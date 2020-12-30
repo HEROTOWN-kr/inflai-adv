@@ -1,0 +1,372 @@
+$colorBg: #fefefe;
+$colorBlue: #093c5e;
+$aqua: #23c9cf;
+$white: #ffffff;
+$colorSoftBlue: #7491B4;
+$colorBlack: #000;
+$colorBlack2: #333333;
+$colorRed: #fa4616;
+$colorRed2: #de2e2e;
+$colorGrey: #dfe2e8;
+$colorGrey2: #a8a8a8;
+$colorGreen: #49d049;
+$colorPink: #fbbaba;
+
+.footer {
+  border-top: 1px solid #ddd;
+  background: $colorBg;
+  color: $colorGrey2;
+  .footer-container {
+    max-width: 1024px;
+    margin: 0 auto;
+    .footer-link {
+      color: $colorGrey2;
+      &:hover {
+        color: $colorPink;
+      }
+    }
+  }
+  .footer-logo {
+    text-align: center;
+  }
+}
+
+.navbar {
+  //background: $colorBlue;
+  transition: background 0.5s ease;
+  border-bottom: 1px solid #ddd;
+  .MuiPaper-elevation4 {
+    box-shadow: none;
+  }
+  .bar {
+    .left-side {
+      max-width: 900px;
+    }
+    .right-side {
+      position: relative;
+      .navbarProfileImage {
+        &:hover {
+          cursor: pointer ;
+          border-radius: 100%;
+          border: 3px solid #eb128c;
+        }
+      }
+    }
+    .name-holder {
+      //color: $colorBg;
+      //background: $colorBlue;
+      line-height: 34px;
+      opacity: 0.8;
+      .name-text {
+        width: 100px;
+        text-align: right;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      svg {
+        position: relative;
+        top: 6px;
+        margin-right: 10px;
+      }
+      &:hover {
+        cursor: pointer;
+        opacity: 1;
+      }
+    }
+  }
+  .mobile-link-bar {
+    //background: $colorBlue;
+    padding: 0 30px;
+    a {
+      font-size: 15px;
+    }
+  }
+  .nav-logo {
+
+  }
+  .menu-icon {
+    //color: $colorBg
+  }
+  .link, .scroll-link {
+    font-size: 17px;
+    //font-weight: bold;
+    //color: $colorBg;
+    color: #232323;
+    text-decoration: none;
+    &:hover {
+      cursor: pointer;
+      color: $aqua;
+    }
+    &.contactUs {
+      height: 48px;
+      line-height: 48px;
+      padding: 0 30px;
+      background-color: $colorBlue;
+      font-weight: bold;
+      font-family: 'Roboto', sans-serif;
+    }
+  }
+  .login-button {
+    box-sizing: border-box;
+    border-radius: 20px;
+    padding: 3px 20px;
+    color: $colorBg;
+    font-weight: 400;
+    border: 2px solid $colorBg;
+    &:hover {
+      color: $aqua
+    }
+  }
+}
+
+.login-dialog {
+  .signUpForm {
+    max-width: 400px;
+    margin: 48px auto;
+    border: solid 1px #dfe2e8;
+    box-sizing: border-box;
+    .title {
+      text-align: center;
+      h2 {
+
+        font-size: 36px;
+        line-height: 1.11;
+        color: #444041;
+      }
+    }
+    .MuiFormControl-root {
+      .MuiOutlinedInput-input {
+        padding: 11px 14px;
+      }
+      &.MuiFormControl-marginNormal {
+        margin: 0;
+      }
+    }
+  }
+
+  .social-networks {
+    .social-main-container {
+      &:hover {
+        cursor: pointer;
+        opacity: 0.9;
+      }
+    }
+    img {
+      height: 40px;
+      width: 40px;
+      border-radius: 100%;
+    }
+    .button-icon {
+      margin: 5px auto;
+      border-right: #fdfdfd 1px solid;
+      img {
+        height: 40px;
+        width: 40px;
+        border-radius: 100%;
+      }
+    }
+    .button-text {
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+}
+
+.instagram-dialog {
+  .MuiTypography-h6 {
+    font-weight: 600;
+  }
+  .dialog-text {
+    font-size: 14px;
+  }
+  .facebook-button {
+    background: #1877F2;
+    color: #fefefe;
+    text-transform: none;
+    font-size: 21px;
+    &:hover {
+      background: #2E68F2;
+    }
+  }
+  .google-button {
+    width: 198px;
+    height: 48px;
+    background-image: url("../img/google_button.png" );
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  .close-icon {
+    color: $colorGrey;
+    &:hover {
+      cursor: pointer;
+      color: $colorBlack;
+    }
+  }
+}
+
+.user-popmenu {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-top: 0;
+  a {
+    text-decoration: none;
+    color: black;
+    .pop-item {
+      &:hover {
+        cursor: pointer;
+        color: #eb128c;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.not-found-page {
+  text-align: center;
+  .title1 {
+    font-size: 30px;
+  }
+  .title2 {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+  .title3 {
+    font-size: 12px;
+    color: #999;
+  }
+}
+
+.profile-menu-link {
+  cursor: pointer;
+  &:hover {
+    background: #f5f6f7;
+  }
+}
+
+.profile {
+  .sns-button {
+    box-sizing: border-box;
+    cursor: pointer;
+    border: 1px solid rgb(234, 234, 234);
+    &:hover {
+      border: 2px solid red;
+    }
+    &.selected {
+      border: 2px solid red;
+    }
+  }
+}
+
+.error-message {
+  color: red;
+  font-size: 0.75rem;
+  &.mb-10 {
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+}
+
+.provide-info {
+  p {
+    overflow-wrap: break-word;
+    word-break: break-all;
+  }
+}
+
+.category-tab {
+  &.active, &:hover {
+    font-weight: bold;
+    border-bottom: 2px solid rgb(249, 113, 184);
+  }
+}
+
+.scrolling-wrapper-flexbox {
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  .card {
+    flex: 0 0 auto;
+  }
+}
+
+.percent_bubble_layer {
+  background: #ffffff;
+  border: 1px solid #eb128c;
+  border-radius: 3px;
+  padding: 2px;
+  width: 44px;
+  text-align: center;
+  &:before, &:after {
+    border-top: 0px solid transparent;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #eb128c;
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    margin-left: -5px;
+  }
+  &:after {
+    border-bottom: 5px solid #ffffff;
+    top: -5px;
+  }
+}
+
+.ck.ck-editor__editable_inline {
+  border: 1px solid #0000003b !important;
+  min-height: 500px;
+}
+
+.agency {
+  box-sizing: border-box;
+  max-width: 780px;
+  margin: 50px auto;
+  color: #3f4653;
+  .form {
+    border: 1px solid $colorGrey;
+  }
+  .main-title {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.33;
+    text-align: center;
+  }
+  .sub-title {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.43;
+    text-align: center;
+  }
+  .submit-button {
+    padding: 15px 0;
+  }
+}
+
+.membership {
+  .membership-card {
+    transition: transform 0.2s, opacity 0.2s;
+    transition-timing-function: ease-in;
+    &:hover, &.selected {
+      transform: translateY(-15px);
+    }
+    &.notSelected {
+      opacity: 25%;
+    }
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .footer {
+    margin-bottom: 60px;
+    .footer-text {
+      font-size: 13px;
+      text-align: center;
+    }
+  }
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!--    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<!--    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.42/css/uikit.min.css" />
+    <title>Inflai</title>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.7.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.42/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.42/js/uikit-icons.min.js"></script>
+</head>
+
+<body>
+<!--<div id="naverIdLogin"></div>-->
+
+    <script>
+        if (!window._babelPolyfill) {
+            require("babel-polyfill");
+        }
+    </script>
+
+    <!--<script>
+        var naverLogin = new naver.LoginWithNaverId(
+            {
+                clientId: '4rBF5bJ4y2jKn0gHoSCf',
+                callbackUrl: 'http://127.0.0.1:3000/Join/Influencer/sns',
+                isPopup: true, /* 팝업을 통한 연동처리 여부 */
+                callbackHandle: true,
+                /* callback 페이지가 분리되었을 경우에 callback 페이지에서는 callback처리를 해줄수 있도록 설정합니다. */
+                loginButton: { color: 'green', type: 3, height: 60 }
+            }
+        );
+
+        naverLogin.init();
+    </script>-->
+
+    <script>
+        var facebookID;
+        if (window.location.host === 'localhost:3002') {
+            facebookID = '139193384125564';
+        } else {
+            facebookID = '663450957780119';
+        }
+
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : facebookID,
+                cookie     : true,
+                xfbml      : true,
+                version    : 'v6.0'
+            });
+
+            FB.AppEvents.logPageView();
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
+    <script type='text/javascript'>
+        //<![CDATA[
+        // Set JavaScript Key of current app.
+        Kakao.init('621ae47398f559dd7479aaba4b841c4b');
+        // Create Kakao Login button.
+        //]]>
+    </script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<!--    <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>-->
+
+    <!--<script type="text/javascript">
+        var naverLogin = new naver.LoginWithNaverId(
+            {
+                clientId: "4rBF5bJ4y2jKn0gHoSCf",
+                callbackUrl: "http://127.0.0.1:3000/login",
+                isPopup: true, /* 팝업을 통한 연동처리 여부 */
+                loginButton: {color: "green", type: 3, height: 60} /* 로그인 버튼의 타입을 지정 */
+            }
+        );
+
+        /* 설정정보를 초기화하고 연동을 준비 */
+        naverLogin.init();
+
+    </script>-->
+
+    <div id="root"></div>
+</body>
+
+</html>

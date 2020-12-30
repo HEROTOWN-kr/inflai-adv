@@ -1,0 +1,279 @@
+$colorBg: #fefefe;
+$colorBlue: #093c5e;
+$colorAqua: #23c9cf;
+$colorGrey: #dfe2e8;
+
+html, body {
+  margin: 0;
+  //background-color: #fefefe;
+  //background-color: #f2f2f2;
+  font-family: 'Noto Sans KR', sans-serif !important;
+  //font-family: 'Noto Sans KR', sans-serif !important;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  height:100%;
+  width:100%;
+  -webkit-font-smoothing: antialiased;
+  -webkit-font-feature-settings: 'tnum';
+  font-feature-settings: 'tnum';
+  //box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.app-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 100vh;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  .app-header {
+
+  }
+  .app-body {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    overflow: hidden;
+    &.active {
+      margin-top: 98px;
+    }
+  }
+  .app-footer {
+    -webkit-box-flex: 0;
+    -ms-flex: none;
+    flex: none;
+  }
+}
+
+.link {
+  color: #ffffff;
+}
+
+.wraper {
+  height: inherit;
+  &.one {
+    margin: 230px 117px;
+  }
+  &.two {
+    margin: 0 215px;
+  }
+  &.three {
+    padding-top: 167px;
+    padding-bottom: 167px;
+  }
+  &.vertical {
+    padding-top: 167px;
+    padding-bottom: 167px;
+  }
+  &.vertical2 {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    &.only-top {
+      padding-bottom: 0;
+    }
+  }
+  &.vertical3 {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    &.only-top {
+      padding-bottom: 0;
+    }
+  }
+  &.four {
+    margin: 0 150px;
+  }
+  &.five {
+    margin: 0 300px;
+  }
+}
+
+.main-container {
+  width: 800px;
+}
+
+.slick-slider {
+  //width: auto;
+}
+
+.slick-slide {
+  //padding: 0 17px;
+}
+
+/*.slick-dots li button:before {
+  color: $colorAqua;
+}*/
+
+.slick-dots {
+  position: static;
+  margin-top: 75px;
+  li {
+    padding: 0 10px;
+    button {
+      &:before {
+        color: $colorAqua;
+        font-size: 20px;
+        //line-height: 20px;
+      }
+    }
+    &.slick-active {
+      button {
+        &:before {
+          color: $colorBlue !important;
+        }
+      }
+    }
+  }
+}
+
+
+.form {
+  /*padding: 50px;
+  border: 1px solid $colorGrey;*/
+  .MuiCheckbox-root {
+    padding: 4px;
+  }
+  .MuiOutlinedInput-input {
+    padding: 11px 14px;
+  }
+  .MuiFormControlLabel-label {
+    &.MuiTypography-body1 {
+      font-size: 14px;
+    }
+  }
+
+  .label-holder {
+    margin-bottom: 10px;
+    line-height: 1;
+    text-align: left;
+    label {
+      font-size: 15px;
+      line-height: 1.33;
+      color: #3f4653;
+    }
+  }
+  textarea {
+    //width: 100%;
+    //height: 80px;
+    padding: 23px 30px;
+    width: -webkit-fill-available;
+    resize: vertical;
+  }
+}
+
+
+@media only screen and (max-width: 1536px) {
+
+}
+
+@media only screen and (max-width: 1366px) {
+  .wraper {
+    height: inherit;
+
+    &.one {
+      margin: 206px 50px;
+    }
+
+    &.two {
+      margin: 0 60px;
+    }
+    &.four {
+      margin: 0 150px;
+    }
+    &.five {
+      margin: 0 130px;
+    }
+
+    &.vertical {
+
+    }
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .wraper {
+    height: inherit;
+
+    &.one {
+
+    }
+
+    &.two {
+      margin: 0 60px;
+    }
+    &.four {
+      margin: 0 150px;
+    }
+    &.five {
+      margin: 0 60px;
+    }
+
+    &.vertical {
+
+    }
+  }
+}
+
+@media only screen and (max-width: 960px) {
+  .wraper {
+    &.one {
+      margin: 176px 71px;
+    }
+
+    &.two {
+      margin: 0 60px;
+    }
+
+    &.three {
+
+    }
+
+    &.vertical {
+
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+
+}
+@media only screen and (max-width: 640px) {
+
+}
+
+@media only screen and (max-width: 375px) {
+  .wraper {
+    &.one {
+      margin: 176px 71px;
+    }
+
+    &.two {
+      margin: 0 60px;
+    }
+
+    &.three {
+
+    }
+
+    &.four {
+      margin: 0 44px;
+    }
+
+    &.five {
+      margin: 0 10px;
+    }
+
+    &.vertical {
+
+    }
+  }
+}
+
