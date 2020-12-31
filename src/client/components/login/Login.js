@@ -23,7 +23,7 @@ function Login({
           const {
             social_type, userToken, userName, regState, userPhone, userPhoto, message
           } = res.data;
-          auth.login(userToken, '1', userName, social_type, userPhoto);
+          auth.login(userToken, userName, social_type, userPhoto);
           if (userPhone) {
             history.push('/');
           } else {

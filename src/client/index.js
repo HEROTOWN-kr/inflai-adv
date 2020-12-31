@@ -4,12 +4,6 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './components/App';
 import './css/common.scss';
 
-/* export default (() => {
-  if (!global || !global._babelPolyfill) {
-    require('babel-polyfill');
-  }
-})(); */
-
 ReactDOM.render((
   <BrowserRouter>
     <App />
