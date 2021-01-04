@@ -120,6 +120,49 @@ $colorPink: #fbbaba;
   }
 }
 
+.home {
+  .service-cards {
+    background: url("../img/bg/bg7.jpg") center;
+    background-size: cover;
+  }
+  .slider-influencer {
+    .card-item {
+      height: 550px;
+      box-sizing: border-box;
+      text-align: center;
+      position: relative;
+      .paper-item {
+        position: relative;
+        top: 163px;
+        height: 370px;
+        .item-content {
+          width: 100%;
+          position: absolute;
+          top: -142px;
+          img {
+            display: block;
+            margin: 0 auto;
+          }
+          .avatar {
+            width: 280px;
+            height: 280px;
+            border-radius: 100%;
+          }
+          .social-name {
+            font-size: 12px;
+            color: #a1a1a1;
+            font-weight: bold;
+          }
+          .social-type {
+            font-size: 24px;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
+
 .login-dialog {
   .signUpForm {
     max-width: 400px;

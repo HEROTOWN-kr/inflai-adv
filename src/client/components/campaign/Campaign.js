@@ -5,6 +5,7 @@ import {
 import CampaignType from './CampaignType';
 import CampaignCreate from './CampaignCreate';
 import CampaignRequest from './CampaignRequest';
+import CampaignDetail from './CampaignDetail';
 
 
 function Campaign() {
@@ -30,6 +31,10 @@ function Campaign() {
         <Route
           path={`${match.url}/Request`}
           render={renderProps => <CampaignRequest {...renderProps} />}
+        />
+        <Route
+          path={`${match.path}/detail/:id`}
+          render={renderProps => <CampaignDetail {...renderProps} />}
         />
         <Route
           exact
