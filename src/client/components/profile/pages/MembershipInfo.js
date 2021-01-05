@@ -79,7 +79,7 @@ function MembershipInfo(props) {
         </StyledText>
       </PageTitle>
       <Box py={4} px={6}>
-        <Box borderBottom={`2px solid ${Colors.grey7}`}>
+        <Box borderBottom={`1px solid ${Colors.grey7}`}>
           <Grid container>
             <Grid item>
               <TabComponent tab={tab} setTab={setTab} text="진행중 구독" tabNumber={1} />

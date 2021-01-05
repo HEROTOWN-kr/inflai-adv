@@ -18,8 +18,8 @@ function UserMenuItems(props) {
       link: '/Profile/CampaignInfo'
     },
     {
-      text: '랭킹 정보',
-      link: '/Profile/Rank'
+      text: '마케팅 요청',
+      link: '/Campaign'
     }
   ];
 

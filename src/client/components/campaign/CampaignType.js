@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import axios from 'axios';
 import { Grid, Paper, Box } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { Colors } from '../../lib/Сonstants';
+import AuthContext from '../../context/AuthContext';
 
 const cards = [
   {
@@ -23,6 +25,28 @@ const cards = [
 function CampaignType() {
   const history = useHistory();
   const [hoverCard, setHoverCard] = useState(null);
+  const { token, isAuthenticated } = useContext(AuthContext);
+
+  function checkSubscription(url) {
+    axios.get('/api/TB_SUBSCRIPTION/check', {
+      params: { token }
+    }).then((res) => {
+      if (res.status === 201) {
+        alert('진행중 서브스크립션이 없습니다!');
+        history.push('/Membership');
+      } else if (res.status === 200) {
+        history.push(url);
+      }
+    }).catch(err => alert(err));
+  }
+
+  function createCampaign(url) {
+    if (!isAuthenticated) {
+      history.push('/Login');
+    } else {
+      checkSubscription(url);
+    }
+  }
 
   return (
     <Box
@@ -50,7 +74,7 @@ function CampaignType() {
           cards.map(item => (
             <Grid key={item.id} item xs={12} sm={6}>
               <Box
-                onClick={() => history.push(item.url)}
+                onClick={() => createCampaign(item.url)}
                 onMouseOver={() => setHoverCard(item.id)}
                 onMouseOut={() => setHoverCard(null)}
                 p={4}

@@ -26,6 +26,7 @@ import StyledButton from '../../containers/StyledButton';
 import defaultAccountImage from '../../img/default_account_image.png';
 import AuthContext from '../../context/AuthContext';
 import TopMenu from './TopMenu';
+import InsightDialog from './InsightDialog';
 
 function TabComponent(props) {
   const {
@@ -55,6 +56,17 @@ function TabComponent(props) {
 function ParticipantList(props) {
   const { adId, isMD } = props;
   const [participants, setParticipants] = useState([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(0);
+
+  function toggleDialog() {
+    setDialogOpen(!dialogOpen);
+  }
+
+  function clickInfo(id) {
+    setSelectedId(id);
+    toggleDialog();
+  }
 
   function getParticipants() {
     axios.get('/api/TB_PARTICIPANT/getList', {
@@ -110,6 +122,17 @@ function ParticipantList(props) {
                           {item.PAR_NAVER ? (
                             <Grid item><StyledImage width="21px" height="21px" src={IconBlog} /></Grid>
                           ) : null}
+                          {item.INS_ID ? (
+                            <Grid item>
+                              <Box
+                                padding="4px 10px"
+                                css={{ background: Colors.blue2, cursor: 'pointer' }}
+                                onClick={() => clickInfo(item.INF_ID)}
+                              >
+                                <StyledText color="#fff">정보</StyledText>
+                              </Box>
+                            </Grid>
+                          ) : null}
                         </Grid>
                       </Grid>
                       <Grid item xs={12}>
@@ -144,6 +167,7 @@ function ParticipantList(props) {
                 </Grid>
               </Box>
             ))}
+            <InsightDialog open={dialogOpen} closeDialog={toggleDialog} selectedId={selectedId} />
           </React.Fragment>
         )
       }
@@ -171,7 +195,7 @@ function CampaignDetail() {
   const [isSticky, setSticky] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showMore, setShowMore] = useState({ visible: false, isOpen: false });
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useState(2);
   const [liked, setLiked] = useState(false);
   const testImage = 'https://www.inflai.com/attach/portfolio/33/1yqw1whkavscxke.PNG';
   const { token, userRole } = useContext(AuthContext);
@@ -216,7 +240,6 @@ function CampaignDetail() {
       params: apiObj
     }).then((res) => {
       const { data } = res.data;
-      console.log(data);
       setProductData(data);
       setCurrentImage(data.TB_PHOTO_ADs[0].PHO_FILE);
       setLoading(false);

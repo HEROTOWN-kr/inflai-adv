@@ -12,6 +12,8 @@ import WhiteBlock from '../../../containers/WhiteBlock';
 import PageTitle from '../PageTitle';
 import CampaignCard from '../../campaign/CampaignCard';
 import MyPagination from '../../../containers/MyPagination';
+import noImage from '../../../img/noImage.png';
+import noFound from '../../../img/notFound400_316.png';
 
 function TabComponent(props) {
   const {
@@ -167,7 +169,7 @@ function CampaignInfo() {
                     return (
                       <Grid item key={AD_ID} style={{ width: getCardWidth() }}>
                         <CampaignCard
-                          image={TB_PHOTO_ADs[0].PHO_FILE}
+                          image={TB_PHOTO_ADs[0] ? TB_PHOTO_ADs[0].PHO_FILE : noFound}
                           ctg1={AD_CTG}
                           ctg2={AD_CTG2}
                           srchEnd={AD_SRCH_END}
