@@ -6,16 +6,17 @@ import {
 import { useForm, Controller } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import StyledText from '../../containers/StyledText';
-import ReactFormDatePicker from '../../containers/ReactFormDatePicker';
-import ReactFormText from '../../containers/ReactFormText';
-import StyledSelect from '../../containers/StyledSelect';
-import { AdvertiseTypes, Colors } from '../../lib/Сonstants';
-import DaumPostCode from '../../containers/DaumPostCode';
+import { useHistory } from 'react-router-dom';
+import StyledText from '../../../containers/StyledText';
+import ReactFormDatePicker from '../../../containers/ReactFormDatePicker';
+import ReactFormText from '../../../containers/ReactFormText';
+import StyledSelect from '../../../containers/StyledSelect';
+import { AdvertiseTypes, Colors } from '../../../lib/Сonstants';
+import DaumPostCode from '../../../containers/DaumPostCode';
 import ImageHolder from './ImageHolder';
-import CKEditorComponent from '../../containers/CKEditorComponent';
-import StyledButton from '../../containers/StyledButton';
-import AuthContext from '../../context/AuthContext';
+import CKEditorComponent from '../../../containers/CKEditorComponent';
+import StyledButton from '../../../containers/StyledButton';
+import AuthContext from '../../../context/AuthContext';
 
 function compareDates(date1, date2) {
   const day1 = date1.getDate();
@@ -36,7 +37,7 @@ function compareDates(date1, date2) {
 }
 
 function CampaignCreate(props) {
-  const { history } = props;
+  const history = useHistory();
   const { token } = useContext(AuthContext);
   const [campaignData, setCampaignData] = useState({
     AD_INSTA: false,
@@ -110,9 +111,22 @@ function CampaignCreate(props) {
     });
   }
 
+  function checkSubscription() {
+    axios.get('/api/TB_SUBSCRIPTION/check', {
+      params: { token }
+    }).then((res) => {
+      if (res.status === 201) {
+        alert('진행중 서브스크립션이 없습니다!');
+        history.push('/Membership');
+      } else if (res.status === 200) {
+        getInfluencersCount();
+      }
+    }).catch(err => alert(err));
+  }
+
   useEffect(() => {
     if (token) {
-      getInfluencersCount();
+      checkSubscription();
     }
   }, [token]);
 
@@ -133,7 +147,7 @@ function CampaignCreate(props) {
         delivery: campaignData.AD_DELIVERY ? 1 : 0
       };
 
-      axios.post('/api/TB_AD/create', obj).then((res) => {
+      axios.post('/api/TB_AD/createBiz', obj).then((res) => {
         if (images.length > 0) {
           const id = res.data.data.AD_ID;
           const uploaders = images.map((item) => {
@@ -261,7 +275,7 @@ function CampaignCreate(props) {
             label="배송형 상품"
           />
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Box mb={1}><StyledText color="#3f51b5">캠페인 출력상태</StyledText></Box>
           <Controller
             as={(
@@ -281,7 +295,7 @@ function CampaignCreate(props) {
             name="visible"
             control={control}
           />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <Box mb={1}><StyledText color="#3f51b5">카테고리</StyledText></Box>
           <Grid container spacing={2}>

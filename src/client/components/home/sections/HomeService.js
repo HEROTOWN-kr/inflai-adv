@@ -55,7 +55,7 @@ function HomeService() {
                   <Box fontSize="28px" fontWeight="600">{item.text2}</Box>
                   <Box mt={5} fontSize="14px" fontWeight="300">{item.text3}</Box>
                 </Box>
-                <Box css={{ background: item.bgColor2 }} py={2} textAlign="center" fontSizw="16px" fontWeight="500">바로가기</Box>
+                <Box css={{ background: item.bgColor2 }} py={2} textAlign="center" fontSize="16px" fontWeight="500">바로가기</Box>
               </Box>
             </Grid>
           ))}

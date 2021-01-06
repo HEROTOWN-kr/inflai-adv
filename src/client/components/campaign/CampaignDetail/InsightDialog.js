@@ -7,18 +7,18 @@ import {
   CalendarToday, ChangeHistory,
   ChatBubble, Clear, Details, Favorite, Image, ImportExportOutlined, Room
 } from '@material-ui/icons';
-import { Colors } from '../../lib/Сonstants';
-import WhiteBlock from '../../containers/WhiteBlock';
-import StyledImage from '../../containers/StyledImage';
-import defaultAccountImage from '../../img/default_account_image.png';
-import StyledText from '../../containers/StyledText';
-import StyledSvg from '../../containers/StyledSvg';
-import GoogleVisionGraph from './Graphs/GoogleVisionGraph';
-import LikeCommentBarGraph from './Graphs/LikeCommentBarGraph';
-import AgeGraph from './Graphs/AgeGraph';
-import GenderGraph from './Graphs/GenderGraph';
-import MapGraph from './Graphs/MapGraph';
-import MapGraph2 from './Graphs/MapGraph2';
+import { Colors } from '../../../lib/Сonstants';
+import WhiteBlock from '../../../containers/WhiteBlock';
+import StyledImage from '../../../containers/StyledImage';
+import defaultAccountImage from '../../../img/default_account_image.png';
+import StyledText from '../../../containers/StyledText';
+import StyledSvg from '../../../containers/StyledSvg';
+import GoogleVisionGraph from '../Graphs/GoogleVisionGraph';
+import LikeCommentBarGraph from '../Graphs/LikeCommentBarGraph';
+import AgeGraph from '../Graphs/AgeGraph';
+import GenderGraph from '../Graphs/GenderGraph';
+import MapGraph from '../Graphs/MapGraph';
+import MapGraph2 from '../Graphs/MapGraph2';
 
 
 const useStyles = makeStyles({
@@ -58,6 +58,11 @@ function InsightDialog(props) {
     }
   }
 
+  function onDialogEntered() {
+    setInstaData({});
+    getInstaInfo();
+  }
+
   return (
     <Dialog
       classes={{ paper: classes.paper }}
@@ -65,7 +70,7 @@ function InsightDialog(props) {
       onClose={closeDialog}
       aria-labelledby="simple-dialog-title"
       open={open}
-      onEntered={getInstaInfo}
+      onEntered={onDialogEntered}
     >
       <Box padding="20px" fontSize="18px" fontWeight="400" lineHeight="18px" textAlign="center" position="relative" borderBottom={`1px solid ${Colors.grey8}`}>
                 SNS 정보

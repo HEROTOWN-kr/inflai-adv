@@ -14,19 +14,22 @@ import { useTheme } from '@material-ui/core/styles';
 import { useHistory, useParams } from 'react-router-dom';
 import * as Scroll from 'react-scroll';
 import { Skeleton } from '@material-ui/lab';
-import Common from '../../lib/common';
-import { Colors, campaignSteps, AdvertiseTypes } from '../../lib/Сonstants';
-import IconYoutube from '../../img/icon_youtube_url.png';
-import IconInsta from '../../img/icon_instagram_url.png';
-import IconBlog from '../../img/icon_blog_url.png';
-import StyledText from '../../containers/StyledText';
-import StyledImage from '../../containers/StyledImage';
-import StyledSvg from '../../containers/StyledSvg';
-import StyledButton from '../../containers/StyledButton';
-import defaultAccountImage from '../../img/default_account_image.png';
-import AuthContext from '../../context/AuthContext';
-import TopMenu from './TopMenu';
+import Common from '../../../lib/common';
+import { Colors, campaignSteps, AdvertiseTypes } from '../../../lib/Сonstants';
+import IconYoutube from '../../../img/icon_youtube_url.png';
+import IconInsta from '../../../img/icon_instagram_url.png';
+import IconBlog from '../../../img/icon_blog_url.png';
+import StyledText from '../../../containers/StyledText';
+import StyledImage from '../../../containers/StyledImage';
+import StyledSvg from '../../../containers/StyledSvg';
+import StyledButton from '../../../containers/StyledButton';
+import defaultAccountImage from '../../../img/default_account_image.png';
+import AuthContext from '../../../context/AuthContext';
+import TopMenu from '../TopMenu';
 import InsightDialog from './InsightDialog';
+import ConfirmDialog from '../../../containers/ConfirmDialog';
+import ParticipantList from './ParticipantList';
+import SelectedList from './SelectedList';
 
 function TabComponent(props) {
   const {
@@ -53,127 +56,6 @@ function TabComponent(props) {
   );
 }
 
-function ParticipantList(props) {
-  const { adId, isMD } = props;
-  const [participants, setParticipants] = useState([]);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [selectedId, setSelectedId] = useState(0);
-
-  function toggleDialog() {
-    setDialogOpen(!dialogOpen);
-  }
-
-  function clickInfo(id) {
-    setSelectedId(id);
-    toggleDialog();
-  }
-
-  function getParticipants() {
-    axios.get('/api/TB_PARTICIPANT/getList', {
-      params: { adId }
-    }).then((res) => {
-      const { data } = res.data;
-      setParticipants(data);
-    }).catch(err => alert(err.response.data.message));
-  }
-
-  function selectParticipant(participantId) {
-    axios.post('/api/TB_PARTICIPANT/change', { adId, participantId }).then((res) => {
-      getParticipants();
-    }).catch(err => alert(err.response.data.message));
-  }
-
-  useEffect(() => {
-    getParticipants();
-  }, []);
-
-  return (
-    <>
-      {
-        participants.length === 0 ? (
-          <Box py={4}>
-            <Grid container justify="center">
-              <Grid item>
-                신청한 리뷰어 없습니다
-              </Grid>
-            </Grid>
-          </Box>
-        ) : (
-          <React.Fragment>
-            {participants.map(item => (
-              <Box key={item.PAR_ID} py={2} borderBottom={`1px solid ${Colors.grey7}`}>
-                <Grid container spacing={2} alignItems="center">
-                  <Grid item>
-                    <StyledImage borderRadius="100%" width={isMD ? '90px' : '60px'} height={isMD ? '90px' : '60px'} src={item.INF_PHOTO || defaultAccountImage} />
-                  </Grid>
-                  <Grid item xs>
-                    <Grid container spacing={isMD ? 2 : 1}>
-                      <Grid item xs={12}>
-                        <Grid container alignItems="center" spacing={1}>
-                          <Grid item>
-                            <StyledText fontSize={16} fontWeight="bold">{item.PAR_NAME}</StyledText>
-                          </Grid>
-                          {item.PAR_INSTA ? (
-                            <Grid item><StyledImage width="21px" height="21px" src={IconInsta} /></Grid>
-                          ) : null}
-                          {item.PAR_YOUTUBE ? (
-                            <Grid item><StyledImage width="21px" height="21px" src={IconYoutube} /></Grid>
-                          ) : null}
-                          {item.PAR_NAVER ? (
-                            <Grid item><StyledImage width="21px" height="21px" src={IconBlog} /></Grid>
-                          ) : null}
-                          {item.INS_ID ? (
-                            <Grid item>
-                              <Box
-                                padding="4px 10px"
-                                css={{ background: Colors.blue2, cursor: 'pointer' }}
-                                onClick={() => clickInfo(item.INF_ID)}
-                              >
-                                <StyledText color="#fff">정보</StyledText>
-                              </Box>
-                            </Grid>
-                          ) : null}
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <StyledText fontSize={isMD ? 15 : 14} lineHeight="1.3em">{item.PAR_MESSAGE}</StyledText>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <StyledText fontSize={isMD ? 15 : 14}>
-                          {item.PAR_DT}
-                        </StyledText>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Grid container justify="flex-end" spacing={1}>
-                      {item.PAR_STATUS === '1' ? (
-                        <Grid item>
-                          <StyledButton
-                            fontSize="12px"
-                            height="25px"
-                            padding="0 10px"
-                            onClick={() => selectParticipant(item.PAR_ID)}
-                          >
-                              리뷰어 선정하기
-                          </StyledButton>
-                        </Grid>
-                      ) : null}
-                      <Grid item>
-                        <StyledButton fontSize="12px" height="25px" padding="0 10px">신청정보 수정</StyledButton>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Box>
-            ))}
-            <InsightDialog open={dialogOpen} closeDialog={toggleDialog} selectedId={selectedId} />
-          </React.Fragment>
-        )
-      }
-    </>
-  );
-}
 
 const useStyles = makeStyles({
   root: {
@@ -231,19 +113,25 @@ function CampaignDetail() {
   }
 
   function getDetailData() {
-    setLoading(true);
-    const apiObj = {
-      id: adId,
-    };
+    if (token) {
+      setLoading(true);
+      const apiObj = {
+        id: adId, token
+      };
 
-    axios.get('/api/TB_AD/campaignDetail', {
-      params: apiObj
-    }).then((res) => {
-      const { data } = res.data;
-      setProductData(data);
-      setCurrentImage(data.TB_PHOTO_ADs[0].PHO_FILE);
-      setLoading(false);
-    }).catch(err => alert(err.response.data.message));
+      axios.get('/api/TB_AD/campaignDetail', {
+        params: apiObj
+      }).then((res) => {
+        if (res.status === 201) {
+          history.push('/');
+        } else {
+          const { data } = res.data;
+          setProductData(data);
+          setCurrentImage(data.TB_PHOTO_ADs[0].PHO_FILE);
+          setLoading(false);
+        }
+      }).catch(err => alert(err.response.data.message));
+    }
   }
 
   function sendRequest() {
@@ -308,7 +196,7 @@ function CampaignDetail() {
 
   useEffect(() => {
     getDetailData();
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     checkFavorites();
@@ -357,7 +245,7 @@ function CampaignDetail() {
                 )
               }
             </Box>
-            <Hidden smDown>
+            {/* <Hidden smDown>
               <Grid container justify="flex-end">
                 <Grid item>
                   <Box width="130px" mb={2}>
@@ -370,7 +258,7 @@ function CampaignDetail() {
                             <FavoriteBorder onClick={favoriteClick} style={{ color: Colors.grey8 }} />
                           )
                         }
-                        {/* <Favorite onClick={favoriteClick} classes={liked ? { root: classes.root } : null} /> */}
+                        <Favorite onClick={favoriteClick} classes={liked ? { root: classes.root } : null} />
                       </Grid>
                       <Grid item><Share /></Grid>
                       <Grid item><Print /></Grid>
@@ -379,7 +267,7 @@ function CampaignDetail() {
                   </Box>
                 </Grid>
               </Grid>
-            </Hidden>
+            </Hidden> */}
             {loading ? (
               <Skeleton variant="rect" width="100%" height={435} />
             ) : (
@@ -481,6 +369,9 @@ function CampaignDetail() {
                 <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
                   <TabComponent isMD={isMD} tab={tab} setTab={setTab} text={`신청한 리뷰어 ${productData.TB_PARTICIPANTs.length}`} tabNumber={2} />
                 </Grid>
+                <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
+                  <TabComponent isMD={isMD} tab={tab} setTab={setTab} text="선정 리뷰어" tabNumber={3} />
+                </Grid>
               </Grid>
             </Box>
             {tab === 1 ? (
@@ -495,10 +386,13 @@ function CampaignDetail() {
                   {ReactHtmlParser(productData.AD_DETAIL)}
                 </div>
               </Box>
-
-            ) : (
+            ) : null}
+            {tab === 2 ? (
               <ParticipantList adId={adId} isMD={isMD} />
-            )}
+            ) : null}
+            {tab === 3 ? (
+              <SelectedList adId={adId} isMD={isMD} />
+            ) : null}
             {showMore.visible && tab === 1 ? (
               <Box mt={1} borderTop={`1px solid ${Colors.grey8}`}>
                 <StyledButton variant="text" background="#ffffff" color="#666" hoverBackground="#f8f8f8" onClick={toggleShowMore}>
@@ -648,38 +542,7 @@ function CampaignDetail() {
             </Box>
           </Grid>
         ) : null}
-
       </Grid>
-      {
-        isMD ? null : (
-          <Box
-            position="fixed"
-            bottom="0"
-            zIndex="2"
-            borderTop={`1px solid ${Colors.grey7}`}
-            width="100%"
-            css={{ backgroundColor: Colors.white }}
-          >
-            <Grid container alignItems="center">
-              <Grid item>
-                <Box px={2} color={Colors.pink3}>
-                  {
-                    liked ? (
-                      <Favorite onClick={favoriteClick} style={{ color: Colors.pink3 }} />
-                    ) : (
-                      <FavoriteBorder onClick={favoriteClick} style={{ color: Colors.grey8 }} />
-                    )
-                  }
-                </Box>
-              </Grid>
-              <Grid item xs>
-                <StyledButton variant="text" height={60} borderRadius="0" onClick={sendRequest}>신청하기</StyledButton>
-              </Grid>
-            </Grid>
-
-          </Box>
-        )
-      }
     </Box>
   );
 }

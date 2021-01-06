@@ -12,6 +12,10 @@ import FacebookIcon from '../../img/facebook-logo.png';
 import TwitchIcon from '../../img/twitch-logo-white.png';
 import AuthContext from '../../context/AuthContext';
 
+function checkLocalHost(hostname) {
+  const result = hostname.indexOf('127.0.0.1');
+  return result !== -1;
+}
 
 function Social(props) {
   const { changeUser, history } = props;
@@ -22,6 +26,9 @@ function Social(props) {
   } else {
     facebookID = '139193384125564';
   }
+
+  const isLocal = checkLocalHost(window.location.origin);
+  const NaverLoginId = isLocal ? 'KyWNbHHgcX4ZcIagGtBg' : 'HddfazOY2WePr9AUHcfh';
 
   function responseGoogle(response) {
     if (!response.error) {
@@ -170,10 +177,9 @@ function Social(props) {
         </Grid>
         <Grid item xs={12}>
           <NaverLogin
-                        // clientId="4rBF5bJ4y2jKn0gHoSCf"
-                        // clientId="KyWNbHHgcX4ZcIagGtBg"
-            clientId="HddfazOY2WePr9AUHcfh"
-            callbackUrl={`${window.location.origin}/Join/Advertiser/Login`}
+              // clientId="4rBF5bJ4y2jKn0gHoSCf"
+            clientId={NaverLoginId}
+            callbackUrl={`${window.location.origin}/Login`}
             render={props => <SocialButton clicked={props.onClick} icon={NaverIcon} text="네이버 로그인" bgColor="#00CE38" textColor="#FFFFFF" />}
             onSuccess={result => responseNaver(result)}
             onFailure={result => responseNaver(result)}
@@ -182,17 +188,6 @@ function Social(props) {
         <Grid item xs={12}>
           <SocialButton clicked={kakaoLoginForm} icon={KakaoIcon} text="카카오 로그인" bgColor="#F7E317" textColor="#3C1E1E" />
         </Grid>
-        {/* <Grid item md={12}>
-          <SocialButton
-            clicked={() => console.log('click')}
-            icon={TwitchIcon}
-            text="트위치 로그인"
-            bgColor="#6034B1"
-            textColor="#FFFFFF"
-              // link="https://id.twitch.tv/oauth2/authorize?client_id=hnwk0poqnawvjedf2nxzaaznj16e1g&redirect_uri=http://localhost:3000&response_type=token&scope=user:edit+user:read:email&force_verify=true"
-            link="https://id.twitch.tv/oauth2/authorize?client_id=hnwk0poqnawvjedf2nxzaaznj16e1g&redirect_uri=http://www.inflai.com&response_type=token&scope=user:edit+user:read:email&force_verify=true"
-          />
-        </Grid> */}
       </Grid>
     </React.Fragment>
   );

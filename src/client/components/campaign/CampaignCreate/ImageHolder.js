@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Divider, Grid } from '@material-ui/core';
 import axios from 'axios';
-import StyledImage from '../../containers/StyledImage';
-import { Colors } from '../../lib/Сonstants';
-import deleteIcon from '../../img/photo_del.png';
-import ConfirmDialog from '../../containers/ConfirmDialog';
+import StyledImage from '../../../containers/StyledImage';
+import { Colors } from '../../../lib/Сonstants';
+import deleteIcon from '../../../img/photo_del.png';
+import ConfirmDialog from '../../../containers/ConfirmDialog';
 
 function ImageHolder(props) {
   const {

@@ -3,9 +3,9 @@ import {
   Route, Switch, useRouteMatch, useHistory
 } from 'react-router-dom';
 import CampaignType from './CampaignType';
-import CampaignCreate from './CampaignCreate';
+import CampaignCreate from './CampaignCreate/CampaignCreate';
 import CampaignRequest from './CampaignRequest';
-import CampaignDetail from './CampaignDetail';
+import CampaignDetail from './CampaignDetail/CampaignDetail';
 
 
 function Campaign() {

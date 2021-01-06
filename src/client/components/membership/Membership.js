@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Box, Grid, Paper } from '@material-ui/core';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import StyledText from '../../containers/StyledText';
 import { Colors } from '../../lib/Сonstants';
 import StyledButton from '../../containers/StyledButton';
@@ -32,13 +33,12 @@ function formatNumber(num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }
 
-function Membership(props) {
-  const { history } = props;
+function Membership() {
   const [plans, setPlans] = useState([]);
   const [selected, setSelected] = useState(null);
   const [selectedData, setSelectedData] = useState({});
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
-
+  const history = useHistory();
   const { token } = useContext(AuthContext);
 
   function getPlans() {
@@ -76,6 +76,14 @@ function Membership(props) {
     setSuccessDialogOpen(!successDialogOpen);
   }
 
+  function openInfoDialog() {
+    if (token) {
+      toggleSuccessDialog();
+    } else {
+      history.push('/Login');
+    }
+  }
+
   function selectPlan(id) {
     if (id === selected) {
       setSelected(null);
@@ -89,8 +97,13 @@ function Membership(props) {
       token,
       PLN_ID: selectedData.PLN_ID
     }).then((res) => {
-      toggleSuccessDialog();
-      history.push('/Profile/MembershipInfo');
+      if (res.status === 201) {
+        alert('이미 등록 된 구독이 있습니다!');
+        toggleSuccessDialog();
+      } else {
+        toggleSuccessDialog();
+        history.push('/Profile/MembershipInfo');
+      }
     }).catch(error => alert(error.response.data.message));
   }
 
@@ -134,7 +147,7 @@ function Membership(props) {
       </Box>
       <Grid container justify="center">
         <Grid item xs={3}>
-          <StyledButton disabled={!selected} onClick={toggleSuccessDialog}>구독하기</StyledButton>
+          <StyledButton disabled={!selected} onClick={openInfoDialog}>구독하기</StyledButton>
         </Grid>
       </Grid>
       <PlanSuccessDialog
