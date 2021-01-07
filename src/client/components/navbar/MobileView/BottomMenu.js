@@ -12,19 +12,19 @@ const MenuCategory = [
     link: '/'
   },
   {
-    icon: 'icon: menu; ratio: 1.2',
-    text: '카테고리',
-
+    icon: 'icon: pencil; ratio: 1.2',
+    text: '마케팅요청',
+    link: '/Campaign'
   },
   {
-    icon: 'icon: heart; ratio: 1.2',
-    text: '스크랩북',
-    link: '/Profile/Favorite'
+    icon: 'icon: table; ratio: 1.2',
+    text: '마이켐페인',
+    link: '/Profile/CampaignInfo'
   },
   {
-    icon: 'icon: info; ratio: 1.2',
-    text: '회원정보수정',
-    link: '/Profile/UserInfo'
+    icon: 'icon: star; ratio: 1.2',
+    text: '멤버십',
+    link: '/Membership'
   },
   {
     icon: 'icon: user; ratio: 1.2',

@@ -20,12 +20,12 @@ function checkLocalHost(hostname) {
 function Social(props) {
   const { changeUser, history } = props;
   const auth = useContext(AuthContext);
-  let facebookID;
-  if (window.location.host === 'www.inflai.com') {
+  /* let facebookID;
+  if (window.location.host === 'biz.inflai.com') {
     facebookID = '663450957780119';
   } else {
     facebookID = '139193384125564';
-  }
+  } */
 
   const isLocal = checkLocalHost(window.location.origin);
   const NaverLoginId = isLocal ? 'KyWNbHHgcX4ZcIagGtBg' : 'HddfazOY2WePr9AUHcfh';
@@ -41,7 +41,7 @@ function Social(props) {
         const {
           userPhone, social_type, userToken, userName, userPhoto
         } = res.data;
-        auth.login(userToken, '1', userName, social_type, userPhoto);
+        auth.login(userToken, userName, social_type, userPhoto);
         if (userPhone) {
           history.push('/');
         } else {
@@ -70,7 +70,7 @@ function Social(props) {
         const {
           userPhone, social_type, userToken, userName, userPhoto
         } = res.data;
-        auth.login(userToken, '1', userName, social_type, userPhoto);
+        auth.login(userToken, userName, social_type, userPhoto);
         if (userPhone) {
           history.push('/');
         } else {
@@ -83,7 +83,7 @@ function Social(props) {
   const responseNaver = (response) => {
     const {
       email, id, name, profile_image
-    } = response.user;
+    } = response;
     if (response) {
       axios.get('/api/TB_ADVERTISER/loginNaver', {
         params: {
@@ -97,7 +97,7 @@ function Social(props) {
         const {
           userPhone, social_type, userToken, userName, userPhoto
         } = res.data;
-        auth.login(userToken, '1', userName, social_type, userPhoto);
+        auth.login(userToken, userName, social_type, userPhoto);
         if (userPhone) {
           history.push('/');
         } else {
@@ -127,7 +127,7 @@ function Social(props) {
               const {
                 social_type, userToken, userName, userPhone, userPhoto
               } = res.data;
-              auth.login(userToken, '1', userName, social_type, userPhoto);
+              auth.login(userToken, userName, social_type, userPhoto);
               if (userPhone) {
                 history.push('/');
               } else {
@@ -165,8 +165,6 @@ function Social(props) {
         </Grid>
         <Grid item xs={12}>
           <FacebookLogin
-                        // appId="139193384125564"
-            appId={facebookID}
             autoLoad
             fields="name,email,picture.width(400).height(400){url}"
             callback={responseFacebook}

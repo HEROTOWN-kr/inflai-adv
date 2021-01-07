@@ -8,6 +8,7 @@ import UserInfo from './pages/UserInfo';
 import CampaignInfo from './pages/CampaignInfo';
 import Alert from '../../containers/Alert';
 import MembershipInfo from './pages/MembershipInfo';
+import MyPage from './pages/MyPage';
 
 function ProfileContent(props) {
   const match = useRouteMatch();
@@ -38,6 +39,10 @@ function ProfileContent(props) {
         <Route
           path={`${match.url}/MembershipInfo`}
           render={renderProps => <MembershipInfo {...props} setMessage={setMessage} />}
+        />
+        <Route
+          path={`${match.path}/MyPage`}
+          render={renderProps => <MyPage {...props} setMessage={setMessage} />}
         />
         <Route
           exact

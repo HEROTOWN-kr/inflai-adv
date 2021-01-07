@@ -39,7 +39,7 @@ function HomeSpeciality() {
       <Box maxWidth="1500px" px={2} margin="0 auto">
         <Grid container spacing={2}>
           {specialityTypes.map(item => (
-            <Grid key={item.id} item xs={4}>
+            <Grid key={item.id} item xs={12} md={4}>
               <StyledImage width="100%" src={item.imgUrl} />
               <Box my={4} fontSize="30px" fontWeight="700">{item.title}</Box>
               <Box fontWeight="400">{item.text1}</Box>

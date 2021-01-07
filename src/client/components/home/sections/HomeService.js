@@ -1,5 +1,7 @@
 import React from 'react';
-import { Box, Grid } from '@material-ui/core';
+import {
+  Box, Grid, useMediaQuery, useTheme
+} from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
 const serviceCards = [
@@ -35,18 +37,19 @@ const serviceCards = [
   },
 ];
 
-function HomeService() {
+function HomeService(props) {
+  const { isMD } = props;
   const history = useHistory();
 
   return (
     <Box padding="100px 0" className="service-cards" color="#fff">
-      <Box textAlign="center" mb={2} fontSize="48px" fontWeight="700">아직도 페이크 인플루언서에게 비용을 쓰고계세요?</Box>
+      <Box textAlign="center" mb={2} fontSize={{ xs: '7vw', md: '48px' }} fontWeight="700">아직도 페이크 인플루언서에게 비용을 쓰고계세요?</Box>
       <Box marginBottom="50px" textAlign="center" fontSize="20px" fontWeight="300">똑똑한 인플루언서 마케팅 inflai</Box>
       <Box maxWidth="1200px" margin="0 auto">
-        <Grid container justify="space-between">
+        <Grid container justify={isMD ? 'space-between' : 'center'} spacing={isMD ? 0 : 2}>
           {serviceCards.map(item => (
-            <Grid item key={item.id}>
-              <Box width="300px" css={{ background: item.bgColor1, cursor: 'pointer' }} onClick={() => history.push(item.link)}>
+            <Grid item key={item.id} xs={12} md="auto">
+              <Box width="300px" margin={{ xs: '0 auto', md: '0' }} css={{ background: item.bgColor1, cursor: 'pointer' }} onClick={() => history.push(item.link)}>
                 <Box p={5}>
                   <Box>
                     <span uk-icon={item.icon} />
