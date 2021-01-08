@@ -5,6 +5,7 @@ import {
 import HomeCategory from './sections/HomeCategory';
 import HomeSpeciality from './sections/HomeSpeciality';
 import HomeService from './sections/HomeService';
+import HomePartners from './sections/HomePartners';
 
 
 function home() {
@@ -23,6 +24,7 @@ function home() {
         <Box marginBottom="50px" textAlign="center" fontSize="16px" fontWeight="300">인플루언서 메칭부터 실시간 캠페인진행까지, 원스톱으로 인플라이하세요.</Box>
       </Box>
       <HomeSpeciality />
+      <HomePartners />
     </Box>
   );
 }

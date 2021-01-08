@@ -1,7 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Box, Grid, Paper } from '@material-ui/core';
+import {
+  Box, Grid, Paper, useTheme, useMediaQuery
+} from '@material-ui/core';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import Slider from 'react-slick';
 import StyledText from '../../containers/StyledText';
 import { Colors } from '../../lib/Сonstants';
 import StyledButton from '../../containers/StyledButton';
@@ -40,6 +43,15 @@ function Membership() {
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const history = useHistory();
   const { token } = useContext(AuthContext);
+  const [dragging, setDragging] = useState(false);
+
+  const theme = useTheme();
+
+  const isXl = useMediaQuery(theme.breakpoints.up('xl'));
+  const is1600 = useMediaQuery('(min-width:1600px)');
+  const isLG = useMediaQuery(theme.breakpoints.up('lg'));
+  const isMD = useMediaQuery(theme.breakpoints.up('md'));
+  const isSM = useMediaQuery(theme.breakpoints.up('sm'));
 
   function getPlans() {
     axios.get('/api/TB_PLAN/').then((res) => {
@@ -108,17 +120,24 @@ function Membership() {
   }
 
   return (
-    <Box width="1160px" margin="0 auto" my={6} className="membership">
-      <StyledText fontSize="35" textAlign="center">
+    <Box maxWidth="1160px" margin="0 auto" my={6} className="membership">
+      <StyledText fontSize={isMD ? '35' : '20'} textAlign="center">
           인플라이
         <span style={{ color: Colors.pink }}> 멤버십을 </span>
             시작하세요
       </StyledText>
+      <Box my={3}>
+        <StyledText fontSize={isMD ? '35' : '20'} textAlign="center">
+          지금 가입하시면 3개월
+          <span style={{ color: Colors.pink }}> 무료</span>
+        </StyledText>
+      </Box>
       <Box my={6}>
         <Grid container spacing={6}>
           {plans.map((item, index) => (
-            <Grid item key={item.PLN_ID} xs={4}>
+            <Grid item key={item.PLN_ID} xs={12} md={4}>
               <Box
+                mx={{ xs: 2, md: 0 }}
                 component={Paper}
                 css={{
                   height: '100%', borderRadius: '15px', overflow: 'hidden', cursor: 'pointer'
@@ -146,8 +165,10 @@ function Membership() {
         </Grid>
       </Box>
       <Grid container justify="center">
-        <Grid item xs={3}>
-          <StyledButton disabled={!selected} onClick={openInfoDialog}>구독하기</StyledButton>
+        <Grid item>
+          <Box width="300px">
+            <StyledButton disabled={!selected} onClick={openInfoDialog}>구독하기</StyledButton>
+          </Box>
         </Grid>
       </Grid>
       <PlanSuccessDialog

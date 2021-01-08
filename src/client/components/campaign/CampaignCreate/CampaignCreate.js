@@ -72,8 +72,8 @@ function CampaignCreate(props) {
       .required('짧은설명을 입력해주세요'),
     searchKeyword: Yup.string()
       .required('검색키워드를 입력해주세요'),
-    discription: Yup.string()
-      .required('참여 안내 사항을 입력해주세요'),
+    /* discription: Yup.string()
+      .required('참여 안내 사항을 입력해주세요'), */
   });
 
   const schema2 = Yup.object().shape({});
@@ -191,6 +191,19 @@ function CampaignCreate(props) {
     <Box my={4} p={4} width={1200} css={{ margin: '0 auto' }} component={Paper}>
       <Box component="h1" css={{ textAlign: 'center' }}>캠페인 정보</Box>
       <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Box mb={1}><StyledText color="#3f51b5">캠페인명</StyledText></Box>
+          <ReactFormText register={register} errors={errors} name="campaignName" />
+        </Grid>
+        <Grid item xs={12}>
+          <Box mb={1}><StyledText color="#3f51b5">짧은설명</StyledText></Box>
+          <TextareaAutosize ref={register} rowsMin={8} style={{ width: '99%' }} placeholder="짧은설명" name="shortDisc" />
+          {
+            errors.shortDisc ? (
+              <div className="error-message">{errors.shortDisc.message}</div>
+            ) : null
+          }
+        </Grid>
         <Grid item xs={12}>
           <Box mb={1}><StyledText color="#3f51b5">모집희망SNS</StyledText></Box>
           {snsTypes.map(item => (
@@ -351,24 +364,12 @@ function CampaignCreate(props) {
           <Box mb={1}><StyledText color="#3f51b5">이메일</StyledText></Box>
           <ReactFormText register={register} errors={errors} name="email" />
         </Grid>
+
         <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">캠페인명</StyledText></Box>
-          <ReactFormText register={register} errors={errors} name="campaignName" />
-        </Grid>
-        <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">짧은설명</StyledText></Box>
-          <TextareaAutosize ref={register} rowsMin={8} style={{ width: '99%' }} placeholder="짧은설명" name="shortDisc" />
-          {
-                        errors.shortDisc ? (
-                          <div className="error-message">{errors.shortDisc.message}</div>
-                        ) : null
-                    }
-        </Grid>
-        <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">검색키워드</StyledText></Box>
+          <Box mb={1}><StyledText color="#3f51b5">필수키워드</StyledText></Box>
           <ReactFormText register={register} errors={errors} name="searchKeyword" />
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Box mb={1}><StyledText color="#3f51b5">참여 안내 사항</StyledText></Box>
           <TextareaAutosize ref={register} rowsMin={8} style={{ width: '99%' }} placeholder="참여 안내 사항" name="discription" />
           {
@@ -376,7 +377,7 @@ function CampaignCreate(props) {
                           <div className="error-message">{errors.discription.message}</div>
                         ) : null
                     }
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <Box mb={1}>
             <StyledText color="#3f51b5">이미지 업로드</StyledText>

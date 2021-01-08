@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import * as Yup from 'yup';
 import axios from 'axios';
 import {
-  Grid, TextField, Divider, FormControlLabel, Checkbox, TextareaAutosize, Button, Box
+  Grid, TextField, Divider, FormControlLabel, Checkbox, TextareaAutosize, Button, Box, FormControl, MenuItem, FormHelperText
 } from '@material-ui/core';
 import {
   Form,
@@ -10,29 +10,35 @@ import {
   useField,
   FieldArray
 } from 'formik';
+import { Controller } from 'react-hook-form';
+import { Category } from '@material-ui/icons';
 import AuthContext from '../../context/AuthContext';
+import StyledText from '../../containers/StyledText';
+import StyledSelect from '../../containers/StyledSelect';
+import { AdvertiseTypes } from '../../lib/Сonstants';
+import StyledSvg from '../../containers/StyledSvg';
 
 const category = {
   aim: [
     {
       value: '1',
-      text: '영향력 있는 소수 인플루언서를 통한 인지도 확산'
+      text: '블로그 체험단'
     },
     {
       value: '2',
-      text: '다수의 리뷰어를 활용한 리뷰 생성'
+      text: '인스타그램 체험단'
     },
     {
       value: '3',
-      text: '인플루언서 믹스를 통한 통합 캠페인'
+      text: '유튜브 체험단'
     },
     {
       value: '4',
-      text: '인플루언서를 활용한 판매'
+      text: '카페 바이럴'
     },
     {
       value: '5',
-      text: '기타 (직접입력)'
+      text: '혼합형'
     },
   ],
   consult: [
@@ -56,7 +62,25 @@ const category = {
       value: '5',
       text: '통합 디지털 마케팅 대행'
     }
-  ]
+  ],
+  visit: [
+    {
+      value: '1',
+      text: '인스타그램 광고'
+    },
+    {
+      value: '2',
+      text: 'dm메세지'
+    },
+    {
+      value: '3',
+      text: '지인추천'
+    },
+    {
+      value: '4',
+      text: '검색'
+    },
+  ],
 };
 
 function MyTextField(props) {
@@ -86,9 +110,41 @@ function MyTextField(props) {
   );
 }
 
+function MySelect(props) {
+  const [field, meta, helpers] = useField(props);
+  const { label, name } = props;
+
+  return (
+    <React.Fragment>
+      <div className="label-holder">
+        <label htmlFor={label}>{label}</label>
+      </div>
+      <FormControl fullWidth variant="outlined" className="select-field">
+
+        <StyledSelect
+          value={meta.value}
+          onChange={(event => helpers.setValue(event.target.value))}
+        >
+          {category[name].map(item => (
+            <MenuItem key={item.text} value={item.value}>{item.text}</MenuItem>
+          ))}
+        </StyledSelect>
+        {meta.touched && meta.error ? (
+          <span className="error-message">{meta.error}</span>
+        ) : null}
+        {/* <FormHelperText>
+          {meta.touched && meta.error ? (
+            <div className="error-message">{meta.error}</div>
+          ) : null}
+        </FormHelperText> */}
+      </FormControl>
+    </React.Fragment>
+  );
+}
+
 function CampaignRequest(props) {
   const { history } = props;
-  const { token } = useContext(AuthContext);
+  // const { token } = useContext(AuthContext);
 
   const mySchema = Yup.object().shape({
     companyName: Yup.string()
@@ -99,8 +155,12 @@ function CampaignRequest(props) {
       .required('이메일을 입력해주세요'),
     phone: Yup.string()
       .required('연락처를 입력해주세요'),
-    productName: Yup.string()
-      .required('브랜드명(제품명)을 입력해주세요'),
+    /* productName: Yup.string()
+      .required('브랜드명(제품명)을 입력해주세요'), */
+    industry: Yup.string()
+      .required('업종을 입력해주세요'),
+    visit: Yup.string()
+      .required('방문경로를 선택하세요'),
     campaignAim: Yup.array()
       .of(Yup.string().required('캠페인 목적을 선택하세요'))
       .min(1, '캠페인 목적을 선택하세요'),
@@ -113,8 +173,9 @@ function CampaignRequest(props) {
       .required('집행 가능 예산을 입력해주세요.'),
   });
 
+
   function saveProduct(values) {
-    const apiObj = { ...values, token };
+    const apiObj = { ...values };
 
     axios.post('/api/TB_REQ_AD/', apiObj).then((res) => {
       if (res.data.code === 200) {
@@ -140,7 +201,9 @@ function CampaignRequest(props) {
           anotherAim: '',
           capital: '',
           consult: [],
-          description: ''
+          description: '',
+          industry: '',
+          visit: ''
         }}
         enableReinitialize
         validationSchema={mySchema}
@@ -186,15 +249,27 @@ function CampaignRequest(props) {
                     <Grid item xs={12}>
                       <Divider />
                     </Grid>
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                       <MyTextField name="productName" label="브랜드명(제품명)" />
+                    </Grid> */}
+                    <Grid item md={12}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={12} sm={6}>
+                          <MyTextField name="industry" label="업종" />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <MySelect name="visit" type="select" label="방문경로" />
+                        </Grid>
+                      </Grid>
                     </Grid>
                     <Grid item xs={12}>
                       <Divider />
                     </Grid>
                     <Grid item xs={12}>
                       <div className="label-holder">
-                        <label htmlFor="campaignAim">캠페인 목적</label>
+                        <label htmlFor="campaignAim">
+                          캠페인 목적 (다중선택 가능)
+                        </label>
                       </div>
                       <FieldArray
                         name="campaignAim"
@@ -216,31 +291,59 @@ function CampaignRequest(props) {
                                       }}
                                       color="primary"
                                     />
-                                              )}
+)}
                                   label={item.text}
                                 />
                               </Grid>
-                            ))
-                                    }
+                            ))}
                           </Grid>
                         )}
                       />
                     </Grid>
+                    {errors.campaignAim && touched.campaignAim ? (
+                      <div className="error-message">{errors.campaignAim}</div>
+                    ) : null}
+                    {/* {values.campaignAim.includes('5') ? (
+                      <Grid item md={12}>
+                        <MyTextField name="anotherAim" label="직접입력" />
+                      </Grid>
+                    ) : null} */}
                     <Grid item xs={12}>
-                      {errors.campaignAim && touched.campaignAim ? (
-                        <div className="error-message">{errors.campaignAim}</div>
-                      ) : null}
+                      <Divider />
                     </Grid>
-                    {
-                          values.campaignAim.includes('5')
-                            ? (
-                              <Grid item md={12}>
-                                <MyTextField name="anotherAim" label="직접입력" />
+                    <Grid item xs={12}>
+                      <div className="label-holder">
+                        <label htmlFor="consult">추가로 원하는 상담분야 (선택)</label>
+                      </div>
+                      <FieldArray
+                        name="consult"
+                        render={arrayHelpers => (
+                          <Grid container>
+                            {category.consult.map(item => (
+                              <Grid item xs={12} key={item.value}>
+                                <FormControlLabel
+                                  control={(
+                                    <Checkbox
+                                      checked={values.consult.includes(item.value)}
+                                      onChange={(e) => {
+                                        if (e.target.checked) {
+                                          arrayHelpers.push(item.value);
+                                        } else {
+                                          const idx = values.consult.indexOf(item.value);
+                                          arrayHelpers.remove(idx);
+                                        }
+                                      }}
+                                      color="primary"
+                                    />
+                                          )}
+                                  label={item.text}
+                                />
                               </Grid>
-                            )
-                            : null
-                        }
-
+                            ))}
+                          </Grid>
+                        )}
+                      />
+                    </Grid>
                     <Grid item xs={12}>
                       <Divider />
                     </Grid>
@@ -276,43 +379,6 @@ function CampaignRequest(props) {
                           </Grid>
                         </Grid>
                       </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Divider />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <div className="label-holder">
-                        <label htmlFor="consult">추가로 원하는 상담분야 (선택)</label>
-                      </div>
-                      <FieldArray
-                        name="consult"
-                        render={arrayHelpers => (
-                          <Grid container>
-                            {category.consult.map(item => (
-                              <Grid item xs={12} key={item.value}>
-                                <FormControlLabel
-                                  control={(
-                                    <Checkbox
-                                      checked={values.consult.includes(item.value)}
-                                      onChange={(e) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(item.value);
-                                        } else {
-                                          const idx = values.consult.indexOf(item.value);
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                      color="primary"
-                                    />
-                                              )}
-                                  label={item.text}
-                                />
-                              </Grid>
-                            ))
-                                    }
-                          </Grid>
-                        )}
-                      />
                     </Grid>
                     <Grid item xs={12}>
                       <Divider />
