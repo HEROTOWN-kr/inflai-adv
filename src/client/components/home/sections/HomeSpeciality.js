@@ -30,22 +30,24 @@ const specialityTypes = [
   },
 ];
 
-function HomeSpeciality() {
+function HomeSpeciality(props) {
+  const { isMD } = props;
+
   return (
-    <Box padding="100px 0" color="#333" css={{ background: '#F6F6F6' }}>
-      <Box textAlign="center" mb={2} fontSize="36px" fontWeight="700">콘텐츠는 브랜드의 얼굴</Box>
-      <Box textAlign="center" fontSize="16px" fontWeight="300">대가들이사는마을은 비즈니스에 필요한 모든 콘텐츠를 최고의 비주얼로 제작해드립니다.</Box>
-      <Box marginBottom="50px" textAlign="center" fontSize="16px" fontWeight="300">각 분야 대가들의 클라이언트와 소통하여 만들어낸 최상의 결과물을 직접 확인해보세요.</Box>
-      <Box maxWidth="1500px" px={2} margin="0 auto">
+    <Box padding={{ xs: '32px 16px', md: '100px 16px' }} color="#333" css={{ background: '#F6F6F6' }}>
+      <Box textAlign={{ xs: 'left', md: 'center' }} mb={{ xs: 1, md: 2 }} fontSize={{ xs: '6.5vw', md: '36px' }} fontWeight="700">콘텐츠는 브랜드의 얼굴</Box>
+      <Box textAlign={{ xs: 'left', md: 'center' }} fontSize={{ xs: '3.5vw', md: '16px' }} fontWeight="300">대가들이사는마을은 비즈니스에 필요한 모든 콘텐츠를 최고의 비주얼로 제작해드립니다.</Box>
+      <Box marginBottom={{ xs: '25px', md: '50px' }} textAlign={{ xs: 'left', md: 'center' }} fontSize={{ xs: '3.5vw', md: '16px' }} fontWeight="300">각 분야 대가들의 클라이언트와 소통하여 만들어낸 최상의 결과물을 직접 확인해보세요.</Box>
+      <Box maxWidth="1500px" margin="0 auto">
         <Grid container spacing={2}>
           {specialityTypes.map(item => (
             <Grid key={item.id} item xs={12} md={4}>
               <StyledImage width="100%" src={item.imgUrl} />
-              <Box my={4} fontSize="30px" fontWeight="700">{item.title}</Box>
-              <Box fontWeight="400">{item.text1}</Box>
-              <Box mt={2} mb={4} fontWeight="400">{item.text2}</Box>
+              <Box my={{ xs: 1, md: 4 }} fontSize={{ xs: '5vw', md: '30px' }} fontWeight="700">{item.title}</Box>
+              <Box fontWeight="400" fontSize={{ xs: '3.5vw', md: '16px' }}>{item.text1}</Box>
+              <Box mt={{ xs: 0, md: 2 }} mb={{ xs: 1, md: 4 }} fontSize={{ xs: '3.5vw', md: '16px' }} fontWeight="400">{item.text2}</Box>
               <Box width="150px">
-                <StyledButton onClick={() => window.open(item.link, '_blank')}>View More</StyledButton>
+                <StyledButton height={isMD ? 48 : 36} onClick={() => window.open(item.link, '_blank')}>View More</StyledButton>
               </Box>
             </Grid>
           ))}

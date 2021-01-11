@@ -78,7 +78,7 @@ export default function PlanSuccessDialog(props) {
           </Grid>
           <Grid item xs={12}>
             <Grid container justify="center" spacing={2}>
-              <Grid item xs={3}>
+              <Grid item>
                 <StyledButton
                   background="#ff005b"
                   hoverBackground="#e00452"
@@ -90,7 +90,7 @@ export default function PlanSuccessDialog(props) {
                 취소
                 </StyledButton>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item>
                 <StyledButton
                   height="36px"
                   fontSize="16px"

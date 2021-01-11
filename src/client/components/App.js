@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NaverLogin from 'react-naver-login';
 import axios from 'axios';
+import { Box } from '@material-ui/core';
 import Main from './main/Main';
 import CustomNavBar from './navbar/Navbar';
 import Footer from './footer/Footer';

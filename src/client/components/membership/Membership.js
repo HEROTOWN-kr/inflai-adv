@@ -120,7 +120,7 @@ function Membership() {
   }
 
   return (
-    <Box maxWidth="1160px" margin="0 auto" my={6} className="membership">
+    <Box maxWidth="1160px" margin="0 auto" my={6} px={2} className="membership">
       <StyledText fontSize={isMD ? '35' : '20'} textAlign="center">
           인플라이
         <span style={{ color: Colors.pink }}> 멤버십을 </span>
@@ -132,45 +132,79 @@ function Membership() {
           <span style={{ color: Colors.pink }}> 무료</span>
         </StyledText>
       </Box>
-      <Box my={6}>
-        <Grid container spacing={6}>
-          {plans.map((item, index) => (
-            <Grid item key={item.PLN_ID} xs={12} md={4}>
-              <Box
-                mx={{ xs: 2, md: 0 }}
-                component={Paper}
-                css={{
-                  height: '100%', borderRadius: '15px', overflow: 'hidden', cursor: 'pointer'
-                }}
-                className={`membership-card ${selected ? ` ${selected === item.PLN_ID ? 'selected' : 'notSelected'}` : ''}`}
-                onClick={() => selectPlan(item.PLN_ID)}
-              >
-                <Box p={3} style={myStyles[index]}>
-                  <StyledText fontSize={21} fontWeight="bold" color={myStyles[index].color}>{item.PLN_NAME}</StyledText>
-                  <Box mt={8}>
-                    <StyledText fontSize={21} color={myStyles[index].color} textAlign="right">월 부담 비용</StyledText>
-                    <StyledText fontSize={42} color={myStyles[index].color} textAlign="right" fontWeight="bold" lineHeight="2em">{`₩ ${formatNumber(item.PLN_PRICE_MONTH)}`}</StyledText>
-                    <StyledText fontSize={21} color={myStyles[index].color} textAlign="right">{`VAT 미포함${item.PLN_DSCNT ? `, ${item.PLN_DSCNT}% 할인적용` : ''}` }</StyledText>
+      <Box py={3}>
+        {isMD ? (
+          <Grid container spacing={6}>
+            {plans.map((item, index) => (
+              <Grid item key={item.PLN_ID} xs={12} md={4}>
+                <Box
+                  mx={{ xs: 2, md: 0 }}
+                  component={Paper}
+                  css={{
+                    height: '100%', borderRadius: '15px', overflow: 'hidden', cursor: 'pointer'
+                  }}
+                  className={`membership-card ${selected ? ` ${selected === item.PLN_ID ? 'selected' : 'notSelected'}` : ''}`}
+                  onClick={() => selectPlan(item.PLN_ID)}
+                >
+                  <Box p={3} style={myStyles[index]}>
+                    <StyledText fontSize={21} fontWeight="bold" color={myStyles[index].color}>{item.PLN_NAME}</StyledText>
+                    <Box mt={8}>
+                      <StyledText fontSize={21} color={myStyles[index].color} textAlign="right">월 부담 비용</StyledText>
+                      <StyledText fontSize={42} color={myStyles[index].color} textAlign="right" fontWeight="bold" lineHeight="2em">{`₩ ${formatNumber(item.PLN_PRICE_MONTH)}`}</StyledText>
+                      <StyledText fontSize={21} color={myStyles[index].color} textAlign="right">{`VAT 미포함${item.PLN_DSCNT ? `, ${item.PLN_DSCNT}% 할인적용` : ''}` }</StyledText>
+                    </Box>
+                  </Box>
+                  <Box px={3} pt={3} pb={8}>
+                    <StyledText fontSize={21} lineHeight="1.5em" color={myStyles[index].color2}>{item.PLN_DETAIL}</StyledText>
+                    <Box mt={2}>
+                      <StyledText fontSize={21} lineHeight="1.5em" color={myStyles[index].color2}>{item.PLN_DETAIL2}</StyledText>
+                    </Box>
                   </Box>
                 </Box>
-                <Box px={3} pt={3} pb={8}>
-                  <StyledText fontSize={21} lineHeight="1.5em" color={myStyles[index].color2}>{item.PLN_DETAIL}</StyledText>
-                  <Box mt={2}>
-                    <StyledText fontSize={21} lineHeight="1.5em" color={myStyles[index].color2}>{item.PLN_DETAIL2}</StyledText>
+              </Grid>
+            ))}
+          </Grid>
+        ) : (
+          <Box margin="0 -20px" className="scrolling-wrapper-flexbox">
+            {plans.map((item, index) => (
+              <Box key={item.PLN_ID} className="card" width="70%" paddingBottom="1px">
+                <Box
+                  margin="0 20px"
+                  component={Paper}
+                  css={{
+                    height: '100%', borderRadius: '15px', overflow: 'hidden', cursor: 'pointer'
+                  }}
+                  onClick={() => { selectPlan(item.PLN_ID); openInfoDialog(); }}
+                >
+                  <Box p={2} style={myStyles[index]}>
+                    <StyledText fontSize={16} fontWeight="bold" color={myStyles[index].color}>{item.PLN_NAME}</StyledText>
+                    <Box mt={3}>
+                      <StyledText fontSize={16} color={myStyles[index].color} textAlign="right">월 부담 비용</StyledText>
+                      <StyledText fontSize={22} color={myStyles[index].color} textAlign="right" fontWeight="bold" lineHeight="2em">{`₩ ${formatNumber(item.PLN_PRICE_MONTH)}`}</StyledText>
+                      <StyledText fontSize={16} color={myStyles[index].color} textAlign="right">{`VAT 미포함${item.PLN_DSCNT ? `, ${item.PLN_DSCNT}% 할인적용` : ''}` }</StyledText>
+                    </Box>
+                  </Box>
+                  <Box px={2} pt={2} pb={2}>
+                    <StyledText fontSize={16} lineHeight="1.5em" color={myStyles[index].color2}>{item.PLN_DETAIL}</StyledText>
+                    <Box mt={1}>
+                      <StyledText fontSize={16} lineHeight="1.5em" color={myStyles[index].color2}>{item.PLN_DETAIL2}</StyledText>
+                    </Box>
                   </Box>
                 </Box>
               </Box>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-      <Grid container justify="center">
-        <Grid item>
-          <Box width="300px">
-            <StyledButton disabled={!selected} onClick={openInfoDialog}>구독하기</StyledButton>
+            ))}
           </Box>
+        )}
+      </Box>
+      {isMD ? (
+        <Grid container justify="center">
+          <Grid item>
+            <Box width="300px">
+              <StyledButton disabled={!selected} onClick={openInfoDialog}>구독하기</StyledButton>
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
+      ) : null}
       <PlanSuccessDialog
         open={successDialogOpen}
         handleClose={toggleSuccessDialog}

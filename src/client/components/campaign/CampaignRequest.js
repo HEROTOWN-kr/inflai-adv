@@ -44,23 +44,23 @@ const category = {
   consult: [
     {
       value: '1',
-      text: '유튜브 크리에이터 섭외'
+      text: '제품사진촬영'
     },
     {
       value: '2',
-      text: '네이버 블로거 섭외'
+      text: '홍보영상제작'
     },
     {
       value: '3',
-      text: '페이스북 파워 페이지 홍보'
+      text: '상세페이지제작'
     },
     {
       value: '4',
-      text: '소셜미디어 유료 광고 대행 (인스타그램/페이스북 등)'
+      text: '메뉴판/배너/포스터'
     },
     {
       value: '5',
-      text: '통합 디지털 마케팅 대행'
+      text: '홈페이지제작'
     }
   ],
   visit: [
