@@ -193,16 +193,29 @@ function CampaignCreate(props) {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Box mb={1}><StyledText color="#3f51b5">캠페인명</StyledText></Box>
-          <ReactFormText register={register} errors={errors} name="campaignName" />
+          <ReactFormText
+            register={register}
+            errors={errors}
+            name="campaignName"
+            placeholder="예시) ㅇㅇ공기청정기 블로거, 인스타그래머 모집"
+          />
         </Grid>
         <Grid item xs={12}>
           <Box mb={1}><StyledText color="#3f51b5">짧은설명</StyledText></Box>
-          <TextareaAutosize ref={register} rowsMin={8} style={{ width: '99%' }} placeholder="짧은설명" name="shortDisc" />
-          {
+          <ReactFormText
+            register={register}
+            errors={errors}
+            multiline
+            rows={5}
+            name="shortDisc"
+            placeholder="예시) 3단계의 공기청정 기능이 탑재된 휴대용 공기청정기 입니다."
+          />
+          {/* <TextareaAutosize ref={register} rowsMin={8} style={{ width: '99%' }} placeholder="짧은설명" name="shortDisc" /> */}
+          {/* {
             errors.shortDisc ? (
               <div className="error-message">{errors.shortDisc.message}</div>
             ) : null
-          }
+          } */}
         </Grid>
         <Grid item xs={12}>
           <Box mb={1}><StyledText color="#3f51b5">모집희망SNS</StyledText></Box>
@@ -215,7 +228,7 @@ function CampaignCreate(props) {
               label={item.text}
             />
           ))}
-          <input
+          {/* <input
             type="text"
             readOnly
             name="sns"
@@ -223,7 +236,7 @@ function CampaignCreate(props) {
             style={{
               opacity: '0', width: '0', padding: '0', border: '0', height: '0'
             }}
-          />
+          /> */}
           {
                         errors.sns ? (
                           <div className="error-message">{errors.sns.message}</div>

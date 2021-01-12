@@ -7,6 +7,30 @@ import { useTheme } from '@material-ui/core/styles';
 import StyledText from '../../containers/StyledText';
 import StyledButton from '../../containers/StyledButton';
 
+const PaymentData = [
+  {
+    title: '선택한 플랜',
+    data: 'planName'
+  },
+  {
+    title: '송금 금액',
+    // data: 'pricePerMonth'
+    data: 'price'
+  },
+  {
+    title: '가상계좌은행',
+    data: 'bankName'
+  },
+  {
+    title: '가상계좌번호',
+    data: 'bankAccount'
+  },
+  {
+    title: '계좌추인',
+    data: 'bankHost'
+  }
+];
+
 export default function PlanSuccessDialog(props) {
   const {
     open, handleClose, onConfirm, selectedData
@@ -18,30 +42,6 @@ export default function PlanSuccessDialog(props) {
     onConfirm();
     handleClose();
   };
-
-  const PaymentData = [
-    {
-      title: '선택한 플랜',
-      data: 'planName'
-    },
-    {
-      title: '송금 금액',
-      // data: 'pricePerMonth'
-      data: 'price'
-    },
-    {
-      title: '가상계좌은행',
-      data: 'bankName'
-    },
-    {
-      title: '가상계좌번호',
-      data: 'bankAccount'
-    },
-    {
-      title: '계좌추인',
-      data: 'bankHost'
-    }
-  ];
 
   return (
     <Dialog

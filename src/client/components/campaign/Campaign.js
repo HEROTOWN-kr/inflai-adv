@@ -6,6 +6,8 @@ import CampaignType from './CampaignType';
 import CampaignCreate from './CampaignCreate/CampaignCreate';
 import CampaignRequest from './CampaignRequest';
 import CampaignDetail from './CampaignDetail/CampaignDetail';
+import PrivateRoute from '../../containers/PrivateRoute';
+import CampaignCreateNew from './CampaignCreate/CampaignCreateNew';
 
 
 function Campaign() {
@@ -24,10 +26,20 @@ function Campaign() {
   return (
     <React.Fragment>
       <Switch>
-        <Route
+        <PrivateRoute
+          path={`${match.url}/Create`}
+          component={CampaignCreate}
+          saveProductInfo={saveProductInfo}
+        />
+        <PrivateRoute
+          path={`${match.url}/CreateNew`}
+          component={CampaignCreateNew}
+          saveProductInfo={saveProductInfo}
+        />
+        {/* <Route
           path={`${match.url}/Create`}
           render={renderProps => <CampaignCreate {...renderProps} saveProductInfo={saveProductInfo} />}
-        />
+        /> */}
         <Route
           path={`${match.url}/Request`}
           render={renderProps => <CampaignRequest {...renderProps} />}

@@ -8,9 +8,9 @@ import AuthContext from '../../context/AuthContext';
 const cards = [
   {
     id: 1,
-    title: '다이렉트 마케팅',
-    text1: '합리적인 가격으로 신속하게!',
-    text2: '직접 인플루언서 마케팅을 진행하세요.',
+    title: '직접 매칭',
+    text1: '처음부터 끝까지',
+    text2: '사장님이 직접 만듭니다.',
     url: '/Campaign/Create'
   },
   {

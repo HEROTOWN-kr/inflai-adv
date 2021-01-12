@@ -10,32 +10,32 @@ const serviceCards = [
     icon: 'pencil',
     ratio: '1.8',
     text1: '인플루언서',
-    text2: '바로매칭',
-    text3: '둘 중 나에게 맞는 티입은',
+    text2: '직접매칭',
+    text3: '사장님이 직접매칭 가능 상대적으로 가격 저렴',
     buttonText: '바로가기',
     bgColor1: 'rgba(46, 42, 62, 0.9)',
     bgColor2: '#3e3857',
-    link: '/Campaign'
+    link: '/Campaign/Create'
   },
   {
     id: 2,
     icon: 'star',
     ratio: '1.8',
     text1: '인플루언서',
-    text2: '멤버십',
-    text3: '메가급부터 마이크로, 나노급까지!',
+    text2: '매칭대행',
+    text3: '사장님이 원하는대로 저희가 직접 매칭해드립니다',
     buttonText: '바로가기',
     bgColor1: 'rgba(47, 58, 74, 0.9)',
     bgColor2: '#3b495e',
-    link: '/Membership'
+    link: '/Campaign/Request'
   },
   {
     id: 3,
     icon: 'cart',
     ratio: '1.8',
-    text1: '인플루언서',
-    text2: 'Mall',
-    text3: '인플루언서에게 판매도하고 진성후기도 얻는방법\n',
+    text1: '계정 인공지능',
+    text2: '분석서비스',
+    text3: '서비스 예정중',
     buttonText: '준비중',
     bgColor1: 'rgba(42, 58, 62, 0.9)',
     bgColor2: '#394e54',
@@ -65,7 +65,7 @@ function HomeService(props) {
                     <Box fontSize="28px" fontWeight="600">{item.text2}</Box>
                     <Box mt={5} fontSize="14px" fontWeight="300">{item.text3}</Box>
                   </Box>
-                  <Box css={{ background: item.bgColor2 }} py={2} textAlign="center" fontSize="16px" fontWeight="500">바로가기</Box>
+                  <Box css={{ background: item.bgColor2 }} py={2} textAlign="center" fontSize="16px" fontWeight="500">{item.buttonText}</Box>
                 </Box>
               </Grid>
             ))}
@@ -91,7 +91,7 @@ function HomeService(props) {
                       </Grid>
                     </Grid>
                   </Box>
-                  <Box css={{ background: item.bgColor2 }} py={{ xs: 1, sm: 2 }} textAlign="center" fontSize="3.5vw" fontWeight="500">바로가기</Box>
+                  <Box css={{ background: item.bgColor2 }} py={{ xs: 1, sm: 2 }} textAlign="center" fontSize="3.5vw" fontWeight="500">{item.buttonText}</Box>
                 </Box>
               </Grid>
             ))}

@@ -6,7 +6,13 @@ const StyledTextField = withStyles({
   root: {
     '& .MuiOutlinedInput-input': {
       padding: '10.5px 14px',
-    }
+    },
+    '& .MuiOutlinedInput-multiline': {
+      padding: '0',
+    },
+    /* '& .MuiOutlinedInput-input': {
+      padding: '10.5px 14px',
+    } */
   },
 })(TextField);
 
