@@ -121,7 +121,7 @@ function CampaignCreate(props) {
       } else if (res.status === 200) {
         getInfluencersCount();
       }
-    }).catch(err => alert(err));
+    }).catch(err => alert(err.response.data.message));
   }
 
   useEffect(() => {
@@ -223,7 +223,7 @@ function CampaignCreate(props) {
             <FormControlLabel
               control={(
                 <Checkbox checked={!!campaignData[item.dbValue]} onChange={event => setCampaignData({ ...campaignData, [item.dbValue]: event.target.checked })} />
-                            )}
+              )}
               key={item.name}
               label={item.text}
             />
@@ -237,11 +237,9 @@ function CampaignCreate(props) {
               opacity: '0', width: '0', padding: '0', border: '0', height: '0'
             }}
           /> */}
-          {
-                        errors.sns ? (
-                          <div className="error-message">{errors.sns.message}</div>
-                        ) : null
-                    }
+          {errors.sns ? (
+            <div className="error-message">{errors.sns.message}</div>
+          ) : null}
         </Grid>
         <Grid item xs={12}>
           <Box mb={1}>
@@ -286,11 +284,9 @@ function CampaignCreate(props) {
               }}
             />
           </Grid>
-          {
-                        errors.searchData ? (
-                          <div className="error-message">{errors.searchData.message}</div>
-                        ) : null
-                    }
+          {errors.searchData ? (
+            <div className="error-message">{errors.searchData.message}</div>
+          ) : null}
         </Grid>
         <Grid item xs={12}>
           <Box mb={1}><StyledText color="#3f51b5">제공상품 배송여부</StyledText></Box>
@@ -342,27 +338,25 @@ function CampaignCreate(props) {
                 control={control}
               />
             </Grid>
-            {
-                            AdvertiseTypes.subType[getType] ? (
-                              <Grid item xs={2}>
-                                <Controller
-                                  render={controllerProps => (
-                                    <StyledSelect
-                                      native
-                                      {...controllerProps}
-                                      variant="outlined"
-                                      fullWidth
-                                    >
-                                      {AdvertiseTypes.subType[getType].map((item, index) => <option key={index} value={index}>{item}</option>)}
-                                    </StyledSelect>
-                                  )}
-                                  defaultValue={0}
-                                  name="subtype"
-                                  control={control}
-                                />
-                              </Grid>
-                            ) : null
-                        }
+            {AdvertiseTypes.subType[getType] ? (
+              <Grid item xs={2}>
+                <Controller
+                  render={controllerProps => (
+                    <StyledSelect
+                      native
+                      {...controllerProps}
+                      variant="outlined"
+                      fullWidth
+                    >
+                      {AdvertiseTypes.subType[getType].map((item, index) => <option key={index} value={index}>{item}</option>)}
+                    </StyledSelect>
+                  )}
+                  defaultValue={0}
+                  name="subtype"
+                  control={control}
+                />
+              </Grid>
+            ) : null}
           </Grid>
         </Grid>
         <Grid item xs={12}>
@@ -407,11 +401,9 @@ function CampaignCreate(props) {
           <Box border="1px solid #0000003b" p={3}>
             <ImageHolder setValue={setValue} images={images} setImages={setImages} dbImages={dbImages} getCampaignData={getCampaignData} />
           </Box>
-          {
-                        errors.picArray ? (
-                          <div className="error-message">{errors.picArray.message}</div>
-                        ) : null
-                    }
+          {errors.picArray ? (
+            <div className="error-message">{errors.picArray.message}</div>
+          ) : null}
         </Grid>
         <Grid item xs={12}>
           <Box mb={1}><StyledText color="#3f51b5">상세정보</StyledText></Box>
@@ -429,6 +421,7 @@ function CampaignCreate(props) {
             {/* <Grid item xs={2}><StyledButton onClick={handleSubmit(onSubmit2)}>test</StyledButton></Grid> */}
           </Grid>
         </Grid>
+        {JSON.stringify(errors)}
       </Grid>
     </Box>
   );

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box, Grid } from '@material-ui/core';
+import { setIn } from 'formik';
 import { Colors } from '../../../lib/Сonstants';
 import StyledImage from '../../../containers/StyledImage';
 import defaultAccountImage from '../../../img/default_account_image.png';
@@ -12,17 +13,24 @@ import StyledButton from '../../../containers/StyledButton';
 import InsightDialog from './InsightDialog';
 import ConfirmDialog from '../../../containers/ConfirmDialog';
 import Sample from '../../component-sample';
+import NaverInsightDialog from './NaverInsightDialog';
 
 function ParticipantList(props) {
   const { adId, isMD } = props;
   const [participants, setParticipants] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [naverDialogOpen, setNaverDialogOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
+  const [influencerId, setInfluencerId] = useState(0);
 
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
 
   function toggleDialog() {
     setDialogOpen(!dialogOpen);
+  }
+
+  function toggleNaverDialog() {
+    setNaverDialogOpen(!naverDialogOpen);
   }
 
   function toggleConfirmDialog() {
@@ -37,6 +45,11 @@ function ParticipantList(props) {
   function clickInfo(id) {
     setSelectedId(id);
     toggleDialog();
+  }
+
+  function clickNaverInfo(id) {
+    setInfluencerId(id);
+    toggleNaverDialog();
   }
 
   function getParticipants() {
@@ -107,6 +120,17 @@ function ParticipantList(props) {
                             </Box>
                           </Grid>
                         ) : null}
+                        {item.NAV_ID ? (
+                          <Grid item>
+                            <Box
+                              padding="4px 10px"
+                              css={{ background: Colors.blue2, cursor: 'pointer' }}
+                              onClick={() => clickNaverInfo(item.PAR_ID)}
+                            >
+                              <StyledText color="#fff">정보</StyledText>
+                            </Box>
+                          </Grid>
+                        ) : null}
                       </Grid>
                     </Grid>
                     <Grid item xs={12}>
@@ -139,6 +163,7 @@ function ParticipantList(props) {
             </Box>
           ))}
           <InsightDialog open={dialogOpen} closeDialog={toggleDialog} selectedId={selectedId} />
+          <NaverInsightDialog open={naverDialogOpen} closeDialog={toggleNaverDialog} selectedId={influencerId} />
           <ConfirmDialog
             open={confirmDialogOpen}
             closeDialog={toggleConfirmDialog}

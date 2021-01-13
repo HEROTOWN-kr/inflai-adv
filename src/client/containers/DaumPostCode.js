@@ -41,7 +41,6 @@ function DaumPostCode(props) {
         // 우편번호와 주소 정보를 해당 필드에 넣는다.
         setValue('postcode', zonecode);
         setValue('roadAddress', roadAddr);
-        console.log(roadAddr);
         // setValue('jibunAddress', jibunAddress);
 
         // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.

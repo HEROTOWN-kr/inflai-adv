@@ -5,31 +5,30 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 
 function ReactFormDatePicker(props) {
   const {
-    control, setValue, handleBlur, getValues, name
+    control, name, ...datePickerProps
   } = props;
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Controller
-        as={(<KeyboardDatePicker />)}
-        control={control}
-        autoOk
-        // disablePast
         name={name}
-        defaultValue={new Date()}
-        disableToolbar
-        variant="inline"
-        format="yyyy/MM/dd"
-        margin="normal"
-        id="date-picker-inline"
-        KeyboardButtonProps={{
-          'aria-label': 'change date',
-        }}
-        onChange={(date) => {
-          setValue('receivedDate', date);
-          handleBlur(getValues().id, 'receivedDate'); // Managing patch save at server
-          return { value: date }; // important to update the controller value after change else state is updated and the controller will not render
-        }}
+        control={control}
+        render={({ ref, ...rest }) => (
+          <KeyboardDatePicker
+            autoOk
+            disableToolbar
+            // disablePast
+            margin="normal"
+            id={name}
+            variant="inline"
+            format="yyyy/MM/dd"
+            KeyboardButtonProps={{
+              'aria-label': 'change date'
+            }}
+            {...rest}
+            {...datePickerProps}
+          />
+        )}
       />
     </MuiPickersUtilsProvider>
   );
@@ -37,3 +36,21 @@ function ReactFormDatePicker(props) {
 
 
 export default ReactFormDatePicker;
+
+
+/* <Controller
+    as={(<KeyboardDatePicker />)}
+    control={control}
+    autoOk
+    // disablePast
+    name={name}
+    defaultValue={new Date()}
+    disableToolbar
+    variant="inline"
+    format="yyyy/MM/dd"
+    margin="normal"
+    id="date-picker-inline"
+    KeyboardButtonProps={{
+      'aria-label': 'change date',
+    }}
+  />; */
