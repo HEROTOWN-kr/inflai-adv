@@ -8,7 +8,7 @@ import {
 import { useForm, Controller, get } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import StyledText from '../../../containers/StyledText';
@@ -17,7 +17,7 @@ import ReactFormText from '../../../containers/ReactFormText';
 import StyledSelect from '../../../containers/StyledSelect';
 import { AdvertiseTypes, Colors } from '../../../lib/Сonstants';
 import DaumPostCode from '../../../containers/DaumPostCode';
-import ImageHolder from './ImageHolder';
+import ImageHolder from '../CampaignCreate/ImageHolder';
 import CKEditorComponent from '../../../containers/CKEditorComponent';
 import StyledButton from '../../../containers/StyledButton';
 import AuthContext from '../../../context/AuthContext';
@@ -33,27 +33,11 @@ const deliveryTypes = [
   { value: '1', text: '배송상품' },
 ];
 
-function compareDates(date1, date2) {
-  const day1 = date1.getDate();
-  const day2 = date2.getDate();
-  const month1 = date1.getMonth();
-  const month2 = date2.getMonth();
-  const year1 = date1.getFullYear();
-  const year2 = date2.getFullYear();
-
-  if (year1 > year2) {
-    return true;
-  } if (year1 === year2 && month1 > month2) {
-    return true;
-  } if (year1 === year2 && month1 === month2 && day1 >= day2) {
-    return true;
-  }
-  return false;
-}
-
-function CampaignCreateNew() {
+function CampaignEdit() {
   const history = useHistory();
+  const params = useParams();
   const { token } = useContext(AuthContext);
+  const [campaignData, setCampaignData] = useState({});
   const [campaignEditor, setCampaignEditor] = useState({});
   const [images, setImages] = useState([]);
   const [dbImages, setDbImages] = useState([]);
@@ -110,8 +94,7 @@ function CampaignCreateNew() {
     phone: Yup.string().required('연락처를 입력해주세요').integerString(),
     email: Yup.string().required('이메일을 입력해주세요').email('잘못된 이메일 형식입니다'),
     searchKeyword: Yup.string().required('검색키워드를 입력해주세요'),
-    discription: Yup.string()
-      .required('참여 안내 사항을 입력해주세요'),
+    discription: Yup.string().required('참여 안내 사항을 입력해주세요'),
     picArray: Yup.string()
       .test('picCheck', '이미지 업러드 해주세요', val => images.length > 0 || dbImages.length > 0)
       .test('picLength', '이미지 5개만 업러드 가능합니다', val => (images.length + dbImages.length) < 6),
@@ -140,9 +123,57 @@ function CampaignCreateNew() {
     minDate.setDate(minDate.getDate() + 1);
     const maxDate = new Date(minDate);
     maxDate.setDate(maxDate.getDate() + 6);
-    setValue('searchFinish', minDate);
+    // setValue('searchFinish', minDate);
     setPickerDates({ min: minDate, max: maxDate });
   }, [watchObj.searchStart]);
+
+  function getCampaignData() {
+    axios.get('/api/TB_AD/getAdDataBiz', {
+      params: {
+        token, adId: params.id
+      }
+    }).then((res) => {
+      if (res.status === 201) {
+        history.push('/');
+      } else {
+        const { data } = res.data;
+        const {
+          AD_INF_CNT, AD_SRCH_START, AD_SRCH_END, AD_DELIVERY, AD_CTG,
+          AD_CTG2, AD_TEL, AD_EMAIL, AD_NAME, AD_SHRT_DISC, AD_DISC, AD_SEARCH_KEY,
+          AD_TYPE, AD_DETAIL, AD_PROVIDE, AD_POST_CODE, AD_ROAD_ADDR,
+          AD_DETAIL_ADDR, AD_EXTR_ADDR, TB_PHOTO_ADs
+        } = data;
+
+        if (AD_DETAIL) setCampaignData({ ...campaignData, AD_DETAIL });
+
+        const resetObj = {
+          ...defaultValues,
+          influencerCount: AD_INF_CNT,
+          searchStart: new Date(AD_SRCH_START),
+          searchFinish: new Date(AD_SRCH_END),
+          delivery: AD_DELIVERY.toString(),
+          type: AD_CTG,
+          subtype: AD_CTG2,
+          phone: AD_TEL,
+          email: AD_EMAIL,
+          campaignName: AD_NAME,
+          shortDisc: AD_SHRT_DISC,
+          discription: AD_DISC,
+          searchKeyword: AD_SEARCH_KEY,
+          sns: AD_TYPE
+        };
+
+        if (AD_PROVIDE) resetObj.provideInfo = AD_PROVIDE;
+        if (AD_POST_CODE) resetObj.postcode = AD_POST_CODE;
+        if (AD_ROAD_ADDR) resetObj.roadAddress = AD_ROAD_ADDR;
+        if (AD_DETAIL_ADDR) resetObj.detailAddress = AD_DETAIL_ADDR;
+        if (AD_EXTR_ADDR) resetObj.extraAddress = AD_EXTR_ADDR;
+        if (TB_PHOTO_ADs && TB_PHOTO_ADs.length > 0) setDbImages(TB_PHOTO_ADs);
+
+        reset(resetObj);
+      }
+    });
+  }
 
   function getInfluencersCount() {
     axios.get('/api/TB_SUBSCRIPTION/getInfluencers', {
@@ -152,15 +183,17 @@ function CampaignCreateNew() {
     }).then((res) => {
       const { InfCountUsed, InfCountLeft, PlnInfMonth } = res.data.data;
       setLimits({ InfCountUsed, InfCountLeft, PlnInfMonth });
+      getCampaignData();
     }).catch((err) => {
       alert(err.response.data.message);
     });
   }
 
+
   const onSubmit = async (data) => {
-    axios.post('/api/TB_AD/createBiz', { ...data, token }).then((res) => {
+    axios.post('/api/TB_AD/updateBiz', { ...data, token, adId: params.id }).then((res) => {
       if (images.length > 0) {
-        const id = res.data.data.AD_ID;
+        const { id } = params;
         const uploaders = images.map((item) => {
           const formData = new FormData();
           formData.append('file', item.file);
@@ -171,12 +204,12 @@ function CampaignCreateNew() {
           }).then(response => ('sucess')).catch(error => ('error'));
         });
         axios.all(uploaders).then(() => {
-          alert('캠페인이 등록되었습니다!!');
-          history.push('/Profile/CampaignInfo');
+          alert('수정되었습니다!');
+          // history.push('/Profile/CampaignInfo');
         });
       } else {
-        alert('캠페인이 등록되었습니다!!');
-        history.push('/Profile/CampaignInfo');
+        alert('수정되었습니다!');
+        // history.push('/Profile/CampaignInfo');
       }
     }).catch((error) => {
       alert(error.response.data);
@@ -201,6 +234,12 @@ function CampaignCreateNew() {
       checkSubscription();
     }
   }, [token]);
+
+  useEffect(() => {
+    if (campaignEditor.detailInfo && campaignData.AD_DETAIL) {
+      campaignEditor.detailInfo.data.set(campaignData.AD_DETAIL);
+    }
+  }, [campaignData]);
 
   return (
     <Box my={{ xs: 0, sm: 4 }} p={{ xs: 2, sm: 4 }} maxWidth={1200} css={{ margin: '0 auto' }} component={Paper}>
@@ -281,7 +320,7 @@ function CampaignCreateNew() {
                 <ReactFormDatePicker
                   name="searchStart"
                   control={control}
-                  disablePast
+                  // disablePast
                 />
               </Box>
             </Grid>
@@ -291,8 +330,8 @@ function CampaignCreateNew() {
                 <ReactFormDatePicker
                   name="searchFinish"
                   control={control}
-                  minDate={pickerDates.min}
-                  maxDate={pickerDates.max}
+                  // minDate={pickerDates.min}
+                  // maxDate={pickerDates.max}
                 />
               </Box>
             </Grid>
@@ -416,7 +455,15 @@ function CampaignCreateNew() {
             />
           </Box>
           <Box border="1px solid #0000003b" p={3}>
-            <ImageHolder setValue={setValue} images={images} setImages={setImages} dbImages={dbImages} setDbImages={setDbImages} />
+            <ImageHolder
+              setValue={setValue}
+              images={images}
+              setImages={setImages}
+              dbImages={dbImages}
+              setDbImages={setDbImages}
+              campaignId={params.id}
+              getCampaignData={getCampaignData}
+            />
           </Box>
           {errors.picArray ? (
             <div className="error-message">{errors.picArray.message}</div>
@@ -439,11 +486,12 @@ function CampaignCreateNew() {
                 <StyledButton onClick={handleSubmit(onSubmit)}>저장하기</StyledButton>
               </Box>
             </Grid>
+            {/* <Grid item xs={2}><StyledButton onClick={handleSubmit(onSubmit2)}>test</StyledButton></Grid> */}
           </Grid>
         </Grid>
       </Grid>
+
     </Box>
   );
 }
-
-export default CampaignCreateNew;
+export default CampaignEdit;

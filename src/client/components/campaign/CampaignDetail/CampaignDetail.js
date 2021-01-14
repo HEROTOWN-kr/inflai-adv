@@ -69,6 +69,9 @@ function CampaignDetail() {
   const adId = params.id;
   const classes = useStyles();
   const [productData, setProductData] = useState({
+    AD_PROVIDE: '',
+    AD_SHRT_DISC: '',
+    AD_DISC: '',
     TB_PHOTO_ADs: [],
     TB_PARTICIPANTs: [],
     AD_CTG: 0
@@ -241,7 +244,10 @@ function CampaignDetail() {
                 loading ? (
                   <Skeleton variant="text" height={16} />
                 ) : (
-                  <StyledText fontSize={isMD ? '16' : '14'} color={Colors.grey2}>{ReactHtmlParser(productData.AD_SHRT_DISC)}</StyledText>
+                  <StyledText fontSize={isMD ? '16' : '14'} color={Colors.grey2}>
+                    {/* {ReactHtmlParser(productData.AD_SHRT_DISC)} */}
+                    {productData.AD_SHRT_DISC.split('\n').map((i, key) => <div key={key}>{i}</div>)}
+                  </StyledText>
                 )
               }
             </Box>
@@ -349,9 +355,15 @@ function CampaignDetail() {
                         <Grid item><StyledText fontWeight="bold">모집희망SNS</StyledText></Grid>
                         <Grid item>
                           <Grid container spacing={1}>
-                            <Grid item><StyledImage width="21px" height="21px" src={IconInsta} /></Grid>
-                            <Grid item><StyledImage width="21px" height="21px" src={IconYoutube} /></Grid>
-                            <Grid item><StyledImage width="21px" height="21px" src={IconBlog} /></Grid>
+                            {productData.AD_TYPE === '1' ? (
+                              <Grid item><StyledImage width="21px" height="21px" src={IconInsta} /></Grid>
+                            ) : null}
+                            {productData.AD_TYPE === '2' ? (
+                              <Grid item><StyledImage width="21px" height="21px" src={IconYoutube} /></Grid>
+                            ) : null}
+                            {productData.AD_TYPE === '3' ? (
+                              <Grid item><StyledImage width="21px" height="21px" src={IconBlog} /></Grid>
+                            ) : null}
                           </Grid>
                         </Grid>
                       </Grid>
@@ -421,7 +433,8 @@ function CampaignDetail() {
                     <Box width="125px" fontWeight="bold" component="p">제공내역</Box>
                   </Grid>
                   <Grid item xs={12} sm className="provide-info">
-                    {ReactHtmlParser(productData.AD_PROVIDE)}
+                    {/* {ReactHtmlParser(productData.AD_PROVIDE)} */}
+                    {productData.AD_PROVIDE.split('\n').map((i, key) => <div key={key}>{i}</div>)}
                   </Grid>
                 </Grid>
               </Grid>
