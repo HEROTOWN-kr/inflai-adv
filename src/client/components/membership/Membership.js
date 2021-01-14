@@ -128,7 +128,7 @@ function Membership() {
       </StyledText>
       <Box my={3}>
         <StyledText fontSize={isMD ? '35' : '20'} textAlign="center">
-          지금 가입하시면 1개월
+          지금 가입하시면 3개월 0원!
           <span style={{ color: Colors.pink }}> 무료</span>
         </StyledText>
       </Box>
