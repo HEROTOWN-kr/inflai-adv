@@ -8,16 +8,16 @@ import AuthContext from '../../context/AuthContext';
 const cards = [
   {
     id: 1,
-    title: '직접 매칭',
-    text1: '처음부터 끝까지',
-    text2: '사장님이 직접 만듭니다.',
+    title: '내가 직접 모집하기',
+    text1: '2분 만에 올리고',
+    text2: '딱 맞는 인플루언서를 만나보자',
     url: '/Campaign/Create'
   },
   {
     id: 2,
-    title: '마케팅 대행 요청',
-    text1: '전략 기획부터 마케팅의 과정을 인플라이',
-    text2: '마케팅 전문가들과 함께 진행하세요.',
+    title: '맞춤형 마케팅 요청',
+    text1: '사진, 영상, 상세페이지, 홈페이지',
+    text2: '지금 견적 받아보기',
     url: '/Campaign/Request'
   }
 ];
@@ -33,7 +33,7 @@ function CampaignType() {
         params: { token }
       }).then((res) => {
         if (res.status === 201) {
-          alert('진행중 서브스크립션이 없습니다!');
+          alert('멤버십 구독을 신청해주세요! (현재 3개월 0원)');
           history.push('/Membership');
         } else if (res.status === 200) {
           history.push(url);
@@ -65,13 +65,13 @@ function CampaignType() {
       margin="0 auto"
     >
       <Box mb={1} fontSize="24px">
-            매칭형 인플루언서 마케팅
+            인공지능 인플루언서 마케팅
       </Box>
       <Box fontSize="45px">
           쉽고 빠른 인플루언서 매칭
       </Box>
       <Box mt={4} mb={8} fontSize="16px">
-            브랜드의 마케팅 목적에 맞춰 최적의 인플루언서를 매칭하고 캠페인을 설계해보세요!
+            내 사업홍보에 딱 맞는 인플루언서를 만나다!
       </Box>
       <Grid container spacing={4}>
         {

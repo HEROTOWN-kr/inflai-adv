@@ -52,9 +52,9 @@ function CampaignCreate(props) {
 
   const schema = Yup.object().shape({
     influencerCount: Yup.string()
-      .required('모집인원수를 입력해주세요'),
-    sns: Yup.string().test('snsTypeCheck', '모집회망SNS를 선택해주세요', val => campaignData.AD_INSTA === true || campaignData.AD_YOUTUBE === true || campaignData.AD_NAVER === true),
-    picArray: Yup.string().test('picCheck', '이미지 업러드 해주세요', val => images.length > 0 || dbImages.length > 0),
+      .required('모집인원 수를 입력해주세요'),
+    sns: Yup.string().test('snsTypeCheck', '모집회망 SNS를 선택해주세요', val => campaignData.AD_INSTA === true || campaignData.AD_YOUTUBE === true || campaignData.AD_NAVER === true),
+    picArray: Yup.string().test('picCheck', '이미지 업로드 해주세요', val => images.length > 0 || dbImages.length > 0),
     searchData: Yup.string()
       .when(['searchStart', 'searchFinish'], {
         is: (searchStart, searchFinish) => compareDates(searchStart, searchFinish),
@@ -71,9 +71,9 @@ function CampaignCreate(props) {
     shortDisc: Yup.string()
       .required('짧은설명을 입력해주세요'),
     searchKeyword: Yup.string()
-      .required('검색키워드를 입력해주세요'),
+      .required('필수키워드를 입력해주세요'),
     /* discription: Yup.string()
-      .required('참여 안내 사항을 입력해주세요'), */
+      .required('참여 안내사항을 입력해주세요'), */
   });
 
   const schema2 = Yup.object().shape({});
@@ -90,7 +90,7 @@ function CampaignCreate(props) {
 
   const snsTypes = [
     { name: 'insta', text: '인스타', dbValue: 'AD_INSTA' },
-    { name: 'naver', text: '네이버', dbValue: 'AD_NAVER' },
+    { name: 'naver', text: '블로그', dbValue: 'AD_NAVER' },
     { name: 'youtube', text: '유튜브', dbValue: 'AD_YOUTUBE' },
   ];
 
@@ -116,7 +116,7 @@ function CampaignCreate(props) {
       params: { token }
     }).then((res) => {
       if (res.status === 201) {
-        alert('진행중 서브스크립션이 없습니다!');
+        alert('멤버십 구독을 신청해주세요(지금 하면 3개월 0원)');
         history.push('/Membership');
       } else if (res.status === 200) {
         getInfluencersCount();
@@ -197,7 +197,7 @@ function CampaignCreate(props) {
             register={register}
             errors={errors}
             name="campaignName"
-            placeholder="예시) ㅇㅇ공기청정기 블로거, 인스타그래머 모집"
+            placeholder="예시) 초경량 3단 핸디 선풍기 인스타그래머 모집"
           />
         </Grid>
         <Grid item xs={12}>
@@ -208,7 +208,7 @@ function CampaignCreate(props) {
             multiline
             rows={5}
             name="shortDisc"
-            placeholder="예시) 3단계의 공기청정 기능이 탑재된 휴대용 공기청정기 입니다."
+            placeholder="예시) 3단계 풍속조절이 가능한 휴대용 선풍기입니다."
           />
           {/* <TextareaAutosize ref={register} rowsMin={8} style={{ width: '99%' }} placeholder="짧은설명" name="shortDisc" /> */}
           {/* {
@@ -218,7 +218,7 @@ function CampaignCreate(props) {
           } */}
         </Grid>
         <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">모집희망SNS</StyledText></Box>
+          <Box mb={1}><StyledText color="#3f51b5">모집희망 SNS</StyledText></Box>
           {snsTypes.map(item => (
             <FormControlLabel
               control={(

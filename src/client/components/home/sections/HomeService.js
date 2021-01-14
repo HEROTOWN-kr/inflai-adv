@@ -10,8 +10,9 @@ const serviceCards = [
     icon: 'pencil',
     ratio: '1.8',
     text1: '인플루언서',
-    text2: '직접매칭',
-    text3: '사장님이 직접매칭 가능 상대적으로 가격 저렴',
+    text2: '직접모집',
+    text3: '업계 최저비용으로 사장님이 직접 모집!',
+
     buttonText: '바로가기',
     bgColor1: 'rgba(46, 42, 62, 0.9)',
     bgColor2: '#3e3857',
@@ -21,9 +22,9 @@ const serviceCards = [
     id: 2,
     icon: 'star',
     ratio: '1.8',
-    text1: '인플루언서',
-    text2: '매칭대행',
-    text3: '사장님이 원하는대로 저희가 직접 매칭해드립니다',
+    text1: '마케팅',
+    text2: '대행요청',
+    text3: '사진, 영상, 홈페이지 견적까지!',
     buttonText: '바로가기',
     bgColor1: 'rgba(47, 58, 74, 0.9)',
     bgColor2: '#3b495e',
@@ -33,9 +34,9 @@ const serviceCards = [
     id: 3,
     icon: 'cart',
     ratio: '1.8',
-    text1: '계정 인공지능',
+    text1: 'Ai',
     text2: '분석서비스',
-    text3: '서비스 예정중',
+    text3: '준비중입니다. 조금만 기다려주세요',
     buttonText: '준비중',
     bgColor1: 'rgba(42, 58, 62, 0.9)',
     bgColor2: '#394e54',
@@ -49,7 +50,7 @@ function HomeService(props) {
 
   return (
     <Box padding={{ xs: '50px 16px', md: '100px 16px' }} className="service-cards" color="#fff">
-      <Box textAlign="center" mb={2} fontSize={{ xs: '7vw', md: '48px' }} fontWeight="700">아직도 페이크 인플루언서에게 비용을 쓰고계세요?</Box>
+      <Box textAlign="center" mb={2} fontSize={{ xs: '7vw', md: '48px' }} fontWeight="700">나에게 딱 맞는 인플루언서를 지금 만나보세요!</Box>
       <Box marginBottom="50px" textAlign="center" fontSize={{ xs: '4vw', md: '20px' }} fontWeight="300">똑똑한 인플루언서 마케팅 inflai</Box>
       <Box maxWidth="1200px" margin="0 auto">
         {isMD ? (

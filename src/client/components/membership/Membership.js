@@ -123,13 +123,13 @@ function Membership() {
     <Box maxWidth="1160px" margin="0 auto" my={6} px={2} className="membership">
       <StyledText fontSize={isMD ? '35' : '20'} textAlign="center">
           인플라이
-        <span style={{ color: Colors.pink }}> 멤버십을 </span>
-            시작하세요 테스트
+        <span style={{ color: Colors.pink }}> 멤버십</span>을
+            시작하세요
       </StyledText>
       <Box my={3}>
         <StyledText fontSize={isMD ? '35' : '20'} textAlign="center">
-          지금 가입하시면
-          <span style={{ color: Colors.pink }}> 3개월 0원</span> !
+          지금 가입 시,
+          <span style={{ color: Colors.pink }}> 3개월 '0원'</span>
         </StyledText>
       </Box>
       <Box py={3}>
