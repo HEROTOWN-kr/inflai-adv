@@ -124,7 +124,7 @@ function Membership() {
       <StyledText fontSize={isMD ? '35' : '20'} textAlign="center">
           인플라이
         <span style={{ color: Colors.pink }}> 멤버십을 </span>
-            시작하세요
+            시작하세요 테스트
       </StyledText>
       <Box my={3}>
         <StyledText fontSize={isMD ? '35' : '20'} textAlign="center">
