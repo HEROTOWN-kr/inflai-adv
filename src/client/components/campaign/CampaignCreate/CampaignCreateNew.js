@@ -207,12 +207,12 @@ function CampaignCreateNew() {
       <Box component={isSM ? 'h1' : 'h3'} css={{ textAlign: 'center' }}>캠페인 정보</Box>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">캠페인명</StyledText></Box>
+          <Box mb={1}><StyledText color="#3f51b5">모집명</StyledText></Box>
           <ReactFormText
             register={register}
             errors={errors}
             name="campaignName"
-            placeholder="예시) ㅇㅇ공기청정기 블로거, 인스타그래머 모집"
+            placeholder="예시) 초경량 휴대용 선풍기, 인스타그래머 모집"
           />
         </Grid>
         <Grid item xs={12}>
@@ -223,7 +223,7 @@ function CampaignCreateNew() {
             multiline
             rows={5}
             name="shortDisc"
-            placeholder="예시) 3단계의 공기청정 기능이 탑재된 휴대용 공기청정기 입니다. 설명이 정확하고 매력적일수록 더 많은 인플루언서의 신청을 받을 수 있습니다"
+            placeholder="예시) 3단계 풍속조절이 되는 휴대용 선풍기에요. 설명이 정확하고 매력적일수록 더 많은 인플루언서의 신청을 받을 수 있습니다"
           />
         </Grid>
         <Grid item xs={12}>

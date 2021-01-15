@@ -59,7 +59,11 @@ function TabComponent(props) {
 
 const useStyles = makeStyles({
   root: {
-    color: Colors.pink3
+    height: '48px',
+    backgroundColor: Colors.grey8,
+    '&:hover': {
+      backgroundColor: Colors.pink3
+    }
   },
 });
 
@@ -137,25 +141,6 @@ function CampaignDetail() {
     }
   }
 
-  function sendRequest() {
-    if (token) {
-      axios.get('/api/TB_PARTICIPANT/checkParticipant', {
-        params: {
-          adId,
-          token
-        }
-      }).then((res) => {
-        if (res.status === 201) {
-          alert(res.data.data.message);
-        } else {
-          history.push(`/Campaign/apply/${adId}`);
-        }
-      }).catch(error => alert(error.response.data.message));
-    } else {
-      history.push('/Login');
-    }
-  }
-
   function checkFavorites() {
     if (token) {
       axios.get('/api/TB_FAVORITES/check', {
@@ -171,22 +156,6 @@ function CampaignDetail() {
           setLiked(false);
         }
       }).catch(error => alert(error.response.data.message));
-    }
-  }
-
-  function favoriteClick() {
-    if (token) {
-      if (!liked) {
-        axios.post('/api/TB_FAVORITES/', { token, adId }).then((res) => {
-          setLiked(true);
-        }).catch(error => alert(error.response.data.message));
-      } else {
-        axios.post('/api/TB_FAVORITES/delete', { token, adId }).then((res) => {
-          setLiked(false);
-        }).catch(error => alert(error.response.data.message));
-      }
-    } else {
-      history.push('/Login');
     }
   }
 
@@ -251,35 +220,11 @@ function CampaignDetail() {
                 )
               }
             </Box>
-            {/* <Hidden smDown>
-              <Grid container justify="flex-end">
-                <Grid item>
-                  <Box width="130px" mb={2}>
-                    <Grid container justify="space-between">
-                      <Grid item>
-                        {
-                          liked ? (
-                            <Favorite onClick={favoriteClick} style={{ color: Colors.pink3 }} />
-                          ) : (
-                            <FavoriteBorder onClick={favoriteClick} style={{ color: Colors.grey8 }} />
-                          )
-                        }
-                        <Favorite onClick={favoriteClick} classes={liked ? { root: classes.root } : null} />
-                      </Grid>
-                      <Grid item><Share /></Grid>
-                      <Grid item><Print /></Grid>
-                      <Grid item><Error /></Grid>
-                    </Grid>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Hidden> */}
             {loading ? (
               <Skeleton variant="rect" width="100%" height={435} />
             ) : (
-              <StyledImage width="100%" height={isMD ? '435px' : 'auto'} src={currentImage || testImage} />
+              <StyledImage width="550px" height={isMD ? '435px' : 'auto'} src={currentImage || testImage} />
             )}
-
             <Box mt={1} mb={isMD ? 5 : 1}>
               <Grid container spacing={1}>
                 {productData.TB_PHOTO_ADs.map(item => (
@@ -292,7 +237,18 @@ function CampaignDetail() {
             <Grid container justify={isMD ? 'flex-end' : 'flex-start'} spacing={1}>
               <Grid item xs={12} md={7}>
                 <Box border={isMD ? `1px solid ${Colors.grey7}` : null} borderRadius="5px" px={isMD ? 3 : 0} pt={isMD ? 3 : 1} pb={isMD ? 6 : 4}>
-                  <StyledText fontSize="16px" fontWeight="bold">리뷰어 신청현황</StyledText>
+                  <Grid container alignItems="center">
+                    <Grid item xs>
+                      <StyledText fontSize="16px" fontWeight="bold">리뷰어 신청현황</StyledText>
+                    </Grid>
+                    {isMD ? null : (
+                      <Grid item>
+                        <Box>
+                          <StyledButton background={Colors.pink3} hoverBackground={Colors.pink} padding="5px" height="34px" onClick={() => history.push(`/Campaign/Edit/${adId}`)}>수정</StyledButton>
+                        </Box>
+                      </Grid>
+                    )}
+                  </Grid>
                   <Box mt={isMD ? 3 : 2}>
                     <Grid container alignItems="center" justify="space-between">
                       <Grid item>
@@ -548,6 +504,11 @@ function CampaignDetail() {
                         <StyledText fontSize="18" cursor="pointer" onClick={() => scrollTo('info')}>업체 정보</StyledText>
                       </Grid>
                       <Grid item xs={12}><Divider /></Grid>
+                      <Grid item xs={12}>
+                        <StyledButton background={Colors.pink3} hoverBackground={Colors.pink} fontWeight="bold" fontSize="20px" onClick={() => history.push(`/Campaign/Edit/${adId}`)}>
+                          캠페인 수정하기
+                        </StyledButton>
+                      </Grid>
                     </Grid>
                   </Box>
                 </Box>

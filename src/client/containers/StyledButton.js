@@ -23,21 +23,19 @@ const useStyles = makeStyles({
 
 function StyledButton(props) {
   const {
+    background, border, borderRadius, boxShadow, color, height, padding, hoverBackground, fontSize, fontWeight,
     variant,
-    className,
     children,
-    onClick,
-    disabled,
+    ...rest
   } = props;
   const classes = useStyles(props);
 
   return (
     <Button
+      classes={{ root: classes.root }}
       variant={variant || 'contained'}
       fullWidth
-      className={`${classes.root} ${className}`}
-      onClick={onClick}
-      disabled={disabled}
+      {...rest}
     >
       {children}
     </Button>

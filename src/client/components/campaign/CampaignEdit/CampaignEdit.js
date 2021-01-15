@@ -205,11 +205,11 @@ function CampaignEdit() {
         });
         axios.all(uploaders).then(() => {
           alert('수정되었습니다!');
-          // history.push('/Profile/CampaignInfo');
+          history.goBack();
         });
       } else {
         alert('수정되었습니다!');
-        // history.push('/Profile/CampaignInfo');
+        history.goBack();
       }
     }).catch((error) => {
       alert(error.response.data);
