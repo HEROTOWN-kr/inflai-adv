@@ -24,7 +24,7 @@ const categoryTypes = [
 function HomeCategory() {
   return (
     <Box padding="100px 0" color="#000">
-      <Box textAlign="center" mb={2} fontSize="36px" fontWeight="700">이제는 인플라이</Box>
+      <Box textAlign="center" mb={2} fontSize="36px" fontWeight="700">인플라이와 함께 합니다</Box>
       <Box marginBottom="50px" textAlign="center" fontSize="16px" fontWeight="300">당신을 기다리고있는 인플루언서들을 만나보세요</Box>
       <Box mt={2} fontSize="16px">
         <Grid container justify="center" spacing={4}>
