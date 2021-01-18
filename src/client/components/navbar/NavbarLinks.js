@@ -1,39 +1,44 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Box, ClickAwayListener, Grid, Hidden, Popper
 } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import * as Scroll from 'react-scroll';
+import AuthContext from '../../context/AuthContext';
 
 const Scroller = Scroll.scroller;
 
+const defaultMenuLinks = [
+  {
+    text: '마케팅 요청',
+    link: '/Campaign'
+  },
+  {
+    text: '멤버십',
+    link: '/Membership'
+  },
+  {
+    text: '캠페인 관리',
+    link: '/Profile/CampaignInfo'
+  }
+];
+
 function NavbarLinks() {
   const history = useHistory();
+  const { isAuthenticated } = useContext(AuthContext);
+  const [menuLinks, setMenuLinks] = useState(defaultMenuLinks);
 
-  const menuLinks = [
-    {
-      text: '마케팅 요청',
-      link: '/Campaign'
-    },
-    {
-      text: '멤버십',
-      link: '/Membership'
+  /* useEffect(() => {
+    if (isAuthenticated) {
+      setMenuLinks([...defaultMenuLinks, {
+        text: '캠페인 관리',
+        link: '/Profile/CampaignInfo'
+      }]);
+    } else {
+      setMenuLinks(defaultMenuLinks);
     }
-  ];
-
-  function scrollTo() {
-    history.push('/');
-    setTimeout(() => {
-      Scroller.scrollTo('target', {
-        duration: 800,
-        delay: 0,
-        smooth: 'easeInOutQuart',
-        ignoreCancelEvents: true
-      });
-    }, 1);
-  }
-
+  }, [isAuthenticated]); */
 
   return (
     <Hidden smDown>

@@ -9,6 +9,7 @@ import Login from '../login/Login';
 import SignUp from '../signup/SignUp';
 import PrivateRoute from '../../containers/PrivateRoute';
 import Profile from '../profile/Profile';
+import CampaignCreateNew from '../campaign/CampaignCreate/CampaignCreateNew';
 
 
 function Main() {
@@ -36,10 +37,14 @@ function Main() {
         path="/SignUp"
         render={renderProps => <SignUp {...renderProps} />}
       />
-      <Route
+      <PrivateRoute
+        path="/Profile"
+        component={Profile}
+      />
+      {/* <Route
         path="/Profile"
         render={renderProps => <Profile {...renderProps} />}
-      />
+      /> */}
       <Route
         component={NotFound}
       />

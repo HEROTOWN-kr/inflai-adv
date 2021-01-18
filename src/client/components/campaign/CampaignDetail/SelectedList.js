@@ -11,20 +11,31 @@ import IconBlog from '../../../img/icon_blog_url.png';
 import StyledButton from '../../../containers/StyledButton';
 import InsightDialog from './InsightDialog';
 import ConfirmDialog from '../../../containers/ConfirmDialog';
+import DetailDataDialog from './DetailDataDialog';
 
 function SelectedList(props) {
   const { adId, isMD } = props;
   const [participants, setParticipants] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
 
   function toggleDialog() {
     setDialogOpen(!dialogOpen);
   }
 
-  function clickInfo(id) {
+  function toggleInfoDialog() {
+    setInfoDialogOpen(!infoDialogOpen);
+  }
+
+  function clickInstaInfo(id) {
     setSelectedId(id);
     toggleDialog();
+  }
+
+  function clickDataInfo(id) {
+    setSelectedId(id);
+    toggleInfoDialog();
   }
 
   function getParticipants() {
@@ -79,7 +90,7 @@ function SelectedList(props) {
                             <Box
                               padding="4px 10px"
                               css={{ background: Colors.blue2, cursor: 'pointer' }}
-                              onClick={() => clickInfo(item.INF_ID)}
+                              onClick={() => clickInstaInfo(item.INF_ID)}
                             >
                               <StyledText color="#fff">정보</StyledText>
                             </Box>
@@ -97,10 +108,14 @@ function SelectedList(props) {
                     </Grid>
                   </Grid>
                 </Grid>
+                <Grid item xs={12} sm="auto">
+                  <StyledButton height="34px" padding="7px" onClick={() => clickDataInfo(item.PAR_ID)}>자세히 보기</StyledButton>
+                </Grid>
               </Grid>
             </Box>
           ))}
           <InsightDialog open={dialogOpen} closeDialog={toggleDialog} selectedId={selectedId} />
+          <DetailDataDialog open={infoDialogOpen} closeDialog={toggleInfoDialog} selectedId={selectedId} />
         </React.Fragment>
       )}
     </>

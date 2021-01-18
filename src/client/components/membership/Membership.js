@@ -71,7 +71,7 @@ function Membership() {
         PLN_ID, PLN_PRICE_MONTH, PLN_NAME, PLN_MONTH
       } = filteredArray[0];
       const pricePerMonth = `${formatNumber(PLN_PRICE_MONTH)}원`;
-      const price = PLN_ID === 1 ? '0원' : `${formatNumber(PLN_PRICE_MONTH * PLN_MONTH)}원`;
+      const price = `${formatNumber(PLN_PRICE_MONTH * PLN_MONTH)}원`;
       setSelectedData({
         PLN_ID,
         planName: PLN_NAME,
@@ -123,15 +123,16 @@ function Membership() {
     <Box maxWidth="1160px" margin="0 auto" my={6} px={2} className="membership">
       <StyledText fontSize={isMD ? '35' : '20'} textAlign="center">
           인플라이
-        <span style={{ color: Colors.pink }}> 멤버십</span>을
+        <span style={{ color: Colors.pink }}> 멤버십</span>
+을
             시작하세요
       </StyledText>
-      <Box my={3}>
+      {/* <Box my={3}>
         <StyledText fontSize={isMD ? '35' : '20'} textAlign="center">
           지금 가입 시,
           <span style={{ color: Colors.pink }}> 3개월 '0원'</span>
         </StyledText>
-      </Box>
+      </Box> */}
       <Box py={3}>
         {isMD ? (
           <Grid container spacing={6}>
@@ -152,11 +153,6 @@ function Membership() {
                       <StyledText fontSize={21} color={myStyles[index].color} textAlign="right">월 부담 비용</StyledText>
                       <StyledText fontSize={42} color={myStyles[index].color} textAlign="right" fontWeight="bold" lineHeight="2em">{`₩ ${formatNumber(item.PLN_PRICE_MONTH)}`}</StyledText>
                       <StyledText fontSize={21} color={myStyles[index].color} textAlign="right">{`VAT 미포함${item.PLN_DSCNT ? `, ${item.PLN_DSCNT}% 할인적용` : ''}` }</StyledText>
-                      {
-                        item.PLN_ID === 1 ? (
-                          <Box fontSize="21px" color="red" textAlign="right">오픈기념 무료</Box>
-                        ) : null
-                      }
                     </Box>
                   </Box>
                   <Box px={3} pt={3} pb={8}>

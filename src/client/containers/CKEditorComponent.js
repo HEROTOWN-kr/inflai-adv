@@ -6,38 +6,35 @@ import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { Controller } from 'react-hook-form';
 
 function CKEditorComponent(props) {
-  const {
-    setValue, name, defaultValue, control, setCampaignEditor, campaignEditor
-  } = props;
+  const { name, control } = props;
   return (
     <div>
       <div id={`${name}_toolbar-container`} />
       <Controller
-        render={controllerProps => (
+        name={name}
+        render={({ onChange, value }) => (
           <CKEditor
             editor={DecoupledEditor}
             config={
-                {
-                  ckfinder: {
-                    uploadUrl: '/api/TB_AD/upload'
-                  },
-                }
-            }
-            // data="<p>Hello from CKEditor 5!</p>"
+                        {
+                          ckfinder: {
+                            uploadUrl: '/api/TB_AD/upload'
+                          },
+                        }
+                    }
+                    // data="<p>Hello from CKEditor 5!</p>"
             onInit={(editor) => {
               const toolbarContainer = document.querySelector(`#${name}_toolbar-container`);
               toolbarContainer.appendChild(editor.ui.view.toolbar.element);
-              setCampaignEditor({ ...campaignEditor, [name]: editor });
+              // setCampaignEditor({ ...campaignEditor, [name]: editor });
               // window[name] = editor;
             }}
             onChange={(event, editor) => {
-              const data = editor.getData();
-              setValue(name, data);
+              onChange(editor.getData());
             }}
+            data={value}
           />
         )}
-        defaultValue=""
-        name={name}
         control={control}
       />
     </div>

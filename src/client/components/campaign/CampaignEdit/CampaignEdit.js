@@ -37,8 +37,6 @@ function CampaignEdit() {
   const history = useHistory();
   const params = useParams();
   const { token } = useContext(AuthContext);
-  const [campaignData, setCampaignData] = useState({});
-  const [campaignEditor, setCampaignEditor] = useState({});
   const [images, setImages] = useState([]);
   const [dbImages, setDbImages] = useState([]);
   const [limits, setLimits] = useState({ InfCountUsed: 0, InfCountLeft: 0, PlnInfMonth: 0 });
@@ -144,14 +142,13 @@ function CampaignEdit() {
           AD_DETAIL_ADDR, AD_EXTR_ADDR, TB_PHOTO_ADs
         } = data;
 
-        if (AD_DETAIL) setCampaignData({ ...campaignData, AD_DETAIL });
-
         const resetObj = {
           ...defaultValues,
           influencerCount: AD_INF_CNT,
           searchStart: new Date(AD_SRCH_START),
           searchFinish: new Date(AD_SRCH_END),
           delivery: AD_DELIVERY.toString(),
+          detailInfo: AD_DETAIL,
           type: AD_CTG,
           subtype: AD_CTG2,
           phone: AD_TEL,
@@ -235,12 +232,6 @@ function CampaignEdit() {
     }
   }, [token]);
 
-  useEffect(() => {
-    if (campaignEditor.detailInfo && campaignData.AD_DETAIL) {
-      campaignEditor.detailInfo.data.set(campaignData.AD_DETAIL);
-    }
-  }, [campaignData]);
-
   return (
     <Box my={{ xs: 0, sm: 4 }} p={{ xs: 2, sm: 4 }} maxWidth={1200} css={{ margin: '0 auto' }} component={Paper}>
       <Box component={isSM ? 'h1' : 'h3'} css={{ textAlign: 'center' }}>캠페인 정보</Box>
@@ -261,6 +252,7 @@ function CampaignEdit() {
             errors={errors}
             multiline
             rows={5}
+            rowsMax={10}
             name="shortDisc"
             placeholder="예시) 3단계의 공기청정 기능이 탑재된 휴대용 공기청정기 입니다. 설명이 정확하고 매력적일수록 더 많은 인플루언서의 신청을 받을 수 있습니다"
           />
@@ -428,6 +420,7 @@ function CampaignEdit() {
             errors={errors}
             multiline
             rows={5}
+            rowsMax={10}
             name="discription"
           />
         </Grid>
@@ -438,6 +431,7 @@ function CampaignEdit() {
             errors={errors}
             multiline
             rows={5}
+            rowsMax={10}
             name="provideInfo"
           />
         </Grid>
@@ -471,7 +465,7 @@ function CampaignEdit() {
         </Grid>
         <Grid item xs={12}>
           <Box mb={1}><StyledText color="#3f51b5">상세정보</StyledText></Box>
-          <CKEditorComponent control={control} name="detailInfo" setValue={setValue} campaignEditor={campaignEditor} setCampaignEditor={setCampaignEditor} />
+          <CKEditorComponent control={control} name="detailInfo" />
         </Grid>
 
         <Grid item xs={12}>
