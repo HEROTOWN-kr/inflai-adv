@@ -13,20 +13,20 @@ const PaymentData = [
     data: 'planName'
   },
   {
-    title: '송금 금액',
+    title: '이용금액',
     // data: 'pricePerMonth'
     data: 'price'
   },
   {
-    title: '가상계좌은행',
+    title: '은행',
     data: 'bankName'
   },
   {
-    title: '가상계좌번호',
+    title: '계좌번호',
     data: 'bankAccount'
   },
   {
-    title: '계좌추인',
+    title: '계좌명',
     data: 'bankHost'
   }
 ];
@@ -72,7 +72,7 @@ export default function PlanSuccessDialog(props) {
             </Grid>
             <Box mt={4}>
               <StyledText fontSize="15" lineHeight="1.5em">
-                *24시간 이내 입금 정보를 확인하고 확인 한 다음에 INFLAI 서비스를 이용하실 수 있을겁니다.
+                *신청 후 24시간 이내에 승인이 됩니다. 승인 후 캠페인(인플루언서모집)을 진행하실 수 있습니다.
               </StyledText>
             </Box>
           </Grid>

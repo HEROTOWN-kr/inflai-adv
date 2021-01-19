@@ -85,23 +85,21 @@ const influencers = [
 function SimpleSlider(props) {
   return (
     <Slider {...settings} className="slider-influencer">
-      {
-          influencers.map(person => (
-            <Box p={2} key={person.url} className="card-item">
-              <Paper className="paper-item">
-                <div className="item-content">
-                  <img src={person.url} className="avatar" />
-                  <Box my={3} className="social-name">{person.name}</Box>
-                  <Box className="social-type">{person.type}</Box>
-                  <Box my={3}>
-                    <img src={person.socialImage} className="social-image" />
-                  </Box>
-                  <Box className="social-tags">{person.tags}</Box>
-                </div>
-              </Paper>
-            </Box>
-          ))
-      }
+      {influencers.map(person => (
+        <Box p={2} key={person.url} className="card-item">
+          <Paper className="paper-item">
+            <div className="item-content">
+              <img src={person.url} className="avatar" />
+              <Box my={3} className="social-name">{person.name}</Box>
+              <Box className="social-type">{person.type}</Box>
+              <Box my={3}>
+                <img src={person.socialImage} className="social-image" />
+              </Box>
+              <Box className="social-tags">{person.tags}</Box>
+            </div>
+          </Paper>
+        </Box>
+      ))}
     </Slider>
   );
 }

@@ -70,16 +70,18 @@ function Membership() {
       const {
         PLN_ID, PLN_PRICE_MONTH, PLN_NAME, PLN_MONTH
       } = filteredArray[0];
+      const finalPrice = Math.round(PLN_PRICE_MONTH * PLN_MONTH * 1.1);
+
       const pricePerMonth = `${formatNumber(PLN_PRICE_MONTH)}원`;
-      const price = `${formatNumber(PLN_PRICE_MONTH * PLN_MONTH)}원`;
+      const price = `${formatNumber(finalPrice)}원`;
       setSelectedData({
         PLN_ID,
         planName: PLN_NAME,
         pricePerMonth,
         price,
         bankName: '기업은행',
-        bankAccount: '123456789',
-        bankHost: 'INFLAI'
+        bankAccount: '935-012238-01016',
+        bankHost: '(주)대가들이사는마을'
       });
     }
   }, [selected]);

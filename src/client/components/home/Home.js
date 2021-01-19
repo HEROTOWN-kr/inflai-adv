@@ -8,6 +8,7 @@ import HomeService from './sections/HomeService';
 import HomePartners from './sections/HomePartners';
 import Membership from '../membership/Membership';
 import HomeProcess from './sections/HomeProcess';
+import HomeBanners from './sections/HomeBanners';
 
 
 function home() {
@@ -22,6 +23,7 @@ function home() {
       <Membership />
       <HomeService isMD={isMD} />
       <HomeCategory />
+      <HomeBanners />
       {/* <HomeProcess /> */}
       <HomeSpeciality isMD={isMD} />
       <HomePartners isMD={isMD} />

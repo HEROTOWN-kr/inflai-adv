@@ -122,7 +122,8 @@ $colorPink: #fbbaba;
 
 .home {
   .service-cards {
-    background: url("../img/bg/bg8.jpg") center;
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("../img/bg/bg2.jpg") center;
+    //background: url("../img/bg/bg2.jpg") center;
     background-size: cover;
   }
   .slider-influencer {
