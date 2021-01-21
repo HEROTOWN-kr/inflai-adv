@@ -21,6 +21,7 @@ import ImageHolder from './ImageHolder';
 import CKEditorComponent from '../../../containers/CKEditorComponent';
 import StyledButton from '../../../containers/StyledButton';
 import AuthContext from '../../../context/AuthContext';
+import StyledBackDrop from '../../../containers/StyledBackDrop';
 
 const snsTypes = [
   { value: '1', text: '인스타', dbValue: 'AD_INSTA' },
@@ -58,6 +59,11 @@ function CampaignCreateNew() {
   const [images, setImages] = useState([]);
   const [dbImages, setDbImages] = useState([]);
   const [limits, setLimits] = useState({ InfCountUsed: 0, InfCountLeft: 0, PlnInfMonth: 0 });
+  const [savingMode, setSavingMode] = useState(false);
+
+  function toggleSavingMode() {
+    setSavingMode(!savingMode);
+  }
 
   const deliveryRef = useRef();
   const snsRef = useRef();
@@ -158,6 +164,7 @@ function CampaignCreateNew() {
   }
 
   const onSubmit = async (data) => {
+    setSavingMode(true);
     axios.post('/api/TB_AD/createBiz', { ...data, token }).then((res) => {
       if (images.length > 0) {
         const id = res.data.data.AD_ID;
@@ -171,14 +178,17 @@ function CampaignCreateNew() {
           }).then(response => ('sucess')).catch(error => ('error'));
         });
         axios.all(uploaders).then(() => {
+          setSavingMode(false);
           alert('캠페인이 등록되었습니다!!');
           history.push('/Profile/CampaignInfo');
         });
       } else {
+        setSavingMode(false);
         alert('캠페인이 등록되었습니다!!');
         history.push('/Profile/CampaignInfo');
       }
     }).catch((error) => {
+      setSavingMode(false);
       alert(error.response.data);
     });
   };
@@ -442,6 +452,7 @@ function CampaignCreateNew() {
           </Grid>
         </Grid>
       </Grid>
+      <StyledBackDrop open={savingMode} handleClose={toggleSavingMode} />
     </Box>
   );
 }

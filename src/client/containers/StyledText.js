@@ -25,7 +25,7 @@ text-overflow: ellipsis; */
 
 function StyledText(props) {
   const {
-    children, ...rest
+    children, fontSize, lineHeight, color, fontWeight, textAlign, overflowHidden, cursor, ...rest
   } = props;
   const classes = useStyles(props);
 

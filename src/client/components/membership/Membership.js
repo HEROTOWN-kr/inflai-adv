@@ -73,7 +73,7 @@ function Membership() {
       const finalPrice = Math.round(PLN_PRICE_MONTH * PLN_MONTH * 1.1);
 
       const pricePerMonth = `${formatNumber(PLN_PRICE_MONTH)}원`;
-      const price = `${formatNumber(finalPrice)}원`;
+      const price = `${formatNumber(finalPrice)}원(VAT포함)`;
       setSelectedData({
         PLN_ID,
         planName: PLN_NAME,
@@ -111,8 +111,12 @@ function Membership() {
       token,
       PLN_ID: selectedData.PLN_ID
     }).then((res) => {
-      if (res.status === 201) {
-        alert('이미 등록 된 구독이 있습니다!');
+      if (res.status === 202) {
+        alert(res.data.message);
+        toggleSuccessDialog();
+        history.push('/Profile/UserInfo');
+      } else if (res.status === 201) {
+        alert(res.data.message);
         toggleSuccessDialog();
       } else {
         toggleSuccessDialog();

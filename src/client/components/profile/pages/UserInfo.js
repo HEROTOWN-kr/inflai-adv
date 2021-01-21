@@ -184,7 +184,7 @@ function UserInfo(props) {
               <Grid item>
                 <LabelComponent labelName="전화번호" />
               </Grid>
-              <Grid item xs={12} md>
+              <Grid item xs={12} md="auto">
                 <Box width={isMD ? '250px' : '100%'}>
                   <StyledTextField
                     fullWidth
@@ -198,6 +198,11 @@ function UserInfo(props) {
                     ) : null}
                   />
                 </Box>
+              </Grid>
+              <Grid item xs={12} md>
+                <StyledText fontSize="13" color={Colors.grey2}>
+                  * 전화번호부정확하면 멤버십신청 안됩니다
+                </StyledText>
               </Grid>
             </Grid>
           </Grid>

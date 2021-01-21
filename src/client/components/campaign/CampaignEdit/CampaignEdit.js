@@ -21,6 +21,7 @@ import ImageHolder from '../CampaignCreate/ImageHolder';
 import CKEditorComponent from '../../../containers/CKEditorComponent';
 import StyledButton from '../../../containers/StyledButton';
 import AuthContext from '../../../context/AuthContext';
+import StyledBackDrop from '../../../containers/StyledBackDrop';
 
 const snsTypes = [
   { value: '1', text: '인스타', dbValue: 'AD_INSTA' },
@@ -40,6 +41,11 @@ function CampaignEdit() {
   const [images, setImages] = useState([]);
   const [dbImages, setDbImages] = useState([]);
   const [limits, setLimits] = useState({ InfCountUsed: 0, InfCountLeft: 0, PlnInfMonth: 0 });
+  const [savingMode, setSavingMode] = useState(false);
+
+  function toggleSavingMode() {
+    setSavingMode(!savingMode);
+  }
 
   const deliveryRef = useRef();
   const snsRef = useRef();
@@ -148,7 +154,6 @@ function CampaignEdit() {
           searchStart: new Date(AD_SRCH_START),
           searchFinish: new Date(AD_SRCH_END),
           delivery: AD_DELIVERY.toString(),
-          detailInfo: AD_DETAIL,
           type: AD_CTG,
           subtype: AD_CTG2,
           phone: AD_TEL,
@@ -160,6 +165,7 @@ function CampaignEdit() {
           sns: AD_TYPE
         };
 
+        if (AD_DETAIL) resetObj.detailInfo = AD_DETAIL;
         if (AD_PROVIDE) resetObj.provideInfo = AD_PROVIDE;
         if (AD_POST_CODE) resetObj.postcode = AD_POST_CODE;
         if (AD_ROAD_ADDR) resetObj.roadAddress = AD_ROAD_ADDR;
@@ -188,6 +194,7 @@ function CampaignEdit() {
 
 
   const onSubmit = async (data) => {
+    setSavingMode(true);
     axios.post('/api/TB_AD/updateBiz', { ...data, token, adId: params.id }).then((res) => {
       if (images.length > 0) {
         const { id } = params;
@@ -201,14 +208,17 @@ function CampaignEdit() {
           }).then(response => ('sucess')).catch(error => ('error'));
         });
         axios.all(uploaders).then(() => {
+          setSavingMode(false);
           alert('수정되었습니다!');
           history.goBack();
         });
       } else {
+        setSavingMode(false);
         alert('수정되었습니다!');
         history.goBack();
       }
     }).catch((error) => {
+      setSavingMode(false);
       alert(error.response.data);
     });
   };
@@ -484,7 +494,7 @@ function CampaignEdit() {
           </Grid>
         </Grid>
       </Grid>
-
+      <StyledBackDrop open={savingMode} handleClose={toggleSavingMode} />
     </Box>
   );
 }

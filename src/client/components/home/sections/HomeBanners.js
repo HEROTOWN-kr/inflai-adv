@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box } from '@material-ui/core';
 import Slider from 'react-slick';
 import webBanner1 from '../../../img/banners/webBanner1.jpg';
@@ -38,49 +38,38 @@ const banners = [
   }
 ];
 
-const settings = {
-  infinite: true,
-  speed: 500,
-  slidesToShow: 3,
-  slidesToScroll: 1,
-  arrows: true,
-  autoplay: true,
-  autoplaySpeed: 3000,
-  // beforeChange: () => setDragging(true),
-  // afterChange: () => setDragging(false),
-  responsive: [
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 1, slidesToScroll: 1, arrows: false,
-      }
-    },
-    {
-      breakpoint: 960,
-      settings: { slidesToShow: 2, slidesToScroll: 1 }
-    },
-    {
-      breakpoint: 1280,
-      settings: { slidesToShow: 2, slidesToScroll: 1 }
-    },
-    {
-      breakpoint: 1600,
-      settings: { slidesToShow: 3, slidesToScroll: 1 }
-    },
-    {
-      breakpoint: 1920,
-      settings: { slidesToShow: 3, slidesToScroll: 1 }
-    },
-    /* {
-      breakpoint: 10000,
-      settings: 'unslick'
-    }, */
-  ]
-};
 
 function HomeBanners() {
-  function openLink(item) {
+  const [dragging, setDragging] = useState(false);
 
+  const settings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    arrows: true,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    beforeChange: () => setDragging(true),
+    afterChange: () => setDragging(false),
+    responsive: [
+      {
+        breakpoint: 600,
+        settings: { slidesToShow: 1, slidesToScroll: 1, arrows: false }
+      },
+      {
+        breakpoint: 1280,
+        settings: { slidesToShow: 2, slidesToScroll: 1 }
+      },
+      {
+        breakpoint: 1600,
+        settings: { slidesToShow: 3, slidesToScroll: 1 }
+      }
+    ]
+  };
+
+  function openLink(item) {
+    if (!dragging) window.open('http://pf.kakao.com/_FBNgM', '_blank');
   }
 
   return (
@@ -88,7 +77,7 @@ function HomeBanners() {
       <Slider {...settings}>
         {banners.map(item => (
           <Box key={item.id} width="100%">
-            <Box margin="0 8px" onClick={() => window.open('http://pf.kakao.com/_FBNgM', '_blank')}>
+            <Box margin="0 8px" onClick={() => openLink(item)} css={{ cursor: 'pointer' }}>
               <StyledImage width="100%" src={item.src} />
             </Box>
           </Box>
