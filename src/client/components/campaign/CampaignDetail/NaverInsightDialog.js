@@ -64,7 +64,7 @@ function NaverInsightDialog(props) {
             <Grid item>{naverData.PAR_NAME}</Grid>
           </Grid>
         </Box>
-        <Box py={1}>
+        {/* <Box py={1}>
           <Grid container justify="space-between">
             <Grid item>이메일</Grid>
             <Grid item>{naverData.PAR_EMAIL}</Grid>
@@ -85,11 +85,15 @@ function NaverInsightDialog(props) {
               </Box>
             </Grid>
           </Grid>
-        </Box>
+        </Box> */}
         <Box>
           <Grid container justify="space-between">
             <Grid item>블로그주소</Grid>
-            <Grid item>{naverData.NAV_URL}</Grid>
+            <Grid item>
+              <a target="_blank" href={naverData.NAV_URL}>
+                {naverData.NAV_URL}
+              </a>
+            </Grid>
           </Grid>
         </Box>
       </Box>

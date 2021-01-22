@@ -11,7 +11,6 @@ import PrivateRoute from '../../containers/PrivateRoute';
 import Profile from '../profile/Profile';
 import CampaignCreateNew from '../campaign/CampaignCreate/CampaignCreateNew';
 
-
 function Main() {
   const { pathname } = useLocation();
   useEffect(() => {
