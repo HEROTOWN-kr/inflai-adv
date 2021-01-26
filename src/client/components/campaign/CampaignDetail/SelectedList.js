@@ -109,7 +109,26 @@ function SelectedList(props) {
                   </Grid>
                 </Grid>
                 <Grid item xs={12} sm="auto">
-                  <StyledButton height="34px" padding="7px" onClick={() => clickDataInfo(item.PAR_ID)}>자세히 보기</StyledButton>
+                  <Box width={{ xs: '100%', sm: '100px' }}>
+                    <Grid container spacing={1}>
+                      <Grid item xs={6} sm={12}>
+                        <StyledButton height="30px" padding="0 10px" onClick={() => clickDataInfo(item.PAR_ID)}>자세히 보기</StyledButton>
+                      </Grid>
+                      {item.PAR_REVIEW ? (
+                        <Grid item xs={6} sm={12}>
+                          <StyledButton
+                            height="30px"
+                            padding="0 10px"
+                            background={Colors.green}
+                            hoverBackground={Colors.greenHover}
+                            onClick={() => window.open(item.PAR_REVIEW, '_blank')}
+                          >
+                                    리뷰 보기
+                          </StyledButton>
+                        </Grid>
+                      ) : null}
+                    </Grid>
+                  </Box>
                 </Grid>
               </Grid>
             </Box>

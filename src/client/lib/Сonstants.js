@@ -194,6 +194,7 @@ export const Colors = {
   grey7: '#e9e9e9',
   grey8: '#ddd',
   green: '#24d024',
+  greenHover: '#3bb13b',
   pink: '#eb128c',
   pink2: '#fec1e3',
   pink3: '#f971b8',

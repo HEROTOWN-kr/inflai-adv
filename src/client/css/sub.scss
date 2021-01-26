@@ -312,6 +312,8 @@ $colorPink: #fbbaba;
 }
 
 .provide-info {
+  overflow-wrap: break-word;
+  word-break: break-all;
   p {
     overflow-wrap: break-word;
     word-break: break-all;
