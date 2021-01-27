@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box, Grid } from '@material-ui/core';
+import { Rating } from '@material-ui/lab';
+import { StarBorder } from '@material-ui/icons';
 import { Colors } from '../../../lib/Сonstants';
 import StyledImage from '../../../containers/StyledImage';
 import defaultAccountImage from '../../../img/default_account_image.png';
@@ -12,6 +14,19 @@ import StyledButton from '../../../containers/StyledButton';
 import InsightDialog from './InsightDialog';
 import ConfirmDialog from '../../../containers/ConfirmDialog';
 import DetailDataDialog from './DetailDataDialog';
+
+function RatingComponent(props) {
+  const { id } = props;
+
+  return (
+    <Rating
+      name={`raiting${id}`}
+      defaultValue={0}
+      precision={1}
+      emptyIcon={<StarBorder fontSize="inherit" />}
+    />
+  );
+}
 
 function SelectedList(props) {
   const { adId, isMD } = props;
@@ -109,7 +124,12 @@ function SelectedList(props) {
                   </Grid>
                 </Grid>
                 <Grid item xs={12} sm="auto">
-                  <Box width={{ xs: '100%', sm: '100px' }}>
+                  {item.PAR_REVIEW ? (
+                    <Box>
+                      <RatingComponent id={item.PAR_ID} />
+                    </Box>
+                  ) : null}
+                  <Box mt="5px" ml="auto" width={{ xs: '100%', sm: '100px' }}>
                     <Grid container spacing={1}>
                       <Grid item xs={6} sm={12}>
                         <StyledButton height="30px" padding="0 10px" onClick={() => clickDataInfo(item.PAR_ID)}>자세히 보기</StyledButton>
