@@ -14,6 +14,7 @@ import StyledButton from '../../../containers/StyledButton';
 import InsightDialog from './InsightDialog';
 import ConfirmDialog from '../../../containers/ConfirmDialog';
 import DetailDataDialog from './DetailDataDialog';
+import MyPagination from '../../../containers/MyPagination';
 
 function RatingComponent(props) {
   const { id } = props;
@@ -34,6 +35,13 @@ function SelectedList(props) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
+  const limit = 10;
+
+  const changePage = (event, value) => {
+    setPage(value);
+  };
 
   function toggleDialog() {
     setDialogOpen(!dialogOpen);
@@ -55,12 +63,19 @@ function SelectedList(props) {
 
   function getParticipants() {
     axios.get('/api/TB_PARTICIPANT/getList', {
-      params: { adId, onlySelected: '1' }
+      params: {
+        adId, limit, page, onlySelected: '1'
+      }
     }).then((res) => {
       const { data } = res.data;
       setParticipants(data);
+      setCount(res.data.count);
     }).catch(err => alert(err.response.data.message));
   }
+
+  useEffect(() => {
+    getParticipants();
+  }, [page]);
 
   useEffect(() => {
     getParticipants();
@@ -124,11 +139,11 @@ function SelectedList(props) {
                   </Grid>
                 </Grid>
                 <Grid item xs={12} sm="auto">
-                  {item.PAR_REVIEW ? (
+                  {/* {item.PAR_REVIEW ? (
                     <Box>
                       <RatingComponent id={item.PAR_ID} />
                     </Box>
-                  ) : null}
+                  ) : null} */}
                   <Box mt="5px" ml="auto" width={{ xs: '100%', sm: '100px' }}>
                     <Grid container spacing={1}>
                       <Grid item xs={6} sm={12}>
@@ -153,6 +168,20 @@ function SelectedList(props) {
               </Grid>
             </Box>
           ))}
+          {participants.length > 0 ? (
+            <Box py={isMD ? 4 : 1}>
+              <Grid container justify="center">
+                <Grid item>
+                  <MyPagination
+                    itemCount={count}
+                    page={page}
+                    changePage={changePage}
+                    perPage={limit}
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+          ) : null}
           <InsightDialog open={dialogOpen} closeDialog={toggleDialog} selectedId={selectedId} />
           <DetailDataDialog open={infoDialogOpen} closeDialog={toggleInfoDialog} selectedId={selectedId} />
         </React.Fragment>

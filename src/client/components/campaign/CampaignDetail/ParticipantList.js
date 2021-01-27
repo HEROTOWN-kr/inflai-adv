@@ -14,6 +14,7 @@ import InsightDialog from './InsightDialog';
 import ConfirmDialog from '../../../containers/ConfirmDialog';
 import Sample from '../../component-sample';
 import NaverInsightDialog from './NaverInsightDialog';
+import MyPagination from '../../../containers/MyPagination';
 
 function ParticipantList(props) {
   const { adId, isMD } = props;
@@ -22,6 +23,13 @@ function ParticipantList(props) {
   const [naverDialogOpen, setNaverDialogOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
   const [influencerId, setInfluencerId] = useState(0);
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
+  const limit = 10;
+
+  const changePage = (event, value) => {
+    setPage(value);
+  };
 
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
 
@@ -54,10 +62,11 @@ function ParticipantList(props) {
 
   function getParticipants() {
     axios.get('/api/TB_PARTICIPANT/getList', {
-      params: { adId }
+      params: { adId, limit, page }
     }).then((res) => {
       const { data } = res.data;
       setParticipants(data);
+      setCount(res.data.count);
     }).catch(err => alert(err.response.data.message));
   }
 
@@ -70,6 +79,10 @@ function ParticipantList(props) {
       }
     }).catch(err => alert(err.response.data.message));
   }
+
+  useEffect(() => {
+    getParticipants();
+  }, [page]);
 
   useEffect(() => {
     getParticipants();
@@ -162,6 +175,20 @@ function ParticipantList(props) {
               </Grid>
             </Box>
           ))}
+          {participants.length > 0 ? (
+            <Box py={isMD ? 4 : 1}>
+              <Grid container justify="center">
+                <Grid item>
+                  <MyPagination
+                    itemCount={count}
+                    page={page}
+                    changePage={changePage}
+                    perPage={limit}
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+          ) : null}
           <InsightDialog open={dialogOpen} closeDialog={toggleDialog} selectedId={selectedId} />
           <NaverInsightDialog open={naverDialogOpen} closeDialog={toggleNaverDialog} selectedId={influencerId} />
           <ConfirmDialog

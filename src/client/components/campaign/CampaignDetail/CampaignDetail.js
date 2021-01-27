@@ -84,7 +84,7 @@ function CampaignDetail() {
   const [isSticky, setSticky] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showMore, setShowMore] = useState({ visible: false, isOpen: false });
-  const [tab, setTab] = useState(3);
+  const [tab, setTab] = useState(2);
   const [liked, setLiked] = useState(false);
   const testImage = 'https://www.inflai.com/attach/portfolio/33/1yqw1whkavscxke.PNG';
   const { token, userRole } = useContext(AuthContext);
