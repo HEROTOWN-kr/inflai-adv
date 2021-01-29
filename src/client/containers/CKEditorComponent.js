@@ -6,7 +6,7 @@ import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { Controller } from 'react-hook-form';
 
 function CKEditorComponent(props) {
-  const { name, control } = props;
+  const { name, control, errors } = props;
   return (
     <div>
       <div id={`${name}_toolbar-container`} />
@@ -37,6 +37,9 @@ function CKEditorComponent(props) {
         )}
         control={control}
       />
+      {errors[name] ? (
+        <div className="error-message">{errors[name].message}</div>
+      ) : null}
     </div>
   );
 }

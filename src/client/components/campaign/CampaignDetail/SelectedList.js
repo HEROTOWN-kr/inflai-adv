@@ -17,14 +17,25 @@ import DetailDataDialog from './DetailDataDialog';
 import MyPagination from '../../../containers/MyPagination';
 
 function RatingComponent(props) {
-  const { id } = props;
+  const { id, rating } = props;
+
+  function updateRating(value) {
+    axios.post('/api/TB_PARTICIPANT/ratingUpdate', { id, ratingValue: value }).then((res) => {
+
+    }).catch((err) => {
+      alert(err.response.message);
+    });
+  }
 
   return (
     <Rating
       name={`raiting${id}`}
-      defaultValue={0}
+      defaultValue={rating}
       precision={1}
       emptyIcon={<StarBorder fontSize="inherit" />}
+      onChange={(event, newValue) => {
+        updateRating(newValue);
+      }}
     />
   );
 }
@@ -139,11 +150,11 @@ function SelectedList(props) {
                   </Grid>
                 </Grid>
                 <Grid item xs={12} sm="auto">
-                  {/* {item.PAR_REVIEW ? (
+                  {item.PAR_REVIEW ? (
                     <Box>
-                      <RatingComponent id={item.PAR_ID} />
+                      <RatingComponent id={item.PAR_ID} rating={item.PAR_RATING} />
                     </Box>
-                  ) : null} */}
+                  ) : null}
                   <Box mt="5px" ml="auto" width={{ xs: '100%', sm: '100px' }}>
                     <Grid container spacing={1}>
                       <Grid item xs={6} sm={12}>

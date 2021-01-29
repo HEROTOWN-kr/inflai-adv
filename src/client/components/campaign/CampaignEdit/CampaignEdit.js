@@ -64,6 +64,7 @@ function CampaignEdit() {
   const defaultValues = {
     sns: '',
     delivery: '',
+    detailInfo: '',
     type: 0,
     subtype: 0,
     searchStart: today,
@@ -102,6 +103,8 @@ function CampaignEdit() {
     picArray: Yup.string()
       .test('picCheck', '이미지 업러드 해주세요', val => images.length > 0 || dbImages.length > 0)
       .test('picLength', '이미지 5개만 업러드 가능합니다', val => (images.length + dbImages.length) < 6),
+    detailInfo: Yup.string()
+      .test('detailInfoCheck', '내용은 최대 3,000자까지 입력 가능합니다.', val => val.length < 3000),
   });
 
   const {
@@ -475,7 +478,7 @@ function CampaignEdit() {
         </Grid>
         <Grid item xs={12}>
           <Box mb={1}><StyledText color="#3f51b5">상세정보</StyledText></Box>
-          <CKEditorComponent control={control} name="detailInfo" />
+          <CKEditorComponent control={control} name="detailInfo" errors={errors} />
         </Grid>
 
         <Grid item xs={12}>
