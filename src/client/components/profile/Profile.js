@@ -43,7 +43,7 @@ function Profile(props) {
               <ProfileMenu {...props} userInfo={userInfo} />
             </Grid>
           </Hidden>
-          <Grid item xs>
+          <Grid item zeroMinWidth xs>
             <ProfileContent
               {...props}
               userInfo={userInfo}

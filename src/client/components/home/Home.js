@@ -9,18 +9,20 @@ import HomePartners from './sections/HomePartners';
 import Membership from '../membership/Membership';
 import HomeProcess from './sections/HomeProcess';
 import HomeBanners from './sections/HomeBanners';
+import HomeVideoTitle from './sections/HomeVideoTitle';
 
 
-function home() {
+function home(props) {
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
+  const { isMember } = props;
 
   return (
     <Box className="home">
-      {/* <Box my={10} textAlign="center" fontSize="30px" fontWeight="500">
-          광고주 페이지는 개발중입니다
-      </Box> */}
-      <Membership />
+      <HomeVideoTitle />
+      {isMember ? null : (
+        <Membership />
+      )}
       <HomeService isMD={isMD} />
       <HomeCategory />
       <HomeBanners />
