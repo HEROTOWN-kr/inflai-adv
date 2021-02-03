@@ -29,12 +29,61 @@ const myStyles = [
     background: 'linear-gradient(349deg, rgba(35,197,117,1) 0%, rgba(45,240,151,1) 100%)',
     color: '#ffffff',
     color2: '#888888'
+  },
+  {
+    backgroundColor: 'rgb(35,197,117)',
+    background: 'linear-gradient(349deg, rgba(187,35,197,1) 0%, rgba(118,230,179,1) 100%)',
+    color: '#ffffff',
+    color2: '#888888'
   }
 ];
 
 function formatNumber(num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }
+
+const testPlans = [
+  {
+    PLN_ID: 1,
+    PLN_NAME: '1개월 이용',
+    PLN_DETAIL: '1개월 무료 플랜입니다',
+    PLN_DETAIL2: '•1개월 간 총 5명의 인플루언서를 인공지능으로 선택할수 있습니다.',
+    PLN_MONTH: 1,
+    PLN_INF_MONTH: 5,
+    PLN_PRICE_MONTH: 0,
+    PLN_DSCNT: null
+  },
+  {
+    PLN_ID: 2,
+    PLN_NAME: '2개월 이용',
+    PLN_DETAIL: '2개월 플랜입니다',
+    PLN_DETAIL2: '•2개월 간 총 30명의 인플루언서를 인공지능으로 선택할수 있습니다.',
+    PLN_MONTH: 2,
+    PLN_INF_MONTH: 15,
+    PLN_PRICE_MONTH: 30000,
+    PLN_DSCNT: null
+  },
+  {
+    PLN_ID: 3,
+    PLN_NAME: '3개월 이용',
+    PLN_DETAIL: '3개월 플랜입니다',
+    PLN_DETAIL2: '•3개월 간 총 300명의 인플루언서를 인공지능으로 선택할수 있습니다.',
+    PLN_MONTH: 3,
+    PLN_INF_MONTH: 100,
+    PLN_PRICE_MONTH: 100000,
+    PLN_DSCNT: null
+  },
+  {
+    PLN_ID: 4,
+    PLN_NAME: '4개월 이용',
+    PLN_DETAIL: '4개월 플랜입니다',
+    PLN_DETAIL2: '•4개월 간 총 2000명의 인플루언서를 인공지능으로 선택할수 있습니다.',
+    PLN_MONTH: 4,
+    PLN_INF_MONTH: 500,
+    PLN_PRICE_MONTH: 150000,
+    PLN_DSCNT: null
+  },
+];
 
 function Membership() {
   const [plans, setPlans] = useState([]);
@@ -62,6 +111,7 @@ function Membership() {
 
   useEffect(() => {
     getPlans();
+    // setPlans(testPlans);
   }, []);
 
   useEffect(() => {
@@ -141,10 +191,11 @@ function Membership() {
       </Box> */}
       <Box py={3}>
         {isMD ? (
-          <Grid container spacing={6}>
+          <Grid container justify="space-between">
             {plans.map((item, index) => (
-              <Grid item key={item.PLN_ID} xs={12} md={4}>
+              <Grid item key={item.PLN_ID} xs={12} md="auto">
                 <Box
+                  width={{ xs: '100%', md: '270px' }}
                   mx={{ xs: 2, md: 0 }}
                   component={Paper}
                   css={{
@@ -153,18 +204,18 @@ function Membership() {
                   className={`membership-card ${selected ? ` ${selected === item.PLN_ID ? 'selected' : 'notSelected'}` : ''}`}
                   onClick={() => selectPlan(item.PLN_ID)}
                 >
-                  <Box p={3} style={myStyles[index]}>
-                    <StyledText fontSize={21} fontWeight="bold" color={myStyles[index].color}>{item.PLN_NAME}</StyledText>
+                  <Box p="20px" style={myStyles[index]}>
+                    <StyledText fontSize={19} fontWeight="bold" color={myStyles[index].color}>{item.PLN_NAME}</StyledText>
                     <Box mt={8}>
-                      <StyledText fontSize={21} color={myStyles[index].color} textAlign="right">월 부담 비용</StyledText>
-                      <StyledText fontSize={42} color={myStyles[index].color} textAlign="right" fontWeight="bold" lineHeight="2em">{`₩ ${formatNumber(item.PLN_PRICE_MONTH)}`}</StyledText>
-                      <StyledText fontSize={21} color={myStyles[index].color} textAlign="right">{`VAT 미포함${item.PLN_DSCNT ? `, ${item.PLN_DSCNT}% 할인적용` : ''}` }</StyledText>
+                      <StyledText fontSize={19} color={myStyles[index].color} textAlign="right">월 부담 비용</StyledText>
+                      <StyledText fontSize={35} color={myStyles[index].color} textAlign="right" fontWeight="bold" lineHeight="2em">{`₩ ${formatNumber(item.PLN_PRICE_MONTH)}`}</StyledText>
+                      <StyledText fontSize={19} color={myStyles[index].color} textAlign="right">{`VAT 미포함${item.PLN_DSCNT ? `, ${item.PLN_DSCNT}% 할인적용` : ''}` }</StyledText>
                     </Box>
                   </Box>
-                  <Box px={3} pt={3} pb={8}>
-                    <StyledText fontSize={21} lineHeight="1.5em" color={myStyles[index].color2}>{item.PLN_DETAIL}</StyledText>
+                  <Box p={3}>
+                    <StyledText fontSize={19} lineHeight="1.5em" color={myStyles[index].color2}>{item.PLN_DETAIL}</StyledText>
                     <Box mt={2}>
-                      <StyledText fontSize={21} lineHeight="1.5em" color={myStyles[index].color2}>{item.PLN_DETAIL2}</StyledText>
+                      <StyledText fontSize={19} lineHeight="1.5em" color={myStyles[index].color2}>{item.PLN_DETAIL2}</StyledText>
                     </Box>
                   </Box>
                 </Box>

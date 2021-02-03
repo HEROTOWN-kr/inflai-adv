@@ -118,7 +118,7 @@ function CampaignCreateNew() {
     email: Yup.string().required('이메일을 입력해주세요').email('잘못된 이메일 형식입니다'),
     searchKeyword: Yup.string().required('검색키워드를 입력해주세요'),
     discription: Yup.string()
-      .required('참여 안내 사항을 입력해주세요'),
+      .required('포스팅가이드를 입력해주세요'),
     picArray: Yup.string()
       .test('picCheck', '이미지 업러드 해주세요', val => images.length > 0 || dbImages.length > 0)
       .test('picLength', '이미지 5개만 업러드 가능합니다', val => (images.length + dbImages.length) < 6),
@@ -396,7 +396,7 @@ function CampaignCreateNew() {
           <ReactFormText register={register} errors={errors} name="searchKeyword" />
         </Grid>
         <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">참여 안내 사항</StyledText></Box>
+          <Box mb={1}><StyledText color="#3f51b5">포스팅가이드</StyledText></Box>
           <ReactFormText
             register={register}
             errors={errors}
