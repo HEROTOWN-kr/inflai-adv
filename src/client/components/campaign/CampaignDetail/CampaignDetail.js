@@ -201,24 +201,19 @@ function CampaignDetail() {
       <Grid container>
         <Grid item xs>
           <Box py={isMD ? 6 : 2} pr={isMD ? 6 : 2} pl={isLG ? 0 : 2}>
-            {
-              loading ? (
-                <Skeleton variant="text" height={33} />
-              ) : (
-                <StyledText fontSize={isMD ? '33' : '20'}>{productData.AD_NAME}</StyledText>
-              )
-            }
+            {loading ? (
+              <Skeleton variant="text" height={33} />
+            ) : (
+              <Box fontSize={isMD ? '33px' : '20px'}>{productData.AD_NAME}</Box>
+            )}
             <Box mt={isMD ? 3 : 2} mb={isMD ? 5 : 2}>
-              {
-                loading ? (
-                  <Skeleton variant="text" height={16} />
-                ) : (
-                  <StyledText fontSize={isMD ? '16' : '14'} color={Colors.grey2}>
-                    {/* {ReactHtmlParser(productData.AD_SHRT_DISC)} */}
-                    {productData.AD_SHRT_DISC.split('\n').map((i, key) => <div key={key}>{i}</div>)}
-                  </StyledText>
-                )
-              }
+              {loading ? (
+                <Skeleton variant="text" height={16} />
+              ) : (
+                <Box fontSize={isMD ? '16px' : '14px'} whiteSpace="pre-wrap" color={Colors.grey2}>
+                  {productData.AD_SHRT_DISC}
+                </Box>
+              )}
             </Box>
             {loading ? (
               <Skeleton variant="rect" width="100%" height={435} />
@@ -389,8 +384,7 @@ function CampaignDetail() {
                     <Box width="125px" fontWeight="bold" component="p">제공내역</Box>
                   </Grid>
                   <Grid item xs={12} sm className="provide-info">
-                    {/* {ReactHtmlParser(productData.AD_PROVIDE)} */}
-                    {productData.AD_PROVIDE.split('\n').map((i, key) => <div key={key}>{i}</div>)}
+                    {productData.AD_PROVIDE}
                   </Grid>
                 </Grid>
               </Grid>
@@ -406,9 +400,7 @@ function CampaignDetail() {
                     </Box>
                   </Grid>
                   <Grid item xs={12} sm className="provide-info">
-                    <Box>
-                      {productData.AD_SEARCH_KEY}
-                    </Box>
+                    <Box>{productData.AD_SEARCH_KEY}</Box>
                   </Grid>
                 </Grid>
               </Grid>
@@ -424,9 +416,7 @@ function CampaignDetail() {
                     </Box>
                   </Grid>
                   <Grid item xs={12} sm className="provide-info">
-                    <Box>
-                      {ReactHtmlParser(productData.AD_DISC)}
-                    </Box>
+                    <Box>{productData.AD_DISC}</Box>
                   </Grid>
                 </Grid>
               </Grid>
@@ -448,7 +438,7 @@ function CampaignDetail() {
                           <Grid container>
                             <Grid item><Box width="65px" fontWeight="bold">주소</Box></Grid>
                             <Grid item xs>
-                              {`(${productData.AD_POST_CODE}) ${productData.AD_ROAD_ADDR} ${productData.AD_DETAIL_ADDR} ${productData.AD_EXTR_ADDR}`}
+                              {`(${productData.AD_POST_CODE}) ${productData.AD_ROAD_ADDR} ${productData.AD_DETAIL_ADDR} ${productData.AD_EXTR_ADDR || ''}`}
                             </Grid>
                           </Grid>
                         </Grid>

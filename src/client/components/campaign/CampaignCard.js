@@ -10,7 +10,7 @@ import noFound from '../../img/notFound400_316.png';
 
 function CampaignCard(props) {
   const {
-    image, ctg1, ctg2, srchEnd, name, shrtDisc, participantsLength, cnt, proportion, onClick, isMD
+    image, type, ctg1, ctg2, srchEnd, name, shrtDisc, participantsLength, cnt, proportion, onClick, isMD
   } = props;
 
   function calculateDates(date) {
@@ -30,8 +30,17 @@ function CampaignCard(props) {
       <Box borderTop="1px solid #eaeaea" p={isMD ? 3 : 1}>
         <Grid container spacing={isMD ? 2 : 1}>
           <Grid item xs={12}>
-            <StyledText overflowHidden>
-              <span style={{ color: Colors.pink }}>{`${AdvertiseTypes.mainType[ctg1]}/${AdvertiseTypes.subType[ctg1][ctg2]}`}</span>
+            <StyledText overflowHidden lineHeight="1.3em">
+              {type === '1' ? (
+                <span style={{ color: Colors.pink, fontWeight: '600' }}>Instagram</span>
+              ) : null}
+              {type === '2' ? (
+                <span style={{ color: Colors.red, fontWeight: '600' }}>Youtube</span>
+              ) : null}
+              {type === '3' ? (
+                <span style={{ color: Colors.green, fontWeight: '600' }}>Blog</span>
+              ) : null}
+              {/* <span style={{ color: Colors.pink }}>{`${AdvertiseTypes.mainType[ctg1]}/${AdvertiseTypes.subType[ctg1][ctg2]}`}</span> */}
               {` D-${calculateDates(srchEnd)}`}
             </StyledText>
           </Grid>

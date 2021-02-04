@@ -205,8 +205,8 @@ function Membership() {
                   onClick={() => selectPlan(item.PLN_ID)}
                 >
                   <Box p="20px" style={myStyles[index]}>
-                    <StyledText fontSize={19} fontWeight="bold" color={myStyles[index].color}>{item.PLN_NAME}</StyledText>
-                    <Box mt={8}>
+                    {/* <StyledText fontSize={19} fontWeight="bold" color={myStyles[index].color}>{item.PLN_NAME}</StyledText> */}
+                    <Box mt="40px">
                       <StyledText fontSize={19} color={myStyles[index].color} textAlign="right">월 부담 비용</StyledText>
                       <StyledText fontSize={35} color={myStyles[index].color} textAlign="right" fontWeight="bold" lineHeight="2em">{`₩ ${formatNumber(item.PLN_PRICE_MONTH)}`}</StyledText>
                       <StyledText fontSize={19} color={myStyles[index].color} textAlign="right">{`VAT 미포함${item.PLN_DSCNT ? `, ${item.PLN_DSCNT}% 할인적용` : ''}` }</StyledText>
