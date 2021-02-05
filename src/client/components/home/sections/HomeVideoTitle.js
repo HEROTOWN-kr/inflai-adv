@@ -42,9 +42,9 @@ function HomeVideoTitle() {
         top="35%"
         width="100%"
       >
-        {/* <Box fontSize={isMD ? '40px' : '4.8vw'}>내가 찾던 브랜드협찬. 당신만의 협찬 파트너</Box>
-        <Box fontSize={isMD ? '70px' : '9vw'}>#인플라이</Box> */}
-        {/* <Box
+        <Box fontSize={isMD ? '40px' : '4.8vw'}>가짜는 거르고,</Box>
+        <Box fontSize={isMD ? '70px' : '9vw'}>딱 맞게 고르고!</Box>
+        <Box
           border="2px solid #fff"
           borderRadius="20px"
           width="150px"
@@ -54,8 +54,8 @@ function HomeVideoTitle() {
           style={{ cursor: 'pointer' }}
           onClick={scrollTo}
         >
-        캠페인 보기
-        </Box> */}
+        시작하기
+        </Box>
       </Box>
       <Box>
         <video
@@ -73,11 +73,11 @@ function HomeVideoTitle() {
           poster="/attach/video/bgImage2.jpg"
           autoPlay
           muted
-          // loop
+          loop
           onEnded={() => console.log('ended')}
           playsInline
         >
-          <source src="/attach/video/bgVideo2.mov" type="video/mp4" />
+          <source src="/attach/video/bgVideo3.mov" type="video/mp4" />
         </video>
       </Box>
     </Box>
