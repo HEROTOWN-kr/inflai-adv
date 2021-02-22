@@ -177,7 +177,7 @@ function Membership() {
 
   return (
     <Box maxWidth="1160px" margin="0 auto" my={6} px={2} className="membership">
-      <StyledText fontSize={isMD ? '35' : '20'} textAlign="center">
+      <StyledText fontSize={isMD ? '35px' : '20px'} textAlign="center">
           인플라이
         <span style={{ color: Colors.pink }}> 멤버십</span>
 을

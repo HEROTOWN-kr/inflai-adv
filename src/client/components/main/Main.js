@@ -11,6 +11,11 @@ import SignUp from '../signup/SignUp';
 import PrivateRoute from '../../containers/PrivateRoute';
 import Profile from '../profile/Profile';
 import AuthContext from '../../context/AuthContext';
+import LoginNew from '../loginNew/LoginNew';
+import SignUpNew from '../loginNew/SignUpNew';
+import Join from '../loginNew/Join';
+import Activate from '../loginNew/Activate';
+import ResetPassPage from '../loginNew/ResetPassPage';
 
 function Main() {
   const [isMember, setIsMember] = useState(false);
@@ -57,15 +62,38 @@ function Main() {
       />
       <Route
         path="/Login"
-        render={renderProps => <Login {...renderProps} />}
+        render={renderProps => <LoginNew {...renderProps} />}
       />
       <Route
         path="/SignUp"
-        render={renderProps => <SignUp {...renderProps} />}
+        render={renderProps => <SignUpNew {...renderProps} />}
       />
       <PrivateRoute
         path="/Profile"
         component={Profile}
+      />
+      <Route
+        exact
+        path="/LoginNew"
+        render={renderProps => <LoginNew {...renderProps} />}
+      />
+      <Route
+        exact
+        path="/SignUpNew"
+        render={renderProps => <SignUpNew {...renderProps} />}
+      />
+      <Route
+        exact
+        path="/Join"
+        render={renderProps => <Join {...renderProps} />}
+      />
+      <Route
+        path="/Activate/:hash"
+        render={renderProps => <Activate {...renderProps} />}
+      />
+      <Route
+        path="/Reset/:hash"
+        render={renderProps => <ResetPassPage {...renderProps} />}
       />
       {/* <Route
         path="/Profile"

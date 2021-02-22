@@ -63,7 +63,7 @@ function BottomMenu() {
           <Grid key={item.text} item style={{ width: '20%' }}>
             <Box py={1} textAlign="center" onClick={() => clickMenuButton(item)}>
               <span uk-icon={item.icon} />
-              <StyledText fontSize="12" lineHeight="1.4em">{item.text}</StyledText>
+              <StyledText fontSize="12px" lineHeight="1.4em">{item.text}</StyledText>
             </Box>
           </Grid>
         ))}

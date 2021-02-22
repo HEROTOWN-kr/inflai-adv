@@ -1,13 +1,12 @@
 import React from 'react';
-import { Box, Button, makeStyles } from '@material-ui/core';
-import { textAlign } from '@material-ui/system';
+import { Box, makeStyles } from '@material-ui/core';
 import { Colors } from '../lib/Сonstants';
 
 const useStyles = makeStyles({
   common: ({
     fontSize, lineHeight, color, fontWeight, textAlign, overflowHidden, cursor
   }) => ({
-    fontSize: fontSize ? `${fontSize}px` : '14px',
+    fontSize: fontSize || '14px',
     lineHeight: lineHeight || '1em',
     color: color || Colors.black,
     fontWeight: fontWeight || 'normal',

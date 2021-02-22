@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Box, Grid } from '@material-ui/core';
 import axios from 'axios';
-import WhiteBlock from '../../../containers/WhiteBlock';
-import PageTitle from '../PageTitle';
-import StyledText from '../../../containers/StyledText';
-import AuthContext from '../../../context/AuthContext';
-import { Colors } from '../../../lib/Сonstants';
+import WhiteBlock from '../../../../containers/WhiteBlock';
+import PageTitle from '../../PageTitle';
+import StyledText from '../../../../containers/StyledText';
+import AuthContext from '../../../../context/AuthContext';
+import { Colors } from '../../../../lib/Сonstants';
 
 const cardInfo = [
   { name: '플랜', data: 'PLN_NAME' },
@@ -33,7 +33,7 @@ function TabComponent(props) {
       css={{ cursor: 'pointer' }}
       onClick={() => setTab(tabNumber)}
     >
-      <StyledText fontSize="16" fontWeight={styles.fontWeight}>{text}</StyledText>
+      <StyledText fontSize="16px" fontWeight={styles.fontWeight}>{text}</StyledText>
     </Box>
   );
 }
@@ -74,7 +74,7 @@ function MembershipInfo(props) {
   return (
     <WhiteBlock height="100%">
       <PageTitle>
-        <StyledText fontSize="24">
+        <StyledText fontSize="24px">
             멤버십 관리
         </StyledText>
       </PageTitle>
@@ -131,7 +131,7 @@ function MembershipInfo(props) {
               <React.Fragment>
                 <Grid container justify="center">
                   <Grid item>
-                    <StyledText fontSize="16">
+                    <StyledText fontSize="16px">
                       진행중 서브스크립션이 없습니다.
                     </StyledText>
                   </Grid>

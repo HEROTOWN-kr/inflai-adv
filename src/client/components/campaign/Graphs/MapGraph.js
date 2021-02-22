@@ -58,7 +58,7 @@ function MapGraph(props) {
                   }}
                 />
               ) : (
-                <StyledText fontSize="14" textAlign="center">
+                <StyledText fontSize="14px" textAlign="center">
                     팔로워가 100명 미만인 데이터가 제공되지 않습니다.
                 </StyledText>
               )

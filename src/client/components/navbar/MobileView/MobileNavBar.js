@@ -34,7 +34,7 @@ function MobileNavBar() {
           isAuthenticated ? null : (
             <Box position="absolute" right="16px" top="6px" width="35px" onClick={LoginButtonClick}>
               <span uk-icon="icon: sign-in; ratio: 1.3" />
-              <StyledText fontSize="12">로그인</StyledText>
+              <StyledText fontSize="12px">로그인</StyledText>
             </Box>
           )
         }

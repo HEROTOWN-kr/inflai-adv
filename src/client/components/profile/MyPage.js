@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Box, Grid } from '@material-ui/core';
-import StyledImage from '../../../containers/StyledImage';
-import defaultAccountImage from '../../../img/default_account_image.png';
-import StyledText from '../../../containers/StyledText';
-import { Colors } from '../../../lib/Сonstants';
-import myPageBg from '../../../img/myPageBg.jpg';
-import AuthContext from '../../../context/AuthContext';
+import StyledImage from '../../containers/StyledImage';
+import defaultAccountImage from '../../img/default_account_image.png';
+import StyledText from '../../containers/StyledText';
+import { Colors } from '../../lib/Сonstants';
+import myPageBg from '../../img/myPageBg.jpg';
+import AuthContext from '../../context/AuthContext';
 
 const arrowIcon = 'icon: chevron-right; ratio: 1';
 
@@ -81,7 +81,7 @@ function MyPage(props) {
       >
         <StyledImage width="68px" height="68px" borderRadius="100%" src={userInfo.INF_PHOTO || defaultAccountImage} />
         <Box mt={1}>
-          <StyledText color="#ffffff" fontSize="20" fontWeight="600">
+          <StyledText color="#ffffff" fontSize="20px" fontWeight="600">
             {userInfo.INF_NAME}
           </StyledText>
         </Box>
@@ -113,7 +113,7 @@ function MyPage(props) {
             onClick={() => history.push(item.link)}
           >
             <Grid container justify="space-between" alignItems="center">
-              <Grid item><StyledText fontSize="14">{item.text}</StyledText></Grid>
+              <Grid item><StyledText fontSize="14px">{item.text}</StyledText></Grid>
               <Grid item><span uk-icon={arrowIcon} /></Grid>
             </Grid>
           </Box>
@@ -124,7 +124,7 @@ function MyPage(props) {
           onClick={clickLogout}
         >
           <Grid container justify="space-between" alignItems="center">
-            <Grid item><StyledText fontSize="14">로그아웃</StyledText></Grid>
+            <Grid item><StyledText fontSize="14px">로그아웃</StyledText></Grid>
             <Grid item><span uk-icon={arrowIcon} /></Grid>
           </Grid>
         </Box>

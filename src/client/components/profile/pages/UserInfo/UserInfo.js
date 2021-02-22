@@ -4,16 +4,19 @@ import {
 } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import StyledText from '../../../containers/StyledText';
-import StyledTextField from '../../../containers/StyledTextField';
-import DaumPostCode from '../../../containers/DaumPostCode';
-import StyledImage from '../../../containers/StyledImage';
-import defaultAccountImage from '../../../img/default_account_image.png';
-import AuthContext from '../../../context/AuthContext';
-import StyledButton from '../../../containers/StyledButton';
-import { Colors } from '../../../lib/Сonstants';
-import WhiteBlock from '../../../containers/WhiteBlock';
-import PageTitle from '../PageTitle';
+import StyledText from '../../../../containers/StyledText';
+import StyledTextField from '../../../../containers/StyledTextField';
+import DaumPostCode from '../../../../containers/DaumPostCode';
+import StyledImage from '../../../../containers/StyledImage';
+import defaultAccountImage from '../../../../img/default_account_image.png';
+import AuthContext from '../../../../context/AuthContext';
+import StyledButton from '../../../../containers/StyledButton';
+import { Colors } from '../../../../lib/Сonstants';
+import WhiteBlock from '../../../../containers/WhiteBlock';
+import PageTitle from '../../PageTitle';
+import SocialLogin from './SocialLogin/SocialLogin';
+import PasswordChange from './PasswordChange/PasswordChange';
+import LabelComponent from './LabelComponent';
 
 function ImageActionButton(props) {
   const {
@@ -33,34 +36,6 @@ function ImageActionButton(props) {
     <div style={styles} onClick={onClick}>
       {children}
     </div>
-  );
-}
-
-function FieldInfoComponent(props) {
-  const { title, children } = props;
-
-  return (
-    <Grid container alignItems="center">
-      <Grid item xs={2}>
-        <StyledText fontSize="15">
-          {title}
-        </StyledText>
-      </Grid>
-      <Grid item xs={10}>
-        {children}
-      </Grid>
-    </Grid>
-  );
-}
-
-function LabelComponent(props) {
-  const { labelName } = props;
-  return (
-    <Box width="175px">
-      <StyledText fontSize="15">
-        {labelName}
-      </StyledText>
-    </Box>
   );
 }
 
@@ -150,7 +125,7 @@ function UserInfo(props) {
     <WhiteBlock borderRadius={isMD ? '7px' : '0'}>
       <Hidden smDown>
         <PageTitle>
-          <StyledText fontSize="24">
+          <StyledText fontSize="24px">
             회원정보수정
           </StyledText>
         </PageTitle>
@@ -200,7 +175,7 @@ function UserInfo(props) {
                 </Box>
               </Grid>
               <Grid item xs={12} md>
-                <StyledText fontSize="13" color={Colors.grey2}>
+                <StyledText fontSize="13px" color={Colors.grey2}>
                   * 전화번호부정확하면 멤버십신청 안됩니다
                 </StyledText>
               </Grid>
@@ -319,7 +294,7 @@ function UserInfo(props) {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Box pt={{ xs: 2, md: 4 }}>
+            <Box py={{ xs: 2, md: 4 }}>
               <Grid container justify="center">
                 <Grid item>
                   <Box width="280px">
@@ -336,7 +311,12 @@ function UserInfo(props) {
             </Box>
           </Grid>
         </Grid>
+        <Divider />
+        <SocialLogin />
+        <Divider />
+        <PasswordChange />
       </Box>
+
     </WhiteBlock>
 
   );

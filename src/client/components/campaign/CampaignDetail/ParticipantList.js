@@ -111,7 +111,7 @@ function ParticipantList(props) {
                     <Grid item xs={12}>
                       <Grid container alignItems="center" spacing={1}>
                         <Grid item>
-                          <StyledText fontSize={16} fontWeight="bold">{item.PAR_NAME}</StyledText>
+                          <StyledText fontSize="16px" fontWeight="bold">{item.PAR_NAME}</StyledText>
                         </Grid>
                         {item.PAR_INSTA ? (
                           <Grid item><StyledImage width="21px" height="21px" src={IconInsta} /></Grid>

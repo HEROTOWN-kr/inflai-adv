@@ -4,11 +4,11 @@ import {
   Route, Switch, Redirect, useRouteMatch
 } from 'react-router-dom';
 import NotFound from '../main/NotFound';
-import UserInfo from './pages/UserInfo';
-import CampaignInfo from './pages/CampaignInfo';
+import UserInfo from './pages/UserInfo/UserInfo';
+import CampaignInfo from './pages/CampaignInfo/CampaignInfo';
 import Alert from '../../containers/Alert';
-import MembershipInfo from './pages/MembershipInfo';
-import MyPage from './pages/MyPage';
+import MembershipInfo from './pages/MembershipInfo/MembershipInfo';
+import MyPage from './MyPage';
 
 function ProfileContent(props) {
   const match = useRouteMatch();

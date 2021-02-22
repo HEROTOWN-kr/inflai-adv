@@ -51,7 +51,7 @@ function TabComponent(props) {
       css={{ cursor: 'pointer' }}
       onClick={() => setTab(tabNumber)}
     >
-      <StyledText fontSize={isMD ? '16' : '14'} fontWeight={styles.fontWeight} textAlign="center">{text}</StyledText>
+      <StyledText fontSize={isMD ? '16px' : '14px'} fontWeight={styles.fontWeight} textAlign="center">{text}</StyledText>
     </Box>
   );
 }
@@ -253,14 +253,14 @@ function CampaignDetail() {
                             color={Colors.grey5}
                             fontSize="20px"
                           />
-                          <StyledText overflowHidden fontSize="15" color={Colors.grey5}>
+                          <StyledText overflowHidden fontSize="15px" color={Colors.grey5}>
                             <span style={{ color: Colors.pink, margin: '2px', fontWeight: 'bold' }}>{`${productData.TB_PARTICIPANTs.length} `}</span>
                             명
                           </StyledText>
                         </div>
                       </Grid>
                       <Grid item>
-                        <StyledText overflowHidden fontSize="15" color={Colors.grey5}>
+                        <StyledText overflowHidden fontSize="15px" color={Colors.grey5}>
                           <span style={{ color: Colors.black, fontWeight: 'bold' }}>{`${productData.AD_INF_CNT} `}</span>
                           명
                         </StyledText>
@@ -277,7 +277,7 @@ function CampaignDetail() {
                         position: 'absolute', top: '10', left: productData.proportion > 100 ? '100%' : `${productData.proportion}%`, padding: '5px 0'
                       }}
                     >
-                      <StyledText fontSize="12" color={Colors.pink}>{`${productData.proportion}%`}</StyledText>
+                      <StyledText fontSize="12px" color={Colors.pink}>{`${productData.proportion}%`}</StyledText>
                     </div>
                   </div>
                 </Box>
@@ -473,27 +473,27 @@ function CampaignDetail() {
                   <Box py={isMD ? 6 : 2} pl={isLG ? 6 : 2} pr={isLG ? 0 : 2} width="312px">
                     <Grid container spacing={3}>
                       <Grid item xs={12}>
-                        <StyledText fontSize="16" fontWeight="bold">{`리뷰어 신청  ${productData.AD_SRCH_START} ~ ${productData.AD_SRCH_END}`}</StyledText>
+                        <StyledText fontSize="16px" fontWeight="bold">{`리뷰어 신청  ${productData.AD_SRCH_START} ~ ${productData.AD_SRCH_END}`}</StyledText>
                       </Grid>
                       <Grid item xs={12}><Divider /></Grid>
                       <Grid item xs={12}>
-                        <StyledText fontSize="18" cursor="pointer" onClick={() => scrollTo('detail')}>캠페인 상세정보</StyledText>
+                        <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('detail')}>캠페인 상세정보</StyledText>
                       </Grid>
                       <Grid item xs={12}><Divider /></Grid>
                       <Grid item xs={12}>
-                        <StyledText fontSize="18" cursor="pointer" onClick={() => scrollTo('provide')}>제공내역</StyledText>
+                        <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('provide')}>제공내역</StyledText>
                       </Grid>
                       <Grid item xs={12}><Divider /></Grid>
                       <Grid item xs={12}>
-                        <StyledText fontSize="18" cursor="pointer" onClick={() => scrollTo('search')}>검색 키워드</StyledText>
+                        <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('search')}>검색 키워드</StyledText>
                       </Grid>
                       <Grid item xs={12}><Divider /></Grid>
                       <Grid item xs={12}>
-                        <StyledText fontSize="18" cursor="pointer" onClick={() => scrollTo('discription')}>참여 안내 사항</StyledText>
+                        <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('discription')}>참여 안내 사항</StyledText>
                       </Grid>
                       <Grid item xs={12}><Divider /></Grid>
                       <Grid item xs={12}>
-                        <StyledText fontSize="18" cursor="pointer" onClick={() => scrollTo('info')}>업체 정보</StyledText>
+                        <StyledText fontSize="18px" cursor="pointer" onClick={() => scrollTo('info')}>업체 정보</StyledText>
                       </Grid>
                       <Grid item xs={12}><Divider /></Grid>
                       <Grid item xs={12}>

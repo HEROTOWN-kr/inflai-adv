@@ -275,11 +275,9 @@ function CampaignCreateNew() {
             name="sns"
             control={control}
           />
-          {
-            errors.sns ? (
-              <div className="error-message">{errors.sns.message}</div>
-            ) : null
-          }
+          { errors.sns ? (
+            <div className="error-message">{errors.sns.message}</div>
+          ) : null }
         </Grid>
         <Grid item xs={12}>
           <Box mb={1}>

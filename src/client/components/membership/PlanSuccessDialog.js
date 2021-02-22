@@ -55,7 +55,7 @@ export default function PlanSuccessDialog(props) {
       <Box p={4}>
         <Grid container spacing={4}>
           <Grid item xs={12}>
-            <StyledText textAlign="center" fontSize="28">계좌 송금 안내</StyledText>
+            <StyledText textAlign="center" fontSize="28px">계좌 송금 안내</StyledText>
           </Grid>
           <Grid item xs={12}>
             <Grid container>
@@ -63,15 +63,15 @@ export default function PlanSuccessDialog(props) {
                 PaymentData.map(item => (
                   <Grid item key={item.title} xs={12}>
                     <Grid container justify="space-between">
-                      <Grid item><StyledText fontSize="18" lineHeight="1.5em">{item.title}</StyledText></Grid>
-                      <Grid item><StyledText fontSize="18" lineHeight="1.5em">{selectedData[item.data]}</StyledText></Grid>
+                      <Grid item><StyledText fontSize="18px" lineHeight="1.5em">{item.title}</StyledText></Grid>
+                      <Grid item><StyledText fontSize="18px" lineHeight="1.5em">{selectedData[item.data]}</StyledText></Grid>
                     </Grid>
                   </Grid>
                 ))
               }
             </Grid>
             <Box mt={4}>
-              <StyledText fontSize="15" lineHeight="1.5em">
+              <StyledText fontSize="15px" lineHeight="1.5em">
                 *신청 후 24시간 이내에 승인이 됩니다. 승인 후 캠페인(인플루언서모집)을 진행하실 수 있습니다.
               </StyledText>
             </Box>

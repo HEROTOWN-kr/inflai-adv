@@ -115,7 +115,7 @@ function SelectedList(props) {
                     <Grid item xs={12}>
                       <Grid container alignItems="center" spacing={1}>
                         <Grid item>
-                          <StyledText fontSize={16} fontWeight="bold">{item.PAR_NAME}</StyledText>
+                          <StyledText fontSize="16px" fontWeight="bold">{item.PAR_NAME}</StyledText>
                         </Grid>
                         {item.PAR_INSTA ? (
                           <Grid item><StyledImage width="21px" height="21px" src={IconInsta} /></Grid>
@@ -140,10 +140,10 @@ function SelectedList(props) {
                       </Grid>
                     </Grid>
                     <Grid item xs={12}>
-                      <StyledText fontSize={isMD ? 15 : 14} lineHeight="1.3em">{item.PAR_MESSAGE}</StyledText>
+                      <StyledText fontSize={isMD ? '15px' : '14px'} lineHeight="1.3em">{item.PAR_MESSAGE}</StyledText>
                     </Grid>
                     <Grid item xs={12}>
-                      <StyledText fontSize={isMD ? 15 : 14}>
+                      <StyledText fontSize={isMD ? '15px' : '14px'}>
                         {item.PAR_DT}
                       </StyledText>
                     </Grid>

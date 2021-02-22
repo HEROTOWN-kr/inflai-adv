@@ -26,7 +26,7 @@ function UserMenuItems(props) {
   return (
     <div className="user-popmenu">
       <Box py={2} px={4} css={{ width: '150px' }}>
-        <StyledText overflowHidden fontWeight="bold" fontSize="20" textAlign="center">{userName}</StyledText>
+        <StyledText overflowHidden fontWeight="bold" fontSize="20px" textAlign="center">{userName}</StyledText>
       </Box>
       {userMenu.map(item => (
         <React.Fragment key={item.text}>
@@ -34,7 +34,7 @@ function UserMenuItems(props) {
             <Link
               to={item.link}
             >
-              <StyledText fontSize="16" textAlign="center" className="pop-item">{item.text}</StyledText>
+              <StyledText fontSize="16px" textAlign="center" className="pop-item">{item.text}</StyledText>
             </Link>
           </Box>
           <Divider />

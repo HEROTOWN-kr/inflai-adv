@@ -11,7 +11,7 @@ const Scroller = Scroll.scroller;
 
 const defaultMenuLinks = [
   {
-    text: '마케팅 요청',
+    text: '홍보하기',
     link: '/Campaign'
   },
   {
@@ -21,7 +21,27 @@ const defaultMenuLinks = [
   {
     text: '캠페인 관리',
     link: '/Profile/CampaignInfo'
-  }
+  },
+  /* {
+    text: 'LoginNew',
+    link: '/LoginNew'
+  },
+  {
+    text: 'SignUpNew',
+    link: '/SignUpNew'
+  },
+  {
+    text: 'Join',
+    link: '/Join'
+  },
+  {
+    text: 'Activate',
+    link: '/Activate/17d325b554fd95143e18be66cc172725:b1a7d695fdec720c92ceb32fbbda6da1'
+  },
+  {
+    text: 'Reset',
+    link: '/Reset/17d325b554fd95143e18be66cc172725:b1a7d695fdec720c92ceb32fbbda6da1'
+  }, */
 ];
 
 function NavbarLinks() {

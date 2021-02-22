@@ -5,15 +5,15 @@ import {
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import axios from 'axios';
 import { Skeleton } from '@material-ui/lab';
-import StyledText from '../../../containers/StyledText';
-import AuthContext from '../../../context/AuthContext';
-import { Colors } from '../../../lib/Сonstants';
-import WhiteBlock from '../../../containers/WhiteBlock';
-import PageTitle from '../PageTitle';
-import CampaignCard from '../../campaign/CampaignCard';
-import MyPagination from '../../../containers/MyPagination';
-import noImage from '../../../img/noImage.png';
-import noFound from '../../../img/notFound400_316.png';
+import StyledText from '../../../../containers/StyledText';
+import AuthContext from '../../../../context/AuthContext';
+import { Colors } from '../../../../lib/Сonstants';
+import WhiteBlock from '../../../../containers/WhiteBlock';
+import PageTitle from '../../PageTitle';
+import CampaignCard from '../../../campaign/CampaignCard';
+import MyPagination from '../../../../containers/MyPagination';
+import noImage from '../../../../img/noImage.png';
+import noFound from '../../../../img/notFound400_316.png';
 
 function TabComponent(props) {
   const {
@@ -34,7 +34,7 @@ function TabComponent(props) {
       css={{ cursor: 'pointer' }}
       onClick={() => setTab(tabNumber)}
     >
-      <StyledText fontSize="16" fontWeight={styles.fontWeight}>{text}</StyledText>
+      <StyledText fontSize="16px" fontWeight={styles.fontWeight}>{text}</StyledText>
     </Box>
   );
 }
@@ -109,7 +109,7 @@ function CampaignInfo() {
     <WhiteBlock height="100%" borderRadius={isMD ? '7px' : '0'}>
       <Hidden smDown>
         <PageTitle>
-          <StyledText fontSize="24">
+          <StyledText fontSize="24px">
               캠페인 관리
           </StyledText>
         </PageTitle>
