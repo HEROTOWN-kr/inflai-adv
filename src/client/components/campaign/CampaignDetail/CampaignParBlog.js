@@ -4,12 +4,14 @@ import axios from 'axios';
 import {
   Box, Grid, Table, TableBody, TableHead, TableRow
 } from '@material-ui/core';
-import StyledTableCell from '../../containers/StyledTableCell';
-import StyledTableSortLabel from '../../containers/StyledTableSortLabel';
-import StyledTableRow from '../../containers/StyledTableRow';
-import StyledText from '../../containers/StyledText';
-import StyledLink from '../../containers/StyledLink';
-import MyPagination from '../../containers/MyPagination';
+import StyledTableCell from '../../../containers/StyledTableCell';
+import StyledTableRow from '../../../containers/StyledTableRow';
+import StyledText from '../../../containers/StyledText';
+import StyledLink from '../../../containers/StyledLink';
+import MyPagination from '../../../containers/MyPagination';
+import StyledButton from '../../../containers/StyledButton';
+import { Colors } from '../../../lib/Сonstants';
+import ConfirmDialog from '../../../containers/ConfirmDialog';
 
 const tableHeader = [
   {
@@ -19,21 +21,33 @@ const tableHeader = [
   },
   {
     text: '이름',
-    align: 'center'
+    align: 'center',
+    width: '100px'
   },
   {
     text: '블로그주소',
-    align: 'center'
+    align: 'center',
   },
+  {
+    text: '선정',
+    align: 'center',
+    width: '50px',
+  }
 ];
 
 function CampaignParBlog() {
   const [participants, setParticipants] = useState([]);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(0);
   const params = useParams();
   const adId = params.id;
   const limit = 10;
+
+  function toggleConfirmDialog() {
+    setConfirmDialogOpen(!confirmDialogOpen);
+  }
 
   function getParticipants() {
     axios.get('/api/TB_PARTICIPANT/getListBlog', {
@@ -44,14 +58,28 @@ function CampaignParBlog() {
     });
   }
 
+  function selectParticipant() {
+    axios.post('/api/TB_PARTICIPANT/change', { adId, participantId: selectedId }).then((res) => {
+      if (res.status === 201) {
+        alert(res.data.message);
+      } else {
+        getParticipants();
+      }
+    }).catch(err => alert(err.response.data.message));
+  }
+
   useEffect(() => {
     getParticipants();
-
   }, [page]);
 
   const changePage = (event, value) => {
     setPage(value);
   };
+
+  function clickSelect(id) {
+    setSelectedId(id);
+    toggleConfirmDialog();
+  }
 
   return (
     <Box my={{ xs: 0, sm: 4 }} boxSizing="border-box" maxWidth={1200} css={{ margin: '0 auto' }}>
@@ -96,6 +124,21 @@ function CampaignParBlog() {
                       <StyledText textAlign="center">-</StyledText>
                     )}
                   </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.PAR_STATUS === '1' ? (
+                      <StyledButton
+                        background={Colors.green}
+                        hoverBackground={Colors.greenHover}
+                        height="25px"
+                        padding="0px 5px"
+                        onClick={() => clickSelect(row.PAR_ID)}
+                      >
+                          선정
+                      </StyledButton>
+                    ) : (
+                      <StyledText color={Colors.green}>선정됨</StyledText>
+                    )}
+                  </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
@@ -116,6 +159,12 @@ function CampaignParBlog() {
       ) : (
         <StyledText textAlign="center">신청한 인플루언서가 없습니다</StyledText>
       )}
+      <ConfirmDialog
+        open={confirmDialogOpen}
+        closeDialog={toggleConfirmDialog}
+        dialogText="선정하시겠습니까?"
+        onConfirm={selectParticipant}
+      />
     </Box>
   );
 }

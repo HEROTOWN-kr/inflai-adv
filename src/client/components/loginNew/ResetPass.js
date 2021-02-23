@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Box, Dialog, IconButton, makeStyles
+  Box, Dialog, Grid, IconButton, makeStyles
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
@@ -27,7 +27,8 @@ const useStyles = makeStyles({
   },
   paper: {
     margin: '12px',
-    // width: '100%',
+    maxWidth: '415px',
+    width: '100%',
     borderRadius: '2px'
   },
   button: {
@@ -107,27 +108,31 @@ function ResetPassDialog(props) {
           <Clear />
         </IconButton>
       </Box>
-      <Box px={2} py={2} width="325px" boxSizing="border-box">
-        <Box mb={1}>
-          <ReactFormText
-            register={register}
-            errors={errors}
-            name="email"
-            placeholder="이메일"
-            onKeyPress={handleUserKeyPress}
-          />
-        </Box>
-        {errorMessage ? (
-          <Box my={1} textAlign="center">
-            <div className="error-message">{errorMessage}</div>
+      <Grid container>
+        <Grid item xs={12}>
+          <Box px={2} py={2} boxSizing="border-box">
+            <Box mb={1}>
+              <ReactFormText
+                register={register}
+                errors={errors}
+                name="email"
+                placeholder="회원가입시 등록하신 이메일 주소를 입력해주세요"
+                onKeyPress={handleUserKeyPress}
+              />
+            </Box>
+            {errorMessage ? (
+              <Box my={1} textAlign="center">
+                <div className="error-message">{errorMessage}</div>
+              </Box>
+            ) : null}
+            <Box mt={1}>
+              <StyledButton height={40} onClick={handleSubmit(sendEmail)}>
+                이메일 보내기
+              </StyledButton>
+            </Box>
           </Box>
-        ) : null}
-        <Box mt={1}>
-          <StyledButton height={40} onClick={handleSubmit(sendEmail)}>
-              이메일 보내기
-          </StyledButton>
-        </Box>
-      </Box>
+        </Grid>
+      </Grid>
     </Dialog>
   );
 }
@@ -149,9 +154,11 @@ function SuccessDialog(props) {
           <Clear />
         </IconButton>
       </Box>
-      <Box px={2} py={2} width="325px" boxSizing="border-box">
+      <Box px={2} py={2} textAlign="center" boxSizing="border-box">
         <Box mb={1}>
-          이메일에 비밀번호 변경링크가 발송되었습니다. 확인해주세요.
+          이메일에 비밀번호 변경링크가 발송되었습니다.
+          <br />
+          확인해주세요.
         </Box>
         <Box mt={1}>
           <StyledButton height={40} onClick={closeDialog}>

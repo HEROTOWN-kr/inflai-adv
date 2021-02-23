@@ -59,22 +59,26 @@ function InsightDialog(props) {
   }
 
   function onDialogEntered() {
-    setInstaData({});
     getInstaInfo();
+  }
+
+  function onDialogClose() {
+    setInstaData({});
+    closeDialog();
   }
 
   return (
     <Dialog
       classes={{ paper: classes.paper }}
       maxWidth="lg"
-      onClose={closeDialog}
+      onClose={onDialogClose}
       aria-labelledby="simple-dialog-title"
       open={open}
       onEntered={onDialogEntered}
     >
       <Box padding="20px" fontSize="18px" fontWeight="400" lineHeight="18px" textAlign="center" position="relative" borderBottom={`1px solid ${Colors.grey8}`}>
                 SNS 정보
-        <Clear onClick={closeDialog} classes={{ root: classes.root }} />
+        <Clear onClick={onDialogClose} classes={{ root: classes.root }} />
       </Box>
       <Box px={2} py={2}>
         <Grid container spacing={isMD ? 3 : 0}>

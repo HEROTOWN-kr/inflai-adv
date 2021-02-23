@@ -30,6 +30,8 @@ import InsightDialog from './InsightDialog';
 import ConfirmDialog from '../../../containers/ConfirmDialog';
 import ParticipantList from './ParticipantList';
 import SelectedList from './SelectedList';
+import CampaignParInsta from './CampaignParInsta';
+import CampaignParBlog from './CampaignParBlog';
 
 function TabComponent(props) {
   const {
@@ -56,6 +58,18 @@ function TabComponent(props) {
   );
 }
 
+
+function ParticipantComponent(props) {
+  const { type } = props;
+  if (type === '1') {
+    return <CampaignParInsta />;
+  } if (type === '2') {
+    return <Box>Youtube</Box>;
+  } if (type === '3') {
+    return <CampaignParBlog />;
+  }
+  return null;
+}
 
 const useStyles = makeStyles({
   root: {
@@ -184,17 +198,21 @@ function CampaignDetail() {
   }, []);
 
   useEffect(() => {
+    console.log(DetailPageRef.current);
     if (DetailPageRef.current && productData.AD_DETAIL) {
       setTimeout(() => {
         const showMoreButton = DetailPageRef.current.clientHeight > 760;
         if (showMoreButton) setShowMore({ ...showMore, visible: true });
-      }, 200);
+      }, 1000);
     }
   }, [productData]);
 
+  function testRef() {
+    console.log(DetailPageRef.current.clientHeight);
+  }
 
   return (
-    <Box maxWidth="1160px" margin="0 auto" className="campaign-detail">
+    <Box maxWidth="1250px" margin="0 auto" className="campaign-detail">
       <Hidden mdUp>
         <TopMenu title="캠페인 안내" history={history} />
       </Hidden>
@@ -333,17 +351,19 @@ function CampaignDetail() {
                   <TabComponent isMD={isMD} tab={tab} setTab={setTab} text={`신청한 리뷰어 ${productData.TB_PARTICIPANTs.length}`} tabNumber={2} />
                 </Grid>
                 <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
-                  <TabComponent isMD={isMD} tab={tab} setTab={setTab} text="선정 리뷰어" tabNumber={3} />
+                  <TabComponent isMD={isMD} tab={tab} setTab={setTab} text="AI 분석" tabNumber={3} />
+                </Grid>
+                <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
+                  <TabComponent isMD={isMD} tab={tab} setTab={setTab} text="선정 리뷰어" tabNumber={4} />
                 </Grid>
               </Grid>
             </Box>
             {tab === 1 ? (
-              <Box
-                style={{
-                  textAlign: 'center',
-                  maxHeight: showMore.isOpen ? 'none' : '760px',
-                  overflow: 'hidden'
-                }}
+              <Box style={{
+                textAlign: 'center',
+                maxHeight: showMore.isOpen ? 'none' : '760px',
+                overflow: 'hidden'
+              }}
               >
                 <div ref={DetailPageRef}>
                   {ReactHtmlParser(productData.AD_DETAIL)}
@@ -351,22 +371,22 @@ function CampaignDetail() {
               </Box>
             ) : null}
             {tab === 2 ? (
-              <ParticipantList adId={adId} isMD={isMD} />
-            ) : null}
+              <ParticipantList adId={adId} isMD={isMD} />) : null}
             {tab === 3 ? (
-              <SelectedList adId={adId} isMD={isMD} />
-            ) : null}
+              <ParticipantComponent type={productData.AD_TYPE} />) : null}
+            {tab === 4 ? (
+              <SelectedList adId={adId} isMD={isMD} />) : null}
             {showMore.visible && tab === 1 ? (
               <Box mt={1} borderTop={`1px solid ${Colors.grey8}`}>
                 <StyledButton variant="text" background="#ffffff" color="#666" hoverBackground="#f8f8f8" onClick={toggleShowMore}>
                   {showMore.isOpen ? (
                     <React.Fragment>
-                        상세 페이지 주리기
+                      상품정보접기
                       <ExpandLess />
                     </React.Fragment>
                   ) : (
                     <React.Fragment>
-                        상세 페이지 더보기
+                      상품정보 더보기
                       <ExpandMore />
                     </React.Fragment>
                   )}
@@ -509,6 +529,7 @@ function CampaignDetail() {
           </Grid>
         ) : null}
       </Grid>
+      <StyledButton onClick={testRef}>test</StyledButton>
     </Box>
   );
 }
