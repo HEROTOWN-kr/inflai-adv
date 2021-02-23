@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useContext, useEffect, useRef, useState
 } from 'react';
 import {
@@ -133,6 +134,12 @@ function CampaignDetail() {
     }, 1);
   }
 
+  const detailDataRef = useCallback((detailDataNode) => {
+    if (detailDataNode !== null) {
+      console.log(detailDataNode.getBoundingClientRect().height);
+    }
+  }, []);
+
   function getDetailData() {
     if (token) {
       setLoading(true);
@@ -206,6 +213,7 @@ function CampaignDetail() {
       }, 1000);
     }
   }, [productData]);
+
 
   function testRef() {
     console.log(DetailPageRef.current.clientHeight);
@@ -365,7 +373,7 @@ function CampaignDetail() {
                 overflow: 'hidden'
               }}
               >
-                <div ref={DetailPageRef}>
+                <div ref={detailDataRef}>
                   {ReactHtmlParser(productData.AD_DETAIL)}
                 </div>
               </Box>
