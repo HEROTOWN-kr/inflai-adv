@@ -4,7 +4,7 @@ import axios from 'axios';
 import { map } from 'async';
 
 function MapGraph2(props) {
-  const { INS_ID } = props;
+  const { INS_ID, setMaxLocVal } = props;
   const [mapData, setMapData] = useState([]);
   const [process, setProcess] = useState(false);
   const selectEl = useRef(null);
@@ -17,7 +17,8 @@ function MapGraph2(props) {
     const InstaAgeInsights = await axios.get('/api/TB_INSTA/statsMap', {
       params: { INS_ID }
     });
-    const { data2 } = InstaAgeInsights.data;
+    const { data2, maxLoc } = InstaAgeInsights.data;
+    if (maxLoc) setMaxLocVal(maxLoc);
     setMapData(data2);
     setProcess(false);
   }

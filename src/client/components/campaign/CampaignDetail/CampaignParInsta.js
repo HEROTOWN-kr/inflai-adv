@@ -50,12 +50,12 @@ const tableHeader = [
     align: 'center',
     colName: 'INS_SCORE',
   },
-  {
+  /* {
     text: '순위',
     align: 'center',
     width: '100px',
     colName: 'INS_RANK',
-  },
+  }, */
   {
     text: '분석',
     align: 'center',
@@ -109,7 +109,8 @@ function CampaignParInsta() {
   };
 
   function sortTable(id) {
-    const isDesc = order.orderBy === id && order.direction === 'desc';
+    let isDesc = order.orderBy === id && order.direction === 'desc';
+    if (order.orderBy !== 'INS_RANK' && id === 'INS_RANK') isDesc = true;
     setPage(1);
     setOrder({
       orderBy: id,
@@ -158,7 +159,7 @@ function CampaignParInsta() {
               <option value="INS_LIKES">좋아요수</option>
               <option value="INS_CMNT">댓글수</option>
               <option value="INS_SCORE">점수</option>
-              <option value="INS_RANK">순위</option>
+              {/* <option value="INS_RANK">순위</option> */}
             </StyledSelect>
           </Grid>
         </Grid>
@@ -231,11 +232,11 @@ function CampaignParInsta() {
                   {row.INS_SCORE || '-'}
                 </StyledText>
               </StyledTableCell>
-              <StyledTableCell align="center">
+              {/* <StyledTableCell align="center">
                 <StyledText textAlign="center">
                   {row.INS_RANK || '-'}
                 </StyledText>
-              </StyledTableCell>
+              </StyledTableCell> */}
               <StyledTableCell align="center">
                 <StyledButton
                   height="25px"

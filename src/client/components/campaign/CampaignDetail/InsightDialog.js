@@ -17,7 +17,6 @@ import GoogleVisionGraph from '../Graphs/GoogleVisionGraph';
 import LikeCommentBarGraph from '../Graphs/LikeCommentBarGraph';
 import AgeGraph from '../Graphs/AgeGraph';
 import GenderGraph from '../Graphs/GenderGraph';
-import MapGraph from '../Graphs/MapGraph';
 import MapGraph2 from '../Graphs/MapGraph2';
 
 
@@ -40,6 +39,10 @@ const useStyles = makeStyles({
 function InsightDialog(props) {
   const { open, closeDialog, selectedId } = props;
   const [instaData, setInstaData] = useState({});
+  const [maxAgeVal, setMaxAgeVal] = useState(null);
+  const [maxLocVal, setMaxLocVal] = useState(null);
+  const [maxStatVal, setMaxStatVal] = useState(null);
+  const [maxGenderVal, setMaxGenderVal] = useState(null);
   const classes = useStyles();
 
   const theme = useTheme();
@@ -52,6 +55,7 @@ function InsightDialog(props) {
         params: { instaId: selectedId }
       });
       const { data } = InstaData.data;
+      console.log(data);
       setInstaData(data);
     } catch (err) {
       alert(err.response.data.message);
@@ -64,6 +68,10 @@ function InsightDialog(props) {
 
   function onDialogClose() {
     setInstaData({});
+    setMaxAgeVal(null);
+    setMaxGenderVal(null);
+    setMaxLocVal(null);
+    setMaxStatVal(null);
     closeDialog();
   }
 
@@ -154,7 +162,7 @@ function InsightDialog(props) {
                           borderRadius="100%"
                         />
                       </Grid>
-                      <Grid item><StyledText fontSize={isMD ? '30px' : '24px'} fontWeight="900">{instaData.INS_LIKES || instaData.INS_LIKES2}</StyledText></Grid>
+                      <Grid item><StyledText fontSize={isMD ? '30px' : '24px'} fontWeight="900">{instaData.INS_LIKES || 0}</StyledText></Grid>
                     </Grid>
                   </Box>
                 </WhiteBlock>
@@ -197,7 +205,7 @@ function InsightDialog(props) {
                     />
                   </Grid>
                   <Grid item xs={12} style={{ width: '100%' }}>
-                    <GoogleVisionGraph INS_ID={instaData.INS_ID} />
+                    <GoogleVisionGraph INS_ID={instaData.INS_ID} setMaxStatVal={setMaxStatVal} />
                   </Grid>
                 </Grid>
               </Box>
@@ -249,7 +257,7 @@ function InsightDialog(props) {
                     </Grid>
                   </Grid>
                   <Grid item xs={12}>
-                    <AgeGraph INS_ID={instaData.INS_ID} />
+                    <AgeGraph INS_ID={instaData.INS_ID} setMaxAgeVal={setMaxAgeVal} />
                   </Grid>
                 </Grid>
               </Box>
@@ -279,11 +287,24 @@ function InsightDialog(props) {
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <GenderGraph INS_ID={instaData.INS_ID} />
+                    <GenderGraph INS_ID={instaData.INS_ID} setMaxGenderVal={setMaxGenderVal} />
                   </Grid>
                 </Grid>
               </Box>
             </WhiteBlock>
+            <Box fontSize="14px" m="16px auto 0" p="10px" maxWidth="570px" width="100%" border="1px solid red">
+              <Box mb={1} textAlign="center" fontSize="18px" fontWeight="bold">인플라이의 Ai분석결과</Box>
+              <Box>{`팔로워 : ${instaData.INS_FLWR || 0}`}</Box>
+              <Box>{`평균 좋아요 : ${instaData.INS_LIKES ? Math.round(instaData.INS_LIKES / 25) : 0}개`}</Box>
+              <Box>{`평균 댓글 : ${instaData.INS_CMNT ? Math.round(instaData.INS_CMNT / 25) : 0}개`}</Box>
+              <Box mt={1}>
+                {`이 인플루언서는 
+                ${maxAgeVal ? `${maxAgeVal}세, ` : ''}
+                ${maxLocVal ? `${maxLocVal} 국적을 가진 ` : ''}
+                ${maxGenderVal ? `${maxGenderVal} ` : ''}팔로워가 많으며, 
+                ${maxStatVal ? `${maxStatVal} 카테고리 ` : ''}마케팅에 적합합니다.`}
+              </Box>
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
             <WhiteBlock borderRadius={isMD ? '25px' : '0'}>
@@ -301,7 +322,7 @@ function InsightDialog(props) {
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <MapGraph2 INS_ID={instaData.INS_ID} />
+                    <MapGraph2 INS_ID={instaData.INS_ID} setMaxLocVal={setMaxLocVal} />
                     {/* <MapGraph INS_ID={instaData.INS_ID} /> */}
                   </Grid>
                 </Grid>

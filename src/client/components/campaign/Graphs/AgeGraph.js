@@ -11,15 +11,16 @@ function AgeGraph(props) {
     age: []
   });
   const [process, setProcess] = useState(false);
-  const { INS_ID } = props;
+  const { INS_ID, setMaxAgeVal } = props;
 
   async function getStatistics() {
     setProcess(true);
     const InstaAgeInsights = await axios.get('/api/TB_INSTA/statsAge', {
       params: { INS_ID }
     });
-    const { data } = InstaAgeInsights.data;
+    const { data, maxAge } = InstaAgeInsights.data;
     setStatistics(data);
+    if (maxAge) setMaxAgeVal(maxAge);
     setProcess(false);
   }
 

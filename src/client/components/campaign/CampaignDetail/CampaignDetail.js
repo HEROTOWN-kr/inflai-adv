@@ -1,6 +1,6 @@
 import React, {
   useCallback,
-  useContext, useEffect, useRef, useState
+  useContext, useEffect, useState
 } from 'react';
 import {
   Grid, Divider, CircularProgress, Button, Box, Hidden, IconButton, makeStyles
@@ -15,8 +15,7 @@ import { useTheme } from '@material-ui/core/styles';
 import { useHistory, useParams } from 'react-router-dom';
 import * as Scroll from 'react-scroll';
 import { Skeleton } from '@material-ui/lab';
-import Common from '../../../lib/common';
-import { Colors, campaignSteps, AdvertiseTypes } from '../../../lib/Сonstants';
+import { Colors, AdvertiseTypes } from '../../../lib/Сonstants';
 import IconYoutube from '../../../img/icon_youtube_url.png';
 import IconInsta from '../../../img/icon_instagram_url.png';
 import IconBlog from '../../../img/icon_blog_url.png';
@@ -24,11 +23,8 @@ import StyledText from '../../../containers/StyledText';
 import StyledImage from '../../../containers/StyledImage';
 import StyledSvg from '../../../containers/StyledSvg';
 import StyledButton from '../../../containers/StyledButton';
-import defaultAccountImage from '../../../img/default_account_image.png';
 import AuthContext from '../../../context/AuthContext';
 import TopMenu from '../TopMenu';
-import InsightDialog from './InsightDialog';
-import ConfirmDialog from '../../../containers/ConfirmDialog';
 import ParticipantList from './ParticipantList';
 import SelectedList from './SelectedList';
 import CampaignParInsta from './CampaignParInsta';
@@ -59,7 +55,6 @@ function TabComponent(props) {
   );
 }
 
-
 function ParticipantComponent(props) {
   const { type } = props;
   if (type === '1') {
@@ -72,21 +67,10 @@ function ParticipantComponent(props) {
   return null;
 }
 
-const useStyles = makeStyles({
-  root: {
-    height: '48px',
-    backgroundColor: Colors.grey8,
-    '&:hover': {
-      backgroundColor: Colors.pink3
-    }
-  },
-});
-
 function CampaignDetail() {
   const history = useHistory();
   const params = useParams();
   const adId = params.id;
-  const classes = useStyles();
   const [productData, setProductData] = useState({
     AD_PROVIDE: '',
     AD_SHRT_DISC: '',
@@ -100,20 +84,14 @@ function CampaignDetail() {
   const [loading, setLoading] = useState(false);
   const [showMore, setShowMore] = useState({ visible: false, isOpen: false });
   const [tab, setTab] = useState(2);
-  const [liked, setLiked] = useState(false);
   const testImage = 'https://www.inflai.com/attach/portfolio/33/1yqw1whkavscxke.PNG';
-  const { token, userRole } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
   const theme = useTheme();
   const Scroller = Scroll.scroller;
   const ElementLink = Scroll.Element;
 
-  const DetailPageRef = useRef(null);
-
-  const isXl = useMediaQuery(theme.breakpoints.up('xl'));
-  const is1600 = useMediaQuery('(min-width:1600px)');
   const isLG = useMediaQuery(theme.breakpoints.up('lg'));
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
-  const isSM = useMediaQuery(theme.breakpoints.up('sm'));
 
   function toggleShowMore() {
     setShowMore({ ...showMore, isOpen: !showMore.isOpen });
@@ -134,9 +112,12 @@ function CampaignDetail() {
     }, 1);
   }
 
-  const detailDataRef = useCallback((detailDataNode) => {
-    if (detailDataNode !== null) {
-      console.log(detailDataNode.getBoundingClientRect().height);
+  const measuredRef = useCallback((node) => {
+    if (node !== null) {
+      setTimeout(() => {
+        const showMoreButton = node.getBoundingClientRect().height > 760;
+        if (showMoreButton) setShowMore({ ...showMore, visible: true });
+      }, 200);
     }
   }, []);
 
@@ -162,24 +143,6 @@ function CampaignDetail() {
     }
   }
 
-  function checkFavorites() {
-    if (token) {
-      axios.get('/api/TB_FAVORITES/check', {
-        params: {
-          adId,
-          token
-        }
-      }).then((res) => {
-        const { data } = res.data;
-        if (data) {
-          setLiked(true);
-        } else {
-          setLiked(false);
-        }
-      }).catch(error => alert(error.response.data.message));
-    }
-  }
-
   function calculateDates(date) {
     const currentDate = new Date();
     const lastDate = new Date(date);
@@ -191,10 +154,6 @@ function CampaignDetail() {
     getDetailData();
   }, [token]);
 
-  useEffect(() => {
-    checkFavorites();
-  }, [token]);
-
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -203,21 +162,6 @@ function CampaignDetail() {
       window.removeEventListener('scroll', () => handleScroll);
     };
   }, []);
-
-  useEffect(() => {
-    console.log(DetailPageRef.current);
-    if (DetailPageRef.current && productData.AD_DETAIL) {
-      setTimeout(() => {
-        const showMoreButton = DetailPageRef.current.clientHeight > 760;
-        if (showMoreButton) setShowMore({ ...showMore, visible: true });
-      }, 1000);
-    }
-  }, [productData]);
-
-
-  function testRef() {
-    console.log(DetailPageRef.current.clientHeight);
-  }
 
   return (
     <Box maxWidth="1250px" margin="0 auto" className="campaign-detail">
@@ -370,10 +314,11 @@ function CampaignDetail() {
               <Box style={{
                 textAlign: 'center',
                 maxHeight: showMore.isOpen ? 'none' : '760px',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                wordBreak: 'break-all'
               }}
               >
-                <div ref={detailDataRef}>
+                <div ref={measuredRef}>
                   {ReactHtmlParser(productData.AD_DETAIL)}
                 </div>
               </Box>
@@ -537,7 +482,6 @@ function CampaignDetail() {
           </Grid>
         ) : null}
       </Grid>
-      <StyledButton onClick={testRef}>test</StyledButton>
     </Box>
   );
 }

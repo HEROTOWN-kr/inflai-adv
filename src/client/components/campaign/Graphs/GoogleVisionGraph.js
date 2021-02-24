@@ -6,7 +6,7 @@ import axios from 'axios';
 function GoogleVisionGraph(props) {
   const [detectData, setDetectData] = useState([]);
   const [process, setProcess] = useState(false);
-  const { INS_ID } = props;
+  const { INS_ID, setMaxStatVal } = props;
 
   async function getGoogleVisionData(INS_ID) {
     setProcess(true);
@@ -15,7 +15,9 @@ function GoogleVisionGraph(props) {
     const googleData = await axios.get('/api/TB_INSTA/getGoogleData', {
       params: { INS_ID, host }
     });
-    setDetectData(googleData.data.statistics);
+    const { statistics } = googleData.data;
+    setDetectData(statistics);
+    if (statistics && statistics[0]) setMaxStatVal(statistics[0].description);
     setProcess(false);
   }
 
@@ -28,38 +30,33 @@ function GoogleVisionGraph(props) {
 
   return (
     <React.Fragment>
-      {
-              process ? <CircularProgress /> : (
-                <div>
-                  {detectData && detectData.length ? (
-                    <Box
-                      height="200px"
-                    >
-                      <PieChart
-                        data={detectData}
-                        animate="true"
-                        animationDuration="800"
-                        label={({ dataEntry }) => `${dataEntry.description} : ${dataEntry.value}%`}
-                        labelStyle={index => ({
-                          fill: detectData[index].color,
-                          fontSize: '10px',
-                          fontFamily: 'sans-serif',
-                        })}
-                        radius={35}
-                        labelPosition={120}
-                      />
-                    </Box>
-                  ) : (
-                    <Grid container justify="center">
-                      <Grid item>
-                                  Google Vision Data
-                      </Grid>
-                    </Grid>
-                  )
-                      }
-                </div>
-              )
-          }
+      {process ? <CircularProgress /> : (
+        <div>
+          {detectData && detectData.length ? (
+            <Box height="200px">
+              <PieChart
+                data={detectData}
+                animate="true"
+                animationDuration="800"
+                label={({ dataEntry }) => `${dataEntry.description} : ${dataEntry.value}%`}
+                labelStyle={index => ({
+                  fill: detectData[index].color,
+                  fontSize: '10px',
+                  fontFamily: 'sans-serif',
+                })}
+                radius={35}
+                labelPosition={120}
+              />
+            </Box>
+          ) : (
+            <Grid container justify="center">
+              <Grid item>
+                Google Vision Data
+              </Grid>
+            </Grid>
+          )}
+        </div>
+      )}
     </React.Fragment>
   );
 }
