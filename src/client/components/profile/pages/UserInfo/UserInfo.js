@@ -135,6 +135,18 @@ function UserInfo(props) {
           <Grid item xs={12}>
             <Grid container alignItems="center" spacing={1}>
               <Grid item>
+                <LabelComponent labelName="이메일" />
+              </Grid>
+              <Grid item xs={12} md>
+                <Box width={isMD ? '250px' : '100%'}>
+                  {userInfo.ADV_EMAIL || ''}
+                </Box>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container alignItems="center" spacing={1}>
+              <Grid item>
                 <LabelComponent labelName="이름" />
               </Grid>
               <Grid item xs={12} md>
