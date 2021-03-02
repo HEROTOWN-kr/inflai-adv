@@ -354,13 +354,31 @@ function CampaignDetail() {
                 <Grid container>
                   <ElementLink name="provide" />
                   <Grid item>
-                    <Box width="125px" fontWeight="bold" component="p">제공내역</Box>
+                    <Box width="125px" fontWeight="bold">제공내역</Box>
                   </Grid>
                   <Grid item xs={12} sm className="provide-info">
                     {productData.AD_PROVIDE}
                   </Grid>
                 </Grid>
               </Grid>
+              {productData.AD_MONEY ? (
+                <React.Fragment>
+                  <Grid item xs={12}>
+                    <Divider />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Grid container>
+                      <ElementLink name="provide" />
+                      <Grid item>
+                        <Box width="125px" fontWeight="bold">제공금액</Box>
+                      </Grid>
+                      <Grid item xs={12} sm className="provide-info">
+                        {`${productData.AD_MONEY}원`}
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </React.Fragment>
+              ) : null}
               <Grid item xs={12}>
                 <Divider />
               </Grid>

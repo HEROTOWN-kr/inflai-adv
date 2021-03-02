@@ -11,15 +11,15 @@ const Scroller = Scroll.scroller;
 
 const defaultMenuLinks = [
   {
-    text: '홍보하기',
+    text: '인플루언서 모집하기',
     link: '/Campaign'
   },
   {
-    text: '멤버십',
+    text: '요금제',
     link: '/Membership'
   },
   {
-    text: '캠페인 관리',
+    text: '인플루언서 모집관리',
     link: '/Profile/CampaignInfo'
   },
   /* {

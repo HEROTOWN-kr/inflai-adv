@@ -90,55 +90,49 @@ function MembershipInfo(props) {
           </Grid>
         </Box>
         <Box mt={4}>
-          {
-            subscribeData.length > 0 ? (
-              <Grid container spacing={1}>
-                {
-                  subscribeData.map(sub => (
-                    <Grid item xs={12} key={sub.SUB_ID}>
-                      <Box py={4} border="1px solid #e9ecef">
-                        <Grid container>
-                          {
-                              cardInfo.map(item => (
-                                <Grid item xs={3} key={item.name}>
-                                  <Grid container direction="column" alignItems="center">
-                                    <Grid item><StyledText fontWeight="bold" lineHeight="1.5em">{item.name}</StyledText></Grid>
-                                    <Grid item><StyledText lineHeight="1.5em">{sub[item.data] || '-'}</StyledText></Grid>
-                                  </Grid>
-                                </Grid>
-                              ))
-                            }
-                          <Grid item xs={3}>
-                            <Grid container direction="column" alignItems="center">
-                              <Grid item><StyledText fontWeight="bold" lineHeight="1.5em">상태</StyledText></Grid>
-                              <Grid item>
-                                <StyledText
-                                  color={sub.SUB_STATUS === '대기' ? Colors.red : Colors.green}
-                                  lineHeight="1.5em"
-                                >
-                                  {sub.SUB_STATUS || '-'}
-                                </StyledText>
-                              </Grid>
-                            </Grid>
+          { subscribeData.length > 0 ? (
+            <Grid container spacing={1}>
+              { subscribeData.map((sub, index) => (
+                <Grid key={index} item xs={12}>
+                  <Box py={4} border="1px solid #e9ecef">
+                    <Grid container>
+                      { cardInfo.map(item => (
+                        <Grid item xs={3} key={item.name}>
+                          <Grid container direction="column" alignItems="center">
+                            <Grid item><StyledText fontWeight="bold" lineHeight="1.5em">{item.name}</StyledText></Grid>
+                            <Grid item><StyledText lineHeight="1.5em">{sub[item.data] || '-'}</StyledText></Grid>
                           </Grid>
                         </Grid>
-                      </Box>
+                      )) }
+                      <Grid item xs={3}>
+                        <Grid container direction="column" alignItems="center">
+                          <Grid item><StyledText fontWeight="bold" lineHeight="1.5em">상태</StyledText></Grid>
+                          <Grid item>
+                            <StyledText
+                              color={sub.SUB_STATUS === '대기' ? Colors.red : Colors.green}
+                              lineHeight="1.5em"
+                            >
+                              {sub.SUB_STATUS || '-'}
+                            </StyledText>
+                          </Grid>
+                        </Grid>
+                      </Grid>
                     </Grid>
-                  ))
-                }
-              </Grid>
-            ) : (
-              <React.Fragment>
-                <Grid container justify="center">
-                  <Grid item>
-                    <StyledText fontSize="16px">
-                      진행중 서브스크립션이 없습니다.
-                    </StyledText>
-                  </Grid>
+                  </Box>
                 </Grid>
-              </React.Fragment>
-            )
-            }
+              )) }
+            </Grid>
+          ) : (
+            <React.Fragment>
+              <Grid container justify="center">
+                <Grid item>
+                  <StyledText fontSize="16px">
+                      진행중 서브스크립션이 없습니다.
+                  </StyledText>
+                </Grid>
+              </Grid>
+            </React.Fragment>
+          ) }
         </Box>
       </Box>
     </WhiteBlock>

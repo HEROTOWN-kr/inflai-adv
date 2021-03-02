@@ -42,8 +42,8 @@ function HomeVideoTitle() {
         top="35%"
         width="100%"
       >
-        <Box fontSize={isMD ? '40px' : '4.8vw'}>가짜는 거르고,</Box>
-        <Box fontSize={isMD ? '70px' : '9vw'}>딱 맞게 고르고!</Box>
+        <Box fontSize={isMD ? '40px' : '4.8vw'}>인공지능으로 추천하는</Box>
+        <Box fontSize={isMD ? '40px' : '4.8vw'}>최적의 인플루언서 매칭 플랫폼</Box>
         <Box
           border="2px solid #fff"
           borderRadius="20px"
