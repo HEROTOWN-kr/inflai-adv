@@ -46,7 +46,7 @@ const tableHeader = [
     colName: 'INS_CMNT',
   },
   {
-    text: '점수',
+    text: 'AI 종합 점수',
     align: 'center',
     colName: 'INS_SCORE',
   },

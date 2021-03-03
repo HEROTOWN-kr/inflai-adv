@@ -508,7 +508,6 @@ function CampaignCreateNew() {
               </Box>
             </Grid>
           </Grid>
-
         </Grid>
         <Grid item xs={12}>
           <Box mb={1}>

@@ -155,10 +155,10 @@ function SelectedList(props) {
                       <RatingComponent id={item.PAR_ID} rating={item.PAR_RATING} />
                     </Box>
                   ) : null}
-                  <Box mt="5px" ml="auto" width={{ xs: '100%', sm: '100px' }}>
+                  <Box mt="5px" ml="auto" width={{ xs: '100%', sm: '120px' }}>
                     <Grid container spacing={1}>
                       <Grid item xs={6} sm={12}>
-                        <StyledButton height="30px" padding="0 10px" onClick={() => clickDataInfo(item.PAR_ID)}>자세히 보기</StyledButton>
+                        <StyledButton height="30px" padding="0 10px" onClick={() => clickDataInfo(item.PAR_ID)}>택배 발송 정보</StyledButton>
                       </Grid>
                       {item.PAR_REVIEW ? (
                         <Grid item xs={6} sm={12}>

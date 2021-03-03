@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import axios from 'axios';
 import {
-  Box, Grid, Paper, FormControlLabel, Checkbox, RadioGroup, Radio, TextareaAutosize
+  Box, Grid, Paper, FormControlLabel, Checkbox, RadioGroup, Radio, TextareaAutosize, InputAdornment, makeStyles
 } from '@material-ui/core';
 import { useForm, Controller, get } from 'react-hook-form';
 import * as Yup from 'yup';
@@ -34,6 +34,20 @@ const deliveryTypes = [
   { value: '1', text: '배송상품' },
 ];
 
+const useStyles = makeStyles({
+  endAdornment: {
+    // padding: '0'
+  },
+  input: {
+    padding: '15px 14px',
+    textAlign: 'right',
+    paddingRight: '2px'
+  },
+  positionEnd: {
+    margin: '0'
+  }
+});
+
 function CampaignEdit() {
   const history = useHistory();
   const params = useParams();
@@ -42,6 +56,7 @@ function CampaignEdit() {
   const [dbImages, setDbImages] = useState([]);
   const [limits, setLimits] = useState({ InfCountUsed: 0, InfCountLeft: 0, PlnInfMonth: 0 });
   const [savingMode, setSavingMode] = useState(false);
+  const classes = useStyles();
 
   function toggleSavingMode() {
     setSavingMode(!savingMode);
@@ -72,7 +87,9 @@ function CampaignEdit() {
     selectStart: today,
     selectFinish: tomorrow,
     phone: '',
-    email: ''
+    email: '',
+    provideInfo: '',
+    provideMoney: '',
   };
 
   Yup.addMethod(Yup.string, 'integerString', function () {
@@ -102,6 +119,14 @@ function CampaignEdit() {
     email: Yup.string().required('이메일을 입력해주세요').email('잘못된 이메일 형식입니다'),
     searchKeyword: Yup.string().required('검색키워드를 입력해주세요'),
     discription: Yup.string().required('포스팅가이드를 입력해주세요'),
+    provideInfo: Yup.string().required('제공내역을 입력해주세요'),
+    provideMoney: Yup.string().notRequired().test('provideMoney', '숫자 입력만 가능합니다', (value) => {
+      if (value) {
+        const moneySchema = Yup.string().integerString();
+        return moneySchema.isValidSync(value);
+      }
+      return true;
+    }),
     picArray: Yup.string()
       .test('picCheck', '이미지 업러드 해주세요', val => images.length > 0 || dbImages.length > 0)
       .test('picLength', '이미지 5개만 업러드 가능합니다', val => (images.length + dbImages.length) < 6),
@@ -147,9 +172,7 @@ function CampaignEdit() {
 
   function getCampaignData() {
     axios.get('/api/TB_AD/getAdDataBiz', {
-      params: {
-        token, adId: params.id
-      }
+      params: { token, adId: params.id }
     }).then((res) => {
       if (res.status === 201) {
         history.push('/');
@@ -158,7 +181,7 @@ function CampaignEdit() {
         const {
           AD_INF_CNT, AD_SRCH_START, AD_SRCH_END, AD_SEL_START, AD_SEL_END, AD_DELIVERY, AD_CTG,
           AD_CTG2, AD_TEL, AD_EMAIL, AD_NAME, AD_SHRT_DISC, AD_DISC, AD_SEARCH_KEY,
-          AD_TYPE, AD_DETAIL, AD_PROVIDE, AD_POST_CODE, AD_ROAD_ADDR,
+          AD_TYPE, AD_DETAIL, AD_PROVIDE, AD_MONEY, AD_POST_CODE, AD_ROAD_ADDR,
           AD_DETAIL_ADDR, AD_EXTR_ADDR, TB_PHOTO_ADs
         } = data;
 
@@ -183,6 +206,7 @@ function CampaignEdit() {
 
         if (AD_DETAIL) resetObj.detailInfo = AD_DETAIL;
         if (AD_PROVIDE) resetObj.provideInfo = AD_PROVIDE;
+        if (AD_MONEY) resetObj.provideMoney = AD_MONEY;
         if (AD_POST_CODE) resetObj.postcode = AD_POST_CODE;
         if (AD_ROAD_ADDR) resetObj.roadAddress = AD_ROAD_ADDR;
         if (AD_DETAIL_ADDR) resetObj.detailAddress = AD_DETAIL_ADDR;
@@ -309,11 +333,9 @@ function CampaignEdit() {
             name="sns"
             control={control}
           />
-          {
-            errors.sns ? (
-              <div className="error-message">{errors.sns.message}</div>
-            ) : null
-          }
+          { errors.sns ? (
+            <div className="error-message">{errors.sns.message}</div>
+          ) : null }
         </Grid>
         <Grid item xs={12}>
           <Box mb={1}>
@@ -480,7 +502,7 @@ function CampaignEdit() {
           />
         </Grid>
         <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">제공내역 (선택)</StyledText></Box>
+          <Box mb={1}><StyledText color="#3f51b5">제공내역 (필수)</StyledText></Box>
           <ReactFormText
             register={register}
             errors={errors}
@@ -488,7 +510,37 @@ function CampaignEdit() {
             rows={5}
             rowsMax={10}
             name="provideInfo"
+            placeholder="예시) 시가 12만원 상당 스틱형벌꿀 1박스"
           />
+        </Grid>
+        <Grid item xs={12}>
+          <Box mb={1}><StyledText color="#3f51b5">추가 제공금액 (선택)</StyledText></Box>
+          <Grid container spacing={1} alignItems="center">
+            <Grid item xs={12} md="auto">
+              <Box width={{ xs: '100%', md: '200px' }}>
+                <ReactFormText
+                  register={register}
+                  errors={errors}
+                  name="provideMoney"
+                  placeholder=""
+                  InputProps={{
+                    readOnly: true,
+                    endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
+                    classes: {
+                      adornedEnd: classes.endAdornment,
+                      input: classes.input
+                    }
+                  }}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md>
+              <Box fontSize="14px">
+                제공하는 물품(서비스)의 시가가 낮은 경우 인플루언서 모집이 원활하지 않을 수 있습니다.
+                이럴 때 추가적인 금액을 제공해 주시면 더 좋은 인플루언서가 신청할 가능성이 커집니다.
+              </Box>
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12}>
           <Box mb={1}>
