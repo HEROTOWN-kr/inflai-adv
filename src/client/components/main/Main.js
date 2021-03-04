@@ -16,6 +16,8 @@ import SignUpNew from '../loginNew/SignUpNew';
 import Join from '../loginNew/Join';
 import Activate from '../loginNew/Activate';
 import ResetPassPage from '../loginNew/ResetPassPage';
+import Service from '../footer/Service';
+import Privacy from '../footer/Privacy';
 
 function Main() {
   const [isMember, setIsMember] = useState(false);
@@ -94,6 +96,14 @@ function Main() {
       <Route
         path="/Reset/:hash"
         render={renderProps => <ResetPassPage {...renderProps} />}
+      />
+      <Route
+        path="/Policy/Service"
+        render={props => <Service {...props} />}
+      />
+      <Route
+        path="/Policy/Privacy"
+        render={props => <Privacy {...props} />}
       />
       {/* <Route
         path="/Profile"

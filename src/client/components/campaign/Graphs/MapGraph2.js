@@ -19,7 +19,7 @@ function MapGraph2(props) {
     });
     const { data2, maxLoc } = InstaAgeInsights.data;
     if (maxLoc) setMaxLocVal(maxLoc);
-    setMapData(data2);
+    if (data2) setMapData(data2);
     setProcess(false);
   }
 

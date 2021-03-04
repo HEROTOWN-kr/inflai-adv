@@ -88,9 +88,9 @@ function CampaignCreateNew() {
 
   const today = new Date();
   const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow.setDate(tomorrow.getDate() + 7);
   const tomorrowMax = new Date(tomorrow);
-  tomorrowMax.setDate(tomorrow.getDate() + 6);
+  tomorrowMax.setDate(tomorrow.getDate() + 13);
 
   const [pickerDates, setPickerDates] = useState({ min: tomorrow, max: tomorrowMax });
 
@@ -177,7 +177,7 @@ function CampaignCreateNew() {
     const selectStart = new Date(watchObj.searchFinish);
     selectStart.setDate(selectStart.getDate() + 1);
     const selectFinish = new Date(selectStart);
-    selectFinish.setDate(selectFinish.getDate() + 6);
+    selectFinish.setDate(selectFinish.getDate() + 7);
     setValue('selectStart', selectStart);
     setValue('selectFinish', selectFinish);
   }, [watchObj.searchFinish]);
@@ -186,8 +186,11 @@ function CampaignCreateNew() {
     const minDate = new Date(date);
     minDate.setDate(minDate.getDate() + 1);
     const maxDate = new Date(minDate);
-    maxDate.setDate(maxDate.getDate() + 6);
-    setValue('searchFinish', minDate);
+    maxDate.setDate(maxDate.getDate() + 13);
+    const searchFinish = new Date(date);
+    searchFinish.setDate(searchFinish.getDate() + 7);
+
+    setValue('searchFinish', searchFinish);
     setPickerDates({ min: minDate, max: maxDate });
   }
 
@@ -321,7 +324,7 @@ function CampaignCreateNew() {
         <Grid item xs={12}>
           <Box mb={1}>
             <StyledText color="#3f51b5">
-              리뷰어 모집기간 (최대 모집기간은 1주일입니다)
+              리뷰어 모집기간 (최대 모집기간은 2주일입니다)
             </StyledText>
           </Box>
           <Grid container spacing={isSM ? 3 : 1} alignItems="center">

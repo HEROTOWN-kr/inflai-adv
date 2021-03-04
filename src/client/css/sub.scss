@@ -31,6 +31,49 @@ $colorPink: #fbbaba;
   }
 }
 
+.privacy {
+  .main-box {
+    border: solid 1px #dfe2e8;
+    .main-title {
+      font-size: 27px;
+    }
+    .text-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+    .text-main {
+      font-size: 14px;
+      line-height: 1.8;
+      .head {
+        position: sticky;
+        top: 0
+      }
+      p {
+        margin: 0;
+        padding-left: 10px;
+      }
+      &.gray {
+        color: #666;
+      }
+      ol {
+        margin: 0;
+        padding-left: 0;
+        &.no-type {
+          list-style-type: none;
+          padding-left: 30px;
+        }
+        li {
+          margin-top: 12px;
+        }
+        li:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}
+
 .navbar {
   //background: $colorBlue;
   transition: background 0.5s ease;
