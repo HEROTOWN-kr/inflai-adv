@@ -185,6 +185,7 @@ export const Colors = {
   aqua: '#23c9cf',
   red: '#fa4616',
   black: '#333',
+  black2: '#000000',
   grey: '#dfe2e8',
   grey2: '#999999',
   grey3: '#f5f6f7',
