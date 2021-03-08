@@ -28,7 +28,7 @@ function home(props) {
       <HomeBanners />
       {/* <HomeProcess /> */}
       <HomeSpeciality isMD={isMD} />
-      <HomePartners isMD={isMD} />
+      {/* <HomePartners isMD={isMD} /> */}
     </Box>
   );
 }

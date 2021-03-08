@@ -96,11 +96,7 @@ function Membership() {
 
   const theme = useTheme();
 
-  const isXl = useMediaQuery(theme.breakpoints.up('xl'));
-  const is1600 = useMediaQuery('(min-width:1600px)');
-  const isLG = useMediaQuery(theme.breakpoints.up('lg'));
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
-  const isSM = useMediaQuery(theme.breakpoints.up('sm'));
 
   function getPlans() {
     axios.get('/api/TB_PLAN/').then((res) => {
@@ -177,19 +173,13 @@ function Membership() {
 
   return (
     <Box maxWidth="1160px" margin="0 auto" my={6} px={2} className="membership">
-      <StyledText fontSize={isMD ? '35px' : '20px'} textAlign="center">
+      <Box fontSize={{ xs: '20px', md: '38px' }} textAlign="center">
           인플라이
         <span style={{ color: Colors.pink }}> 멤버십</span>
 을
             시작하세요
-      </StyledText>
-      {/* <Box my={3}>
-        <StyledText fontSize={isMD ? '35' : '20'} textAlign="center">
-          지금 가입 시,
-          <span style={{ color: Colors.pink }}> 3개월 '0원'</span>
-        </StyledText>
-      </Box> */}
-      <Box py={3}>
+      </Box>
+      <Box mt="50px" mb="90px">
         {isMD ? (
           <Grid container justify="space-between">
             {plans.map((item, index) => (
@@ -205,7 +195,6 @@ function Membership() {
                   onClick={() => selectPlan(item.PLN_ID)}
                 >
                   <Box p="20px" style={myStyles[index]}>
-                    {/* <StyledText fontSize={19} fontWeight="bold" color={myStyles[index].color}>{item.PLN_NAME}</StyledText> */}
                     <Box mt="40px">
                       <StyledText fontSize={19} color={myStyles[index].color} textAlign="right">월 부담 비용</StyledText>
                       <StyledText fontSize={35} color={myStyles[index].color} textAlign="right" fontWeight="bold" lineHeight="2em">{`₩ ${formatNumber(item.PLN_PRICE_MONTH)}`}</StyledText>
@@ -255,13 +244,9 @@ function Membership() {
         )}
       </Box>
       {isMD ? (
-        <Grid container justify="center">
-          <Grid item>
-            <Box width="300px">
-              <StyledButton disabled={!selected} onClick={openInfoDialog}>구독하기</StyledButton>
-            </Box>
-          </Grid>
-        </Grid>
+        <Box width="190px" m="0 auto">
+          <StyledButton disabled={!selected} fontSize="16px" fontWeight="600" height="42px" onClick={openInfoDialog}>구독하기</StyledButton>
+        </Box>
       ) : null}
       <PlanSuccessDialog
         open={successDialogOpen}

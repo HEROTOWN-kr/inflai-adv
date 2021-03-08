@@ -196,9 +196,7 @@ function CampaignCreateNew() {
 
   function getInfluencersCount() {
     axios.get('/api/TB_SUBSCRIPTION/getInfluencers', {
-      params: {
-        token,
-      }
+      params: { token }
     }).then((res) => {
       const { InfCountUsed, InfCountLeft, PlnInfMonth } = res.data.data;
       setLimits({ InfCountUsed, InfCountLeft, PlnInfMonth });
