@@ -18,6 +18,7 @@ import Activate from '../loginNew/Activate';
 import ResetPassPage from '../loginNew/ResetPassPage';
 import Service from '../footer/Service';
 import Privacy from '../footer/Privacy';
+import MembershipNew from '../membership/MembershipNew';
 
 function Main() {
   const [isMember, setIsMember] = useState(false);
@@ -61,6 +62,10 @@ function Main() {
       <Route
         path="/Membership"
         render={renderProps => <Membership {...renderProps} />}
+      />
+      <Route
+        path="/MembershipNew"
+        render={renderProps => <MembershipNew {...renderProps} />}
       />
       <Route
         path="/Login"
