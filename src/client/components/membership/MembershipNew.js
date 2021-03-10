@@ -1,92 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  Box, Grid, Paper, useTheme, useMediaQuery
+  Box, Grid, Paper, useTheme, useMediaQuery, Button
 } from '@material-ui/core';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Slider from 'react-slick';
 import StyledText from '../../containers/StyledText';
 import { Colors } from '../../lib/Сonstants';
-import StyledButton from '../../containers/StyledButton';
 import PlanSuccessDialog from './PlanSuccessDialog';
 import AuthContext from '../../context/AuthContext';
-
-
-const myStyles = [
-  {
-    backgroundColor: 'rgb(251,253,254)',
-    background: 'linear-gradient(349deg, rgba(237,242,245,1) 0%, rgba(251,253,254,1) 100%)',
-    color: '#334155',
-    color2: '#888888'
-  },
-  {
-    backgroundColor: 'rgb(34,155,242)',
-    background: 'linear-gradient(349deg, rgba(34,155,242,1) 0%, rgba(35,218,219,1) 100%)',
-    color: '#ffffff',
-    color2: '#888888'
-  },
-  {
-    backgroundColor: 'rgb(35,197,117)',
-    background: 'linear-gradient(349deg, rgba(35,197,117,1) 0%, rgba(45,240,151,1) 100%)',
-    color: '#ffffff',
-    color2: '#888888'
-  },
-  {
-    backgroundColor: 'rgb(35,197,117)',
-    background: 'linear-gradient(349deg, rgba(187,35,197,1) 0%, rgba(118,230,179,1) 100%)',
-    color: '#ffffff',
-    color2: '#888888'
-  }
-];
+import Payment from './Payment';
 
 const PlanColors = ['#f3953f', '#1a9eda', '#eb5888', '#3adc46'];
 
 function formatNumber(num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }
-
-const testPlans = [
-  {
-    PLN_ID: 1,
-    PLN_NAME: '1개월 이용',
-    PLN_DETAIL: '1개월 무료 플랜입니다',
-    PLN_DETAIL2: '•1개월 간 총 5명의 인플루언서를 인공지능으로 선택할수 있습니다.',
-    PLN_MONTH: 1,
-    PLN_INF_MONTH: 5,
-    PLN_PRICE_MONTH: 0,
-    PLN_DSCNT: null
-  },
-  {
-    PLN_ID: 2,
-    PLN_NAME: '2개월 이용',
-    PLN_DETAIL: '2개월 플랜입니다',
-    PLN_DETAIL2: '•2개월 간 총 30명의 인플루언서를 인공지능으로 선택할수 있습니다.',
-    PLN_MONTH: 2,
-    PLN_INF_MONTH: 15,
-    PLN_PRICE_MONTH: 30000,
-    PLN_DSCNT: null
-  },
-  {
-    PLN_ID: 3,
-    PLN_NAME: '3개월 이용',
-    PLN_DETAIL: '3개월 플랜입니다',
-    PLN_DETAIL2: '•3개월 간 총 300명의 인플루언서를 인공지능으로 선택할수 있습니다.',
-    PLN_MONTH: 3,
-    PLN_INF_MONTH: 100,
-    PLN_PRICE_MONTH: 100000,
-    PLN_DSCNT: null
-  },
-  {
-    PLN_ID: 4,
-    PLN_NAME: '4개월 이용',
-    PLN_DETAIL: '4개월 플랜입니다',
-    PLN_DETAIL2: '•4개월 간 총 2000명의 인플루언서를 인공지능으로 선택할수 있습니다.',
-    PLN_MONTH: 4,
-    PLN_INF_MONTH: 500,
-    PLN_PRICE_MONTH: 150000,
-    PLN_DSCNT: null
-  },
-];
 
 function MembershipNew() {
   const [plans, setPlans] = useState([]);
@@ -202,7 +131,8 @@ function MembershipNew() {
                   <Box m="0 auto" mt="20px" bgcolor={PlanColors[index]} borderRadius="13px" width="95px" height="3px" component="hr" />
                   <Box my="35px" fontSize="15px" letterSpacing="0.01em" lineHeight="24px">{item.PLN_DETAIL2}</Box>
                   <Box fontSize="35px" fontWeight="600" color="#142b65">{`${(item.PLN_PRICE_MONTH).toLocaleString('en')}원` || '무료'}</Box>
-                  <Box my="35px" m="0 auto" p="11px 27px" width="100px" fontSize="18px" color="#ffffff" bgcolor={PlanColors[index]} borderRadius="30px" css={{ cursor: 'pointer' }}>구독하기</Box>
+                  {/* <Box my="35px" m="0 auto" p="11px 27px" width="100px" fontSize="18px" color="#ffffff" bgcolor={PlanColors[index]} borderRadius="30px" css={{ cursor: 'pointer' }}>구독하기</Box> */}
+                  <Payment bgColor={PlanColors[index]} />
                   <Box mb="10px" fontSize="15px" letterSpacing="0.01em" lineHeight="24px">{item.PLN_DETAIL}</Box>
                 </Box>
               </Grid>

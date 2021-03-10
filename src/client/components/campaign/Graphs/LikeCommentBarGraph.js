@@ -34,22 +34,22 @@ function LikeCommentBarGraph(props) {
       type: 'line',
       data: statistics.likeStats,
       fill: false,
-      borderColor: Colors.orange,
-      backgroundColor: Colors.orange,
-      pointBorderColor: Colors.orange,
-      pointBackgroundColor: Colors.orange,
-      pointHoverBackgroundColor: Colors.orange,
-      pointHoverBorderColor: Colors.orange,
+      borderColor: Colors.red2,
+      backgroundColor: Colors.red2,
+      pointBorderColor: Colors.red2,
+      pointBackgroundColor: Colors.red2,
+      pointHoverBackgroundColor: Colors.red2,
+      pointHoverBorderColor: Colors.red2,
       yAxisID: 'y-axis-2'
     }, {
       label: 'Replies',
       type: 'bar',
       data: statistics.commentsStats,
       fill: false,
-      backgroundColor: Colors.blue2,
-      borderColor: Colors.blue2,
-      hoverBackgroundColor: Colors.blue2,
-      hoverBorderColor: Colors.blue2,
+      backgroundColor: Colors.green2,
+      borderColor: Colors.green2,
+      hoverBackgroundColor: Colors.green2,
+      hoverBorderColor: Colors.green2,
       yAxisID: 'y-axis-1'
     }]
   };

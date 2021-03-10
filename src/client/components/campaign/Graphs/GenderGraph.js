@@ -42,7 +42,7 @@ function GenderGraph(props) {
                         width="10px"
                         height="10px"
                         css={{
-                          backgroundColor: Colors.orange,
+                          backgroundColor: Colors.red2,
                           borderRadius: '100%'
                         }}
                       />
@@ -61,7 +61,7 @@ function GenderGraph(props) {
                         width="10px"
                         height="10px"
                         css={{
-                          backgroundColor: Colors.blue2,
+                          backgroundColor: Colors.green2,
                           borderRadius: '100%'
                         }}
                       />
@@ -80,14 +80,14 @@ function GenderGraph(props) {
                   css={{
                     borderRadius: '12px',
                     overflow: 'hidden',
-                    backgroundColor: Colors.blue2
+                    backgroundColor: Colors.green2
                   }}
                 >
                   <Box
                     height="inherit"
                     width={`${statistics}%`}
                     css={{
-                      backgroundColor: Colors.orange,
+                      backgroundColor: Colors.red2,
                       overflow: 'hidden'
                     }}
                   />

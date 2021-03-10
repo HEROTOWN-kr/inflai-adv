@@ -35,8 +35,8 @@ function AgeGraph(props) {
     datasets: [
       {
         label: '팔로워 수',
-        backgroundColor: Colors.orange,
-        borderColor: Colors.orange,
+        backgroundColor: Colors.green2,
+        borderColor: Colors.green2,
         borderWidth: 1,
         // hoverBackgroundColor: Colors.blue2,
         // hoverBorderColor: Colors.blue2,

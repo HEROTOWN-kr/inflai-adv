@@ -221,10 +221,10 @@ function InsightDialog(props) {
                       <Grid item>
                         <StyledSvg
                           component={ImportExportOutlined}
-                          color={Colors.orange}
+                          color={Colors.green2}
                           fontSize="14px"
                           padding="8px"
-                          background={Colors.orangeBack}
+                          background={Colors.green2Back}
                           borderRadius="100%"
                         />
                       </Grid>
@@ -247,10 +247,10 @@ function InsightDialog(props) {
                       <Grid item>
                         <StyledSvg
                           component={CalendarToday}
-                          color={Colors.blue2}
+                          color={Colors.red2}
                           fontSize="14px"
                           padding="8px"
-                          background={Colors.blue2Back}
+                          background={Colors.red2Back}
                           borderRadius="100%"
                         />
                       </Grid>
@@ -270,19 +270,19 @@ function InsightDialog(props) {
                   <Grid item xs={12} container justify="space-between" alignItems="center">
                     <StyledSvg
                       component={Details}
-                      color={Colors.orange}
+                      color={Colors.red2}
                       fontSize="14px"
                       padding="8px"
-                      background={Colors.orangeBack}
+                      background={Colors.red2Back}
                       borderRadius="100%"
                     />
                     <Grid item><StyledText fontSize="14px">성비</StyledText></Grid>
                     <StyledSvg
                       component={ChangeHistory}
-                      color={Colors.blue2}
+                      color={Colors.green2}
                       fontSize="14px"
                       padding="8px"
-                      background={Colors.blue2Back}
+                      background={Colors.green2Back}
                       borderRadius="100%"
                     />
                   </Grid>
