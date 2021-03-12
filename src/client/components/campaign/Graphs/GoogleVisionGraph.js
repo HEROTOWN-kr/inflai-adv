@@ -51,7 +51,7 @@ function GoogleVisionGraph(props) {
           ) : (
             <Grid container justify="center">
               <Grid item>
-                Google Vision Data
+                로딩 중...
               </Grid>
             </Grid>
           )}

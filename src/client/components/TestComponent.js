@@ -1,99 +1,65 @@
-import React, { useState } from 'react';
-import axios from 'axios';
 import {
-  Box, Dialog, useMediaQuery, IconButton, makeStyles, Typography, Grid, useTheme
+  Box, Dialog, Grid, useMediaQuery, useTheme
 } from '@material-ui/core';
 import {
-  CalendarToday, ChangeHistory,
-  ChatBubble, Clear, Details, Favorite, Forum, Image, ImportExportOutlined, Room
+  CalendarToday,
+  ChangeHistory,
+  ChatBubble,
+  Clear,
+  Details,
+  Favorite,
+  Image,
+  ImportExportOutlined, Room, Forum
 } from '@material-ui/icons';
-import { Colors } from '../../../lib/Сonstants';
-import WhiteBlock from '../../../containers/WhiteBlock';
-import StyledImage from '../../../containers/StyledImage';
-import defaultAccountImage from '../../../img/default_account_image.png';
-import StyledText from '../../../containers/StyledText';
-import StyledSvg from '../../../containers/StyledSvg';
-import GoogleVisionGraph from '../Graphs/GoogleVisionGraph';
-import LikeCommentBarGraph from '../Graphs/LikeCommentBarGraph';
-import AgeGraph from '../Graphs/AgeGraph';
-import GenderGraph from '../Graphs/GenderGraph';
-import MapGraph2 from '../Graphs/MapGraph2';
-
-
-const useStyles = makeStyles({
-  root: {
-    position: 'absolute',
-    top: '15px',
-    right: '14px',
-    fontSize: '28px',
-    color: '#b9b9b9de',
-    cursor: 'pointer'
-  },
-  paper: {
-    margin: '12px',
-    width: '100%',
-    borderRadius: '2px'
-  }
-});
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Colors } from '../lib/Сonstants';
+import WhiteBlock from '../containers/WhiteBlock';
+import StyledImage from '../containers/StyledImage';
+import defaultAccountImage from '../img/default_account_image.png';
+import StyledText from '../containers/StyledText';
+import StyledSvg from '../containers/StyledSvg';
+import GoogleVisionGraph from './campaign/Graphs/GoogleVisionGraph';
+import LikeCommentBarGraph from './campaign/Graphs/LikeCommentBarGraph';
+import AgeGraph from './campaign/Graphs/AgeGraph';
+import GenderGraph from './campaign/Graphs/GenderGraph';
+import MapGraph2 from './campaign/Graphs/MapGraph2';
 
 function RoundLikeComment(likeCount, commentsCount) {
   const likeToComment = (commentsCount / likeCount) * 100;
   return likeToComment.toFixed(1);
 }
 
-function InsightDialog(props) {
-  const { open, closeDialog, selectedId } = props;
+function TestComponent(props) {
+  const selectedId = 3139;
   const [instaData, setInstaData] = useState({});
   const [maxAgeVal, setMaxAgeVal] = useState(null);
   const [maxLocVal, setMaxLocVal] = useState(null);
   const [maxStatVal, setMaxStatVal] = useState(null);
   const [maxGenderVal, setMaxGenderVal] = useState(null);
-  const classes = useStyles();
 
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
   const isSM = useMediaQuery(theme.breakpoints.up('sm'));
 
-  async function getInstaInfo() {
-    try {
-      const InstaData = await axios.get('/api/TB_INSTA/rankingInfo', {
-        params: { instaId: selectedId }
-      });
-      const { data } = InstaData.data;
-      console.log(data);
+  function getInstaInfo() {
+    axios.get('/api/TB_INSTA/rankingInfo', {
+      params: { instaId: selectedId }
+    }).then((res) => {
+      const { data } = res.data;
       setInstaData(data);
-    } catch (err) {
-      alert(err.response.data.message);
-    }
+    }).catch((e) => {
+      alert(e.response.data.message);
+    });
   }
 
-  function onDialogEntered() {
+  useEffect(() => {
     getInstaInfo();
-  }
-
-  function onDialogClose() {
-    setInstaData({});
-    setMaxAgeVal(null);
-    setMaxGenderVal(null);
-    setMaxLocVal(null);
-    setMaxStatVal(null);
-    closeDialog();
-  }
+  }, []);
 
   return (
-    <Dialog
-      classes={{ paper: classes.paper }}
-      maxWidth="lg"
-      onClose={onDialogClose}
-      aria-labelledby="simple-dialog-title"
-      open={open}
-      onEntered={onDialogEntered}
-    >
-      <Box padding="20px" fontSize="18px" fontWeight="400" lineHeight="18px" textAlign="center" position="relative" borderBottom={`1px solid ${Colors.grey8}`}>
-                SNS 정보
-        <Clear onClick={onDialogClose} classes={{ root: classes.root }} />
-      </Box>
-      <Box px={2} py={2}>
+    <React.Fragment>
+      <Box px={2} py={2} maxWidth="1263px" m="0 auto">
         <Grid container spacing={isMD ? 3 : 0}>
           <Grid item xs={12} lg={6}>
             <Grid container spacing={isMD ? 3 : 0}>
@@ -364,8 +330,8 @@ function InsightDialog(props) {
           </Grid>
         </Grid>
       </Box>
-    </Dialog>
+    </React.Fragment>
   );
 }
 
-export default InsightDialog;
+export default TestComponent;

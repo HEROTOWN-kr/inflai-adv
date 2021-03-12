@@ -26,6 +26,10 @@ const defaultMenuLinks = [
     text: 'MembershipNew',
     link: '/MembershipNew'
   },
+  {
+    text: 'InstaDialog',
+    link: '/InstaDialog'
+  },
 ];
 
 function NavbarLinks() {

@@ -19,6 +19,7 @@ import ResetPassPage from '../loginNew/ResetPassPage';
 import Service from '../footer/Service';
 import Privacy from '../footer/Privacy';
 import MembershipNew from '../membership/MembershipNew';
+import TestComponent from '../TestComponent';
 
 function Main() {
   const [isMember, setIsMember] = useState(false);
@@ -110,10 +111,10 @@ function Main() {
         path="/Policy/Privacy"
         render={props => <Privacy {...props} />}
       />
-      {/* <Route
-        path="/Profile"
-        render={renderProps => <Profile {...renderProps} />}
-      /> */}
+      <Route
+        path="/InstaDialog"
+        render={renderProps => <TestComponent {...renderProps} />}
+      />
       <Route
         component={NotFound}
       />

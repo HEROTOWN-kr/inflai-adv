@@ -46,16 +46,16 @@ const tableHeader = [
     colName: 'INS_CMNT',
   },
   {
+    text: '게시물',
+    align: 'center',
+    width: '70px',
+    colName: 'INS_MEDIA_CNT',
+  },
+  {
     text: 'AI 종합 점수',
     align: 'center',
     colName: 'INS_SCORE',
   },
-  /* {
-    text: '순위',
-    align: 'center',
-    width: '100px',
-    colName: 'INS_RANK',
-  }, */
   {
     text: '분석',
     align: 'center',
@@ -229,14 +229,14 @@ function CampaignParInsta() {
               </StyledTableCell>
               <StyledTableCell align="center">
                 <StyledText textAlign="center">
+                  {row.INS_MEDIA_CNT || '-'}
+                </StyledText>
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                <StyledText textAlign="center">
                   {row.INS_SCORE || '-'}
                 </StyledText>
               </StyledTableCell>
-              {/* <StyledTableCell align="center">
-                <StyledText textAlign="center">
-                  {row.INS_RANK || '-'}
-                </StyledText>
-              </StyledTableCell> */}
               <StyledTableCell align="center">
                 <StyledButton
                   height="25px"
