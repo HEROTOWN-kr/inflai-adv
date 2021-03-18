@@ -243,7 +243,7 @@ function CampaignEdit() {
           formData.append('file', item.file);
           formData.append('id', id);
           formData.append('isMain', item.isMain);
-          return axios.post('/api/TB_PHOTO_AD/uploadImage', formData, {
+          return axios.post('/api/TB_PHOTO_AD/uploadImageAWS', formData, {
             headers: { 'Content-Type': 'multipart/form-data' }
           }).then(response => ('sucess')).catch(error => ('error'));
         });

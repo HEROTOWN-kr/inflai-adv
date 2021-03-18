@@ -30,7 +30,7 @@ function LikeCommentBarGraph(props) {
 
   const data = {
     datasets: [{
-      label: 'Likes',
+      label: '좋아요수',
       type: 'line',
       data: statistics.likeStats,
       fill: false,
@@ -42,7 +42,7 @@ function LikeCommentBarGraph(props) {
       pointHoverBorderColor: Colors.red2,
       yAxisID: 'y-axis-2'
     }, {
-      label: 'Replies',
+      label: '댓글수',
       type: 'bar',
       data: statistics.commentsStats,
       fill: false,

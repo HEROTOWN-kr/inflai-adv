@@ -41,6 +41,24 @@ function RoundLikeComment(likeCount, commentsCount) {
   return likeToComment.toFixed(1);
 }
 
+function getFollowersType(followers) {
+  if (followers < 1000) return 'Nano Influencer';
+  if (followers >= 1000 && followers < 20000) return 'Micro Influencer';
+  if (followers >= 20000 && followers < 100000) return 'Professional';
+  if (followers >= 100000 && followers < 1000000) return 'Macro Influencer';
+  if (followers >= 1000000) return 'Celebrity';
+  return followers;
+}
+
+function likeToCommentType(likeCount, commentsCount) {
+  const likeToComment = RoundLikeComment(likeCount, commentsCount);
+  if (likeToComment < 5) return '저조';
+  if (likeToComment >= 5 && likeToComment < 10) return '보통';
+  if (likeToComment >= 10 && likeToComment < 15) return '우수';
+  if (likeToComment >= 15) return '훌륭';
+  return likeToComment;
+}
+
 function InsightDialog(props) {
   const { open, closeDialog, selectedId } = props;
   const [instaData, setInstaData] = useState({});
@@ -327,13 +345,21 @@ function InsightDialog(props) {
                     <Box>{`팔로워 : ${instaData.INS_FLWR || 0}`}</Box>
                     <Box>{`평균 좋아요 : ${instaData.INS_LIKES ? Math.round(instaData.INS_LIKES / 25) : 0}개`}</Box>
                     <Box>{`평균 댓글 : ${instaData.INS_CMNT ? Math.round(instaData.INS_CMNT / 25) : 0}개`}</Box>
-                    <Box mt={1}>
-                      {`이 인플루언서는
-                        ${maxAgeVal ? `${maxAgeVal}세, ` : ''}
-                        ${maxLocVal ? `${maxLocVal} 국적을 가진 ` : ''}
-                        ${maxGenderVal ? `${maxGenderVal} ` : ''}팔로워가 많으며,
-                        ${maxStatVal ? `${maxStatVal} 카테고리 ` : ''}마케팅에 적합합니다.`}
-                    </Box>
+                    {instaData.INS_FLWR ? (
+                      <Box mt={1}>
+                        {`인플루언서 선덕여왕 님은 팔로워숫자는 ${instaData.INS_FLWR} 명으로 ${getFollowersType(instaData.INS_FLWR)} 에 해당합니다.`}
+                      </Box>
+                    ) : null}
+                    {instaData.INS_LIKES && instaData.INS_CMNT ? (
+                      <Box>
+                        {`인플루언서 영향력지수산출 중에서 중요한 고객과의 소통능력지수는 ${RoundLikeComment(instaData.INS_LIKES, instaData.INS_CMNT)}% 로서 (${likeToCommentType(instaData.INS_LIKES, instaData.INS_CMNT)}) 에 해당합니다`}
+                      </Box>
+                    ) : null}
+                    {maxAgeVal && maxLocVal && maxGenderVal && maxStatVal ? (
+                      <Box>
+                        {`${maxAgeVal}세, ${maxLocVal} 국적을 가진 ${maxGenderVal} 팔로워가 많으며, ${maxStatVal} 카테고리 마케팅에 적합합니다.`}
+                      </Box>
+                    ) : null}
                   </Box>
                 </WhiteBlock>
               </Grid>

@@ -136,7 +136,7 @@ function CampaignDetail() {
         } else {
           const { data } = res.data;
           setProductData(data);
-          setCurrentImage(data.TB_PHOTO_ADs[0].PHO_FILE);
+          setCurrentImage(data.TB_PHOTO_ADs[0].PHO_FILE_URL);
           setLoading(false);
         }
       }).catch(err => alert(err.response.data.message));
@@ -193,8 +193,8 @@ function CampaignDetail() {
             <Box mt={1} mb={isMD ? 5 : 1}>
               <Grid container spacing={1}>
                 {productData.TB_PHOTO_ADs.map(item => (
-                  <Grid item xs={2} key={item.PHO_FILE}>
-                    <StyledImage width="100%" src={item.PHO_FILE} alt="noFoto" onMouseOver={() => setCurrentImage(item.PHO_FILE)} />
+                  <Grid item xs={2} key={item.PHO_FILE_URL}>
+                    <StyledImage width="100%" src={item.PHO_FILE_URL} alt="noFoto" onMouseOver={() => setCurrentImage(item.PHO_FILE_URL)} />
                   </Grid>
                 ))}
               </Grid>

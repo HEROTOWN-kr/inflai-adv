@@ -123,7 +123,7 @@ function ImageHolder(props) {
   }
 
   function deleteDbPicture(id) {
-    axios.post('/api/TB_PHOTO_AD/delete', { id }).then((res) => {
+    axios.post('/api/TB_PHOTO_AD/deleteImageAWS', { id }).then((res) => {
       getCampaignPhoto();
     }).catch((err) => {
       alert(err.response.message);
@@ -166,7 +166,7 @@ function ImageHolder(props) {
                           width="130px"
                           height="130px"
                           borderRadius="12px"
-                          src={item.PHO_FILE}
+                          src={item.PHO_FILE_URL}
                         />
                         <span onClick={() => { setImageId(item.PHO_ID); setDialogOpen(true); }} style={deleteBtn}>button</span>
                         <span onClick={() => setMainPicture(item.PHO_ID)} style={{ ...mainImgButton, border: `4px solid ${item.PHO_IS_MAIN === 1 ? '#e03f3f' : '#dfe2e8'}` }}>button</span>

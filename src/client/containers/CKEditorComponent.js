@@ -18,7 +18,7 @@ function CKEditorComponent(props) {
             config={
                         {
                           ckfinder: {
-                            uploadUrl: '/api/TB_AD/upload'
+                            uploadUrl: '/api/TB_AD/uploadAWS'
                           },
                         }
                     }

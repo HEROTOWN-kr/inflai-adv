@@ -169,7 +169,7 @@ function CampaignInfo() {
                     return (
                       <Grid item key={AD_ID} style={{ width: getCardWidth() }}>
                         <CampaignCard
-                          image={TB_PHOTO_ADs[0] ? TB_PHOTO_ADs[0].PHO_FILE : noFound}
+                          image={TB_PHOTO_ADs[0] ? TB_PHOTO_ADs[0].PHO_FILE_URL : noFound}
                           type={AD_TYPE}
                           ctg1={AD_CTG}
                           ctg2={AD_CTG2}
