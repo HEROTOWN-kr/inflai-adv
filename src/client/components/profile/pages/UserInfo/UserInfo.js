@@ -57,7 +57,7 @@ function UserInfo(props) {
   useEffect(() => {
     const {
       ADV_NAME, ADV_TEL, ADV_POST_CODE, ADV_ROAD_ADDR, ADV_DETAIL_ADDR,
-      ADV_EXTR_ADDR, ADV_REG_NUM, ADV_COM_NAME, ADV_PHOTO, ADV_MESSAGE
+      ADV_EXTR_ADDR, ADV_REG_NUM, ADV_COM_NAME, ADV_PHOTO, ADV_PHOTO_URL, ADV_MESSAGE
     } = userInfo;
 
     setValue('nickName', ADV_NAME);
@@ -70,7 +70,7 @@ function UserInfo(props) {
     setValue('companyName', ADV_COM_NAME);
     setNoticeCheck(ADV_MESSAGE === 1);
 
-    userDataUpdate(ADV_NAME, ADV_PHOTO);
+    userDataUpdate(ADV_NAME, ADV_PHOTO_URL);
   }, [userInfo]);
 
   const updateProfile = async (data) => {
@@ -85,7 +85,7 @@ function UserInfo(props) {
         const formData = new FormData();
         formData.append('file', photo);
         formData.append('token', token);
-        return axios.post('/api/TB_ADVERTISER/upload', formData, {
+        return axios.post('/api/TB_ADVERTISER/uploadAWS', formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         }).then(async (response) => {
           await getUserInfo();
@@ -111,7 +111,7 @@ function UserInfo(props) {
   }
 
   async function deletePicture() {
-    await axios.post('/api/TB_ADVERTISER/delete', { token }).catch(err => alert('pic delete error'));
+    await axios.post('/api/TB_ADVERTISER/deleteAWS', { token }).catch(err => alert('pic delete error'));
     setImageUrl(null);
     setValue('photo', null);
     getUserInfo();
@@ -262,7 +262,7 @@ function UserInfo(props) {
                         width="110px"
                         height="110px"
                         borderRadius="100%"
-                        src={imageUrl || userInfo.ADV_PHOTO || defaultAccountImage}
+                        src={imageUrl || userInfo.ADV_PHOTO_URL || defaultAccountImage}
                       />
                     </Grid>
                     <Grid item>
@@ -279,7 +279,7 @@ function UserInfo(props) {
                           />
                         </ImageActionButton>
                       </label>
-                      {userInfo.ADV_PHOTO ? (
+                      {userInfo.ADV_PHOTO_URL ? (
                         <Box pt={1}>
                           <ImageActionButton onClick={() => deletePicture(token)}>
                               이미지 삭제

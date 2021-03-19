@@ -104,7 +104,7 @@ function ParticipantList(props) {
             <Box key={item.PAR_ID} py={2} borderBottom={`1px solid ${Colors.grey7}`}>
               <Grid container spacing={2} alignItems="center">
                 <Grid item>
-                  <StyledImage borderRadius="100%" width={isMD ? '90px' : '60px'} height={isMD ? '90px' : '60px'} src={item.INF_PHOTO || defaultAccountImage} />
+                  <StyledImage borderRadius="100%" width={isMD ? '90px' : '60px'} height={isMD ? '90px' : '60px'} src={item.INF_PHOTO_URL || defaultAccountImage} onError={event => event.target.setAttribute('src', defaultAccountImage)} />
                 </Grid>
                 <Grid item xs>
                   <Grid container spacing={isMD ? 2 : 1}>

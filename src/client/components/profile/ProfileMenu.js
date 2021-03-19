@@ -32,7 +32,7 @@ function ProfileMenu(props) {
                 </Grid>
                 <Grid item xs={12}>
                   <Box py={1}>
-                    <StyledImage width="110px" height="110px" borderRadius="100%" src={userInfo.ADV_PHOTO || defaultAccountImage} />
+                    <StyledImage width="110px" height="110px" borderRadius="100%" src={userInfo.ADV_PHOTO_URL || defaultAccountImage} />
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
