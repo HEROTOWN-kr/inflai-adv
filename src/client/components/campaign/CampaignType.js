@@ -35,6 +35,8 @@ function CampaignType() {
         if (res.status === 201) {
           alert('멤버십 구독을 신청해주세요!');
           history.push('/Membership');
+        } else if (res.status === 202) {
+          alert(res.data.message);
         } else if (res.status === 200) {
           history.push(url);
         }

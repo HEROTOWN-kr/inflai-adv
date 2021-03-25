@@ -239,7 +239,7 @@ function CampaignCreateNew() {
     axios.get('/api/TB_SUBSCRIPTION/check', {
       params: { token }
     }).then((res) => {
-      if (res.status === 201) {
+      if (res.status === 201 || res.status === 202) {
         alert('진행중 서브스크립션이 없습니다!');
         history.push('/Membership');
       } else if (res.status === 200) {
