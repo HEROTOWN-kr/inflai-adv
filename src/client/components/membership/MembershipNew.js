@@ -1,15 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useContext, useEffect, useRef, useState
+} from 'react';
 import {
-  Box, Grid, Paper, useTheme, useMediaQuery, Button
+  Box, Grid, Paper, useTheme, useMediaQuery, Button, Dialog, makeStyles, IconButton
 } from '@material-ui/core';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Slider from 'react-slick';
+import { Clear } from '@material-ui/icons';
 import StyledText from '../../containers/StyledText';
 import { Colors } from '../../lib/Сonstants';
 import PlanSuccessDialog from './PlanSuccessDialog';
 import AuthContext from '../../context/AuthContext';
 import Payment from './Payment';
+import StyledButton from '../../containers/StyledButton';
 
 const PlanColors = ['#f3953f', '#1a9eda', '#eb5888', '#3adc46'];
 
@@ -17,18 +21,92 @@ function formatNumber(num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }
 
+const useStyles = makeStyles({
+  root: {
+    position: 'absolute',
+    top: '0',
+    right: '0',
+    color: '#b9b9b9de'
+  },
+  paper: {
+    maxWidth: '763px',
+    width: '100%',
+    margin: '12px',
+    borderRadius: '2px'
+  },
+  button: {
+    padding: 0,
+    minWidth: 0
+  },
+});
+
+function SpringDialog(props) {
+  const [payUrl, setPayUrl] = useState('');
+  const { open, closeDialog, planData } = props;
+  const {
+    ADV_ID, ADV_COM_NAME, ADV_NAME, ADV_EMAIL, ADV_TEL, PLN_ID, PLN_NAME, finalPrice
+  } = planData;
+  const classes = useStyles();
+  const iframeRef = useRef(null);
+
+  function onDialogEntered() {
+    const url = 'http://localhost:3003/payment/order?'
+    + `money=${finalPrice}`
+    + `&plan=${PLN_NAME}`
+    + `&planId=${PLN_ID}`
+    + `&name=${ADV_NAME}`
+    + `&email=${ADV_EMAIL}`
+    + `&phone=${ADV_TEL}`
+    + `&advId=${ADV_ID}`;
+    setPayUrl(url);
+  }
+
+  function onDialogClose() {
+    closeDialog();
+  }
+
+  function handleIframe() {
+    const iframeItem = iframeRef.current;
+    console.log(iframeItem.contentWindow.location.href);
+  }
+
+  return (
+    <Dialog
+      classes={{ paper: classes.paper }}
+      maxWidth="sm"
+      onClose={onDialogClose}
+      aria-labelledby="simple-dialog-title"
+      open={open}
+      onEntered={onDialogEntered}
+    >
+      <Box p="15px" fontSize="21px" fontWeight="400" lineHeight="18px" textAlign="center" position="relative" borderBottom={`1px solid ${Colors.grey8}`}>
+        인플라이
+        <IconButton size="medium" classes={{ root: classes.root }} onClick={onDialogClose}>
+          <Clear />
+        </IconButton>
+      </Box>
+      <Box>
+        <iframe
+          title="spring"
+          ref={iframeRef}
+          src={payUrl}
+          // src="http://localhost:8081"
+          name="thumbnails"
+          frameBorder="0"
+          onLoad={handleIframe}
+          style={{ width: '100%', height: '573px' }}
+        />
+      </Box>
+    </Dialog>
+  );
+}
+
 function MembershipNew() {
   const [plans, setPlans] = useState([]);
-  const [selected, setSelected] = useState(null);
-  const [selectedData, setSelectedData] = useState({});
-  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const [selected, setSelected] = useState({});
+  const [springDialog, setSpringDialog] = useState(false);
   const history = useHistory();
   const { token } = useContext(AuthContext);
-  const [dragging, setDragging] = useState(false);
-
-  const theme = useTheme();
-
-  const isMD = useMediaQuery(theme.breakpoints.up('md'));
 
   function getPlans() {
     axios.get('/api/TB_PLAN/').then((res) => {
@@ -39,68 +117,44 @@ function MembershipNew() {
 
   useEffect(() => {
     getPlans();
-    // setPlans(testPlans);
   }, []);
 
-  useEffect(() => {
-    const filteredArray = plans.filter(plan => plan.PLN_ID === selected);
-    if (filteredArray.length > 0) {
-      const {
-        PLN_ID, PLN_PRICE_MONTH, PLN_NAME, PLN_MONTH
-      } = filteredArray[0];
-      const finalPrice = Math.round(PLN_PRICE_MONTH * PLN_MONTH * 1.1);
-
-      const pricePerMonth = `${formatNumber(PLN_PRICE_MONTH)}원`;
-      const price = `${formatNumber(finalPrice)}원(VAT포함)`;
-      setSelectedData({
-        PLN_ID,
-        planName: PLN_NAME,
-        pricePerMonth,
-        price,
-        bankName: '기업은행',
-        bankAccount: '935-012238-01016',
-        bankHost: '(주)대가들이사는마을'
-      });
-    }
-  }, [selected]);
-
-  function toggleSuccessDialog() {
-    setSuccessDialogOpen(!successDialogOpen);
+  function toggleSpringDialog() {
+    setSpringDialog(!springDialog);
   }
 
-  function openInfoDialog() {
+  function selectPlan(plan) {
     if (token) {
-      toggleSuccessDialog();
+      axios.get('/api/TB_ADVERTISER/getInfo', { params: { token, } }).then((res) => {
+        const {
+          ADV_ID, ADV_COM_NAME, ADV_NAME, ADV_EMAIL, ADV_TEL
+        } = res.data.data;
+        const {
+          PLN_ID, PLN_PRICE_MONTH, PLN_NAME, PLN_MONTH
+        } = plan;
+
+        const finalPrice = Math.round(PLN_PRICE_MONTH * PLN_MONTH * 1.1);
+
+        const planData = {
+          ADV_ID,
+          ADV_COM_NAME,
+          ADV_NAME,
+          ADV_EMAIL,
+          ADV_TEL,
+          PLN_ID,
+          PLN_NAME: `${PLN_NAME} 멤버십 구독`,
+          finalPrice: finalPrice.toString()
+        };
+
+        setSelected(planData);
+        toggleSpringDialog();
+      }).catch((err) => {
+        alert(err.response.data.message);
+      });
     } else {
       history.push('/Login');
     }
-  }
-
-  function selectPlan(id) {
-    if (id === selected) {
-      setSelected(null);
-    } else {
-      setSelected(id);
-    }
-  }
-
-  function subscribePlan() {
-    axios.post('/api/TB_SUBSCRIPTION/save', {
-      token,
-      PLN_ID: selectedData.PLN_ID
-    }).then((res) => {
-      if (res.status === 202) {
-        alert(res.data.message);
-        toggleSuccessDialog();
-        history.push('/Profile/UserInfo');
-      } else if (res.status === 201) {
-        alert(res.data.message);
-        toggleSuccessDialog();
-      } else {
-        toggleSuccessDialog();
-        history.push('/Profile/MembershipInfo');
-      }
-    }).catch(error => alert(error.response.data.message));
+    // toggleSpringDialog();
   }
 
   return (
@@ -131,19 +185,20 @@ function MembershipNew() {
                   <Box m="0 auto" mt="20px" bgcolor={PlanColors[index]} borderRadius="13px" width="95px" height="3px" component="hr" />
                   <Box my="35px" fontSize="15px" letterSpacing="0.01em" lineHeight="24px">{item.PLN_DETAIL2}</Box>
                   <Box fontSize="35px" fontWeight="600" color="#142b65">{`${(item.PLN_PRICE_MONTH).toLocaleString('en')}원` || '무료'}</Box>
+                  <Box mt="6px">VAT 미포함</Box>
                   {/* <Box my="35px" m="0 auto" p="11px 27px" width="100px" fontSize="18px" color="#ffffff" bgcolor={PlanColors[index]} borderRadius="30px" css={{ cursor: 'pointer' }}>구독하기</Box> */}
-                  <Payment bgColor={PlanColors[index]} />
+                  {/* <Payment bgColor={PlanColors[index]} /> */}
+                  <Box my="26px" m="0 auto" p="11px 27px" width="100px" fontSize="18px" color="#ffffff" bgcolor={PlanColors[index]} borderRadius="30px" css={{ cursor: 'pointer' }} onClick={() => selectPlan(item)}>결제</Box>
                   <Box mb="10px" fontSize="15px" letterSpacing="0.01em" lineHeight="24px">{item.PLN_DETAIL}</Box>
                 </Box>
               </Grid>
             ))}
           </Grid>
         </Box>
-        <PlanSuccessDialog
-          open={successDialogOpen}
-          handleClose={toggleSuccessDialog}
-          onConfirm={subscribePlan}
-          selectedData={selectedData}
+        <SpringDialog
+          open={springDialog}
+          closeDialog={toggleSpringDialog}
+          planData={selected}
         />
       </Box>
     </Box>

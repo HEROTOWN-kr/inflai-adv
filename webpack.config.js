@@ -42,7 +42,14 @@ module.exports = {
         pathRewrite: { '^/api': '' },
         secure: false,
         changeOrigin: true
-      }
+      },
+      '/payment': 'http://localhost:8081'
+      /* '/payment': {
+        target: 'http://localhost:8081',
+        pathRewrite: { '^/payment': '' },
+        secure: false,
+        changeOrigin: true
+      }, */
     },
     historyApiFallback: true
   },
