@@ -42,6 +42,7 @@ const useStyles = makeStyles({
 
 function SpringDialog(props) {
   const [payUrl, setPayUrl] = useState('');
+  const history = useHistory();
   const { open, closeDialog, planData } = props;
   const {
     ADV_ID, ADV_COM_NAME, ADV_NAME, ADV_EMAIL, ADV_TEL, PLN_ID, PLN_NAME, finalPrice
@@ -51,12 +52,12 @@ function SpringDialog(props) {
 
   function onDialogEntered() {
     const url = 'http://localhost:3003/payment/order?'
-    + `money=${finalPrice}`
-    + `&plan=${PLN_NAME}`
-    + `&planId=${PLN_ID}`
-    + `&name=${ADV_NAME}`
-    + `&email=${ADV_EMAIL}`
-    + `&phone=${ADV_TEL}`
+    // + `money=${finalPrice}`
+    // + `&plan=${PLN_NAME}`
+    + `planId=${PLN_ID}`
+    // + `&name=${ADV_NAME}`
+    // + `&email=${ADV_EMAIL}`
+    // + `&phone=${ADV_TEL}`
     + `&advId=${ADV_ID}`;
     setPayUrl(url);
   }
@@ -67,7 +68,16 @@ function SpringDialog(props) {
 
   function handleIframe() {
     const iframeItem = iframeRef.current;
-    console.log(iframeItem.contentWindow.location.href);
+    const url = iframeItem.contentWindow.location.href;
+    const success = url.indexOf('success');
+    const failed = url.indexOf('failed');
+    if (success > -1) {
+      history.push('/Profile/MembershipInfo');
+      onDialogClose();
+    }
+    if (failed > -1) {
+      onDialogClose();
+    }
   }
 
   return (
