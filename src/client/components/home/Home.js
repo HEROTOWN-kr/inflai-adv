@@ -10,6 +10,7 @@ import Membership from '../membership/Membership';
 import HomeProcess from './sections/HomeProcess';
 import HomeBanners from './sections/HomeBanners';
 import HomeVideoTitle from './sections/HomeVideoTitle';
+import MembershipNew from "../membership/MembershipNew";
 
 
 function home(props) {
@@ -21,7 +22,7 @@ function home(props) {
     <Box className="home">
       <HomeVideoTitle />
       {isMember ? null : (
-        <Membership />
+        <MembershipNew />
       )}
       <HomeService isMD={isMD} />
       <HomeCategory />

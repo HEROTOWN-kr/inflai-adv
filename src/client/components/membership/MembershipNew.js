@@ -45,13 +45,13 @@ function SpringDialog(props) {
   const history = useHistory();
   const { open, closeDialog, planData } = props;
   const {
-    ADV_ID, ADV_COM_NAME, ADV_NAME, ADV_EMAIL, ADV_TEL, PLN_ID, PLN_NAME, finalPrice
+    ADV_ID, PLN_ID
   } = planData;
   const classes = useStyles();
   const iframeRef = useRef(null);
 
   function onDialogEntered() {
-    const url = 'http://localhost:3003/payment/order?'
+    const url = 'https://biz.inflai.com/payment/order?'
     // + `money=${finalPrice}`
     // + `&plan=${PLN_NAME}`
     + `planId=${PLN_ID}`
@@ -135,32 +135,50 @@ function MembershipNew() {
 
   function selectPlan(plan) {
     if (token) {
-      axios.get('/api/TB_ADVERTISER/getInfo', { params: { token, } }).then((res) => {
-        const {
-          ADV_ID, ADV_COM_NAME, ADV_NAME, ADV_EMAIL, ADV_TEL
-        } = res.data.data;
-        const {
-          PLN_ID, PLN_PRICE_MONTH, PLN_NAME, PLN_MONTH
-        } = plan;
+      const {
+        PLN_ID, PLN_PRICE_MONTH, PLN_NAME, PLN_MONTH
+      } = plan;
 
-        const finalPrice = Math.round(PLN_PRICE_MONTH * PLN_MONTH * 1.1);
+      if (PLN_PRICE_MONTH > 0) {
+        axios.get('/api/TB_ADVERTISER/getInfo', { params: { token, } }).then((res) => {
+          const {
+            ADV_ID, ADV_COM_NAME, ADV_NAME, ADV_EMAIL, ADV_TEL
+          } = res.data.data;
 
-        const planData = {
-          ADV_ID,
-          ADV_COM_NAME,
-          ADV_NAME,
-          ADV_EMAIL,
-          ADV_TEL,
-          PLN_ID,
-          PLN_NAME: `${PLN_NAME} 멤버십 구독`,
-          finalPrice: finalPrice.toString()
-        };
 
-        setSelected(planData);
-        toggleSpringDialog();
-      }).catch((err) => {
-        alert(err.response.data.message);
-      });
+          const finalPrice = Math.round(PLN_PRICE_MONTH * PLN_MONTH * 1.1);
+
+          const planData = {
+            ADV_ID,
+            ADV_COM_NAME,
+            ADV_NAME,
+            ADV_EMAIL,
+            ADV_TEL,
+            PLN_ID,
+            PLN_NAME: `${PLN_NAME} 멤버십 구독`,
+            finalPrice: finalPrice.toString()
+          };
+
+          setSelected(planData);
+          toggleSpringDialog();
+        }).catch((err) => {
+          alert(err.response.data.message);
+        });
+      } else {
+        axios.post('/api/TB_SUBSCRIPTION/save', {
+          token,
+          PLN_ID
+        }).then((res) => {
+          if (res.status === 202) {
+            alert(res.data.message);
+            history.push('/Profile/UserInfo');
+          } else if (res.status === 201) {
+            alert(res.data.message);
+          } else {
+            history.push('/Profile/MembershipInfo');
+          }
+        }).catch(error => alert(error.response.data.message));
+      }
     } else {
       history.push('/Login');
     }
@@ -195,10 +213,12 @@ function MembershipNew() {
                   <Box m="0 auto" mt="20px" bgcolor={PlanColors[index]} borderRadius="13px" width="95px" height="3px" component="hr" />
                   <Box my="35px" fontSize="15px" letterSpacing="0.01em" lineHeight="24px">{item.PLN_DETAIL2}</Box>
                   <Box fontSize="35px" fontWeight="600" color="#142b65">{`${(item.PLN_PRICE_MONTH).toLocaleString('en')}원` || '무료'}</Box>
-                  <Box mt="6px">VAT 미포함</Box>
+                  <Box mt="6px">VAT 포함</Box>
                   {/* <Box my="35px" m="0 auto" p="11px 27px" width="100px" fontSize="18px" color="#ffffff" bgcolor={PlanColors[index]} borderRadius="30px" css={{ cursor: 'pointer' }}>구독하기</Box> */}
                   {/* <Payment bgColor={PlanColors[index]} /> */}
-                  <Box my="26px" m="0 auto" p="11px 27px" width="100px" fontSize="18px" color="#ffffff" bgcolor={PlanColors[index]} borderRadius="30px" css={{ cursor: 'pointer' }} onClick={() => selectPlan(item)}>결제</Box>
+                  <Box my="26px" m="0 auto" p="11px 27px" width="100px" fontSize="18px" color="#ffffff" bgcolor={PlanColors[index]} borderRadius="30px" css={{ cursor: 'pointer' }} onClick={() => selectPlan(item)}>
+                    {item.PLN_PRICE_MONTH > 0 ? '결제' : '시작'}
+                  </Box>
                   <Box mb="10px" fontSize="15px" letterSpacing="0.01em" lineHeight="24px">{item.PLN_DETAIL}</Box>
                 </Box>
               </Grid>

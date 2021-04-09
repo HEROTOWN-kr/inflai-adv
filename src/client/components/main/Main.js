@@ -62,7 +62,7 @@ function Main() {
       />
       <Route
         path="/Membership"
-        render={renderProps => <Membership {...renderProps} />}
+        render={renderProps => <MembershipNew {...renderProps} />}
       />
       <Route
         path="/MembershipNew"
