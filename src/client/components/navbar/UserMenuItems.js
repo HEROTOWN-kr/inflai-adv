@@ -14,11 +14,11 @@ function UserMenuItems(props) {
       link: '/Profile'
     },
     {
-      text: '인플루언서 모집관리',
+      text: '인플루언서 관리',
       link: '/Profile/CampaignInfo'
     },
     {
-      text: '인플루언서 모집하기',
+      text: '인플루언서 모집',
       link: '/Campaign'
     }
   ];

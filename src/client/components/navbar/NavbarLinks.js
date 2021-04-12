@@ -11,7 +11,7 @@ const Scroller = Scroll.scroller;
 
 const defaultMenuLinks = [
   {
-    text: '인플루언서 모집하기',
+    text: '인플루언서 모집',
     link: '/Campaign'
   },
   {
@@ -19,7 +19,7 @@ const defaultMenuLinks = [
     link: '/Membership'
   },
   {
-    text: '인플루언서 모집관리',
+    text: '인플루언서 관리',
     link: '/Profile/CampaignInfo'
   },
   /*{
