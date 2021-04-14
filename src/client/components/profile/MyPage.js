@@ -43,8 +43,8 @@ const menuLinks = [
 ];
 
 function MyPage(props) {
-  const { history, userInfo, match } = props;
-  const { logout } = useContext(AuthContext);
+  const { history } = props;
+  const { logout, userName, userPhoto } = useContext(AuthContext);
   const { Kakao, gapi, FB } = window;
 
   function clickLogout() {
@@ -79,10 +79,10 @@ function MyPage(props) {
         color="#ddd"
         css={{ background: `#333 url(${myPageBg}) 50% no-repeat`, backgroundSize: 'cover' }}
       >
-        <StyledImage width="68px" height="68px" borderRadius="100%" src={userInfo.ADV_PHOTO_URL || defaultAccountImage} onError={event => event.target.setAttribute('src', defaultAccountImage)} />
+        <StyledImage width="68px" height="68px" borderRadius="100%" src={userPhoto || defaultAccountImage} onError={event => event.target.setAttribute('src', defaultAccountImage)} />
         <Box mt={1}>
           <StyledText color="#ffffff" fontSize="20px" fontWeight="600">
-            {userInfo.ADV_NAME}
+            {userName}
           </StyledText>
         </Box>
         <Box mt={6}>

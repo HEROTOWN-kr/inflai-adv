@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  Box, Divider, Grid, Hidden
+  Box, Divider, Grid, Hidden, FormControlLabel, Typography, Checkbox, makeStyles
 } from '@material-ui/core';
-import { useForm } from 'react-hook-form';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
 import StyledText from '../../../../containers/StyledText';
 import StyledTextField from '../../../../containers/StyledTextField';
@@ -17,6 +19,7 @@ import PageTitle from '../../PageTitle';
 import SocialLogin from './SocialLogin/SocialLogin';
 import PasswordChange from './PasswordChange/PasswordChange';
 import LabelComponent from './LabelComponent';
+import ReactFormText from '../../../../containers/ReactFormText';
 
 function ImageActionButton(props) {
   const {
@@ -39,44 +42,91 @@ function ImageActionButton(props) {
   );
 }
 
+Yup.addMethod(Yup.string, 'integerString', function () {
+  return this.matches(/^\d+$/, '숫자 입력만 가능합니다');
+});
+
+const schema = Yup.object().shape({
+  nickName: Yup.string().required('이름을 입력해주세요'),
+  phone: Yup.string().required('연락처를 입력해주세요').integerString(),
+  postcode: Yup.string().required('우편번호를 입력해주세요'),
+  roadAddress: Yup.string().required('도로명주소를 입력해주세요'),
+  detailAddress: Yup.string().required('상세주소를 입력해주세요'),
+});
+
+const defaultValues = {
+  nickName: '',
+  phone: '',
+  registerNumber: '',
+  companyName: '',
+  postcode: '',
+  roadAddress: '',
+  detailAddress: '',
+  extraAddress: '',
+  message: false,
+};
+
+const useStyles = makeStyles({
+  label: {
+    fontSize: '13px'
+  }
+});
+
 function UserInfo(props) {
-  const {
-    userInfo, setUserInfo, getUserInfo, setMessage, isMD
-  } = props;
-  const {
-    register, handleSubmit, watch, errors, setValue, control, getValues
-  } = useForm();
+  const { setMessage, isMD } = props;
   const [imageUrl, setImageUrl] = useState('');
+  const [userInfo, setUserInfo] = useState({});
   const { token, userDataUpdate } = useContext(AuthContext);
-  const [noticeCheck, setNoticeCheck] = useState(false);
+  const classes = useStyles();
+
+  const {
+    register, handleSubmit, reset, errors, setValue, control
+  } = useForm({
+    mode: 'onBlur',
+    resolver: yupResolver(schema),
+    defaultValues
+  });
+
+  function getUserInfo() {
+    axios.get('/api/TB_ADVERTISER/UserInfo', { params: { token } }).then((res) => {
+      const { data } = res.data;
+      const {
+        ADV_EMAIL, ADV_TEL, ADV_REG_NUM, ADV_NAME,
+        ADV_COM_NAME, ADV_CLASS, ADV_POST_CODE, ADV_ROAD_ADDR,
+        ADV_DETAIL_ADDR, ADV_EXTR_ADDR, ADV_PHOTO, ADV_PHOTO_URL,
+        ADV_MESSAGE, ADV_BLOG_TYPE
+      } = data;
+      reset({
+        nickName: ADV_NAME,
+        phone: ADV_TEL,
+        registerNumber: ADV_REG_NUM,
+        companyName: ADV_COM_NAME,
+        postcode: ADV_POST_CODE,
+        roadAddress: ADV_ROAD_ADDR,
+        detailAddress: ADV_DETAIL_ADDR,
+        extraAddress: ADV_EXTR_ADDR,
+        message: ADV_MESSAGE === 1,
+      });
+      setUserInfo({
+        ADV_PHOTO_URL, ADV_EMAIL
+      });
+      userDataUpdate(ADV_NAME, ADV_PHOTO_URL);
+    });
+  }
 
   useEffect(() => {
     register({ name: 'photo' }, {});
   }, [register]);
 
   useEffect(() => {
-    const {
-      ADV_NAME, ADV_TEL, ADV_POST_CODE, ADV_ROAD_ADDR, ADV_DETAIL_ADDR,
-      ADV_EXTR_ADDR, ADV_REG_NUM, ADV_COM_NAME, ADV_PHOTO, ADV_PHOTO_URL, ADV_MESSAGE
-    } = userInfo;
-
-    setValue('nickName', ADV_NAME);
-    setValue('phone', ADV_TEL);
-    setValue('postcode', ADV_POST_CODE);
-    setValue('roadAddress', ADV_ROAD_ADDR);
-    setValue('detailAddress', ADV_DETAIL_ADDR);
-    setValue('extraAddress', ADV_EXTR_ADDR);
-    setValue('registerNumber', ADV_REG_NUM);
-    setValue('companyName', ADV_COM_NAME);
-    setNoticeCheck(ADV_MESSAGE === 1);
-
-    userDataUpdate(ADV_NAME, ADV_PHOTO_URL);
-  }, [userInfo]);
+    if (token) {
+      getUserInfo();
+    }
+  }, [token]);
 
   const updateProfile = async (data) => {
     try {
-      const apiObj = { ...data, token };
-      apiObj.message = noticeCheck ? 1 : 0;
+      const apiObj = { ...data, message: data.message ? 1 : 0, token };
 
       await axios.post('/api/TB_ADVERTISER/update', apiObj);
 
@@ -88,14 +138,14 @@ function UserInfo(props) {
         return axios.post('/api/TB_ADVERTISER/uploadAWS', formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         }).then(async (response) => {
-          await getUserInfo();
+          getUserInfo();
           setMessage({ type: 'success', open: true, text: '저장되었습니다' });
         }).catch((err) => {
           console.log(err.response);
           alert('photo upload error');
         });
       }
-      await getUserInfo();
+      getUserInfo();
       setMessage({ type: 'success', open: true, text: '저장되었습니다' });
     } catch (err) {
       alert(err.message);
@@ -115,10 +165,6 @@ function UserInfo(props) {
     setImageUrl(null);
     setValue('photo', null);
     getUserInfo();
-  }
-
-  function onCheckboxClick(checked) {
-    setNoticeCheck(checked);
   }
 
   return (
@@ -151,16 +197,11 @@ function UserInfo(props) {
               </Grid>
               <Grid item xs={12} md>
                 <Box width={isMD ? '250px' : '100%'}>
-                  <StyledTextField
-                    fullWidth
+                  <ReactFormText
+                    register={register}
+                    errors={errors}
                     name="nickName"
-                    defaultValue={userInfo.ADV_NAME || ''}
-                    inputRef={register({ required: true })}
-                    error={!!errors.nickName}
-                    variant="outlined"
-                    helperText={errors.nickName ? (
-                      <span className="error-message">이름을 입력해주세요</span>
-                    ) : null}
+                    placeholder="이름"
                   />
                 </Box>
               </Grid>
@@ -173,16 +214,11 @@ function UserInfo(props) {
               </Grid>
               <Grid item xs={12} md="auto">
                 <Box width={isMD ? '250px' : '100%'}>
-                  <StyledTextField
-                    fullWidth
+                  <ReactFormText
+                    register={register}
+                    errors={errors}
                     name="phone"
-                    defaultValue={userInfo.ADV_TEL || ''}
-                    inputRef={register({ required: true })}
-                    error={!!errors.phone}
-                    variant="outlined"
-                    helperText={errors.phone ? (
-                      <span className="error-message">전화번호를 입력해주세요</span>
-                    ) : null}
+                    placeholder="전화번호"
                   />
                 </Box>
               </Grid>
@@ -200,16 +236,11 @@ function UserInfo(props) {
               </Grid>
               <Grid item xs={12} md>
                 <Box width={isMD ? '250px' : '100%'}>
-                  <StyledTextField
-                    fullWidth
+                  <ReactFormText
+                    register={register}
+                    errors={errors}
                     name="registerNumber"
-                    defaultValue={userInfo.ADV_REG_NUM || ''}
-                    inputRef={register({ required: true })}
-                    error={!!errors.registerNumber}
-                    variant="outlined"
-                    helperText={errors.registerNumber ? (
-                      <span className="error-message">사업자번호를 입력해주세요</span>
-                    ) : null}
+                    placeholder="사업자번호"
                   />
                 </Box>
               </Grid>
@@ -222,16 +253,11 @@ function UserInfo(props) {
               </Grid>
               <Grid item xs={12} md>
                 <Box width={isMD ? '250px' : '100%'}>
-                  <StyledTextField
-                    fullWidth
+                  <ReactFormText
+                    register={register}
+                    errors={errors}
                     name="companyName"
-                    defaultValue={userInfo.ADV_COM_NAME || ''}
-                    inputRef={register({ required: true })}
-                    error={!!errors.companyName}
-                    variant="outlined"
-                    helperText={errors.companyName ? (
-                      <span className="error-message">회사명을 입력해주세요</span>
-                    ) : null}
+                    placeholder="회사명"
                   />
                 </Box>
               </Grid>
@@ -298,10 +324,25 @@ function UserInfo(props) {
                 <LabelComponent labelName="카카오수신동의" />
               </Grid>
               <Grid item xs={12} md>
-                <input id="kakaoCheck" type="checkbox" checked={noticeCheck} onChange={e => onCheckboxClick(e.target.checked)} />
-                <label htmlFor="kakaoCheck">
-                  {' 카카오톡 통한 캠페인 모집 및 추천, 이벤트 정보 등의 수신에 동의합니다.'}
-                </label>
+                <Controller
+                  name="message"
+                  control={control}
+                  render={checkBoxProps => (
+                    <FormControlLabel
+                      control={(
+                        <Checkbox
+                          onChange={e => checkBoxProps.onChange(e.target.checked)}
+                          checked={checkBoxProps.value}
+                        />
+                            )}
+                      label={(
+                        <Typography classes={{ body1: classes.label }}>
+                                  카카오톡 통한 캠페인 모집 및 추천, 이벤트 정보 등의 수신에 동의합니다.
+                        </Typography>
+                            )}
+                    />
+                  )}
+                />
               </Grid>
             </Grid>
           </Grid>
