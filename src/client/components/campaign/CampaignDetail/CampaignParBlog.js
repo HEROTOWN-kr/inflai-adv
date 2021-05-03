@@ -25,6 +25,18 @@ const tableHeader = [
     width: '100px'
   },
   {
+    text: '방문자(평균)',
+    align: 'center',
+  },
+  {
+    text: '이웃',
+    align: 'center',
+  },
+  {
+    text: '게시물',
+    align: 'center',
+  },
+  {
     text: '블로그주소',
     align: 'center',
   },
@@ -110,6 +122,21 @@ function CampaignParBlog() {
                   <StyledTableCell align="center">
                     <StyledText textAlign="center">
                       {row.PAR_NAME || '-'}
+                    </StyledText>
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <StyledText textAlign="center">
+                      {row.NAV_GUEST_AVG || '-'}
+                    </StyledText>
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <StyledText textAlign="center">
+                      {row.NAV_FLWR || '-'}
+                    </StyledText>
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <StyledText textAlign="center">
+                      {row.NAV_CONT || '-'}
                     </StyledText>
                   </StyledTableCell>
                   <StyledTableCell align="center">
