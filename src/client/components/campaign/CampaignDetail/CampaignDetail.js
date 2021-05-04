@@ -303,7 +303,7 @@ function CampaignDetail() {
                   <TabComponent isMD={isMD} tab={tab} setTab={setTab} text={`신청한 리뷰어 ${productData.TB_PARTICIPANTs.length}`} tabNumber={2} />
                 </Grid>
                 <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
-                  <TabComponent isMD={isMD} tab={tab} setTab={setTab} text="AI 분석" tabNumber={3} />
+                  <TabComponent isMD={isMD} tab={tab} setTab={setTab} text={productData.AD_TYPE === '1' ? 'AI 분석' : '분석'} tabNumber={3} />
                 </Grid>
                 <Grid item style={{ width: isMD ? 'auto' : '50%' }}>
                   <TabComponent isMD={isMD} tab={tab} setTab={setTab} text="선정 리뷰어" tabNumber={4} />

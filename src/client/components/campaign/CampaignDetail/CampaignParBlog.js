@@ -12,6 +12,8 @@ import MyPagination from '../../../containers/MyPagination';
 import StyledButton from '../../../containers/StyledButton';
 import { Colors } from '../../../lib/Сonstants';
 import ConfirmDialog from '../../../containers/ConfirmDialog';
+import StyledTableSortLabel from '../../../containers/StyledTableSortLabel';
+import StyledSelect from '../../../containers/StyledSelect';
 
 const tableHeader = [
   {
@@ -27,18 +29,25 @@ const tableHeader = [
   {
     text: '방문자(평균)',
     align: 'center',
+    width: '80px',
+    colName: 'NAV_GUEST_AVG'
   },
   {
     text: '이웃',
     align: 'center',
+    width: '80px',
+    colName: 'NAV_FLWR'
   },
   {
     text: '게시물',
     align: 'center',
+    width: '80px',
+    colName: 'NAV_CONT'
   },
   {
-    text: '블로그주소',
+    text: '블로그',
     align: 'center',
+    width: '50px',
   },
   {
     text: '선정',
@@ -53,6 +62,7 @@ function CampaignParBlog() {
   const [page, setPage] = useState(1);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
+  const [order, setOrder] = useState({ orderBy: 'NAV_FLWR', direction: 'desc' });
   const params = useParams();
   const adId = params.id;
   const limit = 10;
@@ -63,10 +73,29 @@ function CampaignParBlog() {
 
   function getParticipants() {
     axios.get('/api/TB_PARTICIPANT/getListBlog', {
-      params: { adId, limit, page }
+      params: {
+        ...order, adId, limit, page
+      }
     }).then((res) => {
       setParticipants(res.data.data);
       setCount(res.data.count);
+    });
+  }
+
+  useEffect(() => {
+    getParticipants();
+  }, [order, page]);
+
+  const changePage = (event, value) => {
+    setPage(value);
+  };
+
+  function sortTable(id) {
+    const isDesc = order.orderBy === id && order.direction === 'desc';
+    setPage(1);
+    setOrder({
+      orderBy: id,
+      direction: isDesc ? 'asc' : 'desc'
     });
   }
 
@@ -80,21 +109,35 @@ function CampaignParBlog() {
     }).catch(err => alert(err.response.data.message));
   }
 
-  useEffect(() => {
-    getParticipants();
-  }, [page]);
-
-  const changePage = (event, value) => {
-    setPage(value);
-  };
-
   function clickSelect(id) {
     setSelectedId(id);
     toggleConfirmDialog();
   }
 
+  function selectBoxChange(event) {
+    setOrder({ ...order, orderBy: event.target.value });
+  }
+
   return (
     <Box my={{ xs: 0, sm: 4 }} boxSizing="border-box" maxWidth={1200} css={{ margin: '0 auto' }}>
+      <Box mb={1}>
+        <Grid container justify="space-between" alignItems="center">
+          <Grid item>※ 신청한 고객들의 카테고리별 분석자료를 각각 보실 수 있습니다.</Grid>
+          <Grid item>
+            <StyledSelect
+              native
+              variant="outlined"
+              value={order.orderBy}
+              onChange={selectBoxChange}
+              fullWidth
+            >
+              <option value="NAV_GUEST_AVG">방문자수</option>
+              <option value="NAV_FLWR">이웃</option>
+              <option value="NAV_CONT">게시물</option>
+            </StyledSelect>
+          </Grid>
+        </Grid>
+      </Box>
       {participants.length > 0 ? (
         <React.Fragment>
           <Table>
@@ -102,7 +145,16 @@ function CampaignParBlog() {
               <TableRow>
                 {tableHeader.map(item => (
                   <StyledTableCell key={item.text} align={item.align} width={item.width || null}>
-                    {item.text}
+                    {item.colName ? (
+                      <StyledTableSortLabel
+                        color="#66f8ff"
+                        active={order.orderBy === item.colName}
+                        direction={order.orderBy === item.colName ? order.direction : 'desc'}
+                        onClick={() => sortTable(item.colName)}
+                      >
+                        {item.text}
+                      </StyledTableSortLabel>
+                    ) : item.text}
                   </StyledTableCell>
                 ))}
               </TableRow>
@@ -140,13 +192,16 @@ function CampaignParBlog() {
                     </StyledText>
                   </StyledTableCell>
                   <StyledTableCell align="center">
-                    {row.NAV_URL ? (
-                      <StyledLink
-                        href={row.NAV_URL}
-                        target="_blank"
+                    {row.NAV_BLOG_ID ? (
+                      <StyledButton
+                        background={Colors.green}
+                        hoverBackground={Colors.greenHover}
+                        height="25px"
+                        padding="0px 5px"
+                        onClick={() => window.open(`https://blog.naver.com/${row.NAV_BLOG_ID}`, '_blank')}
                       >
-                        {`@${row.NAV_URL}`}
-                      </StyledLink>
+                          링크
+                      </StyledButton>
                     ) : (
                       <StyledText textAlign="center">-</StyledText>
                     )}
