@@ -125,7 +125,7 @@ function CampaignCreateNew() {
     influencerCount: Yup.string()
       .required('모집인원을 입력해주세요')
       .integerString()
-      .test('checkTen', '50명까지 모집이 가능합니다!', val => parseInt(val, 10) <= 50)
+      // .test('checkTen', '50명까지 모집이 가능합니다!', val => parseInt(val, 10) <= 50)
       .test('checkLimits', '사용가능 인플루언서를 조과하였습니다!', val => parseInt(val, 10) <= parseInt(limits.InfCountLeft, 10)),
     delivery: Yup.string().required('제공상품 배송여부를 선택해주세요'),
     postcode: Yup.string().when('type', {
@@ -282,9 +282,9 @@ function CampaignCreateNew() {
           <Box mb={1}>
             <StyledText color="#3f51b5">
               모집SNS
-              <span style={{ color: Colors.orange }}>
+              {/* <span style={{ color: Colors.orange }}>
                 {' 1개 캠페인=10명까지 모집이 가능합니다. 추가 모집은 캠페인을 추가생성 해주세요!'}
-              </span>
+              </span> */}
             </StyledText>
           </Box>
           <Controller
