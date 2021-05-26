@@ -99,7 +99,7 @@ function TestComponent(props) {
                                 <Grid container direction="column" alignItems="center" spacing={1}>
                                   <Grid item><StyledText fontWeight="bold">{instaData.INS_MEDIA_CNT}</StyledText></Grid>
                                   <Grid item>
-                                    <StyledText fontSize="14px">개시물 수</StyledText>
+                                    <StyledText fontSize="14px">게시물 수</StyledText>
                                   </Grid>
                                 </Grid>
                               </Grid>
