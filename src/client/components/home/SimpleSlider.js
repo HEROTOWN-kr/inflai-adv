@@ -6,10 +6,11 @@ import SlideImage1 from '../../img/slider/beauty.png';
 import SlideImage2 from '../../img/slider/fashion.png';
 import SlideImage3 from '../../img/slider/food.png';
 import Instagram from '../../img/slider/instagram.png';
-import Youtube from '../../img/slider/youtube.png';
+import Youtube from '../../img/slider/youtube_social_circle_red.png';
 import Naver from '../../img/slider/naver.png';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import StyledImage from '../../containers/StyledImage';
 
 const settings = {
   infinite: true,
@@ -93,7 +94,7 @@ function SimpleSlider(props) {
               <Box my={3} className="social-name">{person.name}</Box>
               <Box className="social-type">{person.type}</Box>
               <Box my={3}>
-                <img src={person.socialImage} className="social-image" />
+                <StyledImage width="40px" src={person.socialImage} className="social-image" />
               </Box>
               <Box className="social-tags">{person.tags}</Box>
             </div>

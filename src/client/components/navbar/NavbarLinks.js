@@ -22,14 +22,14 @@ const defaultMenuLinks = [
     text: '인플루언서 관리',
     link: '/Profile/CampaignInfo'
   },
-  /*{
+  /* {
     text: 'MembershipNew',
     link: '/MembershipNew'
-  },
+  }, */
   {
     text: 'InstaDialog',
     link: '/InstaDialog'
-  },*/
+  },
 ];
 
 function NavbarLinks() {
