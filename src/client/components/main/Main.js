@@ -20,6 +20,7 @@ import Service from '../footer/Service';
 import Privacy from '../footer/Privacy';
 import MembershipNew from '../membership/MembershipNew';
 import TestComponent from '../TestComponent';
+import AnalysisComponent from '../Analysis/AnalysisComponent';
 
 function Main() {
   const [isMember, setIsMember] = useState(false);
@@ -113,7 +114,7 @@ function Main() {
       />
       <Route
         path="/InstaDialog"
-        render={renderProps => <TestComponent {...renderProps} />}
+        render={renderProps => <AnalysisComponent {...renderProps} />}
       />
       <Route
         component={NotFound}

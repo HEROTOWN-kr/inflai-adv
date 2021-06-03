@@ -72,39 +72,13 @@ function TestComponent(props) {
   }
 
   useEffect(() => {
-    // getInstaInfo();
+    getInstaInfo();
   }, []);
 
   return (
     <React.Fragment>
       <Box px={2} py={2} maxWidth="1263px" m="0 auto">
-        <Grid container alignItems="center">
-          <Grid item>
-            <Box width="350px">
-              <Grid container alignItems="center">
-                <Grid item>
-                  <Box>
-                    <StyledImage width={isSM ? '110px' : '80px'} height={isSM ? '110px' : '80px'} borderRadius="100%" src={instaData.INS_PROFILE_IMG || defaultAccountImage} />
-                  </Box>
-                </Grid>
-                <Grid item xs>
-                  <Box ml={2}>
-                    <Typography>UserName</Typography>
-                    <Typography>상궁리</Typography>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Box>
-          </Grid>
-          <Grid item xs>
-            <Box bgcolor="red">
-              test
-            </Box>
-          </Grid>
-        </Grid>
-
-
-        {/* <Grid container spacing={isMD ? 3 : 0}>
+        <Grid container spacing={isMD ? 3 : 0}>
           <Grid item xs={12} lg={6}>
             <Grid container spacing={isMD ? 3 : 0}>
               <Grid item xs={12}>
@@ -374,13 +348,13 @@ function TestComponent(props) {
                   </Grid>
                   <Grid item xs={12}>
                     <MapGraph2 INS_ID={instaData.INS_ID} setMaxLocVal={setMaxLocVal} />
-                     <MapGraph INS_ID={instaData.INS_ID} />
+                    {/* <MapGraph INS_ID={instaData.INS_ID} /> */}
                   </Grid>
                 </Grid>
               </Box>
             </WhiteBlock>
           </Grid>
-        </Grid> */}
+        </Grid>
       </Box>
     </React.Fragment>
   );
