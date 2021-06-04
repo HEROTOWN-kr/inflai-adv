@@ -71,7 +71,14 @@ function AnalysisComponent() {
             </Grid>
           </Grid>
         </Grid>
+        <Box>
+          <Typography>계정 정보 간단 요약</Typography>
+        </Box>
+        <Box>
+          인플라이 스코어
+        </Box>
       </Box>
+
     </ThemeProvider>
 
   );
