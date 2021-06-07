@@ -7,6 +7,9 @@ const analysisStyles = makeStyles({
   colorGrey: {
     color: '#00000080'
   },
+  bold: {
+    fontWeight: '500',
+  },
   hoverRed: {
     '&:hover': {
       cursor: 'pointer',

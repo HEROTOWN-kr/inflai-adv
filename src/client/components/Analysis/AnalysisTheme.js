@@ -3,12 +3,9 @@ import { createMuiTheme } from '@material-ui/core';
 const styleTheme = createMuiTheme({
   typography: {
     fontFamily: 'Noto Sans KR, sans-serif',
-    h1: 'h2',
-    h2: 'h2',
-    h3: 'h2',
-    h4: 'h2',
-    h5: 'h2',
-    h6: 'h2',
+    h6: {
+      fontWeight: '600'
+    },
     subtitle1: {
       fontSize: 18,
       fontWeight: 'bold'
@@ -18,6 +15,7 @@ const styleTheme = createMuiTheme({
     },
     body1: {
       fontSize: 14,
+      color: '#000',
     },
     body2: {
       fontSize: 12,
