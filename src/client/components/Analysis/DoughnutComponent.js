@@ -5,7 +5,7 @@ function DoughnutComponent(props) {
   // const { data } = props;
 
   const data = {
-    // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    // labels: ['red', 'blue'],
     datasets: [
       {
         label: '# of Votes',

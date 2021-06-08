@@ -7,6 +7,9 @@ import defaultAccountImage from '../../img/default_account_image.png';
 import styleTheme from './AnalysisTheme';
 import analysisStyles from './AnalysisStyle';
 import DoughnutComponent from './DoughnutComponent';
+import StyledTableRow from '../../containers/StyledTableRow';
+
+const testImage = 'https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/s640x640/44191010_877274945801500_683676639501143736_n.jpg?tp=1&_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_cat=104&_nc_ohc=YTGxy6Ng_lYAX9CiAC8&tn=4V9UH1X9-aaVMXLy&edm=AP_V10EBAAAA&ccb=7-4&oh=9b358edddb6e12c594d7444f91f40e97&oe=60C61119&_nc_sid=4f375e';
 
 function AnalysisComponent() {
   const [instaData, setInstaData] = useState({});
@@ -263,8 +266,36 @@ function AnalysisComponent() {
           <Box mt="80px" mb="24px" pl="10px" borderLeft="4px solid #6E0FFF">
             <Typography variant="h6">포스팅 분석</Typography>
           </Box>
+          <Box mb="50px">
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <Grid container spacing={1}>
+                  {[...Array(9).keys()].map(item => (
+                    <Grid key={item} item xs={4}>
+                      <StyledImage borderRadius="7px" width="100%" height="auto" src={testImage} />
+                    </Grid>
+                  ))}
+                </Grid>
+              </Grid>
+              <Grid item xs={6}>
+                <Box>
+                  <Typography variant="subtitle2">사진분석 결과</Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
           <Box>
-
+            <Grid container spacing={1}>
+              <Grid item xs={4}>
+                <Typography variant="subtitle2">요일별 포스팅 성향</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="subtitle2">시간별 포스팅 성향</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="subtitle2">요일별 포스팅 성향</Typography>
+              </Grid>
+            </Grid>
           </Box>
         </Box>
       </Box>
