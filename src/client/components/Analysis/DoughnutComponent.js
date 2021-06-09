@@ -5,7 +5,7 @@ function DoughnutComponent(props) {
   // const { data } = props;
 
   const data = {
-    // labels: ['red', 'blue'],
+    labels: ['red', 'blue'],
     datasets: [
       {
         label: '# of Votes',
@@ -19,6 +19,9 @@ function DoughnutComponent(props) {
   };
 
   const options = {
+    legend: {
+      display: false
+    },
     responsive: false,
     cutoutPercentage: 65 // толщина полоски
   };

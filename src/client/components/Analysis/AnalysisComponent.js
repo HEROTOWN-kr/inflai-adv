@@ -8,8 +8,9 @@ import styleTheme from './AnalysisTheme';
 import analysisStyles from './AnalysisStyle';
 import DoughnutComponent from './DoughnutComponent';
 import StyledTableRow from '../../containers/StyledTableRow';
+import BarComponent from './BarComponent';
 
-const testImage = 'https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/s640x640/44191010_877274945801500_683676639501143736_n.jpg?tp=1&_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_cat=104&_nc_ohc=YTGxy6Ng_lYAX9CiAC8&tn=4V9UH1X9-aaVMXLy&edm=AP_V10EBAAAA&ccb=7-4&oh=9b358edddb6e12c594d7444f91f40e97&oe=60C61119&_nc_sid=4f375e';
+const testImage = 'https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-15/e35/s320x320/44191010_877274945801500_683676639501143736_n.jpg?tp=1&_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_cat=104&_nc_ohc=YTGxy6Ng_lYAX9CiAC8&edm=ABfd0MgBAAAA&ccb=7-4&oh=47fa1cd0be518349661fa0e5435ab5dc&oe=60C6DF35&_nc_sid=7bff83';
 
 function AnalysisComponent() {
   const [instaData, setInstaData] = useState({});
@@ -278,22 +279,41 @@ function AnalysisComponent() {
                 </Grid>
               </Grid>
               <Grid item xs={6}>
-                <Box>
-                  <Typography variant="subtitle2">사진분석 결과</Typography>
-                </Box>
+                <Typography variant="subtitle2" paragraph>사진분석 결과</Typography>
               </Grid>
             </Grid>
           </Box>
           <Box>
-            <Grid container spacing={1}>
+            <Grid container spacing={2}>
               <Grid item xs={4}>
-                <Typography variant="subtitle2">요일별 포스팅 성향</Typography>
+                <Typography variant="subtitle2" paragraph>요일별 포스팅 성향</Typography>
+                <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
+                  <BarComponent />
+                </Box>
               </Grid>
               <Grid item xs={4}>
-                <Typography variant="subtitle2">시간별 포스팅 성향</Typography>
+                <Typography variant="subtitle2" paragraph>시간별 포스팅 성향</Typography>
+                <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
+                  <BarComponent />
+                </Box>
               </Grid>
               <Grid item xs={4}>
-                <Typography variant="subtitle2">요일별 포스팅 성향</Typography>
+                <Box mt="41px" mb="20px" p="20px" pb="40px" bgcolor="#FFF" borderRadius="7px">
+                  <Box width="fit-content" mb="15px" px="12px" pt="4px" pb="7px" fontSize="16px" borderRadius="7px" bgcolor="#9047FF" color="#FFF" component="div">Total</Box>
+                  <Typography variant="body1">@sal_gungli 님은 목요일, 오후 20 - 24에 주로 게시물을 업로드 하고 있습니다.</Typography>
+                </Box>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <Box p="20px" pb="40px" bgcolor="#FFF" borderRadius="7px">
+                      <Box width="fit-content" mb="15px" px="12px" pt="4px" pb="7px" fontSize="16px" borderRadius="7px" bgcolor="#9047FF" color="#FFF" component="div">Day</Box>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Box p="20px" pb="40px" bgcolor="#FFF" borderRadius="7px">
+                      <Box width="fit-content" mb="15px" px="12px" pt="4px" pb="7px" fontSize="16px" borderRadius="7px" bgcolor="#9047FF" color="#FFF" component="div">Week</Box>
+                    </Box>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </Box>
