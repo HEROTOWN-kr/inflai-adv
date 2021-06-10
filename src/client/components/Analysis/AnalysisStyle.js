@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { colors } from '@material-ui/core';
 
 const analysisStyles = makeStyles({
   colorViolet: {
@@ -15,7 +16,10 @@ const analysisStyles = makeStyles({
       cursor: 'pointer',
       color: 'red'
     }
-  }
+  },
+  orange: {
+    backgroundColor: colors.orange[500]
+  },
 });
 
 export default analysisStyles;

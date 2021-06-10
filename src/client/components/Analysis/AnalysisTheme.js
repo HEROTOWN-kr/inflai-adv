@@ -1,6 +1,11 @@
-import { createMuiTheme } from '@material-ui/core';
+import { colors, createMuiTheme } from '@material-ui/core';
 
 const styleTheme = createMuiTheme({
+  palette: {
+    orange: {
+      main: colors.orange[500]
+    }
+  },
   typography: {
     fontFamily: 'Noto Sans KR, sans-serif',
     h6: {
@@ -24,6 +29,21 @@ const styleTheme = createMuiTheme({
       fontStyle: 'italic',
     },
   },
+  overrides: {
+    MuiLinearProgress: {
+      root: {
+        height: 10,
+        borderRadius: 5,
+      },
+      bar: {
+        borderRadius: 5,
+      },
+      colorPrimary: {
+        backgroundColor: colors.grey[200],
+      },
+    }
+  }
+
 });
 
 export default styleTheme;
