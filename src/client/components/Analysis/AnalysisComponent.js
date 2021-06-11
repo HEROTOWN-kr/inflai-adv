@@ -11,6 +11,13 @@ import StyledTableRow from '../../containers/StyledTableRow';
 import BarComponent from './BarComponent';
 
 const testImage = 'https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-15/e35/s320x320/44191010_877274945801500_683676639501143736_n.jpg?tp=1&_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_cat=104&_nc_ohc=YTGxy6Ng_lYAX9CiAC8&edm=ABfd0MgBAAAA&ccb=7-4&oh=47fa1cd0be518349661fa0e5435ab5dc&oe=60C6DF35&_nc_sid=7bff83';
+const testData = {
+  audience3: {
+    chartColor: ['rgb(110, 15, 255)', 'rgb(24, 219, 168)', 'rgb(255, 230, 0)'],
+    chartData: [28, 61, 11]
+  }
+};
+
 
 function AnalysisComponent() {
   const [instaData, setInstaData] = useState({});
@@ -329,22 +336,24 @@ function AnalysisComponent() {
               </Box>
               <Box borderRadius="7px" overflow="hidden">
                 <Box bgcolor="#FFF" p="20px">
-                  <Grid container alignItems="center">
-                    <Grid item>
-                      <DoughnutComponent />
+                  <Box ml="25px">
+                    <Grid container alignItems="center">
+                      <Grid item>
+                        <DoughnutComponent chartColor={[colors.orange[500], 'rgba(0, 0, 0, 0.2)']} />
+                      </Grid>
+                      <Grid item>
+                        <Box ml={2}>
+                          <Typography variant="subtitle2" classes={{ root: classes.bold }}>
+                            Weak
+                          </Typography>
+                          <Typography variant="subtitle2" classes={{ root: classes.bold }}>
+                            21.1점
+                          </Typography>
+                        </Box>
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <Box ml={2}>
-                        <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                          Great
-                        </Typography>
-                        <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                          2,979명
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                  <Box mt="50px">
+                  </Box>
+                  <Box mt="30px">
                     <Grid container justify="space-between">
                       <Grid item>
                         <Typography variant="body1" color="textSecondary">진짜 팔로워</Typography>
@@ -354,8 +363,16 @@ function AnalysisComponent() {
                       </Grid>
                     </Grid>
                     <Box my={1}>
-                      <LinearProgress variant="determinate" value={50} classes={{ barColorPrimary: classes.orange }} />
+                      <LinearProgress variant="determinate" value={68} classes={{ barColorPrimary: classes.orange }} />
                     </Box>
+                    <Grid container justify="space-between">
+                      <Grid item>
+                        <Typography variant="body1" classes={{ root: classes.bold }}>152,981 (68%)</Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="body1" color="textSecondary" classes={{ root: classes.bold }}>70,690 (32%)</Typography>
+                      </Grid>
+                    </Grid>
                   </Box>
                 </Box>
                 <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
@@ -370,22 +387,45 @@ function AnalysisComponent() {
                 <Typography variant="subtitle2">진짜 도달 예측</Typography>
               </Box>
               <Box borderRadius="7px" overflow="hidden">
-                <Box bgcolor="#FFF" pt="17px" pl="25px" pb="50px">
-                  <Grid container alignItems="center">
-                    <Grid item>
-                      <DoughnutComponent />
+                <Box bgcolor="#FFF" p="20px">
+                  <Box ml="25px">
+                    <Grid container alignItems="center">
+                      <Grid item>
+                        <DoughnutComponent chartColor={['rgb(180, 240, 70)', 'rgba(0, 0, 0, 0.2)']} />
+                      </Grid>
+                      <Grid item>
+                        <Box ml={2}>
+                          <Typography variant="subtitle2" classes={{ root: classes.bold }}>
+                            Not Bad
+                          </Typography>
+                          <Typography variant="subtitle2" classes={{ root: classes.bold }}>
+                            96,110명
+                          </Typography>
+                        </Box>
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <Box ml={2}>
-                        <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                          Great
-                        </Typography>
-                        <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                          2,979명
-                        </Typography>
-                      </Box>
+                  </Box>
+                  <Box mt="30px">
+                    <Grid container justify="space-between">
+                      <Grid item>
+                        <Typography variant="body1" color="textSecondary">팔로워 도달</Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="body1" color="textSecondary">비 팔로워 도달</Typography>
+                      </Grid>
                     </Grid>
-                  </Grid>
+                    <Box my={1}>
+                      <LinearProgress variant="determinate" value={83} classes={{ barColorPrimary: classes.lemon }} />
+                    </Box>
+                    <Grid container justify="space-between">
+                      <Grid item>
+                        <Typography variant="body1" classes={{ root: classes.bold }}>96,110 (83%)</Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="body1" color="textSecondary" classes={{ root: classes.bold }}>19,222 (17%)</Typography>
+                      </Grid>
+                    </Grid>
+                  </Box>
                 </Box>
                 <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
                   <Typography variant="body1">
@@ -399,22 +439,18 @@ function AnalysisComponent() {
                 <Typography variant="subtitle2">팔로워 유형</Typography>
               </Box>
               <Box borderRadius="7px" overflow="hidden">
-                <Box bgcolor="#FFF" pt="17px" pl="25px" pb="50px">
-                  <Grid container alignItems="center">
-                    <Grid item>
-                      <DoughnutComponent />
-                    </Grid>
-                    <Grid item>
-                      <Box ml={2}>
-                        <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                          Great
-                        </Typography>
-                        <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                          2,979명
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  </Grid>
+                <Box bgcolor="#FFF" p="20px">
+                  <Box ml="25px">
+                    <DoughnutComponent chartData={testData.audience3.chartData} chartColor={testData.audience3.chartColor} />
+                    <Box mt="25px">
+                      <Grid container>
+                        <Grid item xs={6}>비활동 28%</Grid>
+                        <Grid item xs={6}>일반 61%</Grid>
+                        <Grid item xs={6}>참여형 11%</Grid>
+                        <Grid item xs={6}>적극적 0%</Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
                 </Box>
                 <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
                   <Typography variant="body1">
@@ -424,6 +460,19 @@ function AnalysisComponent() {
               </Box>
             </Grid>
           </Grid>
+          <Box mt="50px">
+            <Grid container>
+              <Grid item xs={3}>
+                <Typography variant="subtitle2" paragraph>언어 비율</Typography>
+              </Grid>
+              <Grid item xs={3}>
+                <Typography variant="subtitle2" paragraph>연령 비율 </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="subtitle2" paragraph>성별 비율</Typography>
+              </Grid>
+            </Grid>
+          </Box>
         </Box>
       </Box>
     </ThemeProvider>

@@ -20,6 +20,9 @@ const analysisStyles = makeStyles({
   orange: {
     backgroundColor: colors.orange[500]
   },
+  lemon: {
+    backgroundColor: 'rgb(180, 240, 70)'
+  },
 });
 
 export default analysisStyles;

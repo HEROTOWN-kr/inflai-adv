@@ -2,7 +2,7 @@ import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 
 function DoughnutComponent(props) {
-  // const { data } = props;
+  const { chartColor, chartData } = props;
 
   const data = {
     labels: ['red', 'blue'],
@@ -17,6 +17,9 @@ function DoughnutComponent(props) {
       },
     ],
   };
+
+  if (chartColor) data.datasets[0].backgroundColor = chartColor;
+  if (chartData) data.datasets[0].data = chartData;
 
   const options = {
     legend: {
