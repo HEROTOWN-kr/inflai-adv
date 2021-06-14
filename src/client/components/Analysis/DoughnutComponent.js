@@ -2,7 +2,9 @@ import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 
 function DoughnutComponent(props) {
-  const { chartColor, chartData } = props;
+  const {
+    chartColor, chartData, chartWidth, chartHeight
+  } = props;
 
   const data = {
     labels: ['red', 'blue'],
@@ -18,9 +20,6 @@ function DoughnutComponent(props) {
     ],
   };
 
-  if (chartColor) data.datasets[0].backgroundColor = chartColor;
-  if (chartData) data.datasets[0].data = chartData;
-
   const options = {
     legend: {
       display: false
@@ -29,8 +28,19 @@ function DoughnutComponent(props) {
     cutoutPercentage: 65 // толщина полоски
   };
 
+  const sizes = {
+    width: 120,
+    height: 120
+  };
+
+  if (chartColor) data.datasets[0].backgroundColor = chartColor;
+  if (chartData) data.datasets[0].data = chartData;
+  if (chartHeight) sizes.height = chartHeight;
+  if (chartWidth) sizes.width = chartWidth;
+
+
   return (
-    <Doughnut width={120} height={120} data={data} options={options} />
+    <Doughnut width={sizes.width} height={sizes.height} data={data} options={options} />
   );
 }
 

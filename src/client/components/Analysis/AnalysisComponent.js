@@ -15,7 +15,93 @@ const testData = {
   audience3: {
     chartColor: ['rgb(110, 15, 255)', 'rgb(24, 219, 168)', 'rgb(255, 230, 0)'],
     chartData: [28, 61, 11]
-  }
+  },
+  activity: {
+    labels: ['월', '화', '수', '목', '금', '토', '일'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ]
+      },
+    ],
+  },
+  sex: {
+    labels: ['10대', '20대', '30대', '40대'],
+    datasets: [
+      {
+        label: '# of Red Votes',
+        data: [70, 90, 95, 85],
+        backgroundColor: '#6E0FFF',
+      },
+      {
+        label: '# of Blue Votes',
+        data: [30, 10, 5, 15],
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+      },
+    ],
+  },
+  language: [
+    {
+      lng: 'Korean',
+      num: '69.1',
+      color: 'purple'
+    },
+    {
+      lng: 'English',
+      num: '24.7',
+      color: 'lightGreen'
+    },
+    {
+      lng: 'Japanese',
+      num: '2.5',
+      color: 'yellow'
+    },
+    {
+      lng: 'Danish',
+      num: '2.5',
+      color: 'grey'
+    },
+    {
+      lng: 'Indonesian',
+      num: '1.2',
+      color: 'grey'
+    },
+  ],
+  age: [
+    {
+      lng: '10대',
+      num: '17.4',
+      color: 'purple'
+    },
+    {
+      lng: '20대',
+      num: '53.8',
+      color: 'lightGreen'
+    },
+    {
+      lng: '30대',
+      num: '27.1',
+      color: 'yellow'
+    },
+    {
+      lng: '40대',
+      num: '1.4',
+      color: 'grey'
+    },
+    {
+      lng: '50대',
+      num: '0.4',
+      color: 'grey'
+    },
+  ]
 };
 
 
@@ -292,13 +378,13 @@ function AnalysisComponent() {
             <Grid item xs={4}>
               <Typography variant="subtitle2" paragraph>요일별 포스팅 성향</Typography>
               <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                <BarComponent />
+                <BarComponent data={testData.activity} />
               </Box>
             </Grid>
             <Grid item xs={4}>
               <Typography variant="subtitle2" paragraph>시간별 포스팅 성향</Typography>
               <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                <BarComponent />
+                <BarComponent data={testData.activity} />
               </Box>
             </Grid>
             <Grid item xs={4}>
@@ -329,7 +415,7 @@ function AnalysisComponent() {
           <Box mt="80px" mb="24px" pl="10px" borderLeft="4px solid #6E0FFF">
             <Typography variant="h6">오디언스 분석</Typography>
           </Box>
-          <Grid container spacing={1}>
+          <Grid container spacing={2}>
             <Grid item xs={4}>
               <Box mb="13px">
                 <Typography variant="subtitle2">오디언스 퀄리티</Typography>
@@ -441,7 +527,7 @@ function AnalysisComponent() {
               <Box borderRadius="7px" overflow="hidden">
                 <Box bgcolor="#FFF" p="20px">
                   <Box ml="25px">
-                    <DoughnutComponent chartData={testData.audience3.chartData} chartColor={testData.audience3.chartColor} />
+                    <DoughnutComponent chartWidth={140} chartHeight={140} chartData={testData.audience3.chartData} chartColor={testData.audience3.chartColor} />
                     <Box mt="25px">
                       <Grid container>
                         <Grid item xs={6}>비활동 28%</Grid>
@@ -461,15 +547,71 @@ function AnalysisComponent() {
             </Grid>
           </Grid>
           <Box mt="50px">
-            <Grid container>
+            <Grid container spacing={2}>
               <Grid item xs={3}>
                 <Typography variant="subtitle2" paragraph>언어 비율</Typography>
+                <Box p="20px" bgcolor="#FFF" borderRadius="7px">
+                  {testData.language.map(item => (
+                    <Box key={item.lng}>
+                      <Grid container justify="space-between">
+                        <Grid item>
+                          <Typography variant="body1" color="textSecondary">
+                            {item.lng}
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="body1" color="textSecondary">
+                            {`${item.num}%`}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Box my="10px">
+                        <LinearProgress variant="determinate" value={item.num} classes={{ barColorPrimary: classes[item.color] }} />
+                      </Box>
+                    </Box>
+                  ))}
+                </Box>
               </Grid>
               <Grid item xs={3}>
-                <Typography variant="subtitle2" paragraph>연령 비율 </Typography>
+                <Typography variant="subtitle2" paragraph>연령 비율</Typography>
+                <Box p="20px" bgcolor="#FFF" borderRadius="7px">
+                  {testData.age.map(item => (
+                    <Box key={item.lng}>
+                      <Grid container justify="space-between">
+                        <Grid item>
+                          <Typography variant="body1" color="textSecondary">
+                            {item.lng}
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="body1" color="textSecondary">
+                            {`${item.num}%`}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Box my="10px">
+                        <LinearProgress variant="determinate" value={item.num} classes={{ barColorPrimary: classes[item.color] }} />
+                      </Box>
+                    </Box>
+                  ))}
+                </Box>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="subtitle2" paragraph>성별 비율</Typography>
+                <Box p="20px" bgcolor="#FFF" borderRadius="7px">
+                  <Grid container>
+                    <Grid container>
+                      <Grid item>
+                        <Box>
+                          <DoughnutComponent chartWidth={140} chartHeight={140} chartColor={['#6E0FFF', 'rgba(0, 0, 0, 0.2)']} />
+                        </Box>
+                      </Grid>
+                      <Grid item>
+                        <BarComponent data={testData.sex} />
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Box>
               </Grid>
             </Grid>
           </Box>

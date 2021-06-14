@@ -23,6 +23,18 @@ const analysisStyles = makeStyles({
   lemon: {
     backgroundColor: 'rgb(180, 240, 70)'
   },
+  purple: {
+    backgroundColor: '#6E0FFF'
+  },
+  lightGreen: {
+    backgroundColor: '#18DBA8'
+  },
+  yellow: {
+    backgroundColor: '#FFE600'
+  },
+  grey: {
+    backgroundColor: '#00000017'
+  }
 });
 
 export default analysisStyles;

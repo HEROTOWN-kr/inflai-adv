@@ -16,7 +16,8 @@ const styleTheme = createMuiTheme({
       fontWeight: 'bold'
     },
     subtitle2: {
-      fontSize: 16
+      fontSize: 16,
+      color: '#000'
     },
     body1: {
       fontSize: 14,
