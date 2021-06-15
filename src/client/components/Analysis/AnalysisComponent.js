@@ -602,12 +602,14 @@ function AnalysisComponent() {
                   <Grid container>
                     <Grid container>
                       <Grid item>
-                        <Box>
+                        <Box mx={5}>
                           <DoughnutComponent chartWidth={140} chartHeight={140} chartColor={['#6E0FFF', 'rgba(0, 0, 0, 0.2)']} />
                         </Box>
                       </Grid>
-                      <Grid item>
-                        <BarComponent data={testData.sex} />
+                      <Grid item xs>
+                        <Box maxWidth="380px" m="0 auto">
+                          <BarComponent data={testData.sex} />
+                        </Box>
                       </Grid>
                     </Grid>
                   </Grid>
