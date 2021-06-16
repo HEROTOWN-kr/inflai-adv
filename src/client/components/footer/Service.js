@@ -99,7 +99,6 @@ const ServiceContent = [
         '② 회원의 법령 또는 약관의 위반을 포함하여 부정행위 확인 등의 정보보호 업무를 위해 필요한 경우',
         '③ 기타 법률에 의해 요구되는 경우'
       ]
-
     ]
   },
   {
@@ -368,6 +367,43 @@ const ServiceContent = [
     ]
   },
   {
+    title: '제29조(SNS 약관 및 정책 동의)',
+    content: [
+      '1) 회원이 서비스 내에서 YouTube 서비스 연결을 완료한 경우, 아래 각호의 외부 SNS 약관 및 정책에 동의한 것으로 간주합니다.',
+      [
+        '① YouTube 서비스 약관',
+        'https://www.youtube.com/t/terms',
+        '② YouTube API 서비스 약관',
+        'https://developers.google.com/youtube/terms/api-services-terms-of-service-apac',
+        '③ Google 개인정보보호정책',
+        'https://policies.google.com/privacy'
+      ],
+      '2) 회사는 YouTube, Facebook 플랫폼에서 제공하 는 아래 각호의 플랫폼 정책을 준수합니다.',
+      [
+        '① YouTube Developer Policy',
+        'https://developers.google.com/youtube/terms/developer-policies',
+        '② Facebook 플랫폼 정책',
+        'https://developers.facebook.com/policy',
+      ]
+    ]
+  },
+  {
+    title: '제30조(SNS 연결 해지 및 SNS 데이터 삭제)',
+    content: [
+      '1) 회원이 더 이상 회사가 본인의 SNS 데이터를 수집하는 것을 원하지 않거나 기 수집된 SNS 데이터의 삭제를 원하는 경우, 아래 각 호의 방법을 통해 SNS 연결 해지, SNS 데이터 수집 및 사용을 각 중지시킬 수 있습니다.',
+      [
+        '① 인플라이 서비스에서 SNS 연결해지: 마이페이지 > 내정보 관리',
+        'https://influencer.inflai.com/Profile/UserInfo',
+        '② YouTube의 경우 회원이 구글 보안 설정 페이지를 통해 직접 취소',
+        'https://myaccount.google.com/permissions',
+        '③ Instagram의 경우 회원이 페이스북 설정 페이지를 통해 직접 취소',
+        'https://www.facebook.com/settings?tab=business_tools'
+      ],
+      '2) 회원이 제1항의 절차에 따라 SNS 연결을 해지한 즉시 회사는 일부 예외항목을 제외하고 해당 회원의 모든 SNS 데이터를 삭제하는 절차를 진행 합니다. 단, 제18조가 아닌 다른 절차를 통해 수집한 개인정보에 대하여는 그렇지 않습니다.',
+      '3) 단, 제2항에 따른 해지신청 당시 현재 진행 중인 캠페인이 있는 경우에는 SNS 연결을 해지할 수 없습니다. 만일 진행 중인 캠페인이 존재하는 상태에서 회원이 직접 SNS 연결을 해지한 경우 제 17조 제1항 및 제 2항을 근거로 서비스 이용에 불이익을 받을 수 있습니다.',
+    ]
+  },
+  {
     title: '<부칙>',
     description: '본 정책은 2021년 03월 01 일부터 시행합니다.'
   },
@@ -411,12 +447,21 @@ function ContentComponent(props) {
 
   const isArray = Array.isArray(item);
 
+  function checkUrl(text) {
+    if (new RegExp('^(http|https)://', 'i').test(text)) {
+      return (
+        <a href={text} target="_blank">{text}</a>
+      );
+    }
+    return text;
+  }
+
   if (isArray) {
     return (
       <React.Fragment>
         {item.map(item => (
           <Box key={item} classes={{ root: classes.contentSubItem }}>
-            {item}
+            {checkUrl(item)}
           </Box>
         ))}
       </React.Fragment>
@@ -424,7 +469,7 @@ function ContentComponent(props) {
   }
   return (
     <Box key={item} classes={{ root: classes.contentItem }}>
-      {item}
+      {checkUrl(item)}
     </Box>
   );
 }

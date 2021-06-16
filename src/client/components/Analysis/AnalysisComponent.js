@@ -600,27 +600,27 @@ function AnalysisComponent() {
                 <Typography variant="subtitle2" paragraph>성별 비율</Typography>
                 <Box p="20px" bgcolor="#FFF" borderRadius="7px">
                   <Grid container>
-                    <Grid container>
-                      <Grid item>
-                        <Box mx={5}>
-                          <DoughnutComponent chartWidth={140} chartHeight={140} chartColor={['#6E0FFF', 'rgba(0, 0, 0, 0.2)']} />
-                        </Box>
-                      </Grid>
-                      <Grid item xs>
-                        <Box maxWidth="380px" m="0 auto">
-                          <BarComponent data={testData.sex} />
-                        </Box>
-                      </Grid>
+                    <Grid item>
+                      <Box mx={5} mt="50px">
+                        <DoughnutComponent chartWidth={140} chartHeight={140} chartColor={['#6E0FFF', 'rgba(0, 0, 0, 0.2)']} />
+                      </Box>
+                    </Grid>
+                    <Grid item xs>
+                      <Box maxWidth="380px" m="0 auto">
+                        <BarComponent data={testData.sex} />
+                      </Box>
                     </Grid>
                   </Grid>
                 </Box>
               </Grid>
             </Grid>
           </Box>
+          <Box mt="80px" mb="24px" pl="10px" borderLeft="4px solid #6E0FFF">
+            <Typography variant="h6">반응 분석</Typography>
+          </Box>
         </Box>
       </Box>
     </ThemeProvider>
-
   );
 }
 

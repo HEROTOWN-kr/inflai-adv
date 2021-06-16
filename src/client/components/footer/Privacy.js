@@ -199,6 +199,16 @@ const PrivacyContent = [
     ]
   },
   {
+    title: 'SNS 정책 동의',
+    content: [
+      'YouTube 플랫폼에서 제공하 는 아래 각호의 플랫폼 정책을 준수합니다.',
+      [
+        '- Google 개인정보보호정책',
+        'https://policies.google.com/privacy'
+      ]
+    ]
+  },
+  {
     title: '개인정보관리책임자/개인정보보호책임자',
     content: [
       '회원의 개인정보를 보호하고 개인정보와 관련된 불만 등을 처리하기 위하여 회사는 고객서비스담당 부서 및 개인정보관리책임자/개인정보보호책임자를 두고 있습니다. 회원의 개인정보와 관련한 문의사항은 아래의 고객서비스담당 부서 또는 개인정보관리책임자/개인정보보호책임자에게 연락하여주시기 바랍니다.',
@@ -255,7 +265,7 @@ const TableRowContent = {
   ],
 };
 
-function PrivacyNew() {
+function Privacy() {
   const classes = useStyles();
 
   return (
@@ -295,20 +305,30 @@ function ContentComponent(props) {
 
   const isArray = Array.isArray(item);
 
+  function checkUrl(text) {
+    if (new RegExp('^(http|https)://', 'i').test(text)) {
+      return (
+        <a href={text} target="_blank">{text}</a>
+      );
+    }
+    return text;
+  }
+
   if (isArray) {
     return (
       <React.Fragment>
         {item.map(item => (
           <Box key={item} classes={{ root: classes.contentSubItem }}>
-            {item}
+            {checkUrl(item)}
           </Box>
         ))}
       </React.Fragment>
     );
   }
+
   return (
     <Box key={item} classes={{ root: classes.contentItem }}>
-      {item}
+      {checkUrl(item)}
     </Box>
   );
 }
@@ -418,4 +438,4 @@ function ContentTable(props) {
 }
 
 
-export default PrivacyNew;
+export default Privacy;
