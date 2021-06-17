@@ -2,6 +2,7 @@ import {
   Box, createMuiTheme, Grid, useMediaQuery, useTheme, ThemeProvider, Typography, LinearProgress, colors
 } from '@material-ui/core';
 import React, { useState } from 'react';
+import { Line } from 'react-chartjs-2';
 import StyledImage from '../../containers/StyledImage';
 import defaultAccountImage from '../../img/default_account_image.png';
 import styleTheme from './AnalysisTheme';
@@ -101,7 +102,19 @@ const testData = {
       num: '0.4',
       color: 'grey'
     },
-  ]
+  ],
+  line: {
+    labels: ['1', '2', '3', '4', '5', '6'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        fill: false,
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgba(255, 99, 132, 0.2)',
+      },
+    ],
+  }
 };
 
 
@@ -617,6 +630,28 @@ function AnalysisComponent() {
           </Box>
           <Box mt="80px" mb="24px" pl="10px" borderLeft="4px solid #6E0FFF">
             <Typography variant="h6">반응 분석</Typography>
+          </Box>
+          <Box mt="50px">
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Typography variant="subtitle2" paragraph>좋아요 추이</Typography>
+                <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
+                  <BarComponent data={testData.activity} />
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="subtitle2" paragraph>댓글 추이</Typography>
+                <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
+                  <BarComponent data={testData.activity} />
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="subtitle2" paragraph>팬심 추이</Typography>
+                <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
+                  <Line data={testData.line} />
+                </Box>
+              </Grid>
+            </Grid>
           </Box>
         </Box>
       </Box>
