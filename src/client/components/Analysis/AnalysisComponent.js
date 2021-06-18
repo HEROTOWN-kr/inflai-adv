@@ -108,10 +108,47 @@ const testData = {
     datasets: [
       {
         label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        data: [12, 19, 22, 20, 15, 18],
         fill: false,
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgba(255, 99, 132, 0.2)',
+        lineTension: 0,
+        backgroundColor: 'rgba(24, 219, 168, 1)',
+        borderColor: 'rgba(24, 219, 168, 1)',
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderWidth: 5,
+        borderJoinStyle: 'miter',
+        pointBorderColor: 'white',
+        pointBackgroundColor: 'rgba(24, 219, 168, 1)',
+        pointBorderWidth: 1,
+        pointHoverRadius: 10,
+        pointHoverBackgroundColor: 'rgba(24, 219, 168, 1)',
+        pointHoverBorderColor: 'rgba(24, 219, 168, 1)',
+        pointHoverBorderWidth: 2,
+        pointRadius: 7,
+        pointHitRadius: 10,
+      },
+      {
+        label: '# of comment',
+        data: [4, 1, 3, 5, 2, 3],
+        fill: false,
+        lineTension: 0,
+        backgroundColor: 'rgba(144, 71, 255, 1)',
+        borderColor: 'rgba(144, 71, 255, 1)',
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderWidth: 5,
+        borderJoinStyle: 'miter',
+        pointBorderColor: 'white',
+        pointBackgroundColor: 'rgba(144, 71, 255, 1)',
+        pointBorderWidth: 1,
+        pointHoverRadius: 10,
+        pointHoverBackgroundColor: 'rgba(144, 71, 255, 1)',
+        pointHoverBorderColor: 'rgba(144, 71, 255, 1)',
+        pointHoverBorderWidth: 2,
+        pointRadius: 7,
+        pointHitRadius: 10,
       },
     ],
   }
@@ -648,7 +685,7 @@ function AnalysisComponent() {
               <Grid item xs={4}>
                 <Typography variant="subtitle2" paragraph>팬심 추이</Typography>
                 <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                  <Line data={testData.line} />
+                  <Line height={200} data={testData.line} />
                 </Box>
               </Grid>
             </Grid>
