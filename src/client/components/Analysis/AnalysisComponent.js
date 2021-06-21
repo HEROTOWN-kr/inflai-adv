@@ -151,6 +151,78 @@ const testData = {
         pointHitRadius: 10,
       },
     ],
+  },
+  line2: {
+    labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [12, 19, 22, 20, 15, 18, 16, 20, 17],
+        fill: true,
+        lineTension: 0.5,
+        backgroundColor: 'rgba(231, 251, 246, 0.6)',
+        borderColor: 'rgba(24, 219, 168, 1)',
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderWidth: 4,
+        borderJoinStyle: 'miter',
+        pointBorderColor: 'white',
+        pointBackgroundColor: 'rgba(24, 219, 168, 1)',
+        pointBorderWidth: 1,
+        pointHoverRadius: 10,
+        pointHoverBackgroundColor: 'rgba(24, 219, 168, 1)',
+        pointHoverBorderColor: 'rgba(24, 219, 168, 1)',
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+      },
+    ],
+  },
+  line2Opt: {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
+  },
+  line3: {
+    labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [12, 19, 22, 20, 15, 18, 16, 20, 17],
+        fill: true,
+        lineTension: 0.5,
+        backgroundColor: 'rgba(244, 236, 255, 0.6)',
+        borderColor: 'rgba(144, 71, 255, 1)',
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderWidth: 4,
+        borderJoinStyle: 'miter',
+        pointBorderColor: 'white',
+        pointBackgroundColor: 'rgba(144, 71, 255, 1)',
+        pointBorderWidth: 1,
+        pointHoverRadius: 10,
+        pointHoverBackgroundColor: 'rgba(144, 71, 255, 1)',
+        pointHoverBorderColor: 'rgba(144, 71, 255, 1)',
+        pointHoverBorderWidth: 2,
+        pointRadius: 2,
+        pointHitRadius: 10,
+      },
+    ],
+  },
+  line3Opt: {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
   }
 };
 
@@ -686,6 +758,47 @@ function AnalysisComponent() {
                 <Typography variant="subtitle2" paragraph>팬심 추이</Typography>
                 <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
                   <Line height={200} data={testData.line} />
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+          <Box mt="50px">
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <Typography variant="subtitle2" paragraph>팔로워 트렌드</Typography>
+                <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
+                  <Line height={150} data={testData.line2} options={testData.line2Opt} />
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="subtitle2" paragraph>팔로잉 트렌드</Typography>
+                <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
+                  <Line height={150} data={testData.line3} options={testData.line3Opt} />
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+          <Box mt="50px">
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <Typography variant="subtitle2" paragraph>평균 반응 비율</Typography>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
+                      <BarComponent data={testData.activity} />
+                    </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
+                      <BarComponent data={testData.activity} />
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="subtitle2" paragraph>댓글 주요 키워드</Typography>
+                <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
+                  <BarComponent data={testData.activity} />
                 </Box>
               </Grid>
             </Grid>

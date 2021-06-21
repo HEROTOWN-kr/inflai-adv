@@ -18,10 +18,10 @@ const options = {
 };
 
 function BarComponent(props) {
-  const { data } = props;
+  const { data, height } = props;
 
   return (
-    <Bar height={200} data={data} options={options} />
+    <Bar height={height || 200} data={data} options={options} />
   );
 }
 
