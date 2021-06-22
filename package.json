@@ -31,10 +31,12 @@
     "date-fns": "^2.0.0-beta.5",
     "formik": "^2.1.4",
     "formik-error-focus": "^1.0.0",
+    "i": "^0.3.6",
     "infinite-react-carousel": "^1.2.9",
     "moment": "^2.24.0",
     "mui-datatables": "^2.14.0",
     "node-sass": "^4.13.0",
+    "npm": "^7.18.1",
     "react": "^16.11.0",
     "react-bootstrap": "1.0.0-beta.5",
     "react-chartjs-2": "^2.10.0",
@@ -51,6 +53,7 @@
     "react-scripts": "3.2.0",
     "react-scroll": "^1.7.16",
     "react-slick": "^0.25.2",
+    "react-wordcloud": "^1.2.7",
     "react-youtube": "^7.9.0",
     "slick-carousel": "^1.8.1",
     "validator": "^6.3.0",
@@ -78,7 +81,7 @@
     "style-loader": "^0.23.0",
     "url-loader": "^1.0.1",
     "webpack": "^4.5.0",
-    "webpack-dev-server": "3.7.1",
-    "webpack-cli": "^3.0.8"
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "3.7.1"
   }
 }

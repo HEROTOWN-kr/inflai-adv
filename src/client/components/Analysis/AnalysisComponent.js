@@ -3,6 +3,7 @@ import {
 } from '@material-ui/core';
 import React, { useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import ReactWordcloud from 'react-wordcloud';
 import StyledImage from '../../containers/StyledImage';
 import defaultAccountImage from '../../img/default_account_image.png';
 import styleTheme from './AnalysisTheme';
@@ -10,6 +11,7 @@ import analysisStyles from './AnalysisStyle';
 import DoughnutComponent from './DoughnutComponent';
 import StyledTableRow from '../../containers/StyledTableRow';
 import BarComponent from './BarComponent';
+
 
 const testImage = 'https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-15/e35/s320x320/44191010_877274945801500_683676639501143736_n.jpg?tp=1&_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_cat=104&_nc_ohc=YTGxy6Ng_lYAX9CiAC8&edm=ABfd0MgBAAAA&ccb=7-4&oh=47fa1cd0be518349661fa0e5435ab5dc&oe=60C6DF35&_nc_sid=7bff83';
 const testData = {
@@ -223,7 +225,127 @@ const testData = {
         }
       }]
     }
+  },
+  reaction: {
+    labels: ['해당 계정', '카테고리 평균'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [4.15, 0.69],
+        backgroundColor: [
+          'rgba(24, 219, 168, 1)',
+          'rgba(231, 251, 246, 0.6)',
+        ]
+      },
+    ],
+  },
+  reactionOpt: {
+
   }
+};
+
+const words = [
+  {
+    text: '기대',
+    value: 50,
+  },
+  {
+    text: '이거',
+    value: 11
+  },
+  {
+    text: '기분',
+    value: 16
+  },
+  {
+    text: '감사',
+    value: 17
+  },
+  {
+    text: '완료',
+    value: 10
+  },
+  {
+    text: '사용',
+    value: 54
+  },
+  {
+    text: '행주',
+    value: 12
+  },
+  {
+    text: '궁리',
+    value: 40
+  },
+  {
+    text: '거품',
+    value: 45
+  },
+  {
+    text: '주방',
+    value: 19
+  },
+  {
+    text: '주말',
+    value: 13
+  },
+  {
+    text: '이번',
+    value: 32
+  },
+  {
+    text: '세탁',
+    value: 22
+  },
+  {
+    text: '수세미',
+    value: 35
+  },
+  {
+    text: '아워',
+    value: 24
+  },
+  {
+    text: '주문',
+    value: 38
+  },
+  {
+    text: '구매',
+    value: 70,
+    main: 1
+  },
+  {
+    text: '세제',
+    value: 26
+  },
+  {
+    text: '오늘',
+    value: 14
+  },
+  {
+    text: '공구',
+    value: 29
+  },
+];
+
+const callbacks = {
+  getWordColor: word => (word.main ? '#5568f7' : '#00000073'),
+};
+
+const options = {
+  colors: ['#00000073'],
+  enableTooltip: false,
+  deterministic: false,
+  fontFamily: 'impact',
+  fontSizes: [35, 40],
+  fontStyle: 'normal',
+  fontWeight: 'normal',
+  padding: 5,
+  rotations: 1,
+  rotationAngles: [0, 90],
+  scale: 'sqrt',
+  spiral: 'rectangular',
+  transitionDuration: 1000
 };
 
 
@@ -740,28 +862,26 @@ function AnalysisComponent() {
           <Box mt="80px" mb="24px" pl="10px" borderLeft="4px solid #6E0FFF">
             <Typography variant="h6">반응 분석</Typography>
           </Box>
-          <Box mt="50px">
-            <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <Typography variant="subtitle2" paragraph>좋아요 추이</Typography>
-                <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                  <BarComponent data={testData.activity} />
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="subtitle2" paragraph>댓글 추이</Typography>
-                <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                  <BarComponent data={testData.activity} />
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="subtitle2" paragraph>팬심 추이</Typography>
-                <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                  <Line height={200} data={testData.line} />
-                </Box>
-              </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Typography variant="subtitle2" paragraph>좋아요 추이</Typography>
+              <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
+                <BarComponent data={testData.activity} />
+              </Box>
             </Grid>
-          </Box>
+            <Grid item xs={4}>
+              <Typography variant="subtitle2" paragraph>댓글 추이</Typography>
+              <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
+                <BarComponent data={testData.activity} />
+              </Box>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography variant="subtitle2" paragraph>팬심 추이</Typography>
+              <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
+                <Line height={200} data={testData.line} />
+              </Box>
+            </Grid>
+          </Grid>
           <Box mt="50px">
             <Grid container spacing={2}>
               <Grid item xs={6}>
@@ -785,20 +905,20 @@ function AnalysisComponent() {
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
                     <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                      <BarComponent data={testData.activity} />
+                      <BarComponent data={testData.reaction} />
                     </Box>
                   </Grid>
                   <Grid item xs={6}>
                     <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                      <BarComponent data={testData.activity} />
+                      <BarComponent height={200} data={testData.reaction} />
                     </Box>
                   </Grid>
                 </Grid>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="subtitle2" paragraph>댓글 주요 키워드</Typography>
-                <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                  <BarComponent data={testData.activity} />
+                <Box p="20px" bgcolor="#FFF" borderRadius="7px">
+                  <ReactWordcloud options={options} words={words} callbacks={callbacks} />
                 </Box>
               </Grid>
             </Grid>
