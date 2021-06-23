@@ -11,6 +11,9 @@ const analysisStyles = makeStyles({
   bold: {
     fontWeight: '500',
   },
+  bold600: {
+    fontWeight: '600',
+  },
   hoverRed: {
     '&:hover': {
       cursor: 'pointer',

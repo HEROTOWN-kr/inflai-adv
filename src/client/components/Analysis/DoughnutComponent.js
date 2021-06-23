@@ -1,6 +1,7 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 
+
 function DoughnutComponent(props) {
   const {
     chartColor, chartData, chartWidth, chartHeight
@@ -25,7 +26,20 @@ function DoughnutComponent(props) {
       display: false
     },
     responsive: false,
-    cutoutPercentage: 65 // толщина полоски
+    cutoutPercentage: 65, // толщина полоски
+    plugins: {
+      doughnutlabel: {
+        labels: [
+          {
+            text: 'The title',
+            font: {
+              size: '20'
+            },
+            color: 'red'
+          },
+        ]
+      }
+    }
   };
 
   const sizes = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
-const options = {
+const defaultOptions = {
   legend: {
     display: false
   },
@@ -18,10 +18,10 @@ const options = {
 };
 
 function BarComponent(props) {
-  const { data, height } = props;
+  const { data, height, options } = props;
 
   return (
-    <Bar height={height || 200} data={data} options={options} />
+    <Bar height={height || 200} data={data} options={options || defaultOptions} />
   );
 }
 
