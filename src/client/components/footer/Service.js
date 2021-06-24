@@ -417,8 +417,8 @@ function Service() {
       <Box py={{ xs: '25px', md: '45px' }} mx="-700px" px="700px" fontSize={{ xs: '35px', md: '50px' }} fontWeight="300" color={Colors.black2} borderBottom="1px solid #e9e9e9">이용 약관</Box>
       <Box py={{ xs: '40px', md: '60px' }}>
         {ServiceContent.map((item, index) => (
-          <Box mt={{ xs: index === 0 ? '0' : '40px', md: index === 0 ? '0' : '70px' }}>
-            <Box key={index} fontWeight="500" fontSize="18px" color={Colors.black2}>
+          <Box key={index} mt={{ xs: index === 0 ? '0' : '40px', md: index === 0 ? '0' : '70px' }}>
+            <Box fontWeight="500" fontSize="18px" color={Colors.black2}>
               {item.title}
             </Box>
             { item.description ? (

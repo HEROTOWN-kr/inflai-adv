@@ -1,9 +1,10 @@
 import {
   Box, createMuiTheme, Grid, useMediaQuery, useTheme, ThemeProvider, Typography, LinearProgress, colors
 } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import ReactWordcloud from 'react-wordcloud';
+import axios from 'axios';
 import StyledImage from '../../containers/StyledImage';
 import defaultAccountImage from '../../img/default_account_image.png';
 import styleTheme from './AnalysisTheme';
@@ -12,6 +13,11 @@ import DoughnutComponent from './DoughnutComponent';
 import StyledTableRow from '../../containers/StyledTableRow';
 import BarComponent from './BarComponent';
 import TestComponent from '../TestComponent';
+import AuthContext from '../../context/AuthContext';
+import GeneralPart from './parts/GeneralPart';
+import PostPart from './parts/PostPart';
+import AudiencePart from './parts/AudiencePart';
+import ReactionPart from './parts/ReactionPart';
 
 
 const testImage = 'https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/s640x640/44191010_877274945801500_683676639501143736_n.jpg?tp=1&_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_cat=104&_nc_ohc=SMM5lzTWsXsAX9JK4qs&edm=AP_V10EBAAAA&ccb=7-4&oh=971b324811b253d368244c569a59e114&oe=60D9D799&_nc_sid=4f375e';
@@ -300,114 +306,25 @@ const testData = {
     },
   }
 };
-
-const words = [
-  {
-    text: '기대',
-    value: 50,
-  },
-  {
-    text: '이거',
-    value: 11
-  },
-  {
-    text: '기분',
-    value: 16
-  },
-  {
-    text: '감사',
-    value: 17
-  },
-  {
-    text: '완료',
-    value: 10
-  },
-  {
-    text: '사용',
-    value: 54
-  },
-  {
-    text: '행주',
-    value: 12
-  },
-  {
-    text: '궁리',
-    value: 40
-  },
-  {
-    text: '거품',
-    value: 45
-  },
-  {
-    text: '주방',
-    value: 19
-  },
-  {
-    text: '주말',
-    value: 13
-  },
-  {
-    text: '이번',
-    value: 32
-  },
-  {
-    text: '세탁',
-    value: 22
-  },
-  {
-    text: '수세미',
-    value: 35
-  },
-  {
-    text: '아워',
-    value: 24
-  },
-  {
-    text: '주문',
-    value: 38
-  },
-  {
-    text: '구매',
-    value: 70,
-    main: 1
-  },
-  {
-    text: '세제',
-    value: 26
-  },
-  {
-    text: '오늘',
-    value: 14
-  },
-  {
-    text: '공구',
-    value: 29
-  },
-];
-
-const callbacks = {
-  getWordColor: word => (word.main ? '#5568f7' : '#00000073'),
+const defaultData = {
+  INS_ID: null,
+  INS_NAME: '',
+  INS_USERNAME: '',
+  INS_MEDIA_CNT: 0,
+  INS_FLW: 0,
+  INS_FLWR: 0,
+  INS_PROFILE_IMG: testImage,
+  INS_LIKES: 0,
+  INS_CMNT: 0,
+  INS_SCORE: 0,
+  INS_TYPES: 'Smile Cloud Table Tableware Decoration Photograph Dog Light Land vehicle Jeans Forehead Ecoregion Trousers Green Hairstyle Hair Water Umbrella Picture frame Sky Rectangle',
+  ability: '훌륭',
+  influencerType: 'Nano Influencer'
 };
-
-const options = {
-  colors: ['#00000073'],
-  enableTooltip: false,
-  deterministic: false,
-  fontFamily: 'impact',
-  fontSizes: [35, 40],
-  fontStyle: 'normal',
-  fontWeight: 'normal',
-  padding: 5,
-  rotations: 1,
-  rotationAngles: [0, 90],
-  scale: 'sqrt',
-  spiral: 'rectangular',
-  transitionDuration: 1000
-};
-
 
 function AnalysisComponent() {
-  const [instaData, setInstaData] = useState({});
+  const [instaData, setInstaData] = useState(defaultData);
+  const { token } = useContext(AuthContext);
 
   const classes = analysisStyles();
   const theme = useTheme();
@@ -415,6 +332,18 @@ function AnalysisComponent() {
   const isSM = useMediaQuery(theme.breakpoints.up('sm'));
 
   // window.scrollTo(0, document.body.scrollHeight);
+  function getInstaInfo() {
+    axios.get('/api/TB_INSTA/instaInfo', {
+      params: { instaId: 3139 }
+    }).then((res) => {
+      const { data } = res.data;
+      setInstaData({ ...instaData, ...data });
+    }).catch(err => alert(err.response.data.message));
+  }
+
+  useEffect(() => {
+    getInstaInfo();
+  }, []);
 
   return (
     <ThemeProvider theme={styleTheme}>
@@ -432,8 +361,8 @@ function AnalysisComponent() {
                     </Grid>
                     <Grid item xs>
                       <Box ml={2}>
-                        <Typography variant="subtitle1">sal_gungli</Typography>
-                        <Typography variant="subtitle2">상궁리</Typography>
+                        <Typography variant="subtitle1">{instaData.INS_NAME}</Typography>
+                        <Typography variant="subtitle2">{instaData.INS_USERNAME}</Typography>
                       </Box>
                     </Grid>
                   </Grid>
@@ -447,7 +376,7 @@ function AnalysisComponent() {
                         게시물
                       </Typography>
                       <Typography variant="subtitle2" classes={{ root: classes.bold600 }}>
-                        1596
+                        {instaData.INS_MEDIA_CNT}
                       </Typography>
                     </Box>
                   </Grid>
@@ -457,7 +386,7 @@ function AnalysisComponent() {
                         팔로워
                       </Typography>
                       <Typography variant="subtitle2" classes={{ root: classes.bold600 }}>
-                        1596
+                        {instaData.INS_FLWR}
                       </Typography>
                     </Box>
                   </Grid>
@@ -467,7 +396,7 @@ function AnalysisComponent() {
                         팔로잉
                       </Typography>
                       <Typography variant="subtitle2" classes={{ root: classes.bold600 }}>
-                        1596
+                        {instaData.INS_FLW}
                       </Typography>
                     </Box>
                   </Grid>
@@ -493,7 +422,8 @@ function AnalysisComponent() {
                           </Grid>
                           <Grid item>
                             <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                              66.4점
+                              {instaData.INS_SCORE}
+                              점
                             </Typography>
                           </Grid>
                         </Grid>
@@ -610,451 +540,10 @@ function AnalysisComponent() {
               </Box>
             </Grid>
           </Grid>
-          <Box mt="80px" mb="24px" pl="10px" borderLeft="4px solid #6E0FFF">
-            <Typography variant="h6">기본 지표</Typography>
-          </Box>
-          <Grid container spacing={1}>
-            <Grid item xs={3}>
-              <Box mb="13px">
-                <Typography variant="subtitle2">진짜 영향력</Typography>
-              </Box>
-              <Box borderRadius="7px" overflow="hidden">
-                <Box bgcolor="#FFF" pt="10px" pl="25px" pb="50px">
-                  <Grid container alignItems="center">
-                    <Grid item>
-                      <DoughnutComponent />
-                    </Grid>
-                    <Grid item>
-                      <Box ml={2}>
-                        <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                            Great
-                        </Typography>
-                        <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                            2,979명
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Box>
-                <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
-                  <Typography variant="body1">
-                      팔로워 중에서 인플루언서에게 영향을 받아 캠페인 목표로 전환될 수 있는 사람의 수입니다.
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item xs={3}>
-              <Box mb="13px">
-                <Typography variant="subtitle2">인플라이 스코어</Typography>
-              </Box>
-              <Box borderRadius="7px" overflow="hidden">
-                <Box bgcolor="#FFF" pt="10px" pl="25px" pb="50px">
-                  <Grid container alignItems="center">
-                    <Grid item>
-                      <DoughnutComponent />
-                    </Grid>
-                    <Grid item>
-                      <Box ml={2}>
-                        <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                            Great
-                        </Typography>
-                        <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                            2,979명
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Box>
-                <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
-                  <Typography variant="body1">
-                      100점에 가까울수록 유사 인플루언서 채널군(팔로워수 등급 및 카테고리)에서 영향력이 높은 것을 의미합니다.
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item xs={3}>
-              <Box mb="13px">
-                <Typography variant="subtitle2">평균 예상 매출액</Typography>
-              </Box>
-              <Box borderRadius="7px" overflow="hidden">
-                <Box bgcolor="#FFF" pt="10px" pl="25px" pb="50px">
-                  <Grid container alignItems="center">
-                    <Grid item>
-                      <DoughnutComponent />
-                    </Grid>
-                    <Grid item>
-                      <Box ml={2}>
-                        <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                            Great
-                        </Typography>
-                        <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                            2,979명
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Box>
-                <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
-                  <Typography variant="body1">
-                      채널을 통해 상품을 판매한다면 예상할 수 있는 매출 규모입니다. (*품목, 단가 등 개별적 변수에 따라 매출액은 달라질 수 있음)
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item xs={3}>
-              <Box mb="13px">
-                <Typography variant="subtitle2">캠페인 예상 견적</Typography>
-              </Box>
-              <Box borderRadius="7px" overflow="hidden">
-                <Box bgcolor="#FFF" pt="10px" pl="25px" pb="50px">
-                  <Grid container alignItems="center">
-                    <Grid item>
-                      <DoughnutComponent />
-                    </Grid>
-                    <Grid item>
-                      <Box ml={2}>
-                        <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                            Great
-                        </Typography>
-                        <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                            2,979명
-                        </Typography>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Box>
-                <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
-                  <Typography variant="body1">
-                      진짜 팔로워수 기준으로 책정된 캠페인 예상 견적 금액입니다 (*채널, 캠페인 성격에 따라 실제 견적은 상이할 수 있음)
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
-          <Box mt="80px" mb="24px" pl="10px" borderLeft="4px solid #6E0FFF">
-            <Typography variant="h6">포스팅 분석</Typography>
-          </Box>
-          <Box mb="50px">
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Grid container spacing={1}>
-                  {[...Array(9).keys()].map(item => (
-                    <Grid key={item} item xs={4}>
-                      <StyledImage borderRadius="7px" width="100%" height="auto" src={testImage} />
-                    </Grid>
-                  ))}
-                </Grid>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="subtitle2" paragraph>사진분석 결과</Typography>
-              </Grid>
-            </Grid>
-          </Box>
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <Typography variant="subtitle2" paragraph>요일별 포스팅 성향</Typography>
-              <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                <BarComponent data={testData.activity} options={testData.activityOpt} />
-              </Box>
-            </Grid>
-            <Grid item xs={4}>
-              <Typography variant="subtitle2" paragraph>시간별 포스팅 성향</Typography>
-              <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                <BarComponent data={testData.activity} options={testData.activityOpt} />
-              </Box>
-            </Grid>
-            <Grid item xs={4}>
-              <Box mt="41px" mb="20px" p="20px" pb="40px" bgcolor="#FFF" borderRadius="7px">
-                <Box width="fit-content" mb="15px" px="12px" pt="4px" pb="7px" fontSize="16px" borderRadius="7px" bgcolor="#9047FF" color="#FFF" component="div">Total</Box>
-                <Typography variant="body1">@sal_gungli 님은 목요일, 오후 20 - 24에 주로 게시물을 업로드 하고 있습니다.</Typography>
-              </Box>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <Box p="20px" pb="40px" bgcolor="#FFF" borderRadius="7px">
-                    <Box width="fit-content" mb="15px" px="12px" pt="4px" pb="7px" fontSize="16px" borderRadius="7px" bgcolor="#9047FF" color="#FFF" component="div">Day</Box>
-                    <Typography variant="body1">
-                        일 평균 1.3개 게시물을 업로드 합니다.
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={6}>
-                  <Box p="20px" pb="40px" bgcolor="#FFF" borderRadius="7px">
-                    <Box width="fit-content" mb="15px" px="12px" pt="4px" pb="7px" fontSize="16px" borderRadius="7px" bgcolor="#9047FF" color="#FFF" component="div">Week</Box>
-                    <Typography variant="body1">
-                        주 평균 9.1개 게시물을 업로드 합니다.
-                    </Typography>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Box mt="80px" mb="24px" pl="10px" borderLeft="4px solid #6E0FFF">
-            <Typography variant="h6">오디언스 분석</Typography>
-          </Box>
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <Box mb="13px">
-                <Typography variant="subtitle2">오디언스 퀄리티</Typography>
-              </Box>
-              <Box borderRadius="7px" overflow="hidden">
-                <Box bgcolor="#FFF" p="20px">
-                  <Box ml="25px">
-                    <Grid container alignItems="center">
-                      <Grid item>
-                        <DoughnutComponent chartColor={[colors.orange[500], 'rgba(0, 0, 0, 0.2)']} />
-                      </Grid>
-                      <Grid item>
-                        <Box ml={2}>
-                          <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                            Weak
-                          </Typography>
-                          <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                            21.1점
-                          </Typography>
-                        </Box>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                  <Box mt="30px">
-                    <Grid container justify="space-between">
-                      <Grid item>
-                        <Typography variant="body1" color="textSecondary">진짜 팔로워</Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="body1" color="textSecondary">가짜 팔로워</Typography>
-                      </Grid>
-                    </Grid>
-                    <Box my={1}>
-                      <LinearProgress variant="determinate" value={68} classes={{ barColorPrimary: classes.orange }} />
-                    </Box>
-                    <Grid container justify="space-between">
-                      <Grid item>
-                        <Typography variant="body1" classes={{ root: classes.bold }}>152,981 (68%)</Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="body1" color="textSecondary" classes={{ root: classes.bold }}>70,690 (32%)</Typography>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Box>
-                <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
-                  <Typography variant="body1">
-                    @sal_gungli 님의 오디언스 퀄티리티 Weak 등급은 동일 그룹 내 상위 78.9% 입니다.
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item xs={4}>
-              <Box mb="13px">
-                <Typography variant="subtitle2">진짜 도달 예측</Typography>
-              </Box>
-              <Box borderRadius="7px" overflow="hidden">
-                <Box bgcolor="#FFF" p="20px">
-                  <Box ml="25px">
-                    <Grid container alignItems="center">
-                      <Grid item>
-                        <DoughnutComponent chartColor={['rgb(180, 240, 70)', 'rgba(0, 0, 0, 0.2)']} />
-                      </Grid>
-                      <Grid item>
-                        <Box ml={2}>
-                          <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                            Not Bad
-                          </Typography>
-                          <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                            96,110명
-                          </Typography>
-                        </Box>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                  <Box mt="30px">
-                    <Grid container justify="space-between">
-                      <Grid item>
-                        <Typography variant="body1" color="textSecondary">팔로워 도달</Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="body1" color="textSecondary">비 팔로워 도달</Typography>
-                      </Grid>
-                    </Grid>
-                    <Box my={1}>
-                      <LinearProgress variant="determinate" value={83} classes={{ barColorPrimary: classes.lemon }} />
-                    </Box>
-                    <Grid container justify="space-between">
-                      <Grid item>
-                        <Typography variant="body1" classes={{ root: classes.bold }}>96,110 (83%)</Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="body1" color="textSecondary" classes={{ root: classes.bold }}>19,222 (17%)</Typography>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Box>
-                <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
-                  <Typography variant="body1">
-                    @sal_gungli 님의 진짜 도달 예측 Not Bad 등급은 동일 그룹 내 상위 58.5% 입니다.
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item xs={4}>
-              <Box mb="13px">
-                <Typography variant="subtitle2">팔로워 유형</Typography>
-              </Box>
-              <Box borderRadius="7px" overflow="hidden">
-                <Box bgcolor="#FFF" p="20px">
-                  <Box ml="25px">
-                    <DoughnutComponent chartWidth={140} chartHeight={140} chartData={testData.audience3.chartData} chartColor={testData.audience3.chartColor} />
-                    <Box mt="25px">
-                      <Grid container>
-                        <Grid item xs={6}>비활동 28%</Grid>
-                        <Grid item xs={6}>일반 61%</Grid>
-                        <Grid item xs={6}>참여형 11%</Grid>
-                        <Grid item xs={6}>적극적 0%</Grid>
-                      </Grid>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
-                  <Typography variant="body1">
-                    인플루언서의 팔로워 중 최근 반응한 데이터를 기반으로 나타낸 수치입니다.
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
-          <Box mt="50px">
-            <Grid container spacing={2}>
-              <Grid item xs={3}>
-                <Typography variant="subtitle2" paragraph>언어 비율</Typography>
-                <Box p="20px" bgcolor="#FFF" borderRadius="7px">
-                  {testData.language.map(item => (
-                    <Box key={item.lng}>
-                      <Grid container justify="space-between">
-                        <Grid item>
-                          <Typography variant="body1" color="textSecondary">
-                            {item.lng}
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Typography variant="body1" color="textSecondary">
-                            {`${item.num}%`}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                      <Box my="10px">
-                        <LinearProgress variant="determinate" value={item.num} classes={{ barColorPrimary: classes[item.color] }} />
-                      </Box>
-                    </Box>
-                  ))}
-                </Box>
-              </Grid>
-              <Grid item xs={3}>
-                <Typography variant="subtitle2" paragraph>연령 비율</Typography>
-                <Box p="20px" bgcolor="#FFF" borderRadius="7px">
-                  {testData.age.map(item => (
-                    <Box key={item.lng}>
-                      <Grid container justify="space-between">
-                        <Grid item>
-                          <Typography variant="body1" color="textSecondary">
-                            {item.lng}
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Typography variant="body1" color="textSecondary">
-                            {`${item.num}%`}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                      <Box my="10px">
-                        <LinearProgress variant="determinate" value={item.num} classes={{ barColorPrimary: classes[item.color] }} />
-                      </Box>
-                    </Box>
-                  ))}
-                </Box>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="subtitle2" paragraph>성별 비율</Typography>
-                <Box p="20px" bgcolor="#FFF" borderRadius="7px">
-                  <Grid container>
-                    <Grid item>
-                      <Box mx={5} mt="50px">
-                        <DoughnutComponent chartWidth={140} chartHeight={140} chartColor={['#6E0FFF', 'rgba(0, 0, 0, 0.2)']} />
-                      </Box>
-                    </Grid>
-                    <Grid item xs>
-                      <Box maxWidth="380px" m="0 auto">
-                        <BarComponent data={testData.sex} />
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-          <Box mt="80px" mb="24px" pl="10px" borderLeft="4px solid #6E0FFF">
-            <Typography variant="h6">반응 분석</Typography>
-          </Box>
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <Typography variant="subtitle2" paragraph>좋아요 추이</Typography>
-              <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                <BarComponent data={testData.activity} options={testData.activityOpt} />
-              </Box>
-            </Grid>
-            <Grid item xs={4}>
-              <Typography variant="subtitle2" paragraph>댓글 추이</Typography>
-              <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                <BarComponent data={testData.activity} options={testData.activityOpt} />
-              </Box>
-            </Grid>
-            <Grid item xs={4}>
-              <Typography variant="subtitle2" paragraph>팬심 추이</Typography>
-              <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                <Line height={200} data={testData.line} />
-              </Box>
-            </Grid>
-          </Grid>
-          <Box mt="50px">
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Typography variant="subtitle2" paragraph>팔로워 트렌드</Typography>
-                <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                  <Line height={150} data={testData.line2} options={testData.line2Opt} />
-                </Box>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="subtitle2" paragraph>팔로잉 트렌드</Typography>
-                <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                  <Line height={150} data={testData.line3} options={testData.line3Opt} />
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-          <Box mt="50px">
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Typography variant="subtitle2" paragraph>평균 반응 비율</Typography>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                      <BarComponent height={242} data={testData.reaction} options={testData.reactionOpt} />
-                    </Box>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-                      <BarComponent height={242} data={testData.reaction} options={testData.reactionOpt} />
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="subtitle2" paragraph>댓글 주요 키워드</Typography>
-                <Box height="250px" p="20px" bgcolor="#FFF" borderRadius="7px">
-                  <ReactWordcloud options={options} words={words} callbacks={callbacks} />
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
+          <GeneralPart />
+          <PostPart testData={testData} testImage={testImage} />
+          <AudiencePart testData={testData} />
+          <ReactionPart testData={testData} />
         </Box>
       </Box>
     </ThemeProvider>
