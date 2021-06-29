@@ -72,7 +72,7 @@ function SpringDialog(props) {
     const success = url.indexOf('success');
     const failed = url.indexOf('failed');
     if (success > -1) {
-      history.push('/Profile/MembershipInfo');
+      history.push('/Campaign');
       onDialogClose();
     }
     if (failed > -1) {
@@ -175,7 +175,7 @@ function MembershipNew() {
           } else if (res.status === 201) {
             alert(res.data.message);
           } else {
-            history.push('/Profile/MembershipInfo');
+            history.push('/Campaign');
           }
         }).catch(error => alert(error.response.data.message));
       }

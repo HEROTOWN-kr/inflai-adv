@@ -138,55 +138,6 @@ const testData = {
       color: 'grey'
     },
   ],
-  line: {
-    labels: ['1', '2', '3', '4', '5', '6'],
-    datasets: [
-      {
-        label: '# of Votes',
-        data: [12, 19, 22, 20, 15, 18],
-        fill: false,
-        lineTension: 0,
-        backgroundColor: 'rgba(24, 219, 168, 1)',
-        borderColor: 'rgba(24, 219, 168, 1)',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderWidth: 5,
-        borderJoinStyle: 'miter',
-        pointBorderColor: 'white',
-        pointBackgroundColor: 'rgba(24, 219, 168, 1)',
-        pointBorderWidth: 1,
-        pointHoverRadius: 10,
-        pointHoverBackgroundColor: 'rgba(24, 219, 168, 1)',
-        pointHoverBorderColor: 'rgba(24, 219, 168, 1)',
-        pointHoverBorderWidth: 2,
-        pointRadius: 7,
-        pointHitRadius: 10,
-      },
-      {
-        label: '# of comment',
-        data: [4, 1, 3, 5, 2, 3],
-        fill: false,
-        lineTension: 0,
-        backgroundColor: 'rgba(144, 71, 255, 1)',
-        borderColor: 'rgba(144, 71, 255, 1)',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderWidth: 5,
-        borderJoinStyle: 'miter',
-        pointBorderColor: 'white',
-        pointBackgroundColor: 'rgba(144, 71, 255, 1)',
-        pointBorderWidth: 1,
-        pointHoverRadius: 10,
-        pointHoverBackgroundColor: 'rgba(144, 71, 255, 1)',
-        pointHoverBorderColor: 'rgba(144, 71, 255, 1)',
-        pointHoverBorderWidth: 2,
-        pointRadius: 7,
-        pointHitRadius: 10,
-      },
-    ],
-  },
   line2: {
     labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
     datasets: [
@@ -319,7 +270,57 @@ const defaultData = {
   INS_SCORE: 0,
   INS_TYPES: 'Smile Cloud Table Tableware Decoration Photograph Dog Light Land vehicle Jeans Forehead Ecoregion Trousers Green Hairstyle Hair Water Umbrella Picture frame Sky Rectangle',
   ability: '훌륭',
-  influencerType: 'Nano Influencer'
+  influencerType: 'Nano Influencer',
+  mediaData: {
+    urls: [...Array(9).keys()],
+    comments: [12, 19, 3, 5, 2, 3],
+    likes: [12, 19, 3, 5, 2, 3],
+    likesMaxIdx: 1,
+    commentsMaxIdx: 1
+  },
+  activity: {
+    labels: ['월', '화', '수', '목', '금', '토', '일'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: [
+          '#EAEAEA', '#18DBA8', '#EAEAEA', '#EAEAEA', '#EAEAEA', '#EAEAEA'
+        ],
+        categoryPercentage: 0.5
+      },
+    ],
+  },
+  activityOpt: {
+    legend: {
+      display: false
+    },
+    scales: {
+      xAxes: [
+        {
+          categoryPercentage: 0.5,
+          barPercentage: 0.6,
+          gridLines: { display: false }
+        }
+      ],
+      yAxes: [
+        {
+          categoryPercentage: 1.0,
+          barPercentage: 1.0,
+          gridLines: {
+            drawBorder: false,
+            drawTicks: false
+          },
+          ticks: {
+            display: true,
+            min: 0,
+            max: 20,
+            stepSize: 5
+          }
+        }
+      ]
+    }
+  },
 };
 
 function AnalysisComponent() {
@@ -332,6 +333,7 @@ function AnalysisComponent() {
   const isSM = useMediaQuery(theme.breakpoints.up('sm'));
 
   // window.scrollTo(0, document.body.scrollHeight);
+
   function getInstaInfo() {
     axios.get('/api/TB_INSTA/instaInfo', {
       params: { instaId: 3139 }
@@ -541,9 +543,9 @@ function AnalysisComponent() {
             </Grid>
           </Grid>
           <GeneralPart />
-          <PostPart testData={testData} testImage={testImage} />
+          <PostPart instaData={instaData} testImage={testImage} />
           <AudiencePart testData={testData} />
-          <ReactionPart testData={testData} />
+          <ReactionPart instaData={instaData} testData={testData} />
         </Box>
       </Box>
     </ThemeProvider>

@@ -109,8 +109,169 @@ const options = {
   transitionDuration: 1000
 };
 
+const likesData = {
+  labels: ['1', '2', '3', '4', '5', '6'],
+  datasets: [
+    {
+      label: '# of Votes',
+      backgroundColor: [
+        '#EAEAEA', '#18DBA8', '#EAEAEA', '#EAEAEA', '#EAEAEA', '#EAEAEA'
+      ],
+      categoryPercentage: 0.5
+    },
+  ],
+};
+
+const commentsData = {
+  labels: ['1', '2', '3', '4', '5', '6'],
+  datasets: [
+    {
+      label: '# of Votes',
+      data: [12, 19, 3, 5, 2, 3],
+      backgroundColor: [
+        '#EAEAEA', '#18DBA8', '#EAEAEA', '#EAEAEA', '#EAEAEA', '#EAEAEA'
+      ],
+      categoryPercentage: 0.5
+    },
+  ],
+};
+
+const likesOpt = {
+  legend: {
+    display: false
+  },
+  scales: {
+    xAxes: [
+      {
+        categoryPercentage: 0.5,
+        barPercentage: 0.6,
+        gridLines: { display: false }
+      }
+    ],
+    yAxes: [
+      {
+        categoryPercentage: 1.0,
+        barPercentage: 1.0,
+        gridLines: {
+          drawBorder: false,
+          drawTicks: false
+        },
+        ticks: {
+          display: true,
+          min: 0,
+          max: 100,
+          stepSize: 5
+        }
+      }
+    ]
+  }
+};
+
+const commentsOpt = {
+  legend: {
+    display: false
+  },
+  scales: {
+    xAxes: [
+      {
+        categoryPercentage: 0.5,
+        barPercentage: 0.6,
+        gridLines: { display: false }
+      }
+    ],
+    yAxes: [
+      {
+        categoryPercentage: 1.0,
+        barPercentage: 1.0,
+        gridLines: {
+          drawBorder: false,
+          drawTicks: false
+        },
+        ticks: {
+          display: true,
+          min: 0,
+          max: 100,
+          stepSize: 5
+        }
+      }
+    ]
+  }
+};
+
+const line = {
+  labels: ['1', '2', '3', '4', '5', '6'],
+  datasets: [
+    {
+      label: '좋아요수',
+      data: [12, 19, 22, 20, 15, 18],
+      fill: false,
+      lineTension: 0,
+      backgroundColor: 'rgba(24, 219, 168, 1)',
+      borderColor: 'rgba(24, 219, 168, 1)',
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderWidth: 5,
+      borderJoinStyle: 'miter',
+      pointBorderColor: 'white',
+      pointBackgroundColor: 'rgba(24, 219, 168, 1)',
+      pointBorderWidth: 1,
+      pointHoverRadius: 10,
+      pointHoverBackgroundColor: 'rgba(24, 219, 168, 1)',
+      pointHoverBorderColor: 'rgba(24, 219, 168, 1)',
+      pointHoverBorderWidth: 2,
+      pointRadius: 7,
+      pointHitRadius: 10,
+    },
+    {
+      label: '댓글수',
+      data: [4, 1, 3, 5, 2, 3],
+      fill: false,
+      lineTension: 0,
+      backgroundColor: 'rgba(144, 71, 255, 1)',
+      borderColor: 'rgba(144, 71, 255, 1)',
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderWidth: 5,
+      borderJoinStyle: 'miter',
+      pointBorderColor: 'white',
+      pointBackgroundColor: 'rgba(144, 71, 255, 1)',
+      pointBorderWidth: 1,
+      pointHoverRadius: 10,
+      pointHoverBackgroundColor: 'rgba(144, 71, 255, 1)',
+      pointHoverBorderColor: 'rgba(144, 71, 255, 1)',
+      pointHoverBorderWidth: 2,
+      pointRadius: 7,
+      pointHitRadius: 10,
+    },
+  ],
+};
+
 function ReactionPart(props) {
-  const { testData } = props;
+  const { testData, instaData } = props;
+  const {
+    comments, likes, likesMaxIdx, commentsMaxIdx
+  } = instaData.mediaData;
+
+  commentsData.datasets[0].data = comments;
+  commentsData.datasets[0].backgroundColor = Array(comments.length).fill('#EAEAEA');
+  commentsData.datasets[0].backgroundColor[commentsMaxIdx] = '#18DBA8';
+  commentsData.labels = Array.from({ length: comments.length }, (_, i) => i + 1);
+  commentsOpt.scales.yAxes[0].ticks.max = comments[commentsMaxIdx];
+  commentsOpt.scales.yAxes[0].ticks.stepSize = comments[commentsMaxIdx] / 4;
+
+  likesData.datasets[0].data = likes;
+  likesData.datasets[0].backgroundColor = Array(likes.length).fill('#EAEAEA');
+  likesData.datasets[0].backgroundColor[likesMaxIdx] = '#18DBA8';
+  likesData.labels = Array.from({ length: likes.length }, (_, i) => i + 1);
+  likesOpt.scales.yAxes[0].ticks.max = likes[likesMaxIdx];
+  likesOpt.scales.yAxes[0].ticks.stepSize = likes[likesMaxIdx] / 4;
+
+  line.datasets[0].data = likes;
+  line.datasets[1].data = comments;
+  line.labels = Array.from({ length: likes.length }, (_, i) => i + 1);
+
 
   return (
     <React.Fragment>
@@ -121,19 +282,19 @@ function ReactionPart(props) {
         <Grid item xs={4}>
           <Typography variant="subtitle2" paragraph>좋아요 추이</Typography>
           <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-            <BarComponent data={testData.activity} options={testData.activityOpt} />
+            <BarComponent data={likesData} options={likesOpt} />
           </Box>
         </Grid>
         <Grid item xs={4}>
           <Typography variant="subtitle2" paragraph>댓글 추이</Typography>
           <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-            <BarComponent data={testData.activity} options={testData.activityOpt} />
+            <BarComponent data={commentsData} options={commentsOpt} />
           </Box>
         </Grid>
         <Grid item xs={4}>
           <Typography variant="subtitle2" paragraph>팬심 추이</Typography>
           <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-            <Line height={200} data={testData.line} />
+            <Line height={200} data={line} />
           </Box>
         </Grid>
       </Grid>

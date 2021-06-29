@@ -4,7 +4,9 @@ import StyledImage from '../../../containers/StyledImage';
 import BarComponent from '../BarComponent';
 
 function PostPart(props) {
-  const { testData, testImage } = props;
+  const { testImage, instaData } = props;
+
+  const { mediaData } = instaData;
 
   return (
     <React.Fragment>
@@ -15,9 +17,9 @@ function PostPart(props) {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <Grid container spacing={1}>
-              {[...Array(9).keys()].map(item => (
+              {mediaData.urls.map(item => (
                 <Grid key={item} item xs={4}>
-                  <StyledImage borderRadius="7px" width="100%" height="auto" src={testImage} />
+                  <StyledImage borderRadius="7px" width="100%" height="auto" src={item || testImage} />
                 </Grid>
               ))}
             </Grid>
@@ -31,13 +33,13 @@ function PostPart(props) {
         <Grid item xs={4}>
           <Typography variant="subtitle2" paragraph>요일별 포스팅 성향</Typography>
           <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-            <BarComponent data={testData.activity} options={testData.activityOpt} />
+            <BarComponent data={instaData.activity} options={instaData.activityOpt} />
           </Box>
         </Grid>
         <Grid item xs={4}>
           <Typography variant="subtitle2" paragraph>시간별 포스팅 성향</Typography>
           <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-            <BarComponent data={testData.activity} options={testData.activityOpt} />
+            <BarComponent data={instaData.activity} options={instaData.activityOpt} />
           </Box>
         </Grid>
         <Grid item xs={4}>
