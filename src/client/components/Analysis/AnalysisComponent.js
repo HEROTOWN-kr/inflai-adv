@@ -278,6 +278,32 @@ const defaultData = {
     likesMaxIdx: 1,
     commentsMaxIdx: 1
   },
+  genderData: {
+    female: [70, 90, 95, 85],
+    male: [30, 10, 5, 15]
+  },
+  ageData: [
+    {
+      age: '10대',
+      num: '17.4',
+    },
+    {
+      age: '20대',
+      num: '53.8',
+    },
+    {
+      age: '30대',
+      num: '27.1',
+    },
+    {
+      age: '40대',
+      num: '1.4',
+    },
+    {
+      age: '50대',
+      num: '0.4',
+    },
+  ],
   activity: {
     labels: ['월', '화', '수', '목', '금', '토', '일'],
     datasets: [
@@ -544,7 +570,7 @@ function AnalysisComponent() {
           </Grid>
           <GeneralPart />
           <PostPart instaData={instaData} testImage={testImage} />
-          <AudiencePart testData={testData} />
+          <AudiencePart instaData={instaData} testData={testData} />
           <ReactionPart instaData={instaData} testData={testData} />
         </Box>
       </Box>

@@ -7,9 +7,33 @@ import BarComponent from '../BarComponent';
 import analysisStyles from '../AnalysisStyle';
 
 
+const sex = {
+  labels: ['18-24', '25-34', '35-44', '45-54', '65+'],
+  datasets: [
+    {
+      label: '여성',
+      backgroundColor: '#6E0FFF',
+    },
+    {
+      label: '남성',
+      backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    },
+  ],
+};
+
+const bgColors = ['purple', 'lightGreen', 'yellow', 'grey'];
+
 function AudiencePart(props) {
-  const { testData } = props;
+  const { testData, instaData } = props;
+  const { genderData, ageData } = instaData;
+  const { male, female } = genderData;
   const classes = analysisStyles();
+
+  sex.datasets[0].data = female;
+  sex.datasets[1].data = male;
+
+  const femaleSum = female.reduce((a, b) => a + b, 0);
+  const maleSum = male.reduce((a, b) => a + b, 0);
 
   return (
     <React.Fragment>
@@ -176,12 +200,12 @@ function AudiencePart(props) {
           <Grid item xs={3}>
             <Typography variant="subtitle2" paragraph>연령 비율</Typography>
             <Box p="20px" bgcolor="#FFF" borderRadius="7px">
-              {testData.age.map(item => (
-                <Box key={item.lng}>
+              {ageData.map((item, index) => (
+                <Box key={item.age}>
                   <Grid container justify="space-between">
                     <Grid item>
                       <Typography variant="body1" color="textSecondary">
-                        {item.lng}
+                        {item.age}
                       </Typography>
                     </Grid>
                     <Grid item>
@@ -191,7 +215,7 @@ function AudiencePart(props) {
                     </Grid>
                   </Grid>
                   <Box my="10px">
-                    <LinearProgress variant="determinate" value={item.num} classes={{ barColorPrimary: classes[item.color] }} />
+                    <LinearProgress variant="determinate" value={item.num} classes={{ barColorPrimary: classes[bgColors[index]] }} />
                   </Box>
                 </Box>
               ))}
@@ -203,12 +227,12 @@ function AudiencePart(props) {
               <Grid container>
                 <Grid item>
                   <Box mx={5} mt="50px">
-                    <DoughnutComponent chartWidth={140} chartHeight={140} chartColor={['#6E0FFF', 'rgba(0, 0, 0, 0.2)']} />
+                    <DoughnutComponent chartData={[femaleSum, maleSum]} chartWidth={140} chartHeight={140} chartColor={['#6E0FFF', 'rgba(0, 0, 0, 0.2)']} />
                   </Box>
                 </Grid>
                 <Grid item xs>
                   <Box maxWidth="380px" m="0 auto">
-                    <BarComponent data={testData.sex} />
+                    <BarComponent data={sex} />
                   </Box>
                 </Grid>
               </Grid>

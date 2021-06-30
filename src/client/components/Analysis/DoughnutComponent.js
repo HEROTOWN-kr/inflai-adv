@@ -4,11 +4,11 @@ import { Doughnut } from 'react-chartjs-2';
 
 function DoughnutComponent(props) {
   const {
-    chartColor, chartData, chartWidth, chartHeight
+    chartColor, chartData, chartWidth, chartHeight,
   } = props;
 
   const data = {
-    labels: ['red', 'blue'],
+    labels: ['여성', '남성'],
     datasets: [
       {
         label: '# of Votes',
@@ -51,7 +51,6 @@ function DoughnutComponent(props) {
   if (chartData) data.datasets[0].data = chartData;
   if (chartHeight) sizes.height = chartHeight;
   if (chartWidth) sizes.width = chartWidth;
-
 
   return (
     <Doughnut width={sizes.width} height={sizes.height} data={data} options={options} />
