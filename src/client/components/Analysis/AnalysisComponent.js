@@ -138,78 +138,6 @@ const testData = {
       color: 'grey'
     },
   ],
-  line2: {
-    labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    datasets: [
-      {
-        label: '# of Votes',
-        data: [12, 19, 22, 20, 15, 18, 16, 20, 17],
-        fill: true,
-        lineTension: 0.5,
-        backgroundColor: 'rgba(231, 251, 246, 0.6)',
-        borderColor: 'rgba(24, 219, 168, 1)',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderWidth: 4,
-        borderJoinStyle: 'miter',
-        pointBorderColor: 'white',
-        pointBackgroundColor: 'rgba(24, 219, 168, 1)',
-        pointBorderWidth: 1,
-        pointHoverRadius: 10,
-        pointHoverBackgroundColor: 'rgba(24, 219, 168, 1)',
-        pointHoverBorderColor: 'rgba(24, 219, 168, 1)',
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
-      },
-    ],
-  },
-  line2Opt: {
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    }
-  },
-  line3: {
-    labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    datasets: [
-      {
-        label: '# of Votes',
-        data: [12, 19, 22, 20, 15, 18, 16, 20, 17],
-        fill: true,
-        lineTension: 0.5,
-        backgroundColor: 'rgba(244, 236, 255, 0.6)',
-        borderColor: 'rgba(144, 71, 255, 1)',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderWidth: 4,
-        borderJoinStyle: 'miter',
-        pointBorderColor: 'white',
-        pointBackgroundColor: 'rgba(144, 71, 255, 1)',
-        pointBorderWidth: 1,
-        pointHoverRadius: 10,
-        pointHoverBackgroundColor: 'rgba(144, 71, 255, 1)',
-        pointHoverBorderColor: 'rgba(144, 71, 255, 1)',
-        pointHoverBorderWidth: 2,
-        pointRadius: 2,
-        pointHitRadius: 10,
-      },
-    ],
-  },
-  line3Opt: {
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    }
-  },
   reaction: {
     labels: ['해당 계정', '카테고리 평균'],
     datasets: [
@@ -304,6 +232,14 @@ const defaultData = {
       num: '0.4',
     },
   ],
+  followerActivity: {
+    hours: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+    flwrs: [12, 19, 22, 20, 15, 18, 16, 20, 17]
+  },
+  impressions: {
+    impressionsVal: [12, 19, 22, 20, 15, 18, 16],
+    impressionsMax: 0
+  },
   activity: {
     labels: ['월', '화', '수', '목', '금', '토', '일'],
     datasets: [
@@ -347,6 +283,7 @@ const defaultData = {
       ]
     }
   },
+
 };
 
 function AnalysisComponent() {

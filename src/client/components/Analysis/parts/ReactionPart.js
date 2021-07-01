@@ -248,11 +248,85 @@ const line = {
   ],
 };
 
+const activity = {
+  datasets: [
+    {
+      label: '# of Votes',
+      fill: true,
+      lineTension: 0.5,
+      backgroundColor: 'rgba(231, 251, 246, 0.6)',
+      borderColor: 'rgba(24, 219, 168, 1)',
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderWidth: 4,
+      borderJoinStyle: 'miter',
+      pointBorderColor: 'white',
+      pointBackgroundColor: 'rgba(24, 219, 168, 1)',
+      pointBorderWidth: 1,
+      pointHoverRadius: 10,
+      pointHoverBackgroundColor: 'rgba(24, 219, 168, 1)',
+      pointHoverBorderColor: 'rgba(24, 219, 168, 1)',
+      pointHoverBorderWidth: 2,
+      pointRadius: 1,
+      pointHitRadius: 10,
+    },
+  ],
+};
+const activityOpt = {
+  scales: {
+    yAxes: [{
+      ticks: {
+        beginAtZero: true
+      }
+    }]
+  }
+};
+
+const impressionData = {
+  labels: ['1', '2', '3', '4', '5', '6', '7'],
+  datasets: [
+    {
+      label: '# of Votes',
+      fill: true,
+      lineTension: 0.5,
+      backgroundColor: 'rgba(244, 236, 255, 0.6)',
+      borderColor: 'rgba(144, 71, 255, 1)',
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderWidth: 4,
+      borderJoinStyle: 'miter',
+      pointBorderColor: 'white',
+      pointBackgroundColor: 'rgba(144, 71, 255, 1)',
+      pointBorderWidth: 1,
+      pointHoverRadius: 10,
+      pointHoverBackgroundColor: 'rgba(144, 71, 255, 1)',
+      pointHoverBorderColor: 'rgba(144, 71, 255, 1)',
+      pointHoverBorderWidth: 2,
+      pointRadius: 2,
+      pointHitRadius: 10,
+    },
+  ],
+};
+const impressionOpt = {
+  scales: {
+    yAxes: [{
+      ticks: {
+        beginAtZero: true
+      }
+    }]
+  }
+};
+
 function ReactionPart(props) {
   const { testData, instaData } = props;
   const {
     comments, likes, likesMaxIdx, commentsMaxIdx
   } = instaData.mediaData;
+
+  const { hours, flwrs } = instaData.followerActivity;
+  const { impressionsMax, impressionsVal } = instaData.impressions;
 
   commentsData.datasets[0].data = comments;
   commentsData.datasets[0].backgroundColor = Array(comments.length).fill('#EAEAEA');
@@ -271,6 +345,11 @@ function ReactionPart(props) {
   line.datasets[0].data = likes;
   line.datasets[1].data = comments;
   line.labels = Array.from({ length: likes.length }, (_, i) => i + 1);
+
+  activity.datasets[0].data = flwrs;
+  activity.labels = hours;
+
+  impressionData.datasets[0].data = impressionsVal;
 
 
   return (
@@ -303,13 +382,13 @@ function ReactionPart(props) {
           <Grid item xs={6}>
             <Typography variant="subtitle2" paragraph>팔로워 트렌드</Typography>
             <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-              <Line height={150} data={testData.line2} options={testData.line2Opt} />
+              <Line height={150} data={activity} options={activityOpt} />
             </Box>
           </Grid>
           <Grid item xs={6}>
             <Typography variant="subtitle2" paragraph>팔로잉 트렌드</Typography>
             <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-              <Line height={150} data={testData.line3} options={testData.line3Opt} />
+              <Line height={150} data={impressionData} options={impressionOpt} />
             </Box>
           </Grid>
         </Grid>
