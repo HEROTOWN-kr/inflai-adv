@@ -197,8 +197,8 @@ const defaultData = {
   INS_CMNT: 0,
   INS_SCORE: 0,
   INS_TYPES: 'Smile Cloud Table Tableware Decoration Photograph Dog Light Land vehicle Jeans Forehead Ecoregion Trousers Green Hairstyle Hair Water Umbrella Picture frame Sky Rectangle',
-  ability: '훌륭',
-  influencerType: 'Nano Influencer',
+  ability: '',
+  influencerType: '',
   mediaData: {
     urls: [...Array(9).keys()],
     comments: [12, 19, 3, 5, 2, 3],
@@ -210,6 +210,7 @@ const defaultData = {
     female: [70, 90, 95, 85],
     male: [30, 10, 5, 15]
   },
+  genderMax: '',
   ageData: [
     {
       age: '10대',
@@ -232,10 +233,13 @@ const defaultData = {
       num: '0.4',
     },
   ],
+  ageMax: '',
   followerActivity: {
     hours: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    flwrs: [12, 19, 22, 20, 15, 18, 16, 20, 17]
+    flwrs: [12, 19, 22, 20, 15, 18, 16, 20, 17],
+    flwrsMax: ''
   },
+  newFollowers: 0,
   impressions: {
     impressionsVal: [12, 19, 22, 20, 15, 18, 16],
     impressionsMax: 0
@@ -283,7 +287,10 @@ const defaultData = {
       ]
     }
   },
-
+  location: {
+    maxLoc: '',
+    locData: []
+  },
 };
 
 function AnalysisComponent() {
@@ -382,13 +389,13 @@ function AnalysisComponent() {
                         <Grid container justify="space-between">
                           <Grid item>
                             <Typography variant="body1">
-                              인플라이 스코어
+                              인플라이 지수
                             </Typography>
                           </Grid>
                           <Grid item>
                             <Typography variant="body1" classes={{ root: classes.bold600 }}>
                               {instaData.INS_SCORE}
-                              점
+점
                             </Typography>
                           </Grid>
                         </Grid>
@@ -397,12 +404,12 @@ function AnalysisComponent() {
                         <Grid container justify="space-between">
                           <Grid item>
                             <Typography variant="body1">
-                              진짜 영향력
+                              소통, 공감능력
                             </Typography>
                           </Grid>
                           <Grid item>
                             <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                              2,979명
+                              {instaData.ability}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -412,12 +419,13 @@ function AnalysisComponent() {
                         <Grid container justify="space-between">
                           <Grid item>
                             <Typography variant="body1">
-                              영향력 랭킹
+                              인플라이 랭킹
                             </Typography>
                           </Grid>
                           <Grid item>
                             <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                              42위(홈리빙)
+                              {instaData.INS_RANK}
+위
                             </Typography>
                           </Grid>
                         </Grid>
@@ -426,12 +434,13 @@ function AnalysisComponent() {
                         <Grid container justify="space-between">
                           <Grid item>
                             <Typography variant="body1">
-                              성장성 종합 점수
+                              팔로워충성도
                             </Typography>
                           </Grid>
                           <Grid item>
                             <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                              High
+                              {instaData.impressions.impressionsMax}
+명
                             </Typography>
                           </Grid>
                         </Grid>
@@ -443,12 +452,12 @@ function AnalysisComponent() {
                       <Grid container justify="space-between">
                         <Grid item>
                           <Typography variant="body1">
-                            보유 오디언스
+                            팔로워 주요 국적
                           </Typography>
                         </Grid>
                         <Grid item>
                           <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                            30대, 여성(86%)
+                            {instaData.location.maxLoc}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -457,12 +466,12 @@ function AnalysisComponent() {
                       <Grid container justify="space-between">
                         <Grid item>
                           <Typography variant="body1">
-                            진짜 팔로워
+                            팔로워 성비
                           </Typography>
                         </Grid>
                         <Grid item>
                           <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                            152,981명
+                            {instaData.genderMax}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -471,12 +480,12 @@ function AnalysisComponent() {
                       <Grid container justify="space-between">
                         <Grid item>
                           <Typography variant="body1">
-                            진짜 반응률
+                            팔로워 연령
                           </Typography>
                         </Grid>
                         <Grid item>
                           <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                            0.48%
+                            {instaData.ageMax}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -485,12 +494,13 @@ function AnalysisComponent() {
                       <Grid container justify="space-between">
                         <Grid item>
                           <Typography variant="body1">
-                            진짜 도달수
+                            국내영향력 팔로워
                           </Typography>
                         </Grid>
                         <Grid item>
                           <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                            115,332명
+                            {instaData.followerActivity.flwrsMax}
+명
                           </Typography>
                         </Grid>
                       </Grid>
@@ -500,11 +510,54 @@ function AnalysisComponent() {
               </Box>
             </Grid>
             <Grid item xs={4}>
-              <Box p={1} height="100%" boxSizing="border-box" borderTop="7px solid #DDDDDD" borderRadius="7px" overflow="hidden" bgcolor="#FFF">
-                채널 관련 링크 💸
+              <Box height="100%" boxSizing="border-box" borderTop="7px solid #DDDDDD" borderRadius="7px" overflow="hidden">
+                <Box py="13px" px={2}>
+                  <Grid container justify="space-between">
+                    <Grid item>
+                      <Typography variant="body1">
+                        최근 1주일간 새로운 팔로워신청
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1" classes={{ root: classes.bold600 }}>
+                        {instaData.newFollowers}
+명
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Box>
+                <Box py="13px" px={2} bgcolor="#FFF">
+                  <Grid container justify="space-between">
+                    <Grid item>
+                      <Typography variant="body1">
+                        팔로워 주요 국적
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1" classes={{ root: classes.bold600 }}>
+                        {instaData.location.maxLoc}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Box>
               </Box>
             </Grid>
           </Grid>
+          <Box p={2} mt="50px" bgcolor="#F2F2F2">
+            <Typography variant="subtitle2">
+              {
+                `안드레이최는 ${instaData.INS_FLWR}명의 팔로워를 보유하고 있으며 이는 ${instaData.influencerType} 입니다.
+                인플루언서 영향력을 나타내는 인플라이니수는 ${instaData.INS_SCORE}
+                점이며 최근 30일간 ()건의 포스팅으로 진행하였고
+                ()건의 좋아요수와 ()건의 댓글을 받아 공감능력은 ${instaData.ability} 상태입니다.
+                보유팔로워의 78%가 ${instaData.location.maxLoc}인으로 구성되어있으며
+                ${instaData.ageMax}대 ${instaData.genderMax}걸쳐서 가장 큰 영향력을 발휘하게 됩니다.
+                게시물 인공지능분석 결과 가장 높은 비율인 ()%를 (food)가 차지하고 있어서
+                food 쪽에 영향력 지수가 크다고 보여집니다.
+                (제일 높은 이미지의 %가 30% 이하이면 ... 특별한 카테고리에 영향력이 없다고 보여집니다.)`
+              }
+            </Typography>
+          </Box>
           <GeneralPart />
           <PostPart instaData={instaData} testImage={testImage} />
           <AudiencePart instaData={instaData} testData={testData} />
