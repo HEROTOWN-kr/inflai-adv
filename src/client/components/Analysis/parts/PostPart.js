@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Box, Grid, Typography } from '@material-ui/core';
 import StyledImage from '../../../containers/StyledImage';
 import BarComponent from '../BarComponent';
+import GoogleVisionGraph from '../../campaign/Graphs/GoogleVisionGraph';
 
 function PostPart(props) {
   const { testImage, instaData } = props;
-
+  const [maxStatVal, setMaxStatVal] = useState(null);
   const { mediaData } = instaData;
 
   return (
@@ -26,6 +27,7 @@ function PostPart(props) {
           </Grid>
           <Grid item xs={6}>
             <Typography variant="subtitle2" paragraph>사진분석 결과</Typography>
+            <GoogleVisionGraph INS_ID={instaData.INS_ID} setMaxStatVal={setMaxStatVal} />
           </Grid>
         </Grid>
       </Box>

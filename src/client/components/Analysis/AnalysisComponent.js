@@ -206,6 +206,11 @@ const defaultData = {
     likesMaxIdx: 1,
     commentsMaxIdx: 1
   },
+  monthMedia: {
+    mediaCount: 0,
+    likeSum: 0,
+    commentsSum: 0
+  },
   genderData: {
     female: [70, 90, 95, 85],
     male: [30, 10, 5, 15]
@@ -548,8 +553,8 @@ function AnalysisComponent() {
               {
                 `안드레이최는 ${instaData.INS_FLWR}명의 팔로워를 보유하고 있으며 이는 ${instaData.influencerType} 입니다.
                 인플루언서 영향력을 나타내는 인플라이니수는 ${instaData.INS_SCORE}
-                점이며 최근 30일간 ()건의 포스팅으로 진행하였고
-                ()건의 좋아요수와 ()건의 댓글을 받아 공감능력은 ${instaData.ability} 상태입니다.
+                점이며 최근 30일간 ${instaData.monthMedia.mediaCount}건의 포스팅으로 진행하였고
+                ${instaData.monthMedia.likeSum}건의 좋아요수와 ${instaData.monthMedia.commentsSum}건의 댓글을 받아 공감능력은 ${instaData.ability} 상태입니다.
                 보유팔로워의 78%가 ${instaData.location.maxLoc}인으로 구성되어있으며
                 ${instaData.ageMax}대 ${instaData.genderMax}걸쳐서 가장 큰 영향력을 발휘하게 됩니다.
                 게시물 인공지능분석 결과 가장 높은 비율인 ()%를 (food)가 차지하고 있어서

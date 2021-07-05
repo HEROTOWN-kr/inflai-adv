@@ -251,7 +251,7 @@ const line = {
 const activity = {
   datasets: [
     {
-      label: '# of Votes',
+      label: '팔로워 수',
       fill: true,
       lineTension: 0.5,
       backgroundColor: 'rgba(231, 251, 246, 0.6)',
@@ -380,7 +380,7 @@ function ReactionPart(props) {
       <Box mt="50px">
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <Typography variant="subtitle2" paragraph>팔로워 트렌드</Typography>
+            <Typography variant="subtitle2" paragraph>최근 24시간 온라인 상태였던 팔로워 수</Typography>
             <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
               <Line height={150} data={activity} options={activityOpt} />
             </Box>
