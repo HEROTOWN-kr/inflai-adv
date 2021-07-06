@@ -311,7 +311,7 @@ function AnalysisComponent() {
 
   function getInstaInfo() {
     axios.get('/api/TB_INSTA/instaInfo', {
-      params: { instaId: 3139 }
+      params: { instaId: 1197 }
     }).then((res) => {
       const { data } = res.data;
       setInstaData({ ...instaData, ...data });
@@ -551,13 +551,13 @@ function AnalysisComponent() {
           <Box p={2} mt="50px" bgcolor="#F2F2F2">
             <Typography variant="subtitle2">
               {
-                `안드레이최는 ${instaData.INS_FLWR}명의 팔로워를 보유하고 있으며 이는 ${instaData.influencerType} 입니다.
+                `${instaData.INS_NAME}는 ${instaData.INS_FLWR}명의 팔로워를 보유하고 있으며 이는 ${instaData.influencerType} 입니다.
                 인플루언서 영향력을 나타내는 인플라이니수는 ${instaData.INS_SCORE}
                 점이며 최근 30일간 ${instaData.monthMedia.mediaCount}건의 포스팅으로 진행하였고
                 ${instaData.monthMedia.likeSum}건의 좋아요수와 ${instaData.monthMedia.commentsSum}건의 댓글을 받아 공감능력은 ${instaData.ability} 상태입니다.
                 보유팔로워의 78%가 ${instaData.location.maxLoc}인으로 구성되어있으며
                 ${instaData.ageMax}대 ${instaData.genderMax}걸쳐서 가장 큰 영향력을 발휘하게 됩니다.
-                게시물 인공지능분석 결과 가장 높은 비율인 ()%를 (food)가 차지하고 있어서
+                게시물 인공지능분석 결과 가장 높은 비율인 16%를 (food)가 차지하고 있어서
                 food 쪽에 영향력 지수가 크다고 보여집니다.
                 (제일 높은 이미지의 %가 30% 이하이면 ... 특별한 카테고리에 영향력이 없다고 보여집니다.)`
               }

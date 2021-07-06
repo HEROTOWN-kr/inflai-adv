@@ -287,7 +287,7 @@ const impressionData = {
   labels: ['1', '2', '3', '4', '5', '6', '7'],
   datasets: [
     {
-      label: '# of Votes',
+      label: '조회된 횟수',
       fill: true,
       lineTension: 0.5,
       backgroundColor: 'rgba(244, 236, 255, 0.6)',
@@ -359,19 +359,19 @@ function ReactionPart(props) {
       </Box>
       <Grid container spacing={2}>
         <Grid item xs={4}>
-          <Typography variant="subtitle2" paragraph>좋아요 추이</Typography>
+          <Typography variant="subtitle2" paragraph>최근 포스트의 좋아요수</Typography>
           <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
             <BarComponent data={likesData} options={likesOpt} />
           </Box>
         </Grid>
         <Grid item xs={4}>
-          <Typography variant="subtitle2" paragraph>댓글 추이</Typography>
+          <Typography variant="subtitle2" paragraph>최근 포스트의 댓글수</Typography>
           <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
             <BarComponent data={commentsData} options={commentsOpt} />
           </Box>
         </Grid>
         <Grid item xs={4}>
-          <Typography variant="subtitle2" paragraph>팬심 추이</Typography>
+          <Typography variant="subtitle2" paragraph>좋아요와 댓글 피교</Typography>
           <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
             <Line height={200} data={line} />
           </Box>
@@ -386,7 +386,9 @@ function ReactionPart(props) {
             </Box>
           </Grid>
           <Grid item xs={6}>
-            <Typography variant="subtitle2" paragraph>팔로잉 트렌드</Typography>
+            <Typography variant="subtitle2" paragraph>
+              사용자의 미디어가 조회된 횟수 합계
+            </Typography>
             <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
               <Line height={150} data={impressionData} options={impressionOpt} />
             </Box>
