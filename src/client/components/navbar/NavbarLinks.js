@@ -32,6 +32,17 @@ const defaultMenuLinks = [
   }, */
 ];
 
+const testLinks = [
+  {
+    text: 'InstaDialog',
+    link: '/InstaDialog'
+  },
+];
+
+if (window.location.origin.indexOf('localhost') > -1) {
+  defaultMenuLinks.push(...testLinks);
+}
+
 function NavbarLinks() {
   const history = useHistory();
   const { isAuthenticated } = useContext(AuthContext);

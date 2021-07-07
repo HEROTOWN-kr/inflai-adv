@@ -15,7 +15,7 @@ function GeneralPart(props) {
       <Grid container spacing={1}>
         <Grid item xs={3}>
           <Box mb="13px">
-            <Typography variant="subtitle2">진짜 영향력</Typography>
+            <Typography variant="subtitle2">인플라이 랭킹</Typography>
           </Box>
           <Box borderRadius="7px" overflow="hidden">
             <Box bgcolor="#FFF" pt="10px" pl="25px" pb="50px">

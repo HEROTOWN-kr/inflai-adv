@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Box, colors, Grid, LinearProgress, Typography
 } from '@material-ui/core';
+import { FiberManualRecord } from '@material-ui/icons';
 import DoughnutComponent from '../DoughnutComponent';
 import BarComponent from '../BarComponent';
 import analysisStyles from '../AnalysisStyle';
@@ -228,6 +229,28 @@ function AudiencePart(props) {
                 <Grid item>
                   <Box mx={5} mt="50px">
                     <DoughnutComponent chartData={[femaleSum, maleSum]} chartWidth={140} chartHeight={140} chartColor={['#6E0FFF', 'rgba(0, 0, 0, 0.2)']} />
+                    <Box>
+                      <Box>
+                        <Grid container alignItems="center">
+                          <Grid item>
+                            <FiberManualRecord color="primary" classes={{ fontSizeSmall: classes.record }} fontSize="small" />
+                          </Grid>
+                          <Grid item>
+                            <Box width="110px">남성</Box>
+                          </Grid>
+                        </Grid>
+                      </Box>
+                      <Box>
+                        <Grid container alignItems="center">
+                          <Grid item>
+                            <FiberManualRecord classes={{ fontSizeSmall: classes.record }} fontSize="small" />
+                          </Grid>
+                          <Grid item>
+                            <Box width="110px">여성</Box>
+                          </Grid>
+                        </Grid>
+                      </Box>
+                    </Box>
                   </Box>
                 </Grid>
                 <Grid item xs>

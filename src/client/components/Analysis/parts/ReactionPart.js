@@ -358,39 +358,39 @@ function ReactionPart(props) {
         <Typography variant="h6">반응 분석</Typography>
       </Box>
       <Grid container spacing={2}>
-        <Grid item xs={4}>
-          <Typography variant="subtitle2" paragraph>최근 포스트의 좋아요수</Typography>
+        <Grid item xs={6}>
+          <Typography variant="subtitle2" paragraph>최근 24시간 온라인 상태였던 팔로워 수</Typography>
           <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-            <BarComponent data={likesData} options={likesOpt} />
+            <Line height={150} data={activity} options={activityOpt} />
           </Box>
         </Grid>
-        <Grid item xs={4}>
-          <Typography variant="subtitle2" paragraph>최근 포스트의 댓글수</Typography>
+        <Grid item xs={6}>
+          <Typography variant="subtitle2" paragraph>
+            사용자의 미디어가 조회된 횟수 합계
+          </Typography>
           <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-            <BarComponent data={commentsData} options={commentsOpt} />
-          </Box>
-        </Grid>
-        <Grid item xs={4}>
-          <Typography variant="subtitle2" paragraph>좋아요와 댓글 피교</Typography>
-          <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-            <Line height={200} data={line} />
+            <Line height={150} data={impressionData} options={impressionOpt} />
           </Box>
         </Grid>
       </Grid>
       <Box mt="50px">
         <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <Typography variant="subtitle2" paragraph>최근 24시간 온라인 상태였던 팔로워 수</Typography>
+          <Grid item xs={4}>
+            <Typography variant="subtitle2" paragraph>최근 포스트의 좋아요수</Typography>
             <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-              <Line height={150} data={activity} options={activityOpt} />
+              <BarComponent data={likesData} options={likesOpt} />
             </Box>
           </Grid>
-          <Grid item xs={6}>
-            <Typography variant="subtitle2" paragraph>
-              사용자의 미디어가 조회된 횟수 합계
-            </Typography>
+          <Grid item xs={4}>
+            <Typography variant="subtitle2" paragraph>최근 포스트의 댓글수</Typography>
             <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
-              <Line height={150} data={impressionData} options={impressionOpt} />
+              <BarComponent data={commentsData} options={commentsOpt} />
+            </Box>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography variant="subtitle2" paragraph>좋아요와 댓글 피교</Typography>
+            <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
+              <Line height={200} data={line} />
             </Box>
           </Grid>
         </Grid>

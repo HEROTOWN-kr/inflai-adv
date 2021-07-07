@@ -18,6 +18,7 @@ import GeneralPart from './parts/GeneralPart';
 import PostPart from './parts/PostPart';
 import AudiencePart from './parts/AudiencePart';
 import ReactionPart from './parts/ReactionPart';
+import { DAY_OF_WEEK, HOURS } from '../../lib/Сonstants';
 
 
 const testImage = 'https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/s640x640/44191010_877274945801500_683676639501143736_n.jpg?tp=1&_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_cat=104&_nc_ohc=SMM5lzTWsXsAX9JK4qs&edm=AP_V10EBAAAA&ccb=7-4&oh=971b324811b253d368244c569a59e114&oe=60D9D799&_nc_sid=4f375e';
@@ -25,49 +26,6 @@ const testData = {
   audience3: {
     chartColor: ['rgb(110, 15, 255)', 'rgb(24, 219, 168)', 'rgb(255, 230, 0)'],
     chartData: [28, 61, 11]
-  },
-  activity: {
-    labels: ['월', '화', '수', '목', '금', '토', '일'],
-    datasets: [
-      {
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          '#EAEAEA', '#18DBA8', '#EAEAEA', '#EAEAEA', '#EAEAEA', '#EAEAEA'
-        ],
-        categoryPercentage: 0.5
-      },
-    ],
-  },
-  activityOpt: {
-    legend: {
-      display: false
-    },
-    scales: {
-      xAxes: [
-        {
-          categoryPercentage: 0.5,
-          barPercentage: 0.6,
-          gridLines: { display: false }
-        }
-      ],
-      yAxes: [
-        {
-          categoryPercentage: 1.0,
-          barPercentage: 1.0,
-          gridLines: {
-            drawBorder: false,
-            drawTicks: false
-          },
-          ticks: {
-            display: true,
-            min: 0,
-            max: 20,
-            stepSize: 5
-          }
-        }
-      ]
-    }
   },
   sex: {
     labels: ['10대', '20대', '30대', '40대'],
@@ -249,48 +207,13 @@ const defaultData = {
     impressionsVal: [12, 19, 22, 20, 15, 18, 16],
     impressionsMax: 0
   },
-  activity: {
-    labels: ['월', '화', '수', '목', '금', '토', '일'],
-    datasets: [
-      {
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          '#EAEAEA', '#18DBA8', '#EAEAEA', '#EAEAEA', '#EAEAEA', '#EAEAEA'
-        ],
-        categoryPercentage: 0.5
-      },
-    ],
-  },
-  activityOpt: {
-    legend: {
-      display: false
-    },
-    scales: {
-      xAxes: [
-        {
-          categoryPercentage: 0.5,
-          barPercentage: 0.6,
-          gridLines: { display: false }
-        }
-      ],
-      yAxes: [
-        {
-          categoryPercentage: 1.0,
-          barPercentage: 1.0,
-          gridLines: {
-            drawBorder: false,
-            drawTicks: false
-          },
-          ticks: {
-            display: true,
-            min: 0,
-            max: 20,
-            stepSize: 5
-          }
-        }
-      ]
-    }
+  postStats: {
+    hourStats: Array(24).fill(0),
+    dayStats: Array(7).fill(0),
+    dayMaxIdx: 0,
+    hourMaxIdx: 0,
+    dayAvg: 0,
+    weekAvg: 0
   },
   location: {
     maxLoc: '',
@@ -559,14 +482,15 @@ function AnalysisComponent() {
                 ${instaData.ageMax}대 ${instaData.genderMax}걸쳐서 가장 큰 영향력을 발휘하게 됩니다.
                 게시물 인공지능분석 결과 가장 높은 비율인 16%를 (food)가 차지하고 있어서
                 food 쪽에 영향력 지수가 크다고 보여집니다.
-                (제일 높은 이미지의 %가 30% 이하이면 ... 특별한 카테고리에 영향력이 없다고 보여집니다.)`
+                (제일 높은 이미지의 %가 30% 이하이면 ... 특별한 카테고리에 영향력이 없다고 보여집니다.)
+                ${instaData.INS_NAME}님은 ${DAY_OF_WEEK[instaData.postStats.dayMaxIdx]}요일, 오후 ${HOURS[instaData.postStats.hourMaxIdx]}시 주로 게시물을 업로드 하고 있습니다.`
               }
             </Typography>
           </Box>
-          <GeneralPart />
           <PostPart instaData={instaData} testImage={testImage} />
-          <AudiencePart instaData={instaData} testData={testData} />
           <ReactionPart instaData={instaData} testData={testData} />
+          <AudiencePart instaData={instaData} testData={testData} />
+          <GeneralPart />
         </Box>
       </Box>
     </ThemeProvider>
