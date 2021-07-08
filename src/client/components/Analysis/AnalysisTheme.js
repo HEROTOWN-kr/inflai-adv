@@ -4,7 +4,7 @@ const styleTheme = createMuiTheme({
   palette: {
     orange: {
       main: colors.orange[500]
-    }
+    },
   },
   typography: {
     fontFamily: 'Noto Sans KR, sans-serif',

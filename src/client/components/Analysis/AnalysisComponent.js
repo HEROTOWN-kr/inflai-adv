@@ -164,6 +164,7 @@ const defaultData = {
     likesMaxIdx: 1,
     commentsMaxIdx: 1
   },
+  lastPosts: [],
   monthMedia: {
     mediaCount: 0,
     likeSum: 0,
@@ -171,7 +172,9 @@ const defaultData = {
   },
   genderData: {
     female: [70, 90, 95, 85],
-    male: [30, 10, 5, 15]
+    male: [30, 10, 5, 15],
+    malePercent: 0,
+    femalePercent: 0
   },
   genderMax: '',
   ageData: [

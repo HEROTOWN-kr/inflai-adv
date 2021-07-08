@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Grid, Typography } from '@material-ui/core';
+import {
+  Box, Grid, makeStyles, Typography
+} from '@material-ui/core';
 import StyledImage from '../../../containers/StyledImage';
 import BarComponent from '../BarComponent';
 import GoogleVisionGraph from '../../campaign/Graphs/GoogleVisionGraph';
 import { DAY_OF_WEEK, HOURS } from '../../../lib/Сonstants';
+
+const useStyles = makeStyles({
+  multiLineEllipsis: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkit-line-clamp': 3,
+    '-webkit-box-orient': 'vertical'
+  }
+});
 
 const hourData = {
   labels: HOURS,
@@ -81,10 +93,11 @@ const dayOpt = {
 function PostPart(props) {
   const { testImage, instaData } = props;
   const [maxStatVal, setMaxStatVal] = useState(null);
-  const { mediaData, postStats } = instaData;
+  const { mediaData, postStats, lastPosts } = instaData;
   const {
     hourStats, dayStats, dayMaxIdx, hourMaxIdx, dayAvg, weekAvg
   } = postStats;
+  const classes = useStyles();
 
   hourData.datasets[0].data = hourStats;
   hourData.datasets[0].backgroundColor = Array(hourStats.length).fill('#EAEAEA');
@@ -116,6 +129,56 @@ function PostPart(props) {
           </Grid>
         </Grid>
       </Box>
+      <Box mb="50px">
+        <Typography variant="subtitle2" paragraph>최근게시물</Typography>
+        <Grid container spacing={2}>
+          {lastPosts.map(post => (
+            <Grid item xs={6} key={post.id}>
+              <Grid container>
+                <Grid item>
+                  <StyledImage borderRadius="7px" width="200px" height="200px" src={post.media_url || testImage} />
+                </Grid>
+                <Grid item xs zeroMinWidth>
+                  <Box ml={2} p={2} position="relative" boxSizing="border-box" height="100%" bgcolor="#FFF" borderRadius="7px">
+                    <Grid container style={{ height: '100%' }}>
+                      <Grid item xs={12}>
+                        <Typography variant="body1" className={classes.multiLineEllipsis}>
+                          {post.caption}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Box bgcolor="#fafafa" p="14px" borderRadius="7px">
+                          <Grid container justify="space-between">
+                            <Grid item xs={6}>
+                              <Typography variant="body1" style={{ textAlign: 'center' }}>
+                                {'좋아요수: '}
+                                <span style={{ color: 'blue' }}>
+                                  {post.like_count}
+개
+                                </span>
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Typography variant="body1" style={{ textAlign: 'center' }}>
+                                {'댓끌수: '}
+                                <span style={{ color: 'blue' }}>
+                                  {post.comments_count}
+                                  개
+                                </span>
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <Typography variant="subtitle2" paragraph>요일별 포스팅 성향</Typography>

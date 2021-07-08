@@ -3,6 +3,7 @@ import {
   Box, colors, Grid, LinearProgress, Typography
 } from '@material-ui/core';
 import { FiberManualRecord } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
 import DoughnutComponent from '../DoughnutComponent';
 import BarComponent from '../BarComponent';
 import analysisStyles from '../AnalysisStyle';
@@ -24,11 +25,33 @@ const sex = {
 
 const bgColors = ['purple', 'lightGreen', 'yellow', 'grey'];
 
+const barStyles = makeStyles({
+  orange: {
+    backgroundColor: colors.orange[500]
+  },
+  lemon: {
+    backgroundColor: 'rgb(180, 240, 70)'
+  },
+  purple: {
+    backgroundColor: '#6E0FFF'
+  },
+  lightGreen: {
+    backgroundColor: '#18DBA8'
+  },
+  yellow: {
+    backgroundColor: '#FFE600'
+  },
+  grey: {
+    backgroundColor: '#00000017'
+  }
+});
+
 function AudiencePart(props) {
   const { testData, instaData } = props;
   const { genderData, ageData } = instaData;
   const { male, female } = genderData;
   const classes = analysisStyles();
+  const barClasses = barStyles();
 
   sex.datasets[0].data = female;
   sex.datasets[1].data = male;
@@ -75,7 +98,7 @@ function AudiencePart(props) {
                   </Grid>
                 </Grid>
                 <Box my={1}>
-                  <LinearProgress variant="determinate" value={68} classes={{ barColorPrimary: classes.orange }} />
+                  <LinearProgress variant="determinate" value={68} classes={{ barColorPrimary: barClasses.orange }} />
                 </Box>
                 <Grid container justify="space-between">
                   <Grid item>
@@ -127,7 +150,7 @@ function AudiencePart(props) {
                   </Grid>
                 </Grid>
                 <Box my={1}>
-                  <LinearProgress variant="determinate" value={83} classes={{ barColorPrimary: classes.lemon }} />
+                  <LinearProgress variant="determinate" value={83} classes={{ barColorPrimary: barClasses.lemon }} />
                 </Box>
                 <Grid container justify="space-between">
                   <Grid item>
@@ -192,7 +215,7 @@ function AudiencePart(props) {
                     </Grid>
                   </Grid>
                   <Box my="10px">
-                    <LinearProgress variant="determinate" value={item.num} classes={{ barColorPrimary: classes[item.color] }} />
+                    <LinearProgress variant="determinate" value={item.num} classes={{ barColorPrimary: barClasses[item.color] }} />
                   </Box>
                 </Box>
               ))}
@@ -216,7 +239,7 @@ function AudiencePart(props) {
                     </Grid>
                   </Grid>
                   <Box my="10px">
-                    <LinearProgress variant="determinate" value={item.num} classes={{ barColorPrimary: classes[bgColors[index]] }} />
+                    <LinearProgress variant="determinate" value={item.num} classes={{ barColorPrimary: barClasses[bgColors[index]] }} />
                   </Box>
                 </Box>
               ))}
@@ -227,29 +250,25 @@ function AudiencePart(props) {
             <Box p="20px" bgcolor="#FFF" borderRadius="7px">
               <Grid container>
                 <Grid item>
-                  <Box mx={5} mt="50px">
+                  <Box mx={5} mt="30px">
                     <DoughnutComponent chartData={[femaleSum, maleSum]} chartWidth={140} chartHeight={140} chartColor={['#6E0FFF', 'rgba(0, 0, 0, 0.2)']} />
-                    <Box>
-                      <Box>
-                        <Grid container alignItems="center">
-                          <Grid item>
-                            <FiberManualRecord color="primary" classes={{ fontSizeSmall: classes.record }} fontSize="small" />
-                          </Grid>
-                          <Grid item>
-                            <Box width="110px">남성</Box>
-                          </Grid>
+                    <Box mt="25px">
+                      <Grid container alignItems="center" justify="center">
+                        <Grid item>
+                          <FiberManualRecord classes={{ fontSizeSmall: classes.colorGrey2 }} fontSize="small" />
                         </Grid>
-                      </Box>
-                      <Box>
-                        <Grid container alignItems="center">
-                          <Grid item>
-                            <FiberManualRecord classes={{ fontSizeSmall: classes.record }} fontSize="small" />
-                          </Grid>
-                          <Grid item>
-                            <Box width="110px">여성</Box>
-                          </Grid>
+                        <Grid item>
+                          <Box>{`남성 ${genderData.malePercent}%`}</Box>
                         </Grid>
-                      </Box>
+                      </Grid>
+                      <Grid container alignItems="center" justify="center">
+                        <Grid item>
+                          <FiberManualRecord classes={{ fontSizeSmall: classes.colorViolet }} fontSize="small" />
+                        </Grid>
+                        <Grid item>
+                          <Box>{`여성 ${genderData.femalePercent}%`}</Box>
+                        </Grid>
+                      </Grid>
                     </Box>
                   </Box>
                 </Grid>

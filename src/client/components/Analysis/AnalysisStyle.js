@@ -8,6 +8,9 @@ const analysisStyles = makeStyles({
   colorGrey: {
     color: '#00000080'
   },
+  colorGrey2: {
+    color: '#00000033'
+  },
   bold: {
     fontWeight: '500',
   },
