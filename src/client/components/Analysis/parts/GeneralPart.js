@@ -5,6 +5,7 @@ import analysisStyles from '../AnalysisStyle';
 
 
 function GeneralPart(props) {
+  const { instaData } = props;
   const classes = analysisStyles();
 
   return (
@@ -26,10 +27,11 @@ function GeneralPart(props) {
                 <Grid item>
                   <Box ml={2}>
                     <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                      Great
+                      랭킹
                     </Typography>
                     <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                      2,979명
+                      {instaData.INS_RANK}
+위
                     </Typography>
                   </Box>
                 </Grid>

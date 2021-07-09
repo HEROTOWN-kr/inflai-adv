@@ -165,6 +165,8 @@ const defaultData = {
     commentsMaxIdx: 1
   },
   lastPosts: [],
+  maxLikesMedia: {},
+  maxCmntMedia: {},
   monthMedia: {
     mediaCount: 0,
     likeSum: 0,
@@ -203,7 +205,10 @@ const defaultData = {
   followerActivity: {
     hours: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
     flwrs: [12, 19, 22, 20, 15, 18, 16, 20, 17],
-    flwrsMax: ''
+    flwrsMax: '',
+    notActiveFlwr: '',
+    flwrsMaxPer: '',
+    notActiveFlwrPer: ''
   },
   newFollowers: 0,
   impressions: {
@@ -493,7 +498,7 @@ function AnalysisComponent() {
           <PostPart instaData={instaData} testImage={testImage} />
           <ReactionPart instaData={instaData} testData={testData} />
           <AudiencePart instaData={instaData} testData={testData} />
-          <GeneralPart />
+          <GeneralPart instaData={instaData} />
         </Box>
       </Box>
     </ThemeProvider>

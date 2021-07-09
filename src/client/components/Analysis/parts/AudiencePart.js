@@ -7,6 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import DoughnutComponent from '../DoughnutComponent';
 import BarComponent from '../BarComponent';
 import analysisStyles from '../AnalysisStyle';
+import MapGraph2 from '../../campaign/Graphs/MapGraph2';
+import StyledText from '../../../containers/StyledText';
 
 
 const sex = {
@@ -48,7 +50,8 @@ const barStyles = makeStyles({
 
 function AudiencePart(props) {
   const { testData, instaData } = props;
-  const { genderData, ageData } = instaData;
+  const [maxLocVal, setMaxLocVal] = useState(null);
+  const { genderData, ageData, followerActivity } = instaData;
   const { male, female } = genderData;
   const classes = analysisStyles();
   const barClasses = barStyles();
@@ -65,24 +68,24 @@ function AudiencePart(props) {
         <Typography variant="h6">오디언스 분석</Typography>
       </Box>
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <Box mb="13px">
-            <Typography variant="subtitle2">오디언스 퀄리티</Typography>
+            <Typography variant="subtitle2">팔로워의 액티비티</Typography>
           </Box>
           <Box borderRadius="7px" overflow="hidden">
             <Box bgcolor="#FFF" p="20px">
               <Box ml="25px">
                 <Grid container alignItems="center">
                   <Grid item>
-                    <DoughnutComponent chartColor={[colors.orange[500], 'rgba(0, 0, 0, 0.2)']} />
+                    <DoughnutComponent chartData={[followerActivity.flwrsMax, followerActivity.notActiveFlwr]} chartColor={[colors.orange[500], 'rgba(0, 0, 0, 0.2)']} />
                   </Grid>
                   <Grid item>
                     <Box ml={2}>
                       <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                        Weak
+                        적극적 팔로워
                       </Typography>
                       <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                        21.1점
+                        {`${followerActivity.flwrsMax}명`}
                       </Typography>
                     </Box>
                   </Grid>
@@ -91,21 +94,21 @@ function AudiencePart(props) {
               <Box mt="30px">
                 <Grid container justify="space-between">
                   <Grid item>
-                    <Typography variant="body1" color="textSecondary">진짜 팔로워</Typography>
+                    <Typography variant="body1" color="textSecondary">적극적 팔로워</Typography>
                   </Grid>
                   <Grid item>
-                    <Typography variant="body1" color="textSecondary">가짜 팔로워</Typography>
+                    <Typography variant="body1" color="textSecondary">비활동 팔로워</Typography>
                   </Grid>
                 </Grid>
                 <Box my={1}>
-                  <LinearProgress variant="determinate" value={68} classes={{ barColorPrimary: barClasses.orange }} />
+                  <LinearProgress variant="determinate" value={followerActivity.flwrsMax} classes={{ barColorPrimary: barClasses.orange }} />
                 </Box>
                 <Grid container justify="space-between">
                   <Grid item>
-                    <Typography variant="body1" classes={{ root: classes.bold }}>152,981 (68%)</Typography>
+                    <Typography variant="body1" classes={{ root: classes.bold }}>{`${followerActivity.flwrsMax}명 (${followerActivity.flwrsMaxPer}%)`}</Typography>
                   </Grid>
                   <Grid item>
-                    <Typography variant="body1" color="textSecondary" classes={{ root: classes.bold }}>70,690 (32%)</Typography>
+                    <Typography variant="body1" color="textSecondary" classes={{ root: classes.bold }}>{`${followerActivity.notActiveFlwr}명 (${followerActivity.notActiveFlwrPer}%)`}</Typography>
                   </Grid>
                 </Grid>
               </Box>
@@ -117,7 +120,112 @@ function AudiencePart(props) {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
+          <Box mb="13px">
+            <Typography variant="subtitle2">팔로워의 지도</Typography>
+          </Box>
+          <Box borderRadius="7px" overflow="hidden">
+            <Box bgcolor="#FFF" p="20px">
+              <MapGraph2 INS_ID={instaData.INS_ID} setMaxLocVal={setMaxLocVal} />
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+      <Box mt="50px">
+        <Grid container spacing={2}>
+          <Grid item xs={3}>
+            <Typography variant="subtitle2" paragraph>언어 비율</Typography>
+            <Box p="20px" bgcolor="#FFF" borderRadius="7px">
+              {testData.language.map(item => (
+                <Box key={item.lng}>
+                  <Grid container justify="space-between">
+                    <Grid item>
+                      <Typography variant="body1" color="textSecondary">
+                        {item.lng}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1" color="textSecondary">
+                        {`${item.num}%`}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Box my="10px">
+                    <LinearProgress variant="determinate" value={item.num} classes={{ barColorPrimary: barClasses[item.color] }} />
+                  </Box>
+                </Box>
+              ))}
+            </Box>
+          </Grid>
+          <Grid item xs={3}>
+            <Typography variant="subtitle2" paragraph>연령 비율</Typography>
+            <Box p="20px" bgcolor="#FFF" borderRadius="7px">
+              { ageData.map((item, index) => (
+                <Box key={item.age}>
+                  <Grid container justify="space-between">
+                    <Grid item>
+                      <Typography variant="body1" color="textSecondary">
+                        {item.age}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1" color="textSecondary">
+                        {`${item.num}%`}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Box my="10px">
+                    <LinearProgress variant="determinate" value={item.num} classes={{ barColorPrimary: barClasses[bgColors[index]] }} />
+                  </Box>
+                </Box>
+              ))}
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="subtitle2" paragraph>성별 비율</Typography>
+            <Box p="20px" bgcolor="#FFF" borderRadius="7px">
+              <Grid container>
+                <Grid item>
+                  <Box mx={5} mt="30px">
+                    <DoughnutComponent chartData={[femaleSum, maleSum]} chartWidth={140} chartHeight={140} chartColor={['#6E0FFF', 'rgba(0, 0, 0, 0.2)']} />
+                    <Box mt="25px">
+                      <Grid container alignItems="center" justify="center">
+                        <Grid item>
+                          <FiberManualRecord classes={{ fontSizeSmall: classes.colorGrey2 }} fontSize="small" />
+                        </Grid>
+                        <Grid item>
+                          <Box>{`남성 ${genderData.malePercent}%`}</Box>
+                        </Grid>
+                      </Grid>
+                      <Grid container alignItems="center" justify="center">
+                        <Grid item>
+                          <FiberManualRecord classes={{ fontSizeSmall: classes.colorViolet }} fontSize="small" />
+                        </Grid>
+                        <Grid item>
+                          <Box>{`여성 ${genderData.femalePercent}%`}</Box>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs>
+                  <Box maxWidth="380px" m="0 auto">
+                    <BarComponent data={sex} />
+                  </Box>
+                </Grid>
+              </Grid>
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+    </React.Fragment>
+  );
+}
+
+export default AudiencePart;
+
+
+{ /* <Grid item xs={4}>
           <Box mb="13px">
             <Typography variant="subtitle2">진짜 도달 예측</Typography>
           </Box>
@@ -193,97 +301,4 @@ function AudiencePart(props) {
               </Typography>
             </Box>
           </Box>
-        </Grid>
-      </Grid>
-      <Box mt="50px">
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
-            <Typography variant="subtitle2" paragraph>언어 비율</Typography>
-            <Box p="20px" bgcolor="#FFF" borderRadius="7px">
-              {testData.language.map(item => (
-                <Box key={item.lng}>
-                  <Grid container justify="space-between">
-                    <Grid item>
-                      <Typography variant="body1" color="textSecondary">
-                        {item.lng}
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body1" color="textSecondary">
-                        {`${item.num}%`}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Box my="10px">
-                    <LinearProgress variant="determinate" value={item.num} classes={{ barColorPrimary: barClasses[item.color] }} />
-                  </Box>
-                </Box>
-              ))}
-            </Box>
-          </Grid>
-          <Grid item xs={3}>
-            <Typography variant="subtitle2" paragraph>연령 비율</Typography>
-            <Box p="20px" bgcolor="#FFF" borderRadius="7px">
-              {ageData.map((item, index) => (
-                <Box key={item.age}>
-                  <Grid container justify="space-between">
-                    <Grid item>
-                      <Typography variant="body1" color="textSecondary">
-                        {item.age}
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body1" color="textSecondary">
-                        {`${item.num}%`}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Box my="10px">
-                    <LinearProgress variant="determinate" value={item.num} classes={{ barColorPrimary: barClasses[bgColors[index]] }} />
-                  </Box>
-                </Box>
-              ))}
-            </Box>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography variant="subtitle2" paragraph>성별 비율</Typography>
-            <Box p="20px" bgcolor="#FFF" borderRadius="7px">
-              <Grid container>
-                <Grid item>
-                  <Box mx={5} mt="30px">
-                    <DoughnutComponent chartData={[femaleSum, maleSum]} chartWidth={140} chartHeight={140} chartColor={['#6E0FFF', 'rgba(0, 0, 0, 0.2)']} />
-                    <Box mt="25px">
-                      <Grid container alignItems="center" justify="center">
-                        <Grid item>
-                          <FiberManualRecord classes={{ fontSizeSmall: classes.colorGrey2 }} fontSize="small" />
-                        </Grid>
-                        <Grid item>
-                          <Box>{`남성 ${genderData.malePercent}%`}</Box>
-                        </Grid>
-                      </Grid>
-                      <Grid container alignItems="center" justify="center">
-                        <Grid item>
-                          <FiberManualRecord classes={{ fontSizeSmall: classes.colorViolet }} fontSize="small" />
-                        </Grid>
-                        <Grid item>
-                          <Box>{`여성 ${genderData.femalePercent}%`}</Box>
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  </Box>
-                </Grid>
-                <Grid item xs>
-                  <Box maxWidth="380px" m="0 auto">
-                    <BarComponent data={sex} />
-                  </Box>
-                </Grid>
-              </Grid>
-            </Box>
-          </Grid>
-        </Grid>
-      </Box>
-    </React.Fragment>
-  );
-}
-
-export default AudiencePart;
+        </Grid> */ }

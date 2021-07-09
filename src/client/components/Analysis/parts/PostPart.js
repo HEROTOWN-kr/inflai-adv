@@ -90,10 +90,60 @@ const dayOpt = {
   }
 };
 
+function MediaCard(props) {
+  const { post, testImage } = props;
+  const classes = useStyles();
+
+  return (
+    <Grid container>
+      <Grid item>
+        <StyledImage borderRadius="7px" width="200px" height="200px" src={post.media_url || testImage} />
+      </Grid>
+      <Grid item xs zeroMinWidth>
+        <Box ml={2} p={2} position="relative" boxSizing="border-box" height="100%" bgcolor="#FFF" borderRadius="7px">
+          <Grid container style={{ height: '100%' }}>
+            <Grid item xs={12}>
+              <Typography variant="body1" className={classes.multiLineEllipsis}>
+                {post.caption}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Box bgcolor="#fafafa" p="14px" borderRadius="7px">
+                <Grid container justify="space-between">
+                  <Grid item xs={6}>
+                    <Typography variant="body1" style={{ textAlign: 'center' }}>
+                      {'좋아요수: '}
+                      <span style={{ color: 'blue' }}>
+                        {post.like_count}
+                            개
+                      </span>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="body1" style={{ textAlign: 'center' }}>
+                      {'댓끌수: '}
+                      <span style={{ color: 'blue' }}>
+                        {post.comments_count}
+                            개
+                      </span>
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
+    </Grid>
+  );
+}
+
 function PostPart(props) {
   const { testImage, instaData } = props;
   const [maxStatVal, setMaxStatVal] = useState(null);
-  const { mediaData, postStats, lastPosts } = instaData;
+  const {
+    mediaData, postStats, lastPosts, maxLikesMedia, maxCmntMedia
+  } = instaData;
   const {
     hourStats, dayStats, dayMaxIdx, hourMaxIdx, dayAvg, weekAvg
   } = postStats;
@@ -130,50 +180,23 @@ function PostPart(props) {
         </Grid>
       </Box>
       <Box mb="50px">
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Typography variant="subtitle2" paragraph>인기포스트(좋아요수 1위)</Typography>
+            <MediaCard post={maxLikesMedia} testImage={testImage} />
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="subtitle2" paragraph>관심도1위(댓글 1위)</Typography>
+            <MediaCard post={maxCmntMedia} testImage={testImage} />
+          </Grid>
+        </Grid>
+      </Box>
+      <Box mb="50px">
         <Typography variant="subtitle2" paragraph>최근게시물</Typography>
         <Grid container spacing={2}>
           {lastPosts.map(post => (
             <Grid item xs={6} key={post.id}>
-              <Grid container>
-                <Grid item>
-                  <StyledImage borderRadius="7px" width="200px" height="200px" src={post.media_url || testImage} />
-                </Grid>
-                <Grid item xs zeroMinWidth>
-                  <Box ml={2} p={2} position="relative" boxSizing="border-box" height="100%" bgcolor="#FFF" borderRadius="7px">
-                    <Grid container style={{ height: '100%' }}>
-                      <Grid item xs={12}>
-                        <Typography variant="body1" className={classes.multiLineEllipsis}>
-                          {post.caption}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Box bgcolor="#fafafa" p="14px" borderRadius="7px">
-                          <Grid container justify="space-between">
-                            <Grid item xs={6}>
-                              <Typography variant="body1" style={{ textAlign: 'center' }}>
-                                {'좋아요수: '}
-                                <span style={{ color: 'blue' }}>
-                                  {post.like_count}
-개
-                                </span>
-                              </Typography>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Typography variant="body1" style={{ textAlign: 'center' }}>
-                                {'댓끌수: '}
-                                <span style={{ color: 'blue' }}>
-                                  {post.comments_count}
-                                  개
-                                </span>
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                        </Box>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Grid>
-              </Grid>
+              <MediaCard post={post} testImage={testImage} />
             </Grid>
           ))}
         </Grid>
