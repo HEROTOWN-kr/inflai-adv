@@ -413,7 +413,7 @@ function ReactionPart(props) {
             </Grid>
           </Grid>
           <Grid item xs={6}>
-            <Typography variant="subtitle2" paragraph>댓글 주요 키워드</Typography>
+            <Typography variant="subtitle2" paragraph>해시태그 주요 키워드</Typography>
             <Box height="250px" p="20px" bgcolor="#FFF" borderRadius="7px">
               <ReactWordcloud options={options} words={words} callbacks={callbacks} />
             </Box>

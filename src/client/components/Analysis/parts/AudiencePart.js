@@ -115,7 +115,7 @@ function AudiencePart(props) {
             </Box>
             <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
               <Typography variant="body1">
-                @sal_gungli 님의 오디언스 퀄티리티 Weak 등급은 동일 그룹 내 상위 78.9% 입니다.
+                적극적 팔로워 수는 지난 주 동안 Instagram의 온라인 상태에 대한 정보를 수신하여 계산됩니다.
               </Typography>
             </Box>
           </Box>

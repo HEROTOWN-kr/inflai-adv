@@ -19,23 +19,11 @@ function GeneralPart(props) {
             <Typography variant="subtitle2">인플라이 랭킹</Typography>
           </Box>
           <Box borderRadius="7px" overflow="hidden">
-            <Box bgcolor="#FFF" pt="10px" pl="25px" pb="50px">
-              <Grid container alignItems="center">
-                <Grid item>
-                  <DoughnutComponent />
-                </Grid>
-                <Grid item>
-                  <Box ml={2}>
-                    <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                      랭킹
-                    </Typography>
-                    <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                      {instaData.INS_RANK}
+            <Box bgcolor="#FFF" px={2} py="45px">
+              <Typography classes={{ root: classes.generalStats }}>
+                {instaData.INS_RANK}
 위
-                    </Typography>
-                  </Box>
-                </Grid>
-              </Grid>
+              </Typography>
             </Box>
             <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
               <Typography variant="body1">
@@ -46,87 +34,51 @@ function GeneralPart(props) {
         </Grid>
         <Grid item xs={3}>
           <Box mb="13px">
-            <Typography variant="subtitle2">인플라이 스코어</Typography>
+            <Typography variant="subtitle2">적극적 팔로워</Typography>
           </Box>
           <Box borderRadius="7px" overflow="hidden">
-            <Box bgcolor="#FFF" pt="10px" pl="25px" pb="50px">
-              <Grid container alignItems="center">
-                <Grid item>
-                  <DoughnutComponent />
-                </Grid>
-                <Grid item>
-                  <Box ml={2}>
-                    <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                      Great
-                    </Typography>
-                    <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                      2,979명
-                    </Typography>
-                  </Box>
-                </Grid>
-              </Grid>
+            <Box bgcolor="#FFF" px={2} py="45px">
+              <Typography classes={{ root: classes.generalStats }}>
+                {`${instaData.followerActivity.flwrsMax}명`}
+              </Typography>
             </Box>
             <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
               <Typography variant="body1">
-                100점에 가까울수록 유사 인플루언서 채널군(팔로워수 등급 및 카테고리)에서 영향력이 높은 것을 의미합니다.
+                  특정 범위 동안 온라인 상태였던 인스타 사용자 팔로워 수 합계
               </Typography>
             </Box>
           </Box>
         </Grid>
         <Grid item xs={3}>
           <Box mb="13px">
-            <Typography variant="subtitle2">평균 예상 매출액</Typography>
+            <Typography variant="subtitle2">소통, 공감능력</Typography>
           </Box>
           <Box borderRadius="7px" overflow="hidden">
-            <Box bgcolor="#FFF" pt="10px" pl="25px" pb="50px">
-              <Grid container alignItems="center">
-                <Grid item>
-                  <DoughnutComponent />
-                </Grid>
-                <Grid item>
-                  <Box ml={2}>
-                    <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                      Great
-                    </Typography>
-                    <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                      2,979명
-                    </Typography>
-                  </Box>
-                </Grid>
-              </Grid>
+            <Box bgcolor="#FFF" px={2} py="45px">
+              <Typography classes={{ root: classes.generalStats }}>
+                {instaData.ability}
+              </Typography>
             </Box>
             <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
               <Typography variant="body1">
-                채널을 통해 상품을 판매한다면 예상할 수 있는 매출 규모입니다. (*품목, 단가 등 개별적 변수에 따라 매출액은 달라질 수 있음)
+                사용자가 포스팅된 계시물의 좋아요수랑 댓끌수를 대비해서 나오는 공감능력은 상태입니다.
               </Typography>
             </Box>
           </Box>
         </Grid>
         <Grid item xs={3}>
           <Box mb="13px">
-            <Typography variant="subtitle2">캠페인 예상 견적</Typography>
+            <Typography variant="subtitle2">팔로워충성도</Typography>
           </Box>
           <Box borderRadius="7px" overflow="hidden">
-            <Box bgcolor="#FFF" pt="10px" pl="25px" pb="50px">
-              <Grid container alignItems="center">
-                <Grid item>
-                  <DoughnutComponent />
-                </Grid>
-                <Grid item>
-                  <Box ml={2}>
-                    <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                      Great
-                    </Typography>
-                    <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                      2,979명
-                    </Typography>
-                  </Box>
-                </Grid>
-              </Grid>
+            <Box bgcolor="#FFF" px={2} py="45px">
+              <Typography classes={{ root: classes.generalStats }}>
+                {`${instaData.impressions.impressionsMax}명`}
+              </Typography>
             </Box>
             <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
               <Typography variant="body1">
-                진짜 팔로워수 기준으로 책정된 캠페인 예상 견적 금액입니다 (*채널, 캠페인 성격에 따라 실제 견적은 상이할 수 있음)
+                  인스타그램 사용자의 미디어가 조회된 횟수 합계. 홍보 기능을 통해 생성된 광고 활동을 포함합니다.
               </Typography>
             </Box>
           </Box>
