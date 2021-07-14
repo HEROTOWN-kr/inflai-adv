@@ -27,7 +27,7 @@ function GeneralPart(props) {
             </Box>
             <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
               <Typography variant="body1">
-                팔로워 중에서 인플루언서에게 영향을 받아 캠페인 목표로 전환될 수 있는 사람의 수입니다.
+                팔로워 중에서 인플루언서에게 영향을 받아 캠페인 목표로 전환될 수 있는 사람의 순위입니다.
               </Typography>
             </Box>
           </Box>

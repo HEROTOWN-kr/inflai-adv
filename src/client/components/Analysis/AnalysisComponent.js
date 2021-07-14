@@ -1,26 +1,28 @@
 import {
-  Box, createMuiTheme, Grid, useMediaQuery, useTheme, ThemeProvider, Typography, LinearProgress, colors
+  Box, Grid, useMediaQuery, useTheme, ThemeProvider, Typography, Tooltip,
 } from '@material-ui/core';
+import { HelpOutline } from '@material-ui/icons';
 import React, { useContext, useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
-import ReactWordcloud from 'react-wordcloud';
 import axios from 'axios';
 import StyledImage from '../../containers/StyledImage';
 import defaultAccountImage from '../../img/default_account_image.png';
 import styleTheme from './AnalysisTheme';
 import analysisStyles from './AnalysisStyle';
-import DoughnutComponent from './DoughnutComponent';
-import StyledTableRow from '../../containers/StyledTableRow';
-import BarComponent from './BarComponent';
-import TestComponent from '../TestComponent';
 import AuthContext from '../../context/AuthContext';
 import GeneralPart from './parts/GeneralPart';
 import PostPart from './parts/PostPart';
 import AudiencePart from './parts/AudiencePart';
 import ReactionPart from './parts/ReactionPart';
 import { DAY_OF_WEEK, HOURS } from '../../lib/Сonstants';
+import HelpTooltip from './HelpTooltip';
 
-
+const tooltips = {
+  score: '인플루언서 영향력을 나타내는 인플라이지수입니다',
+  ranking: '팔로워 중에서 인플루언서에게 영향을 받아 캠페인 목표로 전환될 수 있는 사람의 순위입니다.',
+  communication: '사용자가 포스팅된 계시물의 좋아요수랑 댓끌수를 대비해서 나오는 공감능력은 상태입니다.',
+  activity: '특정 범위 동안 온라인 상태였던 인스타 사용자 팔로워 수 합계.',
+  impressions: '인스타그램 사용자의 미디어가 조회된 횟수 합계. 홍보 기능을 통해 생성된 광고 활동을 포함합니다..',
+};
 const testImage = 'https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/s640x640/44191010_877274945801500_683676639501143736_n.jpg?tp=1&_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_cat=104&_nc_ohc=SMM5lzTWsXsAX9JK4qs&edm=AP_V10EBAAAA&ccb=7-4&oh=971b324811b253d368244c569a59e114&oe=60D9D799&_nc_sid=4f375e';
 const testData = {
   audience3: {
@@ -324,9 +326,10 @@ function AnalysisComponent() {
                       <Box py="13px" px={2}>
                         <Grid container justify="space-between">
                           <Grid item>
-                            <Typography variant="body1">
-                              인플라이 지수
-                            </Typography>
+                            <Box className={classes.textAndIcon}>
+                              <span>인플라이 지수</span>
+                              <HelpTooltip title={tooltips.score} />
+                            </Box>
                           </Grid>
                           <Grid item>
                             <Typography variant="body1" classes={{ root: classes.bold600 }}>
@@ -339,9 +342,10 @@ function AnalysisComponent() {
                       <Box py="13px" px={2} bgcolor="#FFF">
                         <Grid container justify="space-between">
                           <Grid item>
-                            <Typography variant="body1">
-                              소통, 공감능력
-                            </Typography>
+                            <Box className={classes.textAndIcon}>
+                              <span>소통, 공감능력</span>
+                              <HelpTooltip title={tooltips.communication} />
+                            </Box>
                           </Grid>
                           <Grid item>
                             <Typography variant="body1" classes={{ root: classes.bold600 }}>
@@ -354,9 +358,10 @@ function AnalysisComponent() {
                       <Box py="13px" px={2}>
                         <Grid container justify="space-between">
                           <Grid item>
-                            <Typography variant="body1">
-                              인플라이 랭킹
-                            </Typography>
+                            <Box className={classes.textAndIcon}>
+                              <span> 인플라이 랭킹</span>
+                              <HelpTooltip title={tooltips.ranking} />
+                            </Box>
                           </Grid>
                           <Grid item>
                             <Typography variant="body1" classes={{ root: classes.bold600 }}>
@@ -369,9 +374,10 @@ function AnalysisComponent() {
                       <Box py="13px" px={2} bgcolor="#FFF">
                         <Grid container justify="space-between">
                           <Grid item>
-                            <Typography variant="body1">
-                              팔로워충성도
-                            </Typography>
+                            <Box className={classes.textAndIcon}>
+                              <span>팔로워충성도</span>
+                              <HelpTooltip title={tooltips.impressions} />
+                            </Box>
                           </Grid>
                           <Grid item>
                             <Typography variant="body1" classes={{ root: classes.bold600 }}>
@@ -429,9 +435,10 @@ function AnalysisComponent() {
                     <Box py="13px" px={2} bgcolor="#FFF">
                       <Grid container justify="space-between">
                         <Grid item>
-                          <Typography variant="body1">
-                            국내영향력 팔로워
-                          </Typography>
+                          <Box className={classes.textAndIcon}>
+                            <span>국내영향력 팔로워</span>
+                            <HelpTooltip title={tooltips.activity} />
+                          </Box>
                         </Grid>
                         <Grid item>
                           <Typography variant="body1" classes={{ root: classes.bold600 }}>
@@ -481,8 +488,7 @@ function AnalysisComponent() {
           </Grid>
           <Box p={2} mt="50px" bgcolor="#F2F2F2">
             <Typography variant="subtitle2">
-              {
-                `${instaData.INS_NAME}는 ${instaData.INS_FLWR}명의 팔로워를 보유하고 있으며 이는 ${instaData.influencerType} 입니다.
+              { `${instaData.INS_NAME}는 ${instaData.INS_FLWR}명의 팔로워를 보유하고 있으며 이는 ${instaData.influencerType} 입니다.
                 인플루언서 영향력을 나타내는 인플라이니수는 ${instaData.INS_SCORE}
                 점이며 최근 30일간 ${instaData.monthMedia.mediaCount}건의 포스팅으로 진행하였고
                 ${instaData.monthMedia.likeSum}건의 좋아요수와 ${instaData.monthMedia.commentsSum}건의 댓글을 받아 공감능력은 ${instaData.ability} 상태입니다.
@@ -491,8 +497,7 @@ function AnalysisComponent() {
                 게시물 인공지능분석 결과 가장 높은 비율인 16%를 (food)가 차지하고 있어서
                 food 쪽에 영향력 지수가 크다고 보여집니다.
                 (제일 높은 이미지의 %가 30% 이하이면 ... 특별한 카테고리에 영향력이 없다고 보여집니다.)
-                ${instaData.INS_NAME}님은 ${DAY_OF_WEEK[instaData.postStats.dayMaxIdx]}요일, 오후 ${HOURS[instaData.postStats.hourMaxIdx]}시 주로 게시물을 업로드 하고 있습니다.`
-              }
+                ${instaData.INS_NAME}님은 ${DAY_OF_WEEK[instaData.postStats.dayMaxIdx]}요일, 오후 ${HOURS[instaData.postStats.hourMaxIdx]}시 주로 게시물을 업로드 하고 있습니다.` }
             </Typography>
           </Box>
           <PostPart instaData={instaData} testImage={testImage} />

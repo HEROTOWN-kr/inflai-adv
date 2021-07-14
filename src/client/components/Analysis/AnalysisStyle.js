@@ -28,6 +28,20 @@ const analysisStyles = makeStyles({
       color: 'red'
     }
   },
+  textAndIcon: {
+    display: 'flex',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    fontSize: '14px',
+    color: '#000'
+  },
+  tooltip: {
+    fontSize: 12
+  },
+  tooltipIcon: {
+    color: 'grey',
+    marginLeft: '5px'
+  },
   orange: {
     backgroundColor: colors.orange[500]
   },
