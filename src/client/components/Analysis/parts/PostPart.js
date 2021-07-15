@@ -6,6 +6,7 @@ import StyledImage from '../../../containers/StyledImage';
 import BarComponent from '../BarComponent';
 import GoogleVisionGraph from '../../campaign/Graphs/GoogleVisionGraph';
 import { DAY_OF_WEEK, HOURS } from '../../../lib/Сonstants';
+import CategoryPieChart from '../CategoryPieChart';
 
 const useStyles = makeStyles({
   multiLineEllipsis: {
@@ -14,7 +15,20 @@ const useStyles = makeStyles({
     display: '-webkit-box',
     '-webkit-line-clamp': 3,
     '-webkit-box-orient': 'vertical'
-  }
+  },
+  imgFile: {
+    width: '100%',
+    height: '210px',
+    objectFit: 'cover',
+    objectPosition: '50% 50%',
+  },
+  imgFileMedia: {
+    width: '200px',
+    height: '200px',
+    borderRadius: '7px',
+    objectFit: 'cover',
+    objectPosition: '50% 50%',
+  },
 });
 
 const hourData = {
@@ -97,7 +111,8 @@ function MediaCard(props) {
   return (
     <Grid container>
       <Grid item>
-        <StyledImage borderRadius="7px" width="200px" height="200px" src={post.media_url || testImage} />
+        <img className={classes.imgFileMedia} src={post.media_url || testImage} />
+        {/* <StyledImage borderRadius="7px" width="200px" height="200px" src={post.media_url || testImage} /> */}
       </Grid>
       <Grid item xs zeroMinWidth>
         <Box ml={2} p={2} position="relative" boxSizing="border-box" height="100%" bgcolor="#FFF" borderRadius="7px">
@@ -168,14 +183,15 @@ function PostPart(props) {
             <Grid container spacing={1}>
               {mediaData.urls.map(item => (
                 <Grid key={item} item xs={4}>
-                  <StyledImage borderRadius="7px" width="100%" height="auto" src={item || testImage} />
+                  <img className={classes.imgFile} src={item || testImage} />
+                  {/* <StyledImage borderRadius="7px" width="100%" height="auto" src={item || testImage} /> */}
                 </Grid>
               ))}
             </Grid>
           </Grid>
           <Grid item xs={6}>
             <Typography variant="subtitle2" paragraph>사진분석 결과</Typography>
-            <GoogleVisionGraph INS_ID={instaData.INS_ID} setMaxStatVal={setMaxStatVal} />
+            <CategoryPieChart INS_ID={instaData.INS_ID} setMaxStatVal={setMaxStatVal} />
           </Grid>
         </Grid>
       </Box>
