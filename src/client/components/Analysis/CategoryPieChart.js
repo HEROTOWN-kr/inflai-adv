@@ -6,13 +6,15 @@ import axios from 'axios';
 function CategoryPieChart(props) {
   const [detectData, setDetectData] = useState([]);
   const [process, setProcess] = useState(false);
-  const { INS_ID, setMaxStatVal } = props;
+  const { INS_ID, setMaxStatVal, type } = props;
+
+  const url = type === 'object' ? '/api/TB_INSTA/getGoogleDataObjectNew' : '/api/TB_INSTA/getGoogleDataNew';
 
   async function getGoogleVisionData(INS_ID) {
     setProcess(true);
     const { host } = window.location;
 
-    const googleData = await axios.get('/api/TB_INSTA/getGoogleDataNew', {
+    const googleData = await axios.get(url, {
       params: { INS_ID, host }
     });
     const { statistics } = googleData.data;
@@ -30,10 +32,16 @@ function CategoryPieChart(props) {
 
   return (
     <React.Fragment>
-      {process ? <CircularProgress /> : (
-        <div>
+      {process ? (
+        <Grid container alignItems="center" justify="center">
+          <Grid item>
+            <CircularProgress />
+          </Grid>
+        </Grid>
+      ) : (
+        <React.Fragment>
           {detectData && detectData.length ? (
-            <Box height="400px">
+            <Box height="350px">
               <PieChart
                 data={detectData}
                 animate="true"
@@ -49,11 +57,13 @@ function CategoryPieChart(props) {
               />
             </Box>
           ) : (
-            <Box textAlign="center">
+            <Grid container alignItems="center" justify="center" style={{ height: '100%' }}>
+              <Grid item>
                 로딩 중...
-            </Box>
+              </Grid>
+            </Grid>
           )}
-        </div>
+        </React.Fragment>
       )}
     </React.Fragment>
   );

@@ -108,6 +108,10 @@ a {
   //padding: 0 17px;
 }
 
+.slick-next:before, .slick-prev:before {
+  color: #c8c2c2;
+}
+
 /*.slick-  li button:before {
   color: $colorAqua;
 }*/

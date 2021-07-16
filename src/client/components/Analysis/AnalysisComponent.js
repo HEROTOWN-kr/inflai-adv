@@ -1,7 +1,6 @@
 import {
   Box, Grid, useMediaQuery, useTheme, ThemeProvider, Typography, Tooltip,
 } from '@material-ui/core';
-import { HelpOutline } from '@material-ui/icons';
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import StyledImage from '../../containers/StyledImage';
@@ -152,7 +151,7 @@ const defaultData = {
   INS_MEDIA_CNT: 0,
   INS_FLW: 0,
   INS_FLWR: 0,
-  INS_PROFILE_IMG: testImage,
+  INS_PROFILE_IMG: defaultAccountImage,
   INS_LIKES: 0,
   INS_CMNT: 0,
   INS_SCORE: 0,
@@ -160,7 +159,7 @@ const defaultData = {
   ability: '',
   influencerType: '',
   mediaData: {
-    urls: [...Array(9).keys()],
+    urls: Array(9).fill(null),
     comments: [12, 19, 3, 5, 2, 3],
     likes: [12, 19, 3, 5, 2, 3],
     likesMaxIdx: 1,
