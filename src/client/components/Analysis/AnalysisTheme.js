@@ -9,7 +9,8 @@ const styleTheme = createMuiTheme({
   typography: {
     fontFamily: 'Noto Sans KR, sans-serif',
     h6: {
-      fontWeight: '600'
+      fontWeight: '600',
+      color: '#333'
     },
     subtitle1: {
       fontSize: 18,

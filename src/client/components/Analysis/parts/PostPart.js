@@ -208,15 +208,16 @@ function PostPart(props) {
         </Slider>
       </Box>
       <Box my="50px">
+        <Typography variant="h6" paragraph>계정 이미지 인공지능 분석</Typography>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={6}>
-            <Typography variant="subtitle2" paragraph>Label 분석</Typography>
+            {/* <Typography variant="subtitle2" paragraph>Label 분석</Typography> */}
             <Box boxSizing="border-box" width="100%" height="390px" p="20px" bgcolor="#FFF" borderRadius="7px">
               <CategoryPieChart INS_ID={instaData.INS_ID} setMaxStatVal={setMaxStatVal} />
             </Box>
           </Grid>
           <Grid item xs={6}>
-            <Typography variant="subtitle2" paragraph>Object 분석</Typography>
+            {/* <Typography variant="subtitle2" paragraph>Object 분석</Typography> */}
             <Box boxSizing="border-box" width="100%" height="390px" p="20px" bgcolor="#FFF" borderRadius="7px">
               <CategoryPieChart INS_ID={instaData.INS_ID} setMaxStatVal={setMaxStatVal} type="object" />
             </Box>

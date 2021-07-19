@@ -63,14 +63,11 @@ function AudiencePart(props) {
   const maleSum = male.reduce((a, b) => a + b, 0);
 
   return (
-    <React.Fragment>
-      <Box mt="80px" mb="24px" pl="10px" borderLeft="4px solid #6E0FFF">
-        <Typography variant="h6">오디언스 분석</Typography>
-      </Box>
+    <Box mt="80px" mb="24px">
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <Box mb="13px">
-            <Typography variant="subtitle2">팔로워의 액티비티</Typography>
+          <Box pl="10px" borderLeft="4px solid #6E0FFF">
+            <Typography variant="h6" paragraph>팔로워 충성도 분석</Typography>
           </Box>
           <Box borderRadius="7px" overflow="hidden">
             <Box bgcolor="#FFF" p="20px">
@@ -82,7 +79,7 @@ function AudiencePart(props) {
                   <Grid item>
                     <Box ml={2}>
                       <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                        적극적 팔로워
+                        충성도있는 팔로워
                       </Typography>
                       <Typography variant="subtitle2" classes={{ root: classes.bold }}>
                         {`${followerActivity.flwrsMax}명`}
@@ -94,7 +91,7 @@ function AudiencePart(props) {
               <Box mt="30px">
                 <Grid container justify="space-between">
                   <Grid item>
-                    <Typography variant="body1" color="textSecondary">적극적 팔로워</Typography>
+                    <Typography variant="body1" color="textSecondary">충성도있는 팔로워</Typography>
                   </Grid>
                   <Grid item>
                     <Typography variant="body1" color="textSecondary">비활동 팔로워</Typography>
@@ -115,22 +112,72 @@ function AudiencePart(props) {
             </Box>
             <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
               <Typography variant="body1">
-                적극적 팔로워 수는 지난 주 동안 Instagram의 온라인 상태에 대한 정보를 수신하여 계산됩니다.
+                충성도있는 팔로워 수는 지난 주 동안 Instagram의 온라인 상태에 대한 정보를 수신하여 계산됩니다.
               </Typography>
             </Box>
           </Box>
         </Grid>
         <Grid item xs={6}>
-          <Box mb="13px">
-            <Typography variant="subtitle2">팔로워의 지도</Typography>
+          <Box pl="10px" borderLeft="4px solid #6E0FFF">
+            <Typography variant="h6" paragraph>팔로워 공감능력 분석</Typography>
           </Box>
           <Box borderRadius="7px" overflow="hidden">
             <Box bgcolor="#FFF" p="20px">
-              <MapGraph2 INS_ID={instaData.INS_ID} setMaxLocVal={setMaxLocVal} />
+              <Box ml="25px">
+                <Grid container alignItems="center">
+                  <Grid item>
+                    <DoughnutComponent chartData={[followerActivity.flwrsMax, followerActivity.notActiveFlwr]} chartColor={[colors.orange[500], 'rgba(0, 0, 0, 0.2)']} />
+                  </Grid>
+                  <Grid item>
+                    <Box ml={2}>
+                      <Typography variant="subtitle2" classes={{ root: classes.bold }}>
+                        충성도있는 팔로워
+                      </Typography>
+                      <Typography variant="subtitle2" classes={{ root: classes.bold }}>
+                        {`${followerActivity.flwrsMax}명`}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+              <Box mt="30px">
+                <Grid container justify="space-between">
+                  <Grid item>
+                    <Typography variant="body1" color="textSecondary">충성도있는 팔로워</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="body1" color="textSecondary">비활동 팔로워</Typography>
+                  </Grid>
+                </Grid>
+                <Box my={1}>
+                  <LinearProgress variant="determinate" value={followerActivity.flwrsMax} classes={{ barColorPrimary: barClasses.orange }} />
+                </Box>
+                <Grid container justify="space-between">
+                  <Grid item>
+                    <Typography variant="body1" classes={{ root: classes.bold }}>{`${followerActivity.flwrsMax}명 (${followerActivity.flwrsMaxPer}%)`}</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="body1" color="textSecondary" classes={{ root: classes.bold }}>{`${followerActivity.notActiveFlwr}명 (${followerActivity.notActiveFlwrPer}%)`}</Typography>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
+            <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
+              <Typography variant="body1">
+                공감능력분석은 좋아요 대비 댓글수로서 (   )님의 공감능력은 (   ) % 입니다
+              </Typography>
             </Box>
           </Box>
         </Grid>
       </Grid>
+      <Box mb="13px">
+        <Typography variant="subtitle2">팔로워의 지도</Typography>
+      </Box>
+      <Box borderRadius="7px" overflow="hidden">
+        <Box bgcolor="#FFF" p="20px">
+          <MapGraph2 INS_ID={instaData.INS_ID} setMaxLocVal={setMaxLocVal} />
+        </Box>
+      </Box>
       <Box mt="50px">
         <Grid container spacing={2}>
           <Grid item xs={3}>
@@ -218,7 +265,7 @@ function AudiencePart(props) {
           </Grid>
         </Grid>
       </Box>
-    </React.Fragment>
+    </Box>
   );
 }
 
