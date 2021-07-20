@@ -116,62 +116,80 @@ function AudiencePart(props) {
               </Typography>
             </Box>
           </Box>
+          <Box mt={1} px="25px" py="15px" bgcolor="#F2F2F2" borderRadius="7px">
+            <Typography variant="body1" gutterBottom classes={{ root: classes.bold600 }}>
+              충성도있는 팔로워 수로 본 영향력지수
+            </Typography>
+            <Typography variant="body1">
+              0%~1%  : 미미
+              <br />
+              1%~3%  : 저조
+              <br />
+              3%~5%  : 보통
+              <br />
+              5%~7%  : 우수
+              <br />
+              7%이상  : 매우우수
+            </Typography>
+
+          </Box>
         </Grid>
         <Grid item xs={6}>
-          <Box pl="10px" borderLeft="4px solid #6E0FFF">
-            <Typography variant="h6" paragraph>팔로워 공감능력 분석</Typography>
-          </Box>
-          <Box borderRadius="7px" overflow="hidden">
-            <Box bgcolor="#FFF" p="20px">
-              <Box ml="25px">
-                <Grid container alignItems="center">
-                  <Grid item>
-                    <DoughnutComponent chartData={[followerActivity.flwrsMax, followerActivity.notActiveFlwr]} chartColor={[colors.orange[500], 'rgba(0, 0, 0, 0.2)']} />
-                  </Grid>
-                  <Grid item>
-                    <Box ml={2}>
-                      <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                        충성도있는 팔로워
-                      </Typography>
-                      <Typography variant="subtitle2" classes={{ root: classes.bold }}>
-                        {`${followerActivity.flwrsMax}명`}
-                      </Typography>
-                    </Box>
+          <Grid container direction="column" style={{ height: '100%' }}>
+            <Grid item>
+              <Box pl="10px" borderLeft="4px solid #6E0FFF">
+                <Typography variant="h6" paragraph>팔로워 공감능력 분석</Typography>
+              </Box>
+            </Grid>
+            <Grid item xs>
+              <Box bgcolor="#FFF" p="20px" pl="45px" boxSizing="border-box" height="100%" borderRadius="7px 7px 0 0" overflow="hidden">
+                <Grid container alignItems="center" style={{ height: '100%' }}>
+                  <Grid item container alignItems="center">
+                    <Grid item>
+                      <DoughnutComponent chartData={[instaData.ability, 100 - instaData.ability]} chartColor={[colors.orange[500], 'rgba(0, 0, 0, 0.2)']} />
+                    </Grid>
+                    <Grid item>
+                      <Box ml={2}>
+                        <Typography variant="subtitle2" classes={{ root: classes.bold }}>
+                          팔로워의 공감능력
+                        </Typography>
+                        <Typography variant="subtitle2" classes={{ root: classes.bold }}>
+                          {`${instaData.ability}%(${instaData.abilityType})`}
+                        </Typography>
+                      </Box>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Box>
-              <Box mt="30px">
-                <Grid container justify="space-between">
-                  <Grid item>
-                    <Typography variant="body1" color="textSecondary">충성도있는 팔로워</Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="body1" color="textSecondary">비활동 팔로워</Typography>
-                  </Grid>
-                </Grid>
-                <Box my={1}>
-                  <LinearProgress variant="determinate" value={followerActivity.flwrsMax} classes={{ barColorPrimary: barClasses.orange }} />
-                </Box>
-                <Grid container justify="space-between">
-                  <Grid item>
-                    <Typography variant="body1" classes={{ root: classes.bold }}>{`${followerActivity.flwrsMax}명 (${followerActivity.flwrsMaxPer}%)`}</Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="body1" color="textSecondary" classes={{ root: classes.bold }}>{`${followerActivity.notActiveFlwr}명 (${followerActivity.notActiveFlwrPer}%)`}</Typography>
-                  </Grid>
-                </Grid>
+            </Grid>
+            <Grid item>
+              <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2" borderRadius="0 0 7px 7px">
+                <Typography variant="body1">
+                  {`공감능력분석은 좋아요 대비 댓글수로서 ${instaData.INS_NAME}님의 공감능력은 ${instaData.ability}% 입니다`}
+                </Typography>
               </Box>
-            </Box>
-            <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
-              <Typography variant="body1">
-                공감능력분석은 좋아요 대비 댓글수로서 (   )님의 공감능력은 (   ) % 입니다
-              </Typography>
-            </Box>
-          </Box>
+              <Box mt={1} px="25px" py="15px" bgcolor="#F2F2F2" borderRadius="7px">
+                <Typography variant="body1" gutterBottom classes={{ root: classes.bold600 }}>
+                  공감능력분석으로 본 영향력지수
+                </Typography>
+                <Typography variant="body1">
+                  0%~5%  : 미미
+                  <br />
+                  5%~10%  : 저조
+                  <br />
+                  10%~15%  : 보통
+                  <br />
+                  15%~20%  : 우수
+                  <br />
+                  25%이상  : 매우우수
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
-      <Box mb="13px">
-        <Typography variant="subtitle2">팔로워의 지도</Typography>
+      <Box mt="50px">
+        <Typography variant="subtitle2" paragraph>팔로워의 지도</Typography>
       </Box>
       <Box borderRadius="7px" overflow="hidden">
         <Box bgcolor="#FFF" p="20px">

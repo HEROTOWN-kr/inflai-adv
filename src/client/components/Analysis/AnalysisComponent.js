@@ -157,6 +157,7 @@ const defaultData = {
   INS_SCORE: 0,
   INS_TYPES: 'Smile Cloud Table Tableware Decoration Photograph Dog Light Land vehicle Jeans Forehead Ecoregion Trousers Green Hairstyle Hair Water Umbrella Picture frame Sky Rectangle',
   ability: '',
+  abilityType: '',
   influencerType: '',
   mediaData: {
     urls: Array(9).fill(null),
@@ -348,7 +349,7 @@ function AnalysisComponent() {
                           </Grid>
                           <Grid item>
                             <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                              {instaData.ability}
+                              {`${instaData.ability}%(${instaData.abilityType})`}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -490,7 +491,7 @@ function AnalysisComponent() {
               { `${instaData.INS_NAME}는 ${instaData.INS_FLWR}명의 팔로워를 보유하고 있으며 이는 ${instaData.influencerType} 입니다.
                 인플루언서 영향력을 나타내는 인플라이니수는 ${instaData.INS_SCORE}
                 점이며 최근 30일간 ${instaData.monthMedia.mediaCount}건의 포스팅으로 진행하였고
-                ${instaData.monthMedia.likeSum}건의 좋아요수와 ${instaData.monthMedia.commentsSum}건의 댓글을 받아 공감능력은 ${instaData.ability} 상태입니다.
+                ${instaData.monthMedia.likeSum}건의 좋아요수와 ${instaData.monthMedia.commentsSum}건의 댓글을 받아 공감능력은 ${instaData.ability}%(${instaData.abilityType}) 상태입니다.
                 보유팔로워의 78%가 ${instaData.location.maxLoc}인으로 구성되어있으며
                 ${instaData.ageMax}대 ${instaData.genderMax}걸쳐서 가장 큰 영향력을 발휘하게 됩니다.
                 게시물 인공지능분석 결과 가장 높은 비율인 16%를 (food)가 차지하고 있어서
