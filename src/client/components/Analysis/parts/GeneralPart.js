@@ -56,7 +56,7 @@ function GeneralPart(props) {
           <Box borderRadius="7px" overflow="hidden">
             <Box bgcolor="#FFF" px={2} py="45px">
               <Typography classes={{ root: classes.generalStats }}>
-                {instaData.ability}
+                {`${instaData.ability}%(${instaData.abilityType})`}
               </Typography>
             </Box>
             <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">

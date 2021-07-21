@@ -4,11 +4,11 @@ import {
 } from '@material-ui/core';
 import { FiberManualRecord } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 import DoughnutComponent from '../DoughnutComponent';
 import BarComponent from '../BarComponent';
 import analysisStyles from '../AnalysisStyle';
-import MapGraph2 from '../../campaign/Graphs/MapGraph2';
-import StyledText from '../../../containers/StyledText';
+import MapGraph from '../../campaign/Graphs/MapGraph';
 
 
 const sex = {
@@ -50,9 +50,13 @@ const barStyles = makeStyles({
 
 function AudiencePart(props) {
   const { testData, instaData } = props;
-  const [maxLocVal, setMaxLocVal] = useState(null);
-  const { genderData, ageData, followerActivity } = instaData;
+  const {
+    genderData, ageData, followerActivity, INS_ID
+  } = instaData;
   const { male, female } = genderData;
+  const [mapData, setMapData] = useState([]);
+  const [statsData, setStatsData] = useState([]);
+
   const classes = analysisStyles();
   const barClasses = barStyles();
 
@@ -61,6 +65,22 @@ function AudiencePart(props) {
 
   const femaleSum = female.reduce((a, b) => a + b, 0);
   const maleSum = male.reduce((a, b) => a + b, 0);
+
+  function getStatistics() {
+    axios.get('/api/TB_INSTA/statsMapNew', {
+      params: { INS_ID }
+    }).then((res) => {
+      const { sortedStats, stats } = res.data;
+      if (sortedStats) setMapData(sortedStats);
+      if (stats) setStatsData(stats);
+    }).catch(err => alert(err));
+  }
+
+  useEffect(() => {
+    if (INS_ID) {
+      getStatistics();
+    }
+  }, [INS_ID]);
 
   return (
     <Box mt="80px" mb="24px">
@@ -191,11 +211,37 @@ function AudiencePart(props) {
       <Box mt="50px">
         <Typography variant="subtitle2" paragraph>팔로워의 지도</Typography>
       </Box>
-      <Box borderRadius="7px" overflow="hidden">
-        <Box bgcolor="#FFF" p="20px">
-          <MapGraph2 INS_ID={instaData.INS_ID} setMaxLocVal={setMaxLocVal} />
-        </Box>
-      </Box>
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <Box borderRadius="7px" bgcolor="#FFF" p="20px">
+            <MapGraph mapData={mapData} />
+          </Box>
+        </Grid>
+        <Grid item xs={3}>
+          <Box borderRadius="7px" bgcolor="#FFF" p="20px" height="100%" boxSizing="border-box">
+            {statsData.map(item => (
+              <Box key={item.name}>
+                <Grid container justify="space-between">
+                  <Grid item>
+                    <Typography variant="body1" color="textSecondary">
+                      {item.name}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="body1" color="textSecondary">
+                      {`${item.value}%`}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Box my="10px">
+                  <LinearProgress variant="determinate" value={item.value} classes={{ barColorPrimary: barClasses[item.color] }} />
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        </Grid>
+      </Grid>
+
       <Box mt="50px">
         <Grid container spacing={2}>
           <Grid item xs={3}>

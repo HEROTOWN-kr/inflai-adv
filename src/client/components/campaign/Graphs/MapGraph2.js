@@ -1,26 +1,29 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, CircularProgress } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import axios from 'axios';
-import { map } from 'async';
+import * as am4core from '@amcharts/amcharts4/core';
+import * as am4maps from '@amcharts/amcharts4/maps';
+import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow';
+import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+import am4themes_material from '@amcharts/amcharts4/themes/material';
+
+am4core.useTheme(am4themes_material);
+am4core.useTheme(am4themes_animated);
+am4core.options.autoDispose = true;
 
 function MapGraph2(props) {
   const { INS_ID, setMaxLocVal } = props;
   const [mapData, setMapData] = useState([]);
-  const [process, setProcess] = useState(false);
   const selectEl = useRef(null);
-  const {
-    am4core, am4themes_material, am4themes_animated, am4maps, am4geodata_worldLow
-  } = window;
 
-  async function getStatistics() {
-    setProcess(true);
-    const InstaAgeInsights = await axios.get('/api/TB_INSTA/statsMap', {
+  function getStatistics() {
+    axios.get('/api/TB_INSTA/statsMap', {
       params: { INS_ID }
-    });
-    const { data2, maxLoc } = InstaAgeInsights.data;
-    if (maxLoc) setMaxLocVal(maxLoc);
-    if (data2) setMapData(data2);
-    setProcess(false);
+    }).then((res) => {
+      const { data2, maxLoc } = res.data;
+      if (maxLoc) setMaxLocVal(maxLoc);
+      if (data2) setMapData(data2);
+    }).catch(err => alert(err));
   }
 
   useEffect(() => {
@@ -32,12 +35,6 @@ function MapGraph2(props) {
   useEffect(() => {
     if (selectEl.current && mapData.length > 0) {
       am4core.ready(() => {
-        // Themes begin
-        am4core.useTheme(am4themes_material);
-        am4core.useTheme(am4themes_animated);
-        am4core.options.autoDispose = true;
-        // Themes end
-
         // Create map instance
         const chart = am4core.create('chartdiv', am4maps.MapChart);
 
