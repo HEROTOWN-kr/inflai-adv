@@ -173,8 +173,7 @@ function MediaCard(props) {
 }
 
 function PostPart(props) {
-  const { testImage, instaData } = props;
-  const [maxStatVal, setMaxStatVal] = useState(null);
+  const { testImage, instaData, setImgDetectMac } = props;
   const {
     mediaData, postStats, lastPosts, maxLikesMedia, maxCmntMedia, recentPosts
   } = instaData;
@@ -213,13 +212,13 @@ function PostPart(props) {
           <Grid item xs={6}>
             {/* <Typography variant="subtitle2" paragraph>Label 분석</Typography> */}
             <Box boxSizing="border-box" width="100%" height="390px" p="20px" bgcolor="#FFF" borderRadius="7px">
-              <CategoryPieChart INS_ID={instaData.INS_ID} setMaxStatVal={setMaxStatVal} />
+              <CategoryPieChart INS_ID={instaData.INS_ID} setImgDetectMac={setImgDetectMac} />
             </Box>
           </Grid>
           <Grid item xs={6}>
             {/* <Typography variant="subtitle2" paragraph>Object 분석</Typography> */}
             <Box boxSizing="border-box" width="100%" height="390px" p="20px" bgcolor="#FFF" borderRadius="7px">
-              <CategoryPieChart INS_ID={instaData.INS_ID} setMaxStatVal={setMaxStatVal} type="object" />
+              <CategoryPieChart INS_ID={instaData.INS_ID} setImgDetectMac={setImgDetectMac} type="object" />
             </Box>
           </Grid>
         </Grid>

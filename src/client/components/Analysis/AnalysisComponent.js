@@ -233,6 +233,7 @@ const defaultData = {
 
 function AnalysisComponent() {
   const [instaData, setInstaData] = useState(defaultData);
+  const [imgDetectMax, setImgDetectMax] = useState({ description: '', value: '' });
   const { token } = useContext(AuthContext);
 
   const classes = analysisStyles();
@@ -494,13 +495,13 @@ function AnalysisComponent() {
                 ${instaData.monthMedia.likeSum}건의 좋아요수와 ${instaData.monthMedia.commentsSum}건의 댓글을 받아 공감능력은 ${instaData.ability}%(${instaData.abilityType}) 상태입니다.
                 보유팔로워의 78%가 ${instaData.location.maxLoc}인으로 구성되어있으며
                 ${instaData.ageMax}대 ${instaData.genderMax}걸쳐서 가장 큰 영향력을 발휘하게 됩니다.
-                게시물 인공지능분석 결과 가장 높은 비율인 16%를 (food)가 차지하고 있어서
-                food 쪽에 영향력 지수가 크다고 보여집니다.
+                게시물 인공지능분석 결과 가장 높은 비율인 ${imgDetectMax.value}%를 (${imgDetectMax.description})가 차지하고 있어서
+                ${imgDetectMax.description} 쪽에 영향력 지수가 크다고 보여집니다.
                 (제일 높은 이미지의 %가 30% 이하이면 ... 특별한 카테고리에 영향력이 없다고 보여집니다.)
                 ${instaData.INS_NAME}님은 ${DAY_OF_WEEK[instaData.postStats.dayMaxIdx]}요일, 오후 ${HOURS[instaData.postStats.hourMaxIdx]}시 주로 게시물을 업로드 하고 있습니다.` }
             </Typography>
           </Box>
-          <PostPart instaData={instaData} testImage={testImage} />
+          <PostPart instaData={instaData} setImgDetectMac={setImgDetectMax} testImage={testImage} />
           <ReactionPart instaData={instaData} testData={testData} />
           <AudiencePart instaData={instaData} testData={testData} />
           <GeneralPart instaData={instaData} />

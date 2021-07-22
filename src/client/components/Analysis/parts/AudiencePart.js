@@ -241,7 +241,15 @@ function AudiencePart(props) {
           </Box>
         </Grid>
       </Grid>
-
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <Box px="25px" py="15px" bgcolor="#F2F2F2" borderRadius="7px">
+            <Typography variant="body1">
+              팔로워들의 국적을 분석하여 지도로 보여줍니다. 국내외의 사용자가 지나치게 많을 경우 팔로워구매를 의심할 수 있습니다. 실제 사용자중 국내사용자들의 비율로 팔로워수를 판단해야 합니다.
+            </Typography>
+          </Box>
+        </Grid>
+      </Grid>
       <Box mt="50px">
         <Grid container spacing={2}>
           <Grid item xs={3}>

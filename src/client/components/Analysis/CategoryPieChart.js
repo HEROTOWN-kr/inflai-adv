@@ -6,7 +6,7 @@ import axios from 'axios';
 function CategoryPieChart(props) {
   const [detectData, setDetectData] = useState([]);
   const [process, setProcess] = useState(false);
-  const { INS_ID, setMaxStatVal, type } = props;
+  const { INS_ID, setImgDetectMac, type } = props;
 
   const url = type === 'object' ? '/api/TB_INSTA/getGoogleDataObjectNew' : '/api/TB_INSTA/getGoogleDataNew';
 
@@ -19,7 +19,7 @@ function CategoryPieChart(props) {
     });
     const { statistics } = googleData.data;
     setDetectData(statistics);
-    if (statistics && statistics[0]) setMaxStatVal(statistics[0].description);
+    if (statistics && statistics[0] && type !== 'object') setImgDetectMac(statistics[0]);
     setProcess(false);
   }
 
