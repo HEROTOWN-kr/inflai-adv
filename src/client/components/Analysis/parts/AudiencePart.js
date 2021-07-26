@@ -5,6 +5,7 @@ import {
 import { FiberManualRecord } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+import { PieChart } from 'react-minimal-pie-chart';
 import DoughnutComponent from '../DoughnutComponent';
 import BarComponent from '../BarComponent';
 import analysisStyles from '../AnalysisStyle';
@@ -49,7 +50,7 @@ const barStyles = makeStyles({
 });
 
 function AudiencePart(props) {
-  const { testData, instaData } = props;
+  const { testData, instaData, setLocationMax } = props;
   const {
     genderData, ageData, followerActivity, INS_ID
   } = instaData;
@@ -72,7 +73,13 @@ function AudiencePart(props) {
     }).then((res) => {
       const { sortedStats, stats } = res.data;
       if (sortedStats) setMapData(sortedStats);
-      if (stats) setStatsData(stats);
+      if (stats) {
+        setStatsData(stats);
+        setLocationMax({
+          description: stats[0].description,
+          value: stats[0].value,
+        });
+      }
     }).catch(err => alert(err));
   }
 
@@ -216,37 +223,42 @@ function AudiencePart(props) {
           <Box borderRadius="7px" bgcolor="#FFF" p="20px">
             <MapGraph mapData={mapData} />
           </Box>
-        </Grid>
-        <Grid item xs={3}>
-          <Box borderRadius="7px" bgcolor="#FFF" p="20px" height="100%" boxSizing="border-box">
-            {statsData.map(item => (
-              <Box key={item.name}>
-                <Grid container justify="space-between">
-                  <Grid item>
-                    <Typography variant="body1" color="textSecondary">
-                      {item.name}
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="body1" color="textSecondary">
-                      {`${item.value}%`}
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <Box my="10px">
-                  <LinearProgress variant="determinate" value={item.value} classes={{ barColorPrimary: barClasses[item.color] }} />
-                </Box>
-              </Box>
-            ))}
-          </Box>
-        </Grid>
-      </Grid>
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
           <Box px="25px" py="15px" bgcolor="#F2F2F2" borderRadius="7px">
             <Typography variant="body1">
               팔로워들의 국적을 분석하여 지도로 보여줍니다. 국내외의 사용자가 지나치게 많을 경우 팔로워구매를 의심할 수 있습니다. 실제 사용자중 국내사용자들의 비율로 팔로워수를 판단해야 합니다.
             </Typography>
+          </Box>
+        </Grid>
+        <Grid item xs={6}>
+          <Box borderRadius="7px" bgcolor="#FFF" p="20px" height="100%" boxSizing="border-box">
+
+            {statsData && statsData.length ? (
+              <Grid container alignItems="center" style={{ height: '100%' }}>
+                <Grid item xs={12}>
+                  <Box height="350px">
+                    <PieChart
+                      data={statsData}
+                      animate="true"
+                      animationDuration="800"
+                      label={({ dataEntry }) => `${dataEntry.description} : ${dataEntry.value}%`}
+                      labelStyle={index => ({
+                        fill: statsData[index].color,
+                        fontSize: '6px',
+                        fontFamily: 'sans-serif',
+                      })}
+                      radius={35}
+                      labelPosition={120}
+                    />
+                  </Box>
+                </Grid>
+              </Grid>
+            ) : (
+              <Grid container alignItems="center" justify="center" style={{ height: '100%' }}>
+                <Grid item>
+                    로딩 중...
+                </Grid>
+              </Grid>
+            )}
           </Box>
         </Grid>
       </Grid>

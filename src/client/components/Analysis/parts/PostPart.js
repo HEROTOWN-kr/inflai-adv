@@ -193,7 +193,11 @@ function PostPart(props) {
   return (
     <React.Fragment>
       <Box mt="80px" mb="24px" pl="10px" borderLeft="4px solid #6E0FFF">
-        <Typography variant="h6">포스팅 분석</Typography>
+        <Typography variant="h6">
+포스팅 분석
+          <span>(최신 게시물로 보여드립니다)</span>
+        </Typography>
+
       </Box>
       <Box margin="0 -8px">
         <Slider {...settings}>

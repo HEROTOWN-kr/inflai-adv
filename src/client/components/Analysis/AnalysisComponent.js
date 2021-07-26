@@ -18,9 +18,10 @@ import HelpTooltip from './HelpTooltip';
 const tooltips = {
   score: '인플루언서 영향력을 나타내는 인플라이지수입니다',
   ranking: '팔로워 중에서 인플루언서에게 영향을 받아 캠페인 목표로 전환될 수 있는 사람의 순위입니다.',
-  communication: '사용자가 포스팅된 계시물의 좋아요수랑 댓끌수를 대비해서 나오는 공감능력은 상태입니다.',
+  communication: '좋아요 클릭수량 대비 댓글 수로서 팔로워와의 인터랙션 지수를 말합니다 공감지수가 높으면 팔로워와의 소통이 원활하며 영향력지수가 높아집니다',
   activity: '특정 범위 동안 온라인 상태였던 인스타 사용자 팔로워 수 합계.',
   impressions: '인스타그램 사용자의 미디어가 조회된 횟수 합계. 홍보 기능을 통해 생성된 광고 활동을 포함합니다..',
+  activeFollowers: '원래 팔로워수 온라인상태 팔로워수 비율. X축 시간. 팔로원들이 가장 강력하게 보는 시간 영향력있는 시간 팔로워들의 활동시간 분석'
 };
 const testImage = 'https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/s640x640/44191010_877274945801500_683676639501143736_n.jpg?tp=1&_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_cat=104&_nc_ohc=SMM5lzTWsXsAX9JK4qs&edm=AP_V10EBAAAA&ccb=7-4&oh=971b324811b253d368244c569a59e114&oe=60D9D799&_nc_sid=4f375e';
 const testData = {
@@ -215,7 +216,8 @@ const defaultData = {
   newFollowers: 0,
   impressions: {
     impressionsVal: [12, 19, 22, 20, 15, 18, 16],
-    impressionsMax: 0
+    impressionsMax: 0,
+    impressionsMaxPer: ''
   },
   postStats: {
     hourStats: Array(24).fill(0),
@@ -234,6 +236,7 @@ const defaultData = {
 function AnalysisComponent() {
   const [instaData, setInstaData] = useState(defaultData);
   const [imgDetectMax, setImgDetectMax] = useState({ description: '', value: '' });
+  const [locationMax, setLocationMax] = useState({ description: '', value: '' });
   const { token } = useContext(AuthContext);
 
   const classes = analysisStyles();
@@ -311,6 +314,16 @@ function AnalysisComponent() {
                       </Typography>
                     </Box>
                   </Grid>
+                  <Grid item>
+                    <Box width="120px" textAlign="center">
+                      <Typography variant="body1" color="textSecondary">
+                        카테고리
+                      </Typography>
+                      <Typography variant="subtitle2" classes={{ root: classes.bold600 }}>
+                        {imgDetectMax.description}
+                      </Typography>
+                    </Box>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
@@ -382,8 +395,7 @@ function AnalysisComponent() {
                           </Grid>
                           <Grid item>
                             <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                              {instaData.impressions.impressionsMax}
-명
+                              {`${instaData.impressions.impressionsMax}명(${instaData.impressions.impressionsMaxPer}%)`}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -443,8 +455,7 @@ function AnalysisComponent() {
                         </Grid>
                         <Grid item>
                           <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                            {instaData.followerActivity.flwrsMax}
-명
+                            {`${instaData.followerActivity.flwrsMax}명(${instaData.followerActivity.flwrsMaxPer}%)`}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -474,12 +485,12 @@ function AnalysisComponent() {
                   <Grid container justify="space-between">
                     <Grid item>
                       <Typography variant="body1">
-                        팔로워 주요 국적
+                        주 평균 게시물을 업로드
                       </Typography>
                     </Grid>
                     <Grid item>
                       <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                        {instaData.location.maxLoc}
+                        {`${instaData.postStats.weekAvg}개`}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -493,7 +504,7 @@ function AnalysisComponent() {
                 인플루언서 영향력을 나타내는 인플라이니수는 ${instaData.INS_SCORE}
                 점이며 최근 30일간 ${instaData.monthMedia.mediaCount}건의 포스팅으로 진행하였고
                 ${instaData.monthMedia.likeSum}건의 좋아요수와 ${instaData.monthMedia.commentsSum}건의 댓글을 받아 공감능력은 ${instaData.ability}%(${instaData.abilityType}) 상태입니다.
-                보유팔로워의 78%가 ${instaData.location.maxLoc}인으로 구성되어있으며
+                보유팔로워의 ${locationMax.value}%가 ${locationMax.description}인으로 구성되어있으며
                 ${instaData.ageMax}대 ${instaData.genderMax}걸쳐서 가장 큰 영향력을 발휘하게 됩니다.
                 게시물 인공지능분석 결과 가장 높은 비율인 ${imgDetectMax.value}%를 (${imgDetectMax.description})가 차지하고 있어서
                 ${imgDetectMax.description} 쪽에 영향력 지수가 크다고 보여집니다.
@@ -502,8 +513,8 @@ function AnalysisComponent() {
             </Typography>
           </Box>
           <PostPart instaData={instaData} setImgDetectMac={setImgDetectMax} testImage={testImage} />
-          <ReactionPart instaData={instaData} testData={testData} />
-          <AudiencePart instaData={instaData} testData={testData} />
+          <ReactionPart tooltips={tooltips} instaData={instaData} testData={testData} />
+          <AudiencePart instaData={instaData} setLocationMax={setLocationMax} testData={testData} />
           <GeneralPart instaData={instaData} />
         </Box>
       </Box>

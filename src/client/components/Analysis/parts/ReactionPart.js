@@ -3,6 +3,8 @@ import { Box, Grid, Typography } from '@material-ui/core';
 import { Line } from 'react-chartjs-2';
 import ReactWordcloud from 'react-wordcloud';
 import BarComponent from '../BarComponent';
+import HelpTooltip from '../HelpTooltip';
+import analysisStyles from '../AnalysisStyle';
 
 
 const words = [
@@ -320,13 +322,15 @@ const impressionOpt = {
 };
 
 function ReactionPart(props) {
-  const { testData, instaData } = props;
+  const { testData, instaData, tooltips } = props;
   const {
     comments, likes, likesMaxIdx, commentsMaxIdx
   } = instaData.mediaData;
 
   const { hours, flwrs } = instaData.followerActivity;
   const { impressionsMax, impressionsVal } = instaData.impressions;
+
+  const classes = analysisStyles();
 
   commentsData.datasets[0].data = comments;
   commentsData.datasets[0].backgroundColor = Array(comments.length).fill('#EAEAEA');
@@ -359,7 +363,11 @@ function ReactionPart(props) {
       </Box>
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <Typography variant="subtitle2" paragraph>최근 24시간 온라인 상태였던 팔로워 수</Typography>
+          {/* <Typography variant="subtitle2" paragraph>최근 24시간 온라인 상태였던 팔로워 수</Typography> */}
+          <Box mb="17px" className={classes.textAndIcon}>
+            <span style={{ color: '#000', fontSize: '16px', fontWeight: '500' }}>최근 24시간 온라인 상태였던 팔로워 수</span>
+            <HelpTooltip title={tooltips.activeFollowers} />
+          </Box>
           <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
             <Line height={150} data={activity} options={activityOpt} />
           </Box>
