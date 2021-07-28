@@ -4,6 +4,7 @@ import { Grid, Paper, Box } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { Colors } from '../../lib/Сonstants';
 import AuthContext from '../../context/AuthContext';
+import StyledButton from '../../containers/StyledButton';
 
 const cards = [
   {
@@ -66,6 +67,20 @@ function CampaignType() {
       border={`1px solid ${Colors.grey}`}
       margin="0 auto"
     >
+      <Box p={2} mb={3} border="1px solid green" color="green">
+        지금 진행중인 서브스크립션은 비기너 플랜입니다. 서브스크립션 만료 기간은 2021-07-30 입니다.
+      </Box>
+      <Box p={1} mb={3} border="1px solid red" color="red">
+        <Grid container alignItems="center">
+          <Grid item>진행중인 서브스크립션은 없습니다. 서브스크립션 구독하실까요? </Grid>
+          <Grid item>
+            <StyledButton height="38px" padding="0 22px">
+              구독하기
+            </StyledButton>
+          </Grid>
+        </Grid>
+
+      </Box>
       <Box mb={1} fontSize="24px">
             인공지능 인플루언서 마케팅
       </Box>
@@ -76,31 +91,29 @@ function CampaignType() {
             내 사업홍보에 딱 맞는 인플루언서를 만나다!
       </Box>
       <Grid container spacing={4}>
-        {
-          cards.map(item => (
-            <Grid key={item.id} item xs={12} sm={6}>
-              <Box
-                onClick={() => createCampaign(item.id, item.url)}
-                onMouseOver={() => setHoverCard(item.id)}
-                onMouseOut={() => setHoverCard(null)}
-                p={4}
-                border={item.id === hoverCard ? `2px solid ${Colors.pink3}` : `1px solid ${Colors.grey}`}
-                css={{
-                  cursor: 'pointer'
-                }}
-              >
-                <Box fontSize="28px">
-                  {item.title}
-                </Box>
-                <Box mt={4}>
-                  {item.text1}
-                  <br />
-                  {item.text2}
-                </Box>
+        { cards.map(item => (
+          <Grid key={item.id} item xs={12} sm={6}>
+            <Box
+              onClick={() => createCampaign(item.id, item.url)}
+              onMouseOver={() => setHoverCard(item.id)}
+              onMouseOut={() => setHoverCard(null)}
+              p={4}
+              border={item.id === hoverCard ? `2px solid ${Colors.pink3}` : `1px solid ${Colors.grey}`}
+              css={{
+                cursor: 'pointer'
+              }}
+            >
+              <Box fontSize="28px">
+                {item.title}
               </Box>
-            </Grid>
-          ))
-        }
+              <Box mt={4}>
+                {item.text1}
+                <br />
+                {item.text2}
+              </Box>
+            </Box>
+          </Grid>
+        )) }
       </Grid>
     </Box>
   );
