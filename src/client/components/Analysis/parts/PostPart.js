@@ -195,7 +195,7 @@ function PostPart(props) {
       <Box mt="80px" mb="24px" pl="10px" borderLeft="4px solid #6E0FFF">
         <Typography variant="h6">
 포스팅 분석
-          <span>(최신 게시물로 보여드립니다)</span>
+          <span>{`(${instaData.INS_NAME}님은 주로 이런 포스팅을 최근에 하고 있습니다)`}</span>
         </Typography>
 
       </Box>

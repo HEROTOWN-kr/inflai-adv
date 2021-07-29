@@ -396,7 +396,7 @@ function ReactionPart(props) {
             </Box>
           </Grid>
           <Grid item xs={4}>
-            <Typography variant="subtitle2" paragraph>좋아요와 댓글 피교</Typography>
+            <Typography variant="subtitle2" paragraph>좋아요와 댓글 비교</Typography>
             <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
               <Line height={200} data={line} />
             </Box>

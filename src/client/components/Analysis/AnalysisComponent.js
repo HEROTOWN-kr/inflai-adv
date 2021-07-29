@@ -233,6 +233,10 @@ const defaultData = {
   },
 };
 
+function addSeparator(item) {
+  return (item).toLocaleString('en');
+}
+
 function AnalysisComponent() {
   const [instaData, setInstaData] = useState(defaultData);
   const [imgDetectMax, setImgDetectMax] = useState({ description: '', value: '' });
@@ -347,8 +351,7 @@ function AnalysisComponent() {
                           </Grid>
                           <Grid item>
                             <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                              {instaData.INS_SCORE}
-점
+                              {`${instaData.INS_SCORE}점`}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -357,7 +360,7 @@ function AnalysisComponent() {
                         <Grid container justify="space-between">
                           <Grid item>
                             <Box className={classes.textAndIcon}>
-                              <span>소통, 공감능력</span>
+                              <span>소통공감 지수</span>
                               <HelpTooltip title={tooltips.communication} />
                             </Box>
                           </Grid>
@@ -475,8 +478,7 @@ function AnalysisComponent() {
                     </Grid>
                     <Grid item>
                       <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                        {instaData.newFollowers}
-명
+                        {`${instaData.newFollowers}명`}
                       </Typography>
                     </Grid>
                   </Grid>

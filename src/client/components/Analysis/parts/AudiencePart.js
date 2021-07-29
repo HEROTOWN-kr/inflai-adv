@@ -192,7 +192,7 @@ function AudiencePart(props) {
             <Grid item>
               <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2" borderRadius="0 0 7px 7px">
                 <Typography variant="body1">
-                  {`공감능력분석은 좋아요 대비 댓글수로서 ${instaData.INS_NAME}님의 공감능력은 ${instaData.ability}% 입니다`}
+                  {`공감능력분석은 좋아요 대비 댓글수로서 ${instaData.INS_NAME}님의 공감능력은 ${instaData.ability}% 입니다. 공감능력이 높을 수록 광고의 효율성이 높아집니다`}
                 </Typography>
               </Box>
               <Box mt={1} px="25px" py="15px" bgcolor="#F2F2F2" borderRadius="7px">
