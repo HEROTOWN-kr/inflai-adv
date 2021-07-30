@@ -3,9 +3,9 @@ import {
   Box, Grid, makeStyles, Typography
 } from '@material-ui/core';
 import Slider from 'react-slick';
+import axios from 'axios';
 import defaultImage from '../../../img/notFound400_316.png';
 import BarComponent from '../BarComponent';
-import GoogleVisionGraph from '../../campaign/Graphs/GoogleVisionGraph';
 import { DAY_OF_WEEK, HOURS } from '../../../lib/Сonstants';
 import CategoryPieChart from '../CategoryPieChart';
 
@@ -124,7 +124,7 @@ const settings = {
 };
 
 function MediaCard(props) {
-  const { post, testImage } = props;
+  const { post } = props;
   const classes = useStyles();
 
   return (
@@ -173,9 +173,12 @@ function MediaCard(props) {
 }
 
 function PostPart(props) {
+  const [process, setProcess] = useState(false);
+  const [labelData, setLabelData] = useState([]);
+  const [objectData, setObjectData] = useState([]);
   const { testImage, instaData, setImgDetectMac } = props;
   const {
-    mediaData, postStats, lastPosts, maxLikesMedia, maxCmntMedia, recentPosts
+    mediaData, postStats, lastPosts, maxLikesMedia, maxCmntMedia, INS_ID
   } = instaData;
   const {
     hourStats, dayStats, dayMaxIdx, hourMaxIdx, dayAvg, weekAvg
@@ -189,6 +192,29 @@ function PostPart(props) {
   dayData.datasets[0].data = dayStats;
   dayData.datasets[0].backgroundColor = Array(dayStats.length).fill('#EAEAEA');
   dayData.datasets[0].backgroundColor[dayMaxIdx] = '#18DBA8';
+
+  function getGoogleVisionData(INS_ID) {
+    setProcess(true);
+    const { host } = window.location;
+
+    axios.get('/api/TB_INSTA/getGoogleDataCommon', {
+      params: { INS_ID, host }
+    }).then((res) => {
+      const { labelInfo, objectInfo } = res.data;
+      setLabelData(labelInfo);
+      setObjectData(objectInfo);
+      setImgDetectMac(labelInfo[0]);
+      setProcess(false);
+    }).catch((e) => {
+
+    });
+  }
+
+  useEffect(() => {
+    if (INS_ID) {
+      getGoogleVisionData(INS_ID);
+    }
+  }, [INS_ID]);
 
   return (
     <React.Fragment>
@@ -216,13 +242,13 @@ function PostPart(props) {
           <Grid item xs={6}>
             {/* <Typography variant="subtitle2" paragraph>Label 분석</Typography> */}
             <Box boxSizing="border-box" width="100%" height="390px" p="20px" bgcolor="#FFF" borderRadius="7px">
-              <CategoryPieChart INS_ID={instaData.INS_ID} setImgDetectMac={setImgDetectMac} />
+              <CategoryPieChart detectData={labelData} process={process} />
             </Box>
           </Grid>
           <Grid item xs={6}>
             {/* <Typography variant="subtitle2" paragraph>Object 분석</Typography> */}
             <Box boxSizing="border-box" width="100%" height="390px" p="20px" bgcolor="#FFF" borderRadius="7px">
-              <CategoryPieChart INS_ID={instaData.INS_ID} setImgDetectMac={setImgDetectMac} type="object" />
+              <CategoryPieChart detectData={objectData} process={process} />
             </Box>
           </Grid>
         </Grid>

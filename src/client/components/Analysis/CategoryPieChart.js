@@ -1,34 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, CircularProgress, Grid } from '@material-ui/core';
 import { PieChart } from 'react-minimal-pie-chart';
-import axios from 'axios';
 
 function CategoryPieChart(props) {
-  const [detectData, setDetectData] = useState([]);
-  const [process, setProcess] = useState(false);
-  const { INS_ID, setImgDetectMac, type } = props;
-
-  const url = type === 'object' ? '/api/TB_INSTA/getGoogleDataObjectNew' : '/api/TB_INSTA/getGoogleDataNew';
-
-  async function getGoogleVisionData(INS_ID) {
-    setProcess(true);
-    const { host } = window.location;
-
-    const googleData = await axios.get(url, {
-      params: { INS_ID, host }
-    });
-    const { statistics } = googleData.data;
-    setDetectData(statistics);
-    if (statistics && statistics[0] && type !== 'object') setImgDetectMac(statistics[0]);
-    setProcess(false);
-  }
-
-  useEffect(() => {
-    if (INS_ID) {
-      getGoogleVisionData(INS_ID);
-    }
-  }, [INS_ID]);
-
+  const { detectData, process } = props;
 
   return (
     <React.Fragment>

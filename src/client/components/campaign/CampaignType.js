@@ -67,7 +67,7 @@ function CampaignType() {
       border={`1px solid ${Colors.grey}`}
       margin="0 auto"
     >
-      <Box p={2} mb={3} border="1px solid green" color="green">
+      {/* <Box p={2} mb={3} border="1px solid green" color="green">
         지금 진행중인 서브스크립션은 비기너 플랜입니다. 서브스크립션 만료 기간은 2021-07-30 입니다.
       </Box>
       <Box p={1} mb={3} border="1px solid red" color="red">
@@ -80,7 +80,7 @@ function CampaignType() {
           </Grid>
         </Grid>
 
-      </Box>
+      </Box> */}
       <Box mb={1} fontSize="24px">
             인공지능 인플루언서 마케팅
       </Box>
