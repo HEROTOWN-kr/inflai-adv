@@ -71,13 +71,14 @@ function AudiencePart(props) {
     axios.get('/api/TB_INSTA/statsMapNew', {
       params: { INS_ID }
     }).then((res) => {
-      const { sortedStats, stats } = res.data;
+      const { statsTopString, sortedStats, stats } = res.data;
       if (sortedStats) setMapData(sortedStats);
       if (stats) {
         setStatsData(stats);
         setLocationMax({
           description: stats[0].description,
           value: stats[0].value,
+          statsTop: statsTopString
         });
       }
     }).catch(err => alert(err));
@@ -242,7 +243,7 @@ function AudiencePart(props) {
                       animationDuration="800"
                       label={({ dataEntry }) => `${dataEntry.description} : ${dataEntry.value}%`}
                       labelStyle={index => ({
-                        fill: statsData[index].color,
+                        fill: statsData[index].labelColor,
                         fontSize: '6px',
                         fontFamily: 'sans-serif',
                       })}

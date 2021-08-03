@@ -240,7 +240,7 @@ function addSeparator(item) {
 function AnalysisComponent() {
   const [instaData, setInstaData] = useState(defaultData);
   const [imgDetectMax, setImgDetectMax] = useState({ description: '', value: '' });
-  const [locationMax, setLocationMax] = useState({ description: '', value: '' });
+  const [locationMax, setLocationMax] = useState({ description: '', value: '', statsTop: '' });
   const { token } = useContext(AuthContext);
 
   const classes = analysisStyles();
@@ -415,7 +415,7 @@ function AnalysisComponent() {
                         </Grid>
                         <Grid item>
                           <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                            {instaData.location.maxLoc}
+                            {locationMax.statsTop}
                           </Typography>
                         </Grid>
                       </Grid>
