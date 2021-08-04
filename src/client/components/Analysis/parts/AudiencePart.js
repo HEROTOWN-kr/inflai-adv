@@ -246,6 +246,7 @@ function AudiencePart(props) {
                         fill: statsData[index].labelColor,
                         fontSize: '6px',
                         fontFamily: 'sans-serif',
+                        letterSpacing: 'normal'
                       })}
                       radius={35}
                       labelPosition={120}
