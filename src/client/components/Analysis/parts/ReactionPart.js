@@ -92,7 +92,7 @@ const words = [
 ];
 
 const callbacks = {
-  getWordColor: word => (word.main ? '#5568f7' : '#00000073'),
+  getWordColor: word => (word.main ? '#8C3FFF' : '#00000073'),
 };
 
 const options = {
@@ -355,7 +355,6 @@ function ReactionPart(props) {
 
   impressionData.datasets[0].data = impressionsVal;
 
-
   return (
     <React.Fragment>
       <Box mt="80px" mb="24px" pl="10px" borderLeft="4px solid #6E0FFF">
@@ -423,7 +422,7 @@ function ReactionPart(props) {
           <Grid item xs={6}>
             <Typography variant="subtitle2" paragraph>해시태그 주요 키워드</Typography>
             <Box height="250px" p="20px" bgcolor="#FFF" borderRadius="7px">
-              <ReactWordcloud options={options} words={words} callbacks={callbacks} />
+              <ReactWordcloud options={options} words={instaData.hashTags} callbacks={callbacks} />
             </Box>
           </Grid>
         </Grid>

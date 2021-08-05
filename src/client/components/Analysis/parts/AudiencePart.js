@@ -241,7 +241,7 @@ function AudiencePart(props) {
                       data={statsData}
                       animate="true"
                       animationDuration="800"
-                      label={({ dataEntry }) => `${dataEntry.description} : ${dataEntry.value}%`}
+                      label={({ dataEntry }) => `${dataEntry.description}: ${dataEntry.value}%`}
                       labelStyle={index => ({
                         fill: statsData[index].labelColor,
                         fontSize: '6px',

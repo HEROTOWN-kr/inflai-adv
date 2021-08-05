@@ -21,7 +21,7 @@ function CategoryPieChart(props) {
                 data={detectData}
                 animate="true"
                 animationDuration="800"
-                label={({ dataEntry }) => `${dataEntry.description} : ${dataEntry.value}%`}
+                label={({ dataEntry }) => `${dataEntry.description}: ${dataEntry.value}%`}
                 labelStyle={index => ({
                   fill: detectData[index].labelColor,
                   fontSize: '6px',
