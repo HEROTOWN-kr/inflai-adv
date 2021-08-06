@@ -1,5 +1,5 @@
 import {
-  Box, Grid, useMediaQuery, useTheme, ThemeProvider, Typography, Tooltip,
+  Box, Grid, useMediaQuery, useTheme, ThemeProvider, Typography, Tooltip, Button,
 } from '@material-ui/core';
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
@@ -346,6 +346,17 @@ function AnalysisComponent() {
     getInstaInfo();
   }, []);
 
+  function testExcel() {
+    axios.get('/api/testRoute/test', {
+      params: { AD_ID: 277 }
+    }).then((res) => {
+      const { url } = res.data;
+      window.open(window.location.origin + url, '_blank');
+    }).catch((err) => {
+      alert(err.response.message);
+    });
+  }
+
   return (
     <ThemeProvider theme={styleTheme}>
       <Box bgcolor="#FAFAFA">
@@ -410,6 +421,9 @@ function AnalysisComponent() {
                         {imgDetectMax.description}
                       </Typography>
                     </Box>
+                  </Grid>
+                  <Grid item>
+                    <Button variant="contained" color="primary" onClick={testExcel}>excel</Button>
                   </Grid>
                 </Grid>
               </Grid>
