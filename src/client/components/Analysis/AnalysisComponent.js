@@ -335,7 +335,7 @@ function AnalysisComponent() {
 
   function getInstaInfo() {
     axios.get('/api/TB_INSTA/instaInfo', {
-      params: { instaId: 1197 }
+      params: { instaId: 634 }
     }).then((res) => {
       const { data } = res.data;
       setInstaData({ ...instaData, ...data });
@@ -422,9 +422,9 @@ function AnalysisComponent() {
                       </Typography>
                     </Box>
                   </Grid>
-                  <Grid item>
+                  {/* <Grid item>
                     <Button variant="contained" color="primary" onClick={testExcel}>excel</Button>
-                  </Grid>
+                  </Grid> */}
                 </Grid>
               </Grid>
             </Grid>
