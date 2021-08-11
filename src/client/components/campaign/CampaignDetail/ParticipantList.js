@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box, Grid } from '@material-ui/core';
 import { setIn } from 'formik';
+import { Check, CheckCircle, Description } from '@material-ui/icons';
 import { Colors } from '../../../lib/Сonstants';
 import StyledImage from '../../../containers/StyledImage';
 import defaultAccountImage from '../../../img/default_account_image.png';
@@ -15,13 +16,16 @@ import ConfirmDialog from '../../../containers/ConfirmDialog';
 import Sample from '../../component-sample';
 import NaverInsightDialog from './NaverInsightDialog';
 import MyPagination from '../../../containers/MyPagination';
+import InstaInsightDialog from './InstaInsightDialog';
 
 function ParticipantList(props) {
   const { adId, isMD } = props;
   const [participants, setParticipants] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [instaDialogOpen, setInstaDialogOpen] = useState(false);
   const [naverDialogOpen, setNaverDialogOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
+  const [instaId, setInstaId] = useState(0);
   const [influencerId, setInfluencerId] = useState(0);
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
@@ -35,6 +39,10 @@ function ParticipantList(props) {
 
   function toggleDialog() {
     setDialogOpen(!dialogOpen);
+  }
+
+  function toggleInstaDialog() {
+    setInstaDialogOpen(!instaDialogOpen);
   }
 
   function toggleNaverDialog() {
@@ -53,6 +61,11 @@ function ParticipantList(props) {
   function clickInfo(id) {
     setSelectedId(id);
     toggleDialog();
+  }
+
+  function clickInstaInfo(id) {
+    setInfluencerId(id);
+    toggleInstaDialog();
   }
 
   function clickNaverInfo(id) {
@@ -156,21 +169,37 @@ function ParticipantList(props) {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <Grid container justify="flex-end" spacing={1}>
-                    {item.PAR_STATUS === '1' ? (
-                      <Grid item>
-                        <StyledButton
-                          fontSize="12px"
-                          height="25px"
-                          padding="0 10px"
-                          onClick={() => clickSelect(item.PAR_ID)}
-                        >
-                                                        리뷰어 선정하기
-                        </StyledButton>
-                      </Grid>
-                    ) : null}
-                  </Grid>
+                <Grid item>
+                  <Box width="125px">
+                    <Grid container spacing={1}>
+                      {item.INS_ID && item.INS_STATUS > 0 ? (
+                        <Grid item xs={12}>
+                          <StyledButton
+                            height={40}
+                            padding="0 20px"
+                            background={Colors.green}
+                            hoverBackground={Colors.greenHover}
+                            onClick={() => clickInstaInfo(item.INF_ID)}
+                            startIcon={<Description />}
+                          >
+                            보고서
+                          </StyledButton>
+                        </Grid>
+                      ) : null}
+                      {item.PAR_STATUS === '1' ? (
+                        <Grid item xs={12}>
+                          <StyledButton
+                            height={40}
+                            padding="0 20px"
+                            onClick={() => clickSelect(item.PAR_ID)}
+                            startIcon={<CheckCircle />}
+                          >
+                              선정하기
+                          </StyledButton>
+                        </Grid>
+                      ) : null}
+                    </Grid>
+                  </Box>
                 </Grid>
               </Grid>
             </Box>
@@ -190,6 +219,7 @@ function ParticipantList(props) {
             </Box>
           ) : null}
           <InsightDialog open={dialogOpen} closeDialog={toggleDialog} selectedId={selectedId} />
+          <InstaInsightDialog open={instaDialogOpen} handleClose={toggleInstaDialog} INS_ID={influencerId} />
           <NaverInsightDialog open={naverDialogOpen} closeDialog={toggleNaverDialog} selectedId={influencerId} />
           <ConfirmDialog
             open={confirmDialogOpen}

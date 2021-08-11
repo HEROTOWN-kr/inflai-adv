@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box, Grid } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
-import { StarBorder } from '@material-ui/icons';
+import { StarBorder, Description } from '@material-ui/icons';
 import { Colors } from '../../../lib/Сonstants';
 import StyledImage from '../../../containers/StyledImage';
 import defaultAccountImage from '../../../img/default_account_image.png';
@@ -84,6 +84,15 @@ function SelectedList(props) {
     }).catch(err => alert(err.response.data.message));
   }
 
+  function getExcel() {
+    axios.get('/api/TB_PARTICIPANT/getExcel', {
+      params: { AD_ID: adId }
+    }).then((res) => {
+      const { url } = res.data;
+      window.open(window.location.origin + url, '_blank');
+    }).catch(err => alert(err.response.data.message));
+  }
+
   useEffect(() => {
     getParticipants();
   }, [page]);
@@ -104,6 +113,22 @@ function SelectedList(props) {
         </Box>
       ) : (
         <React.Fragment>
+          <Box mt={2} pb={2} borderBottom={`1px solid ${Colors.grey7}`}>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <StyledButton
+                  height={40}
+                  padding="0 20px"
+                  background="#0fb359"
+                  hoverBackground="#107C41"
+                  startIcon={<Description />}
+                  onClick={getExcel}
+                >
+                  엑셀다운
+                </StyledButton>
+              </Grid>
+            </Grid>
+          </Box>
           {participants.map(item => (
             <Box key={item.PAR_ID} py={2} borderBottom={`1px solid ${Colors.grey7}`}>
               <Grid container spacing={2} alignItems="center">

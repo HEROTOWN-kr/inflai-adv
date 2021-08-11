@@ -14,6 +14,7 @@ import AudiencePart from './parts/AudiencePart';
 import ReactionPart from './parts/ReactionPart';
 import { DAY_OF_WEEK, HOURS } from '../../lib/Сonstants';
 import HelpTooltip from './HelpTooltip';
+import StyledBackDrop from '../../containers/StyledBackDrop';
 
 const tooltips = {
   score: '인플루언서 영향력을 나타내는 인플라이지수입니다',
@@ -316,15 +317,12 @@ const defaultData = {
   },
 };
 
-function addSeparator(item) {
-  return (item).toLocaleString('en');
-}
-
-function AnalysisComponent() {
+function AnalysisComponent(props) {
+  const { INS_ID } = props;
+  const [loading, setLoading] = useState(false);
   const [instaData, setInstaData] = useState(defaultData);
   const [imgDetectMax, setImgDetectMax] = useState({ description: '', value: '' });
   const [locationMax, setLocationMax] = useState({ description: '', value: '', statsTop: '' });
-  const { token } = useContext(AuthContext);
 
   const classes = analysisStyles();
   const theme = useTheme();
@@ -333,13 +331,22 @@ function AnalysisComponent() {
 
   // window.scrollTo(0, document.body.scrollHeight);
 
+  function toggleLoading() {
+    setLoading(!loading);
+  }
+
   function getInstaInfo() {
+    setLoading(true);
     axios.get('/api/TB_INSTA/instaInfo', {
-      params: { instaId: 634 }
+      params: { instaId: INS_ID }
     }).then((res) => {
       const { data } = res.data;
       setInstaData({ ...instaData, ...data });
-    }).catch(err => alert(err.response.data.message));
+      setLoading(false);
+    }).catch((err) => {
+      setLoading(false);
+      alert(err.response.data.message);
+    });
   }
 
   useEffect(() => {
@@ -616,6 +623,7 @@ function AnalysisComponent() {
           <AudiencePart instaData={instaData} setLocationMax={setLocationMax} testData={testData} />
           <GeneralPart instaData={instaData} />
         </Box>
+        <StyledBackDrop open={loading} handleClose={toggleLoading} />
       </Box>
     </ThemeProvider>
   );
