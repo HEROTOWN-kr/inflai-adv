@@ -19,7 +19,7 @@ import MyPagination from '../../../containers/MyPagination';
 import InstaInsightDialog from './InstaInsightDialog';
 
 function ParticipantList(props) {
-  const { adId, isMD } = props;
+  const { adId, type, isMD } = props;
   const [participants, setParticipants] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [instaDialogOpen, setInstaDialogOpen] = useState(false);
@@ -75,7 +75,9 @@ function ParticipantList(props) {
 
   function getParticipants() {
     axios.get('/api/TB_PARTICIPANT/getList', {
-      params: { adId, limit, page }
+      params: {
+        adId, type, limit, page
+      }
     }).then((res) => {
       const { data } = res.data;
       setParticipants(data);
@@ -94,12 +96,8 @@ function ParticipantList(props) {
   }
 
   useEffect(() => {
-    getParticipants();
-  }, [page]);
-
-  useEffect(() => {
-    getParticipants();
-  }, []);
+    if (type) getParticipants();
+  }, [type, page]);
 
   return (
     <>
@@ -172,7 +170,7 @@ function ParticipantList(props) {
                 <Grid item>
                   <Box width="125px">
                     <Grid container spacing={1}>
-                      {item.INS_ID && item.INS_STATUS > 0 ? (
+                      {item.INS_ID ? (
                         <Grid item xs={12}>
                           <StyledButton
                             height={40}
@@ -181,23 +179,23 @@ function ParticipantList(props) {
                             hoverBackground={Colors.greenHover}
                             onClick={() => clickInstaInfo(item.INF_ID)}
                             startIcon={<Description />}
+                            disabled={item.INS_STATUS === 0}
                           >
                             보고서
                           </StyledButton>
                         </Grid>
                       ) : null}
-                      {item.PAR_STATUS === '1' ? (
-                        <Grid item xs={12}>
-                          <StyledButton
-                            height={40}
-                            padding="0 20px"
-                            onClick={() => clickSelect(item.PAR_ID)}
-                            startIcon={<CheckCircle />}
-                          >
-                              선정하기
-                          </StyledButton>
-                        </Grid>
-                      ) : null}
+                      <Grid item xs={12}>
+                        <StyledButton
+                          height={40}
+                          padding="0 20px"
+                          onClick={() => clickSelect(item.PAR_ID)}
+                          startIcon={<CheckCircle />}
+                          disabled={item.PAR_STATUS === '2'}
+                        >
+                          {item.PAR_STATUS === '1' ? '선정하기' : '선정됨'}
+                        </StyledButton>
+                      </Grid>
                     </Grid>
                   </Box>
                 </Grid>

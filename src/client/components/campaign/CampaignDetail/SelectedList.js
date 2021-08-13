@@ -20,7 +20,9 @@ function RatingComponent(props) {
   const { id, rating } = props;
 
   function updateRating(value) {
-    axios.post('/api/TB_PARTICIPANT/ratingUpdate', { id, ratingValue: value }).then((res) => {
+    axios.post('/api/TB_PARTICIPANT/ratingUpdate', {
+      id, ratingValue: value
+    }).then((res) => {
 
     }).catch((err) => {
       alert(err.response.message);
@@ -41,7 +43,7 @@ function RatingComponent(props) {
 }
 
 function SelectedList(props) {
-  const { adId, isMD } = props;
+  const { adId, type, isMD } = props;
   const [participants, setParticipants] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
@@ -75,7 +77,7 @@ function SelectedList(props) {
   function getParticipants() {
     axios.get('/api/TB_PARTICIPANT/getList', {
       params: {
-        adId, limit, page, onlySelected: '1'
+        adId, type, limit, page, onlySelected: '1'
       }
     }).then((res) => {
       const { data } = res.data;
@@ -94,12 +96,8 @@ function SelectedList(props) {
   }
 
   useEffect(() => {
-    getParticipants();
-  }, [page]);
-
-  useEffect(() => {
-    getParticipants();
-  }, []);
+    if (type) getParticipants();
+  }, [type, page]);
 
   return (
     <>

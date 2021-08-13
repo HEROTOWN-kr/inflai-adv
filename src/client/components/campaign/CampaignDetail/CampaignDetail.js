@@ -432,11 +432,11 @@ function CampaignDetail() {
               </Box>
             ) : null}
             {tab === 2 ? (
-              <ParticipantList adId={adId} isMD={isMD} />) : null}
+              <ParticipantList adId={adId} type={productData.AD_TYPE} isMD={isMD} />) : null}
             {tab === 3 ? (
               <ParticipantComponent type={productData.AD_TYPE} />) : null}
             {tab === 4 ? (
-              <SelectedList adId={adId} isMD={isMD} />) : null}
+              <SelectedList adId={adId} type={productData.AD_TYPE} isMD={isMD} />) : null}
             {showMore.visible && tab === 1 ? (
               <Box mt={1} borderTop={`1px solid ${Colors.grey8}`}>
                 <StyledButton variant="text" background="#ffffff" color="#666" hoverBackground="#f8f8f8" onClick={toggleShowMore}>
