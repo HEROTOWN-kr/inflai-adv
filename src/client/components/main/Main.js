@@ -113,7 +113,7 @@ function Main() {
       />
       <Route
         path="/InstaDialog"
-        render={renderProps => <AnalysisComponent {...renderProps} INS_ID={634} />}
+        render={renderProps => <AnalysisComponent {...renderProps} INS_ID={2923} />}
       />
       <Route
         component={NotFound}
