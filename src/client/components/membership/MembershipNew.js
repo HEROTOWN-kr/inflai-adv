@@ -7,13 +7,14 @@ import {
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Slider from 'react-slick';
-import { Clear } from '@material-ui/icons';
+import { Clear, Description } from '@material-ui/icons';
 import StyledText from '../../containers/StyledText';
 import { Colors } from '../../lib/Сonstants';
 import PlanSuccessDialog from './PlanSuccessDialog';
 import AuthContext from '../../context/AuthContext';
 import Payment from './Payment';
 import StyledButton from '../../containers/StyledButton';
+import CouponDialog from './CouponDialog';
 
 const PlanColors = ['#f3953f', '#1a9eda', '#eb5888', '#3adc46'];
 
@@ -114,6 +115,7 @@ function SpringDialog(props) {
 function MembershipNew() {
   const [plans, setPlans] = useState([]);
   const [selected, setSelected] = useState({});
+  const [couponDialog, setCouponDialog] = useState(false);
   const [springDialog, setSpringDialog] = useState(false);
   const history = useHistory();
   const { token } = useContext(AuthContext);
@@ -131,6 +133,10 @@ function MembershipNew() {
 
   function toggleSpringDialog() {
     setSpringDialog(!springDialog);
+  }
+
+  function toggleCouponDialog() {
+    setCouponDialog(!couponDialog);
   }
 
   function selectPlan(plan) {
@@ -193,14 +199,25 @@ function MembershipNew() {
           <span style={{ color: Colors.pink }}> 멤버십</span>
             을 시작하세요
         </Box>
-        <Box mt="100px" mb="90px">
+        <Box mt="55px" ml="auto" width={120}>
+          <StyledButton
+            height={40}
+            padding="0 20px"
+            background={Colors.green}
+            hoverBackground={Colors.greenHover}
+            onClick={toggleCouponDialog}
+            startIcon={<Description />}
+          >
+              쿠폰
+          </StyledButton>
+        </Box>
+        <Box mt="20px" mb="90px">
           <Grid container spacing={2} justify="space-between" style={{ marginBottom: '-50px' }}>
             {plans.map((item, index) => (
               <Grid item key={item.PLN_ID}>
                 <Box
                   textAlign="center"
-                  px="50px"
-                  py="35px"
+                  p="35px"
                   mb="50px"
                   boxSizing="border-box"
                   border={`3px solid ${PlanColors[index]}`}
@@ -216,19 +233,33 @@ function MembershipNew() {
                   <Box mt="6px">VAT 포함</Box>
                   {/* <Box my="35px" m="0 auto" p="11px 27px" width="100px" fontSize="18px" color="#ffffff" bgcolor={PlanColors[index]} borderRadius="30px" css={{ cursor: 'pointer' }}>구독하기</Box> */}
                   {/* <Payment bgColor={PlanColors[index]} /> */}
-                  <Box my="26px" m="0 auto" p="11px 27px" width="100px" fontSize="18px" color="#ffffff" bgcolor={PlanColors[index]} borderRadius="30px" css={{ cursor: 'pointer' }} onClick={() => selectPlan(item)}>
-                    {item.PLN_PRICE_MONTH > 0 ? '결제' : '시작'}
-                  </Box>
+                  { item.PLN_PRICE_MONTH > 0 ? (
+                    <Box my="26px" m="0 auto" p="11px 27px" width="100px" fontSize="18px" color="#ffffff" bgcolor={PlanColors[index]} borderRadius="30px" css={{ cursor: 'pointer' }} onClick={() => selectPlan(item)}>
+                        결제
+                    </Box>
+                  ) : (
+                    <Box my="26px" m="0 auto" p="11px 27px" width="100px" fontSize="18px" color="#ffffff" bgcolor={PlanColors[index]} borderRadius="30px" css={{ cursor: 'pointer' }} onClick={() => selectPlan(item)}>
+                     시작
+                    </Box>
+                  )}
                   <Box mb="10px" fontSize="15px" letterSpacing="0.01em" lineHeight="24px">{item.PLN_DETAIL}</Box>
                 </Box>
               </Grid>
             ))}
           </Grid>
         </Box>
+
+        {/* <Box my="26px" p="11px 40px" fontSize="18px" color="#ffffff" bgcolor={Colors.greenHover} borderRadius="30px" css={{ cursor: 'pointer' }} onClick={toggleCouponDialog}>
+          쿠폰 사용하기
+        </Box> */}
         <SpringDialog
           open={springDialog}
           closeDialog={toggleSpringDialog}
           planData={selected}
+        />
+        <CouponDialog
+          open={couponDialog}
+          closeDialog={toggleCouponDialog}
         />
       </Box>
     </Box>

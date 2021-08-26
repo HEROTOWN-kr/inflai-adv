@@ -3,8 +3,14 @@ $colorBlue: #093c5e;
 $colorAqua: #23c9cf;
 $colorGrey: #dfe2e8;
 
-html, body {
+html {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+body {
   margin: 0;
+  padding: 0;
   //background-color: #fefefe;
   //background-color: #f2f2f2;
   font-family: 'Noto Sans KR', sans-serif !important;
