@@ -139,6 +139,14 @@ function MembershipNew() {
     setCouponDialog(!couponDialog);
   }
 
+  function openCouponDialog() {
+    if (!token) {
+      history.push('/Login');
+      return;
+    }
+    toggleCouponDialog();
+  }
+
   function selectPlan(plan) {
     if (token) {
       const {
@@ -205,7 +213,7 @@ function MembershipNew() {
             padding="0 20px"
             background={Colors.green}
             hoverBackground={Colors.greenHover}
-            onClick={toggleCouponDialog}
+            onClick={openCouponDialog}
             startIcon={<Description />}
           >
               쿠폰
