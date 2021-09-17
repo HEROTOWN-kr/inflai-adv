@@ -349,6 +349,20 @@ function AnalysisComponent(props) {
     });
   }
 
+  function getTestInstaInfo() {
+    setLoading(true);
+    axios.get('/api/testRoute/test', {
+      params: { instaId: 1158 }
+    }).then((res) => {
+      const { data } = res.data;
+      setInstaData({ ...instaData, ...data });
+      setLoading(false);
+    }).catch((err) => {
+      setLoading(false);
+      alert(err.response.data.message);
+    });
+  }
+
   useEffect(() => {
     getInstaInfo();
   }, []);

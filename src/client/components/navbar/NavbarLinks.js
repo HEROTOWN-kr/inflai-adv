@@ -37,6 +37,10 @@ const testLinks = [
     text: 'InstaDialog',
     link: '/InstaDialog'
   },
+  {
+    text: 'YoutubeDialog',
+    link: '/YoutubeAnalysis'
+  },
 ];
 
 if (window.location.origin.indexOf('localhost') > -1) {

@@ -20,6 +20,7 @@ import Service from '../footer/Service';
 import Privacy from '../footer/Privacy';
 import MembershipNew from '../membership/MembershipNew';
 import AnalysisComponent from '../Analysis/AnalysisComponent';
+import YoutubeAnalysis from '../Analysis/Youtube/YoutubeAnalysis';
 
 function Main() {
   const [isMember, setIsMember] = useState(false);
@@ -113,7 +114,11 @@ function Main() {
       />
       <Route
         path="/InstaDialog"
-        render={renderProps => <AnalysisComponent {...renderProps} INS_ID={2923} />}
+        render={renderProps => <AnalysisComponent {...renderProps} INS_ID={1140} />}
+      />
+      <Route
+        path="/YoutubeAnalysis"
+        render={renderProps => <YoutubeAnalysis {...renderProps} />}
       />
       <Route
         component={NotFound}
