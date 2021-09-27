@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { NotificationsNone } from '@material-ui/icons';
 import axios from 'axios';
 
 const useStyles = makeStyles({
   box: {
-    padding: '20px 25px',
+    padding: '15px 25px',
     color: '#fff',
     borderRadius: '5px'
+  },
+  boxTitle: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
   },
   bgBlue: { background: 'linear-gradient(45deg, #4099ff, #73b4ff)' },
   bgGreen: { background: 'linear-gradient(45deg, #2ed8b6, #59e0c5)' },
@@ -15,6 +21,7 @@ const useStyles = makeStyles({
   bgRed: { background: 'linear-gradient(45deg, #FF5370, #ff869a)' },
   avatar: { borderRadius: '50%' }
 });
+
 
 const defaultValues = {
   comment_prediction: {
@@ -64,9 +71,11 @@ function YoutubeAnalysis(props) {
               <Box mb={1}>
                 Channel name
               </Box>
-              <Grid container>
-                <Grid item><img className={classes.avatar} src={youtubeInfo.channel_info.Avatar_url} alt="noImage" /></Grid>
-                <Grid item xs><Box fontSize={32} fontWeight="bold">대가들이사는마을</Box></Grid>
+              <Grid container spacing={2}>
+                <Grid item>
+                  <img width={70} height={70} className={classes.avatar} src={youtubeInfo.channel_info.Avatar_url} alt="noImage" />
+                </Grid>
+                <Grid item xs><Box maxWidth="300px" fontSize={28} fontWeight="bold" className={classes.boxTitle}>대가들이사는마을</Box></Grid>
               </Grid>
             </Box>
           </Grid>
@@ -75,6 +84,12 @@ function YoutubeAnalysis(props) {
               <Box mb={1}>
                 Subscriber-count
               </Box>
+              <Grid container justify="space-between" alignItems="center">
+                <Grid item>
+                  <NotificationsNone fontSize="large" />
+                </Grid>
+                <Grid item><Box fontSize={28} fontWeight="bold" className={classes.boxTitle}>200</Box></Grid>
+              </Grid>
             </Box>
           </Grid>
           <Grid item xs={3}>
@@ -82,6 +97,12 @@ function YoutubeAnalysis(props) {
               <Box mb={1}>
                 Recent View-count(accumulation)
               </Box>
+              <Grid container justify="space-between" alignItems="center">
+                <Grid item>
+                  <NotificationsNone fontSize="large" />
+                </Grid>
+                <Grid item><Box fontSize={28} fontWeight="bold" className={classes.boxTitle}>200</Box></Grid>
+              </Grid>
             </Box>
           </Grid>
           <Grid item xs={3}>
@@ -89,6 +110,12 @@ function YoutubeAnalysis(props) {
               <Box mb={1}>
                 Recent Like-count(accumulation)
               </Box>
+              <Grid container justify="space-between" alignItems="center">
+                <Grid item>
+                  <NotificationsNone fontSize="large" />
+                </Grid>
+                <Grid item><Box fontSize={28} fontWeight="bold" className={classes.boxTitle}>200</Box></Grid>
+              </Grid>
             </Box>
           </Grid>
         </Grid>
