@@ -1,0 +1,509 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+{% block content %}
+
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Youtube Channel Analytics</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{{ channel_info['Static_link'] }}">{{ channel_info['Static_link'] }}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="row">
+            <!-- order-card start -->
+            <div class="col-md-6 col-xl-3">
+                <div class="card bg-c-blue order-card">
+                    <div class="card-body">
+                        <img class="img-radius float-left" src= "{{ channel_info['Avatar_url'] }}" alt="channel avatar" style="width:70px;height:70px;">
+                        <h6 class="text-right text-white">Channel name</h6>
+                        <h3 class="text-right text-white">
+                            {{ channel_info['Name'] }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+                <div class="card bg-c-green order-card">
+                    <div class="card-body">
+                        <h6 class="text-white">Subcriber-count</h6>
+                        <h2 class="text-right text-white"><i class="feather icon-bell float-left"></i>
+                            <span>{{ channel_info['Number_of_subscribe'] }}</span></h2>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+                <div class="card bg-c-yellow order-card">
+                    <div class="card-body">
+                        <h6 class="text-white">Recent View-count(accumulation)</h6>
+                        <h2 class="text-right text-white"><i class="feather icon-eye float-left"></i>
+                            <span>{{ videos_info['View_count'].sum() }}</span></h2>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+                <div class="card bg-c-red order-card">
+                    <div class="card-body">
+                        <h6 class="text-white">Recent Like-count(accumulation)</h6>
+                        <h2 class="text-right text-white"><i class="feather icon-thumbs-up float-left"></i>
+                            <span>{{ videos_info['Like_count'].sum()  }}</span></h2>
+
+                    </div>
+                </div>
+            </div>
+            <!-- order-card end -->
+            <!-- plot table start -->
+            <div class="col-md-12 col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Recent {{ k }}-Video Content 3862 Class inference</h4>
+                    </div>
+                    <div class="card-body pl-0 pb-0">
+                        <div id='pie-chart-content-3862'></div>
+                        <script>
+                            var labels = {{ content_primary_prediction.index.to_list() | safe }}
+                            var series = {{ content_primary_prediction.values | list }}
+                            var colors = {{ yt8m_colormap | safe }}
+                            var options = {
+                                chart: {
+                                    height: 320,
+                                    type: 'pie',
+                                },
+                                labels: labels,
+                                series: series,
+                                colors: colors,
+                                legend: {
+                                    show: true,
+                                    position: 'bottom',
+                                    horizontalAlign: 'center',
+                                    offsetX:80
+                                },
+                                fill: {
+                                    type: 'gradient',
+                                    gradient: {
+                                        shade: 'light',
+                                        inverseColors: true,
+                                    }
+                                },
+                                dataLabels: {
+                                    enabled: true,
+                                    dropShadow: {
+                                        enabled: false,
+                                    }
+                                },
+                                responsive: [{
+                                    breakpoint: 480,
+                                    options: {
+                                        legend: {
+                                            position: 'bottom'
+                                        }
+                                    }
+                                }],
+                                tooltip: {
+                                    enabled: false,
+                                },
+                            };
+                            var chart = new ApexCharts(
+                                document.querySelector("#pie-chart-content-3862"),
+                                options
+                            );
+                            chart.render();
+
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Recent {{ k }}-Video Content 26 Class inference</h4>
+                    </div>
+                    <div class="card-body pl-0 pb-0">
+                        <div id='pie-chart-content-26'></div>
+                        <script>
+                            var labels = {{ content_second_prediction.index.to_list() | safe }}
+                            var series = {{ content_second_prediction.values | list }}
+                            var colors = {{ yt_colormap | safe }}
+                            var options = {
+                                chart: {
+                                    height: 320,
+                                    type: 'pie',
+                                },
+                                labels: labels,
+                                series: series,
+                                colors: colors,
+                                legend: {
+                                    show: true,
+                                    position: 'bottom',
+                                    horizontalAlign: 'center',
+                                    offsetX:80
+                                },
+                                fill: {
+                                    type: 'gradient',
+                                    gradient: {
+                                        shade: 'light',
+                                        inverseColors: true,
+                                    }
+                                },
+                                dataLabels: {
+                                    enabled: true,
+                                    dropShadow: {
+                                        enabled: false,
+                                    }
+                                },
+                                responsive: [{
+                                    breakpoint: 480,
+                                    options: {
+                                        legend: {
+                                            position: 'bottom'
+                                        }
+                                    }
+                                }],
+                                tooltip: {
+                                    enabled: false,
+                                },
+                            };
+                            var chart = new ApexCharts(
+                                document.querySelector("#pie-chart-content-26"),
+                                options
+                            );
+                            chart.render();
+
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Recent {{ k }}-Video title 26 Class inference</h4>
+                    </div>
+                    <div class="card-body pl-0 pb-0">
+                        <div id='pie-chart-title-prediction'></div>
+                        <script>
+                            var labels = {{ title_prediction.index.to_list() | safe }}
+                            var series = {{ title_prediction.values | list }}
+                            var colors = {{ yt_title_colormap | safe }}
+                            var options = {
+                                chart: {
+                                    height: 320,
+                                    type: 'pie',
+                                },
+                                labels: labels,
+                                series: series,
+                                colors: colors,
+                                legend: {
+                                    show: true,
+                                    position: 'bottom',
+                                    horizontalAlign: 'center',
+                                    offsetX:80
+                                },
+                                fill: {
+                                    type: 'gradient',
+                                    gradient: {
+                                        shade: 'light',
+                                        inverseColors: true,
+                                    }
+                                },
+                                dataLabels: {
+                                    enabled: true,
+                                    dropShadow: {
+                                        enabled: false,
+                                    }
+                                },
+                                responsive: [{
+                                    breakpoint: 480,
+                                    options: {
+                                        legend: {
+                                            position: 'bottom'
+                                        }
+                                    }
+                                }],
+                                tooltip: {
+                                    enabled: false,
+                                },
+                            };
+                            var chart = new ApexCharts(
+                                document.querySelector("#pie-chart-title-prediction"),
+                                options
+                            );
+                            chart.render();
+
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Recent {{ k }}-Video comments evaluation</h4>
+                    </div>
+                    <div class="card-body pl-0 pb-0">
+                        <div id='pie-chart-sentiment-prediction'></div>
+                        <script>
+                            var labels = {{ comment_prediction.index.to_list() | safe }}
+                            var series = {{ comment_prediction.values | list }}
+                            var colors = ['#ff3131', '#18aeff']
+                            var options = {
+                                chart: {
+                                    height: 320,
+                                    type: 'pie',
+                                },
+                                labels: labels,
+                                series: series,
+                                colors: colors,
+                                legend: {
+                                    show: true,
+                                    position: 'bottom',
+                                    horizontalAlign: 'center',
+                                    offsetX:80
+                                },
+                                fill: {
+                                    type: 'gradient',
+                                    gradient: {
+                                        shade: 'light',
+                                        inverseColors: true,
+                                    }
+                                },
+                                dataLabels: {
+                                    enabled: true,
+                                    dropShadow: {
+                                        enabled: false,
+                                    }
+                                },
+                                responsive: [{
+                                    breakpoint: 480,
+                                    options: {
+                                        legend: {
+                                            position: 'bottom'
+                                        }
+                                    }
+                                }],
+                                tooltip: {
+                                    enabled: false,
+                                },
+                            };
+                            var chart = new ApexCharts(
+                                document.querySelector("#pie-chart-sentiment-prediction"),
+                                options
+                            );
+                            chart.render();
+
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Recent {{ k }}-Video View count</h4>
+                    </div>
+                    <div class="card-body pl-0 pb-0 text-center">
+                        <div id='mixed-chart-view-comments-count'></div>
+                        <script>
+                            var labels = {{ videos_info['Upload_datetime'].values | list | safe}}
+                            var view_count = {{ videos_info['View_count'].values | list }}
+                            var comment_count = {{ videos_info['Number_of_comments'].values | list }}
+
+                            var colors = ['#48ffa4', '#4099ff']
+
+                            var options = {
+                                chart: {
+                                    height: 350,
+                                    type: 'line',
+                                    toolbar: {
+                                        show: true
+                                    },
+                                    zoom: {
+                                        enabled: true
+                                    }
+                                },
+                                series: [{
+                                    name: 'View count',
+                                    type: 'column',
+                                    data: view_count
+                                }, {
+                                    name: 'Comment count',
+                                    type: 'line',
+                                    data: comment_count
+                                }],
+                                title: {
+                                    text: 'View count vs Comment count'
+                                },
+                                markers: {
+                                    size:4,
+                                },
+                                stroke: {
+                                    width: [0, 4]
+                                },
+                                colors: colors,
+                                fill: {
+                                    type: 'gradient',
+                                    gradient: {
+                                        shade: 'light',
+                                        type: "vertical",
+                                        shadeIntensity: 0.25,
+                                        inverseColors: true,
+                                        opacityFrom: 1,
+                                        opacityTo: 0.7,
+                                        stops: [50, 100]
+                                    },
+                                },
+
+                                labels: labels,
+
+                                xaxis: {
+                                    type: 'category',
+                                    labels : {
+                                        rotateAlways: false
+                                    }
+                                },
+                                yaxis: [{
+                                    title: {
+                                        text: 'View count',
+                                    },
+
+                                }, {
+                                    opposite: true,
+                                    title: {
+                                        text: 'Comment count'
+                                    }
+                                }],
+                                legend: {
+                                    show:true,
+                                    offsetY:30,
+                                    offsetX:80,
+                                    horizontalAlign: 'center',
+                                    position:'top'
+                                }
+
+                            };
+                            var chart = new ApexCharts(
+                                document.querySelector("#mixed-chart-view-comments-count"),
+                                options
+                            );
+                            chart.render();
+
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Recent {{ k }}-Video Like-Dislike count</h4>
+                    </div>
+                    <div class="card-body pl-0 pb-0">
+                        <div id='mixed-chart-like-dislike-count'></div>
+                        <script>
+                            var labels = {{ videos_info['Upload_datetime'].values | list | safe}}
+                            var like_count = {{ videos_info['Like_count'].values | list }}
+                            var dislike_count = {{ videos_info['Dislike_count'].values | list }}
+
+                            var colors = ['#18aeff', '#ff209c']
+                            var options = {
+                                chart: {
+                                    height: 350,
+                                    type: 'bar',
+                                    toolbar: {
+                                        show: true
+                                    },
+                                    zoom: {
+                                        enabled: true
+                                    }
+                                },
+                                plotOptions: {
+                                    bar: {
+                                        horizontal: false
+                                    },
+                                },
+                                colors: colors,
+                                responsive: [{
+                                    breakpoint: 480,
+                                    options: {
+                                        legend: {
+                                            position: 'bottom',
+                                            offsetX: 0,
+                                            offsetY: 0
+                                        }
+                                    }
+                                }],
+                                legend: {
+                                    show: true,
+                                    position: 'bottom',
+                                    horizontalAlign: 'center',
+                                    offsetX:80
+                                },
+                                stroke: {
+                                    show: true,
+                                    width: 2,
+                                    colors: ['transparent']
+                                },
+                                fill: {
+                                    type: 'gradient',
+                                    gradient: {
+                                        shade: 'light',
+                                        type: "vertical",
+                                        shadeIntensity: 0.25,
+                                        inverseColors: true,
+                                        opacityFrom: 1,
+                                        opacityTo: 0.7,
+                                        stops: [0, 100]
+                                    },
+                                },
+                                series: [{
+                                    name: 'Like count',
+                                    data: like_count
+                                }, {
+                                    name: 'Dislike count',
+                                    data: dislike_count
+                                }],
+                                labels: labels,
+                                xaxis: {
+                                    type: 'category',
+                                    labels : {
+                                        rotateAlways: false
+                                    }
+                                },
+
+                            }
+                            var chart = new ApexCharts(
+                                document.querySelector("#mixed-chart-like-dislike-count"),
+                                options
+                            );
+                            chart.render();
+
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <!-- plot table start end -->
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+</div>
+<!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+{% endblock javascripts %}
