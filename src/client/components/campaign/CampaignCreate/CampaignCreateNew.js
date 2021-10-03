@@ -163,7 +163,7 @@ function CampaignCreateNew() {
     defaultValues
   });
 
-  const watchObj = watch(['type', 'delivery', 'searchStart', 'searchFinish', 'shortDisc', 'influencerCount']);
+  const watchObj = watch(['type', 'delivery', 'searchStart', 'searchFinish', 'shortDisc', 'influencerCount', 'sns']);
 
   useEffect(() => {
     if (watchObj.delivery === '1') {
@@ -304,6 +304,15 @@ function CampaignCreateNew() {
             name="sns"
             control={control}
           />
+          { watchObj.sns === '2' ? (
+            <Box color={Colors.orange}>
+              유튜버 모집 경우 제품체험단 외에 추가로 편집비용이 최소 20만원 이상부터 모집이 가능합니다.
+              <br />
+              편집비용은 유튜버 개인에게 주시면 되며
+              <br />
+              신청자중 선발하여 개별 계약을 하시면 됩니다
+            </Box>
+          ) : null }
           { errors.sns ? (
             <div className="error-message">{errors.sns.message}</div>
           ) : null }
