@@ -41,9 +41,9 @@ const defaultValues = {
     View_count: [],
     Comment_count: [],
     viewCountSum: 0,
-    Like_count: {},
+    likeCounts: [],
     likeCountSum: 0,
-    Dislike_count: {},
+    dislikeCounts: [],
     Youtube_average_rating: {},
     Upload_date: {},
     Upload_datetime: []
@@ -87,14 +87,22 @@ function YoutubeAnalysis(props) {
 
   const viewLine = createDataSet({ color: green, label: '조회수', data: youtubeInfo.videos_info.View_count });
   const commentLine = createDataSet({ color: violet, label: '댓끌수', data: youtubeInfo.videos_info.Comment_count });
+  const likeCountLine = createDataSet({ color: green, label: '좋아요수', data: youtubeInfo.videos_info.likeCounts });
+  const dislikeCountLine = createDataSet({ color: violet, label: '싫어요수', data: youtubeInfo.videos_info.dislikeCounts });
+
 
   const lineData = {
     labels: youtubeInfo.videos_info.Upload_datetime,
     datasets: [viewLine, commentLine]
   };
 
+  const likeDislikeLine = {
+    labels: youtubeInfo.videos_info.Upload_datetime,
+    datasets: [likeCountLine, dislikeCountLine]
+  };
+
   function getYoutubeInfo() {
-    axios.get('/api/testRoute/getYoutubeFile').then((res) => {
+    axios.get('/api/TB_YOUTUBE/getYoutubeFile').then((res) => {
       const { data } = res.data;
       setYoutubeInfo(data);
     }).catch(err => alert(err.response.data.message));
@@ -221,7 +229,7 @@ function YoutubeAnalysis(props) {
             <Grid item xs={6}>
               <Box p={3} bgcolor="#FFF">
                 <Box fontSize="20px" fontWeight="600">최근 10개의 동영상 좋아요-싫어요 수</Box>
-                {/* <CategoryPieChart detectData={youtubeInfo.content_second_prediction} process={process} /> */}
+                <Line height={150} data={likeDislikeLine} />
               </Box>
             </Grid>
           </Grid>
