@@ -4,8 +4,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { NotificationsNone, RemoveRedEyeOutlined, ThumbUpOutlined } from '@material-ui/icons';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
+import { purple } from '@material-ui/core/colors';
 import defaultAccountImage from '../../../img/default_account_image.png';
 import CategoryPieChart from '../CategoryPieChart';
+import BarComponent from '../BarComponent';
+import MapGraph from '../../campaign/Graphs/MapGraph';
 
 const useStyles = makeStyles({
   box: {
@@ -16,6 +19,9 @@ const useStyles = makeStyles({
     height: '100%'
   },
   boxTitle: {
+    fontSize: '20px',
+    fontWeight: '600',
+    marginBottom: '25px'
     // overflow: 'hidden',
     // whiteSpace: 'nowrap',
     // textOverflow: 'ellipsis',
@@ -51,11 +57,42 @@ const defaultValues = {
   channel_info: {}
 };
 
+const defaultAnalyticsValues = {
+  basicStats: {
+    views: 0,
+    comments: 0,
+    likes: 0,
+    dislikes: 0,
+    estimatedMinutesWatched: 0,
+    averageViewDuration: 0
+  },
+  mostWatchedVideos: {
+  },
+  timeBasedStats: {
+    day: [],
+    views: [],
+    estimatedMinutesWatched: [],
+    averageViewDuration: [],
+    averageViewPercentage: [],
+    subscribersGained: []
+  },
+  ageDemographic: {},
+  watchTimeByCountry: {
+    countryData: [],
+    countryPieData: []
+  },
+  genderDemographic: {}
+};
+
 const green = 'rgba(24, 219, 168, 1)';
+const greenBg = 'rgba(231, 251, 246, 0.6)';
 const violet = 'rgba(144, 71, 255, 1)';
+const violetBg = 'rgba(244, 236, 255, 0.6)';
 
 function createDataSet(props) {
-  const { color, label, data } = props;
+  const {
+    color, label, data, fill, ...rest
+  } = props;
 
   return {
     label: label || 'label',
@@ -64,7 +101,7 @@ function createDataSet(props) {
     pointBackgroundColor: color || green,
     pointHoverBackgroundColor: color || green,
     pointHoverBorderColor: color || green,
-    fill: false,
+    fill: fill || false,
     lineTension: 0,
     borderCapStyle: 'butt',
     borderDash: [],
@@ -77,18 +114,50 @@ function createDataSet(props) {
     pointHoverBorderWidth: 2,
     pointRadius: 7,
     pointHitRadius: 10,
+    ...rest
   };
 }
+
+const barOptions = {
+  legend: {
+    // display: false
+  },
+  scales: {
+    xAxes: [
+      {
+        gridLines: { display: false }
+      }
+    ],
+    yAxes: [
+      {
+        gridLines: {
+          drawBorder: false,
+          drawTicks: false
+        },
+      }
+    ]
+  }
+};
 
 function YoutubeAnalysis(props) {
   const [process, setProcess] = useState(false);
   const [youtubeInfo, setYoutubeInfo] = useState(defaultValues);
+  const [youtubeAnalytics, setYoutubeAnalytics] = useState(defaultAnalyticsValues);
   const classes = useStyles();
 
   const viewLine = createDataSet({ color: green, label: '조회수', data: youtubeInfo.videos_info.View_count });
   const commentLine = createDataSet({ color: violet, label: '댓끌수', data: youtubeInfo.videos_info.Comment_count });
-  const likeCountLine = createDataSet({ color: green, label: '좋아요수', data: youtubeInfo.videos_info.likeCounts });
-  const dislikeCountLine = createDataSet({ color: violet, label: '싫어요수', data: youtubeInfo.videos_info.dislikeCounts });
+  const views = createDataSet({
+    color: violet,
+    label: '구독자수',
+    data: youtubeAnalytics.timeBasedStats.views,
+    fill: true,
+    backgroundColor: violetBg,
+    lineTension: 0.5,
+    borderCapStyle: 'butt',
+    pointRadius: 1,
+    borderWidth: 4,
+  });
 
 
   const lineData = {
@@ -96,10 +165,34 @@ function YoutubeAnalysis(props) {
     datasets: [viewLine, commentLine]
   };
 
-  const likeDislikeLine = {
+  const likeDislikeData = {
     labels: youtubeInfo.videos_info.Upload_datetime,
-    datasets: [likeCountLine, dislikeCountLine]
+    datasets: [{
+      label: '좋아요수',
+      data: youtubeInfo.videos_info.likeCounts,
+      backgroundColor: green,
+    },
+    {
+      label: '싫어요수',
+      data: youtubeInfo.videos_info.dislikeCounts,
+      backgroundColor: violet,
+    }]
   };
+
+  const subscribersGainedData = {
+    labels: youtubeAnalytics.timeBasedStats.day,
+    datasets: [{
+      label: '새 구독자',
+      data: youtubeAnalytics.timeBasedStats.subscribersGained,
+      backgroundColor: green,
+    }]
+  };
+
+  const viewsData = {
+    labels: youtubeAnalytics.timeBasedStats.day,
+    datasets: [views]
+  };
+
 
   function getYoutubeInfo() {
     axios.get('/api/TB_YOUTUBE/getYoutubeFile').then((res) => {
@@ -108,8 +201,16 @@ function YoutubeAnalysis(props) {
     }).catch(err => alert(err.response.data.message));
   }
 
+  function getYoutubeAnalytics() {
+    axios.get('/api/testRoute/getYoutubeAnalytics').then((res) => {
+      const { data } = res;
+      setYoutubeAnalytics(data);
+    }).catch(err => alert(err.response.data.message));
+  }
+
   useEffect(() => {
     getYoutubeInfo();
+    getYoutubeAnalytics();
   }, []);
 
   return (
@@ -192,13 +293,13 @@ function YoutubeAnalysis(props) {
           <Grid container spacing={3}>
             <Grid item xs={6}>
               <Box p={3} bgcolor="#FFF">
-                <Box fontSize="20px" fontWeight="600">최근 10개의 비디오 콘텐츠 3862 클래스 추론</Box>
+                <Box className={classes.boxTitle}>최근 10개의 비디오 콘텐츠 3862 클래스 추론</Box>
                 <CategoryPieChart detectData={youtubeInfo.content_primary_prediction} process={process} />
               </Box>
             </Grid>
             <Grid item xs={6}>
               <Box p={3} bgcolor="#FFF">
-                <Box fontSize="20px" fontWeight="600">최근 10개의 비디오 콘텐츠 26 클래스 추론</Box>
+                <Box className={classes.boxTitle}>최근 10개의 비디오 콘텐츠 26 클래스 추론</Box>
                 <CategoryPieChart detectData={youtubeInfo.content_second_prediction} process={process} />
               </Box>
             </Grid>
@@ -207,13 +308,13 @@ function YoutubeAnalysis(props) {
         <Grid container spacing={3}>
           <Grid item xs={6}>
             <Box p={3} bgcolor="#FFF">
-              <Box fontSize="20px" fontWeight="600">최근 10개의 비디오 제목 26 클래스 추론</Box>
+              <Box className={classes.boxTitle}>최근 10개의 비디오 제목 26 클래스 추론</Box>
               <CategoryPieChart detectData={youtubeInfo.title_prediction} process={process} />
             </Box>
           </Grid>
           <Grid item xs={6}>
             <Box p={3} bgcolor="#FFF">
-              <Box fontSize="20px" fontWeight="600">최근 10개의 비디오 댓글 평가</Box>
+              <Box className={classes.boxTitle}>최근 10개의 비디오 댓글 평가</Box>
               <CategoryPieChart detectData={youtubeInfo.comment_prediction} process={process} />
             </Box>
           </Grid>
@@ -222,14 +323,44 @@ function YoutubeAnalysis(props) {
           <Grid container spacing={3}>
             <Grid item xs={6}>
               <Box p={3} bgcolor="#FFF">
-                <Box fontSize="20px" fontWeight="600">최근 10개의 동영상 조회수</Box>
+                <Box className={classes.boxTitle}>최근 10개의 동영상 조회수</Box>
                 <Line height={150} data={lineData} />
               </Box>
             </Grid>
             <Grid item xs={6}>
               <Box p={3} bgcolor="#FFF">
-                <Box fontSize="20px" fontWeight="600">최근 10개의 동영상 좋아요-싫어요 수</Box>
-                <Line height={150} data={likeDislikeLine} />
+                <Box className={classes.boxTitle}>최근 10개의 동영상 좋아요-싫어요 수</Box>
+                <BarComponent height={150} data={likeDislikeData} options={barOptions} />
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+        <Grid container spacing={3}>
+          <Grid item xs={6}>
+            <Box p={3} bgcolor="#FFF">
+              <Box className={classes.boxTitle}>최근 30일 신규 구독자 수</Box>
+              <BarComponent height={150} data={subscribersGainedData} options={barOptions} />
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Box p={3} bgcolor="#FFF">
+              <Box className={classes.boxTitle}>최근 30일 채널 영상 조회수</Box>
+              <Line height={150} data={viewsData} />
+            </Box>
+          </Grid>
+        </Grid>
+        <Box my={3}>
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <Box p={3} bgcolor="#FFF">
+                <Box className={classes.boxTitle}>최근 1년 국가별 동영상 조회수</Box>
+                <MapGraph mapData={youtubeAnalytics.watchTimeByCountry.countryData} />
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box p={3} bgcolor="#FFF">
+                <Box className={classes.boxTitle}>최근 10개의 동영상 좋아요-싫어요 수</Box>
+                <CategoryPieChart detectData={youtubeAnalytics.watchTimeByCountry.countryPieData} process={process} />
               </Box>
             </Grid>
           </Grid>
