@@ -9,6 +9,8 @@ import defaultAccountImage from '../../../img/default_account_image.png';
 import CategoryPieChart from '../CategoryPieChart';
 import BarComponent from '../BarComponent';
 import MapGraph from '../../campaign/Graphs/MapGraph';
+import LocationPart from './LocationPart';
+import GenderAgePart from './GenderAgePart';
 
 const useStyles = makeStyles({
   box: {
@@ -76,10 +78,18 @@ const defaultAnalyticsValues = {
     averageViewPercentage: [],
     subscribersGained: []
   },
-  ageDemographic: {},
+  ageDemographic: {
+    labels: [],
+    count: []
+  },
   watchTimeByCountry: {
     countryData: [],
-    countryPieData: []
+    countryLineData: {
+      labels: [],
+      data: [],
+      backgroundColor: [],
+      borderColor: []
+    }
   },
   genderDemographic: {}
 };
@@ -214,7 +224,7 @@ function YoutubeAnalysis(props) {
   }, []);
 
   return (
-    <Box bgcolor="#f6f7fb" py="30px">
+    <Box bgcolor="#f6f7fb" py="30px" px={2}>
       <Box maxWidth={1500} m="0 auto">
         <Grid container spacing={3}>
           <Grid item xs={3}>
@@ -229,7 +239,6 @@ function YoutubeAnalysis(props) {
                     ml={2}
                     fontSize={25}
                     fontWeight="bold"
-                    className={classes.boxTitle}
                   >
                     {youtubeInfo.channel_info.Name}
                   </Box>
@@ -247,7 +256,7 @@ function YoutubeAnalysis(props) {
                   <NotificationsNone fontSize="large" />
                 </Grid>
                 <Grid item>
-                  <Box fontSize={28} fontWeight="bold" className={classes.boxTitle}>
+                  <Box fontSize={28} fontWeight="bold">
                     {youtubeInfo.channel_info.Number_of_subscribe}
                   </Box>
                 </Grid>
@@ -264,7 +273,7 @@ function YoutubeAnalysis(props) {
                   <RemoveRedEyeOutlined fontSize="large" />
                 </Grid>
                 <Grid item>
-                  <Box fontSize={28} fontWeight="bold" className={classes.boxTitle}>
+                  <Box fontSize={28} fontWeight="bold">
                     {youtubeInfo.videos_info.viewCountSum}
                   </Box>
                 </Grid>
@@ -281,7 +290,7 @@ function YoutubeAnalysis(props) {
                   <ThumbUpOutlined fontSize="large" />
                 </Grid>
                 <Grid item>
-                  <Box fontSize={28} fontWeight="bold" className={classes.boxTitle}>
+                  <Box fontSize={28} fontWeight="bold">
                     {youtubeInfo.videos_info.likeCountSum}
                   </Box>
                 </Grid>
@@ -350,21 +359,9 @@ function YoutubeAnalysis(props) {
           </Grid>
         </Grid>
         <Box my={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={6}>
-              <Box p={3} bgcolor="#FFF">
-                <Box className={classes.boxTitle}>최근 1년 국가별 동영상 조회수</Box>
-                <MapGraph mapData={youtubeAnalytics.watchTimeByCountry.countryData} />
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box p={3} bgcolor="#FFF">
-                <Box className={classes.boxTitle}>최근 10개의 동영상 좋아요-싫어요 수</Box>
-                <CategoryPieChart detectData={youtubeAnalytics.watchTimeByCountry.countryPieData} process={process} />
-              </Box>
-            </Grid>
-          </Grid>
+          <LocationPart classes={classes} data={youtubeAnalytics.watchTimeByCountry} process={process} />
         </Box>
+        <GenderAgePart classes={classes} genderDemographic={youtubeAnalytics.genderDemographic} ageDemographic={youtubeAnalytics.ageDemographic} process={process} />
       </Box>
     </Box>
   );
