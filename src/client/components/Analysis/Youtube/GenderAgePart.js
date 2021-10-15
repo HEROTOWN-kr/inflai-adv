@@ -52,7 +52,7 @@ function GenderAgePart(props) {
       </Grid>
       <Grid item xs={6}>
         <Box p={3} bgcolor="#FFF">
-          <Box className={classes.boxTitle}>최근 10개의 비디오 댓글 평가</Box>
+          <Box className={classes.boxTitle}>연령 비율</Box>
           <BarComponent height={153} data={subscribersGainedData} options={barOptions} />
         </Box>
       </Grid>
