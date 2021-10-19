@@ -118,7 +118,7 @@ function Main() {
       />
       <Route
         path="/YoutubeAnalysis"
-        render={renderProps => <YoutubeAnalysis {...renderProps} />}
+        render={renderProps => <YoutubeAnalysis {...renderProps} id={90} />}
       />
       <Route
         component={NotFound}
