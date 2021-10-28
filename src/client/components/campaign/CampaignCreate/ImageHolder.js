@@ -110,7 +110,7 @@ function ImageHolder(props) {
         checked: false,
         isMain: 0
       };
-      if (dbImages.length === 0 && index === 0) imageObj.isMain = 1;
+      if (dbImages.length === 0 && images.length === 0 && index === 0) imageObj.isMain = 1;
 
       return imageObj;
     });
