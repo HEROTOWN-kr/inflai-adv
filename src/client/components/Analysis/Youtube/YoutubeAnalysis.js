@@ -20,7 +20,11 @@ const useStyles = makeStyles(theme => ({
     color: '#fff',
     borderRadius: '5px',
     boxSizing: 'border-box',
-    height: '100%'
+    height: '100%',
+    transition: 'all 0.3s ease-in-out',
+    '&:hover': {
+      boxShadow: '0 0 25px -5px #9e9c9e',
+    }
   },
   boxTitle: {
     fontSize: '20px',
@@ -32,6 +36,9 @@ const useStyles = makeStyles(theme => ({
   },
   circular: {
     color: '#fff',
+  },
+  youtubeLink: {
+    cursor: 'pointer'
   },
   bgBlue: { background: 'linear-gradient(45deg, #4099ff, #73b4ff)' },
   bgGreen: { background: 'linear-gradient(45deg, #2ed8b6, #59e0c5)' },
@@ -61,7 +68,10 @@ const defaultValues = {
     Upload_date: {},
     Upload_datetime: []
   },
-  channel_info: {}
+  channel_info: {
+    Name: '',
+    Number_of_subscribe: '0'
+  }
 };
 
 const defaultAnalyticsValues = {
@@ -103,6 +113,7 @@ const green = 'rgba(24, 219, 168, 1)';
 const greenBg = 'rgba(231, 251, 246, 0.6)';
 const violet = 'rgba(144, 71, 255, 1)';
 const violetBg = 'rgba(244, 236, 255, 0.6)';
+const testText = 'test';
 
 function createDataSet(props) {
   const {
@@ -168,7 +179,7 @@ function LoadingPage() {
 }
 
 function YoutubeAnalysis(props) {
-  const { id } = props;
+  const { id, closeDialog } = props;
   const [process, setProcess] = useState(false);
   const [youtubeInfo, setYoutubeInfo] = useState(defaultValues);
   const [youtubeAnalytics, setYoutubeAnalytics] = useState(defaultAnalyticsValues);
@@ -250,8 +261,8 @@ function YoutubeAnalysis(props) {
   }
 
   useEffect(() => {
-    getYoutubeInfo();
-    getYoutubeAnalytics();
+    // getYoutubeInfo();
+    // getYoutubeAnalytics();
   }, []);
 
   return (
@@ -261,14 +272,17 @@ function YoutubeAnalysis(props) {
       ) : (
         <Box bgcolor="#f6f7fb" p={2} position="relative">
           <Box position="absolute" top="0" right="0">
-            <IconButton style={{ position: 'fixed' }}>
+            <IconButton style={{ position: 'fixed', color: '#fff' }} onClick={closeDialog}>
               <Cancel />
             </IconButton>
           </Box>
           <Box maxWidth={1500} m="0 auto">
             <Grid container spacing={3}>
               <Grid item xs={3}>
-                <Box className={`${classes.box} ${classes.bgBlue}`}>
+                <Box
+                  className={`${classes.box} ${classes.bgBlue} ${classes.youtubeLink}`}
+                  onClick={() => window.open(`https://www.youtube.com/channel/${youtubeInfo.channel_info.Channel_id}`, '_blank')}
+                >
                   <Grid container alignItems="center" style={{ height: '100%' }}>
                     <Grid item>
                       <img width={70} height={70} className={classes.avatar} src={youtubeInfo.channel_info.Avatar_url || defaultAccountImage} alt="noImage" />
@@ -289,7 +303,7 @@ function YoutubeAnalysis(props) {
               <Grid item xs={3}>
                 <Box className={`${classes.box} ${classes.bgGreen}`}>
                   <Box mb={1}>
-                        팔로워수
+                        구독자수
                   </Box>
                   <Grid container justify="space-between" alignItems="center">
                     <Grid item>
@@ -338,17 +352,31 @@ function YoutubeAnalysis(props) {
                 </Box>
               </Grid>
             </Grid>
+            <Box mt={3} p={3} bgcolor="#FFF">
+              <Typography variant="subtitle2">
+                { `우당탕으니는 3120명의 구독자를 보유하고 있으며 이는 /influencerType/ 입니다.
+                인플루언서 영향력을 나타내는 인플라이니수는 /influencerScore/
+                점이며 최근 30일간 채널 영상 최대 조회수는 /maxWatchTime/이고 신규 구독자 수는 /newFollowersSum/입니다.
+                /likeSum/건의 좋아요수와 /commentSum/건의 댓글을 받아 공감능력은 /likeToComment/%(/likeToCommentType/) 상태입니다.
+                보유팔로워의 /countryMaxPercent/%가 /countryMaxName/인으로 구성되어있으며
+                /influencerAgeMax/대 /influencerGenderMax/(/influencerGenderMaxPercent/)걸쳐서 가장 큰 영향력을 발휘하게 됩니다.
+                게시물 인공지능분석 결과 가장 높은 비율인 /CategoryTypeMaxPercent/%를 (/CategoryTypeMaxName/)가 차지하고 있어서
+                (/CategoryTypeMaxName/) 쪽에 영향력 지수가 크다고 보여집니다.
+                (제일 높은 이미지의 %가 30% 이하이면 ... 특별한 카테고리에 영향력이 없다고 보여집니다.)
+                ${testText}님은 ${testText}요일, 오후 ${testText}시 주로 게시물을 업로드 하고 있습니다.` }
+              </Typography>
+            </Box>
             <Box my={3}>
               <Grid container spacing={3}>
                 <Grid item xs={6}>
                   <Box p={3} bgcolor="#FFF">
-                    <Box className={classes.boxTitle}>최근 10개의 비디오 콘텐츠 3862 클래스 추론</Box>
+                    <Box className={classes.boxTitle}>하위 카테고리 분석 결과</Box>
                     <CategoryPieChart detectData={youtubeInfo.content_primary_prediction} process={process} />
                   </Box>
                 </Grid>
                 <Grid item xs={6}>
                   <Box p={3} bgcolor="#FFF">
-                    <Box className={classes.boxTitle}>최근 10개의 비디오 콘텐츠 26 클래스 추론</Box>
+                    <Box className={classes.boxTitle}>상위 카테고리 분석 결과</Box>
                     <CategoryPieChart detectData={youtubeInfo.content_second_prediction} process={process} />
                   </Box>
                 </Grid>
@@ -357,13 +385,13 @@ function YoutubeAnalysis(props) {
             <Grid container spacing={3}>
               <Grid item xs={6}>
                 <Box p={3} bgcolor="#FFF">
-                  <Box className={classes.boxTitle}>최근 10개의 비디오 제목 26 클래스 추론</Box>
+                  <Box className={classes.boxTitle}>비디오 제목 분석 결과</Box>
                   <CategoryPieChart detectData={youtubeInfo.title_prediction} process={process} />
                 </Box>
               </Grid>
               <Grid item xs={6}>
                 <Box p={3} bgcolor="#FFF">
-                  <Box className={classes.boxTitle}>최근 10개의 비디오 댓글 평가</Box>
+                  <Box className={classes.boxTitle}>비디오 댓글 평가</Box>
                   <CategoryPieChart detectData={youtubeInfo.comment_prediction} process={process} />
                 </Box>
               </Grid>
