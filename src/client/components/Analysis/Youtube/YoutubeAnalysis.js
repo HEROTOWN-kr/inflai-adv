@@ -44,7 +44,14 @@ const useStyles = makeStyles(theme => ({
   bgGreen: { background: 'linear-gradient(45deg, #2ed8b6, #59e0c5)' },
   bgOrange: { background: 'linear-gradient(45deg, #FFB64D, #ffcb80)' },
   bgRed: { background: 'linear-gradient(45deg, #FF5370, #ff869a)' },
-  avatar: { borderRadius: '50%' }
+  avatar: { borderRadius: '50%' },
+  reportText: {
+    color: '#000',
+    fontSize: '16px',
+    fontFamily: 'Noto Sans KR, sans-serif',
+    fontWeight: 500,
+    lineHeight: 1.57
+  }
 }));
 
 const defaultValues = {
@@ -52,6 +59,8 @@ const defaultValues = {
   title_prediction: [],
   content_primary_prediction: [],
   content_second_prediction: [],
+  maxTypeCategory: '',
+  maxTypeCategoryValue: 0,
   videos_info: {
     Channel_id: {},
     Sequence: {},
@@ -79,6 +88,8 @@ const defaultAnalyticsValues = {
     views: 0,
     comments: 0,
     likes: 0,
+    likesToComments: '',
+    abilityType: '',
     dislikes: 0,
     estimatedMinutesWatched: 0,
     averageViewDuration: 0
@@ -88,6 +99,8 @@ const defaultAnalyticsValues = {
   timeBasedStats: {
     day: [],
     views: [],
+    viewsMax: 0,
+    subscribersGainedSum: 0,
     estimatedMinutesWatched: [],
     averageViewDuration: [],
     averageViewPercentage: [],
@@ -95,7 +108,9 @@ const defaultAnalyticsValues = {
   },
   ageDemographic: {
     labels: [],
-    count: []
+    count: [],
+    maxAgeValue: 0,
+    maxAgeType: ''
   },
   watchTimeByCountry: {
     countryData: [],
@@ -104,9 +119,19 @@ const defaultAnalyticsValues = {
       data: [],
       backgroundColor: [],
       borderColor: []
+    },
+    maxCountry: {
+      id: '',
+      name: '',
+      value: 0,
+      color: '#ff5252'
     }
   },
-  genderDemographic: {}
+  genderDemographic: {
+    chart: [],
+    maxGenderValue: 0,
+    maxGender: ''
+  }
 };
 
 const green = 'rgba(24, 219, 168, 1)';
@@ -261,8 +286,8 @@ function YoutubeAnalysis(props) {
   }
 
   useEffect(() => {
-    // getYoutubeInfo();
-    // getYoutubeAnalytics();
+    getYoutubeInfo();
+    getYoutubeAnalytics();
   }, []);
 
   return (
@@ -352,19 +377,17 @@ function YoutubeAnalysis(props) {
                 </Box>
               </Grid>
             </Grid>
-            <Box mt={3} p={3} bgcolor="#FFF">
-              <Typography variant="subtitle2">
-                { `우당탕으니는 3120명의 구독자를 보유하고 있으며 이는 /influencerType/ 입니다.
-                인플루언서 영향력을 나타내는 인플라이니수는 /influencerScore/
-                점이며 최근 30일간 채널 영상 최대 조회수는 /maxWatchTime/이고 신규 구독자 수는 /newFollowersSum/입니다.
-                /likeSum/건의 좋아요수와 /commentSum/건의 댓글을 받아 공감능력은 /likeToComment/%(/likeToCommentType/) 상태입니다.
-                보유팔로워의 /countryMaxPercent/%가 /countryMaxName/인으로 구성되어있으며
-                /influencerAgeMax/대 /influencerGenderMax/(/influencerGenderMaxPercent/)걸쳐서 가장 큰 영향력을 발휘하게 됩니다.
-                게시물 인공지능분석 결과 가장 높은 비율인 /CategoryTypeMaxPercent/%를 (/CategoryTypeMaxName/)가 차지하고 있어서
-                (/CategoryTypeMaxName/) 쪽에 영향력 지수가 크다고 보여집니다.
-                (제일 높은 이미지의 %가 30% 이하이면 ... 특별한 카테고리에 영향력이 없다고 보여집니다.)
-                ${testText}님은 ${testText}요일, 오후 ${testText}시 주로 게시물을 업로드 하고 있습니다.` }
-              </Typography>
+            <Box mt={3} p={3} bgcolor="#F2F2F2">
+              <Box className={classes.reportText}>
+                { `${youtubeInfo.channel_info.Name}는 ${youtubeInfo.channel_info.Number_of_subscribe}명의 구독자를 보유하고 있으며 이는 ${youtubeInfo.channel_info.influencerType} 입니다.
+                인플루언서 영향력을 나타내는 인플라이니수는 105점이며 최근 30일간 채널 영상 최대 조회수는 ${youtubeAnalytics.timeBasedStats.viewsMax}이고 신규 구독자 수는 ${youtubeAnalytics.timeBasedStats.subscribersGainedSum}입니다.
+                ${youtubeAnalytics.basicStats.likes}건의 좋아요수와 ${youtubeAnalytics.basicStats.comments}건의 댓글을 받아 공감능력은 ${youtubeAnalytics.basicStats.likesToComments}%(${youtubeAnalytics.basicStats.abilityType}) 상태입니다.
+                보유팔로워의 ${youtubeAnalytics.watchTimeByCountry.maxCountry.value}명은 ${youtubeAnalytics.watchTimeByCountry.maxCountry.name}인으로 구성되어있으며
+                ${youtubeAnalytics.ageDemographic.maxAgeType}대(${youtubeAnalytics.ageDemographic.maxAgeValue}%) ${youtubeAnalytics.genderDemographic.maxGender}(${youtubeAnalytics.genderDemographic.maxGenderValue}%)걸쳐서 가장 큰 영향력을 발휘하게 됩니다.
+                게시물 인공지능분석 결과 가장 높은 비율인 ${youtubeInfo.maxTypeCategoryValue}%를 ${youtubeInfo.maxTypeCategory}가 차지하고 있어서
+                ${youtubeInfo.maxTypeCategory} 쪽에 영향력 지수가 크다고 보여집니다.
+                (제일 높은 이미지의 %가 30% 이하이면 ... 특별한 카테고리에 영향력이 없다고 보여집니다.)` }
+              </Box>
             </Box>
             <Box my={3}>
               <Grid container spacing={3}>
@@ -429,7 +452,7 @@ function YoutubeAnalysis(props) {
             <Box my={3}>
               <LocationPart classes={classes} data={youtubeAnalytics.watchTimeByCountry} process={process} />
             </Box>
-            <GenderAgePart classes={classes} genderDemographic={youtubeAnalytics.genderDemographic} ageDemographic={youtubeAnalytics.ageDemographic} process={process} />
+            <GenderAgePart classes={classes} genderDemographic={youtubeAnalytics.genderDemographic.chart} ageDemographic={youtubeAnalytics.ageDemographic} process={process} />
           </Box>
         </Box>
       )}
