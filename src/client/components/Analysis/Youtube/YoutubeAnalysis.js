@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import {
-  Backdrop, Box, CircularProgress, Grid, IconButton, Typography
+  Backdrop, Box, CircularProgress, Grid, IconButton, Tooltip, Typography
 } from '@material-ui/core';
 import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import {
-  Cancel, NotificationsNone, RemoveRedEyeOutlined, ThumbUpOutlined
+  Cancel, HelpOutline, NotificationsNone, RemoveRedEyeOutlined, ThumbUpOutlined
 } from '@material-ui/icons';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
@@ -13,6 +13,8 @@ import CategoryPieChart from '../CategoryPieChart';
 import BarComponent from '../BarComponent';
 import LocationPart from './LocationPart';
 import GenderAgePart from './GenderAgePart';
+import PieChartApex from '../PieChartApex';
+import HelpTooltip from '../HelpTooltip';
 
 const useStyles = makeStyles(theme => ({
   box: {
@@ -51,14 +53,45 @@ const useStyles = makeStyles(theme => ({
     fontFamily: 'Noto Sans KR, sans-serif',
     fontWeight: 500,
     lineHeight: 1.57
-  }
+  },
+  textAndIcon: {
+    display: 'flex',
+    // alignItems: 'center',
+    flexWrap: 'wrap',
+    fontSize: '14px',
+    color: '#000'
+  },
+  tooltipIcon: {
+    color: '#8C3FFF',
+    marginLeft: '5px',
+    marginTop: '5px'
+  },
+  tooltip: {
+    fontSize: 12
+  },
 }));
+
+const tooltipContent = {
+  content_primary: '사용자의 최근 10개의 동영상을 인공지능으로 분석하여 3862개의 카테고리로 분류한 결과'
+};
 
 const defaultValues = {
   comment_prediction: [],
+  comment_prediction_labels: [],
+  comment_prediction_series: [],
+  comment_prediction_colors: [],
   title_prediction: [],
+  title_prediction_labels: [],
+  title_prediction_series: [],
+  title_prediction_colors: [],
   content_primary_prediction: [],
+  content_primary_labels: [],
+  content_primary_series: [],
+  content_primary_colors: [],
   content_second_prediction: [],
+  content_second_labels: [],
+  content_second_series: [],
+  content_second_colors: [],
   maxTypeCategory: '',
   maxTypeCategoryValue: 0,
   videos_info: {
@@ -266,6 +299,7 @@ function YoutubeAnalysis(props) {
     }).then((res) => {
       const { data } = res.data;
       setYoutubeInfo(data);
+      setProcess(false);
     }).catch((err) => {
       setProcess(false);
       // alert(err.response.data.message);
@@ -287,7 +321,7 @@ function YoutubeAnalysis(props) {
 
   useEffect(() => {
     getYoutubeInfo();
-    getYoutubeAnalytics();
+    // getYoutubeAnalytics();
   }, []);
 
   return (
@@ -393,14 +427,22 @@ function YoutubeAnalysis(props) {
               <Grid container spacing={3}>
                 <Grid item xs={6}>
                   <Box p={3} bgcolor="#FFF">
-                    <Box className={classes.boxTitle}>하위 카테고리 분석 결과</Box>
-                    <CategoryPieChart detectData={youtubeInfo.content_primary_prediction} process={process} />
+                    <Box className={classes.boxTitle}>상위 카테고리 분석 결과</Box>
+                    {/* <CategoryPieChart detectData={youtubeInfo.content_second_prediction} process={process} /> */}
+                    <PieChartApex series={youtubeInfo.content_second_series} colors={youtubeInfo.content_second_colors} labels={youtubeInfo.content_second_labels} />
                   </Box>
                 </Grid>
                 <Grid item xs={6}>
                   <Box p={3} bgcolor="#FFF">
-                    <Box className={classes.boxTitle}>상위 카테고리 분석 결과</Box>
-                    <CategoryPieChart detectData={youtubeInfo.content_second_prediction} process={process} />
+                    <Box mb="17px" className={classes.textAndIcon}>
+                      <span className={classes.boxTitle}>하위 카테고리 분석 결과</span>
+                      <Tooltip title="test" placement="top-start" classes={{ tooltip: classes.tooltip }}>
+                        <HelpOutline fontSize="small" classes={{ root: classes.tooltipIcon }} />
+                      </Tooltip>
+                    </Box>
+                    {/* <Box className={classes.boxTitle}>하위 카테고리 분석 결과</Box> */}
+                    {/* <CategoryPieChart detectData={youtubeInfo.content_primary_prediction} process={process} /> */}
+                    <PieChartApex series={youtubeInfo.content_primary_series} colors={youtubeInfo.content_primary_colors} labels={youtubeInfo.content_primary_labels} />
                   </Box>
                 </Grid>
               </Grid>
@@ -409,13 +451,15 @@ function YoutubeAnalysis(props) {
               <Grid item xs={6}>
                 <Box p={3} bgcolor="#FFF">
                   <Box className={classes.boxTitle}>비디오 제목 분석 결과</Box>
-                  <CategoryPieChart detectData={youtubeInfo.title_prediction} process={process} />
+                  {/* <CategoryPieChart detectData={youtubeInfo.title_prediction} process={process} /> */}
+                  <PieChartApex series={youtubeInfo.title_prediction_series} colors={youtubeInfo.title_prediction_colors} labels={youtubeInfo.title_prediction_labels} />
                 </Box>
               </Grid>
               <Grid item xs={6}>
                 <Box p={3} bgcolor="#FFF">
                   <Box className={classes.boxTitle}>비디오 댓글 평가</Box>
-                  <CategoryPieChart detectData={youtubeInfo.comment_prediction} process={process} />
+                  {/* <CategoryPieChart detectData={youtubeInfo.comment_prediction} process={process} /> */}
+                  <PieChartApex series={youtubeInfo.comment_prediction_series} colors={youtubeInfo.comment_prediction_colors} labels={youtubeInfo.comment_prediction_labels} />
                 </Box>
               </Grid>
             </Grid>

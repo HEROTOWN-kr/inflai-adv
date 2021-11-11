@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   },
   tooltipIcon: {
     color: '#8C3FFF',
-    marginLeft: '5px'
+    marginLeft: '5px',
   },
 });
 
