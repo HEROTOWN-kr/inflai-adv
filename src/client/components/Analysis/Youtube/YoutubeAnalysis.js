@@ -72,7 +72,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const tooltipContent = {
-  content_primary: '사용자의 최근 10개의 동영상을 인공지능으로 분석하여 3862개의 카테고리로 분류한 결과'
+  content_primary: '유튜브 채널 최근 10개의 동영상을 인공지능으로 분석하여 3862개의 카테고리로 분류한 결과',
+  content_second: '유튜브 채널 최근 10개의 동영상을 인공지능으로 분석하여 26개의 카테고리로 분류한 결과',
+
 };
 
 const defaultValues = {
@@ -414,7 +416,7 @@ function YoutubeAnalysis(props) {
             <Box mt={3} p={3} bgcolor="#F2F2F2">
               <Box className={classes.reportText}>
                 { `${youtubeInfo.channel_info.Name}는 ${youtubeInfo.channel_info.Number_of_subscribe}명의 구독자를 보유하고 있으며 이는 ${youtubeInfo.channel_info.influencerType} 입니다.
-                인플루언서 영향력을 나타내는 인플라이니수는 105점이며 최근 30일간 채널 영상 최대 조회수는 ${youtubeAnalytics.timeBasedStats.viewsMax}이고 신규 구독자 수는 ${youtubeAnalytics.timeBasedStats.subscribersGainedSum}입니다.
+                인플루언서 영향력을 나타내는 인플라이지수는 105점이며 최근 30일간 채널 영상 최대 조회수는 ${youtubeAnalytics.timeBasedStats.viewsMax}이고 신규 구독자 수는 ${youtubeAnalytics.timeBasedStats.subscribersGainedSum}입니다.
                 ${youtubeAnalytics.basicStats.likes}건의 좋아요수와 ${youtubeAnalytics.basicStats.comments}건의 댓글을 받아 공감능력은 ${youtubeAnalytics.basicStats.likesToComments}%(${youtubeAnalytics.basicStats.abilityType}) 상태입니다.
                 보유팔로워의 ${youtubeAnalytics.watchTimeByCountry.maxCountry.value}명은 ${youtubeAnalytics.watchTimeByCountry.maxCountry.name}인으로 구성되어있으며
                 ${youtubeAnalytics.ageDemographic.maxAgeType}대(${youtubeAnalytics.ageDemographic.maxAgeValue}%) ${youtubeAnalytics.genderDemographic.maxGender}(${youtubeAnalytics.genderDemographic.maxGenderValue}%)걸쳐서 가장 큰 영향력을 발휘하게 됩니다.
@@ -427,16 +429,21 @@ function YoutubeAnalysis(props) {
               <Grid container spacing={3}>
                 <Grid item xs={6}>
                   <Box p={3} bgcolor="#FFF">
-                    <Box className={classes.boxTitle}>상위 카테고리 분석 결과</Box>
+                    <Box className={classes.textAndIcon}>
+                      <span className={classes.boxTitle}>상위 카테고리 분석 결과</span>
+                      <Tooltip title={tooltipContent.content_second} placement="top-start" classes={{ tooltip: classes.tooltip }}>
+                        <HelpOutline fontSize="small" classes={{ root: classes.tooltipIcon }} />
+                      </Tooltip>
+                    </Box>
                     {/* <CategoryPieChart detectData={youtubeInfo.content_second_prediction} process={process} /> */}
                     <PieChartApex series={youtubeInfo.content_second_series} colors={youtubeInfo.content_second_colors} labels={youtubeInfo.content_second_labels} />
                   </Box>
                 </Grid>
                 <Grid item xs={6}>
                   <Box p={3} bgcolor="#FFF">
-                    <Box mb="17px" className={classes.textAndIcon}>
+                    <Box className={classes.textAndIcon}>
                       <span className={classes.boxTitle}>하위 카테고리 분석 결과</span>
-                      <Tooltip title="test" placement="top-start" classes={{ tooltip: classes.tooltip }}>
+                      <Tooltip title={tooltipContent.content_primary} placement="top-start" classes={{ tooltip: classes.tooltip }}>
                         <HelpOutline fontSize="small" classes={{ root: classes.tooltipIcon }} />
                       </Tooltip>
                     </Box>
@@ -450,7 +457,12 @@ function YoutubeAnalysis(props) {
             <Grid container spacing={3}>
               <Grid item xs={6}>
                 <Box p={3} bgcolor="#FFF">
-                  <Box className={classes.boxTitle}>비디오 제목 분석 결과</Box>
+                  <Box className={classes.textAndIcon}>
+                    <span className={classes.boxTitle}>비디오 제목 분석 결과</span>
+                    <Tooltip title={tooltipContent.content_second} placement="top-start" classes={{ tooltip: classes.tooltip }}>
+                      <HelpOutline fontSize="small" classes={{ root: classes.tooltipIcon }} />
+                    </Tooltip>
+                  </Box>
                   {/* <CategoryPieChart detectData={youtubeInfo.title_prediction} process={process} /> */}
                   <PieChartApex series={youtubeInfo.title_prediction_series} colors={youtubeInfo.title_prediction_colors} labels={youtubeInfo.title_prediction_labels} />
                 </Box>
