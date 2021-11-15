@@ -74,7 +74,8 @@ const useStyles = makeStyles(theme => ({
 const tooltipContent = {
   content_primary: '유튜브 채널 최근 10개의 동영상을 인공지능으로 분석하여 3862개의 카테고리로 분류한 결과',
   content_second: '유튜브 채널 최근 10개의 동영상을 인공지능으로 분석하여 26개의 카테고리로 분류한 결과',
-
+  title_prediction: '유튜브 채널 최근 10개의 동영상의 제목을 인공지능으로 분석하여 26개의 카테고리로 분류한 결과',
+  comment_prediction: '유튜브 채널 최근 10개의 동영상의 댓글을 인공지능으로 분석하여 긍정적와 부정적 카테고리로 분류한 결과',
 };
 
 const defaultValues = {
@@ -459,7 +460,7 @@ function YoutubeAnalysis(props) {
                 <Box p={3} bgcolor="#FFF">
                   <Box className={classes.textAndIcon}>
                     <span className={classes.boxTitle}>비디오 제목 분석 결과</span>
-                    <Tooltip title={tooltipContent.content_second} placement="top-start" classes={{ tooltip: classes.tooltip }}>
+                    <Tooltip title={tooltipContent.title_prediction} placement="top-start" classes={{ tooltip: classes.tooltip }}>
                       <HelpOutline fontSize="small" classes={{ root: classes.tooltipIcon }} />
                     </Tooltip>
                   </Box>
@@ -469,7 +470,12 @@ function YoutubeAnalysis(props) {
               </Grid>
               <Grid item xs={6}>
                 <Box p={3} bgcolor="#FFF">
-                  <Box className={classes.boxTitle}>비디오 댓글 평가</Box>
+                  <Box className={classes.textAndIcon}>
+                    <span className={classes.boxTitle}>비디오 댓글 평가</span>
+                    <Tooltip title={tooltipContent.comment_prediction} placement="top-start" classes={{ tooltip: classes.tooltip }}>
+                      <HelpOutline fontSize="small" classes={{ root: classes.tooltipIcon }} />
+                    </Tooltip>
+                  </Box>
                   {/* <CategoryPieChart detectData={youtubeInfo.comment_prediction} process={process} /> */}
                   <PieChartApex series={youtubeInfo.comment_prediction_series} colors={youtubeInfo.comment_prediction_colors} labels={youtubeInfo.comment_prediction_labels} />
                 </Box>
@@ -479,14 +485,24 @@ function YoutubeAnalysis(props) {
               <Grid container spacing={3}>
                 <Grid item xs={6}>
                   <Box p={3} bgcolor="#FFF">
-                    <Box className={classes.boxTitle}>최근 10개의 동영상 조회수</Box>
+                    <Box className={classes.boxTitle}>조회수와 댓글수 비교</Box>
                     <Line height={150} data={lineData} />
+                  </Box>
+                  <Box p={2} bgcolor="#F2F2F2">
+                    <Box className={classes.reportText}>
+                      최근 10개의 동영상의 데이터를 가지고 조회수와 댓글수 업로드 날짜에 맞아서 출력된 데이터입니다
+                    </Box>
                   </Box>
                 </Grid>
                 <Grid item xs={6}>
                   <Box p={3} bgcolor="#FFF">
-                    <Box className={classes.boxTitle}>최근 10개의 동영상 좋아요-싫어요 수</Box>
+                    <Box className={classes.boxTitle}>좋아요수와 싫어요수 비교</Box>
                     <BarComponent height={150} data={likeDislikeData} options={barOptions} />
+                  </Box>
+                  <Box p={2} bgcolor="#F2F2F2">
+                    <Box className={classes.reportText}>
+                      최근 10개의 동영상의 데이터를 가지고 좋아요수와 싫어요수 업로드 날짜에 맞아서 출력된 데이터입니다
+                    </Box>
                   </Box>
                 </Grid>
               </Grid>
@@ -494,14 +510,24 @@ function YoutubeAnalysis(props) {
             <Grid container spacing={3}>
               <Grid item xs={6}>
                 <Box p={3} bgcolor="#FFF">
-                  <Box className={classes.boxTitle}>최근 30일 신규 구독자 수</Box>
+                  <Box className={classes.boxTitle}>신규 구독자 수</Box>
                   <BarComponent height={150} data={subscribersGainedData} options={barOptions} />
+                </Box>
+                <Box p={2} bgcolor="#F2F2F2">
+                  <Box className={classes.reportText}>
+                    최근 30일 동안 유튜브 채널의 신규 구독자수를 날짜 별로 보실 수 있습니다.
+                  </Box>
                 </Box>
               </Grid>
               <Grid item xs={6}>
                 <Box p={3} bgcolor="#FFF">
-                  <Box className={classes.boxTitle}>최근 30일 채널 영상 조회수</Box>
+                  <Box className={classes.boxTitle}>영상 조회수</Box>
                   <Line height={150} data={viewsData} />
+                </Box>
+                <Box p={2} bgcolor="#F2F2F2">
+                  <Box className={classes.reportText}>
+                    최근 30일 동안 유튜브 채널의 모두 영상의 조회수를 날짜 별로 보실 수 있습니다.
+                  </Box>
                 </Box>
               </Grid>
             </Grid>

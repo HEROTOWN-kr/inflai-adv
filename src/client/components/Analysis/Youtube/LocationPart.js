@@ -82,8 +82,13 @@ function LocationPart(props) {
     <Grid container spacing={3}>
       <Grid item xs={6}>
         <Box p={3} bgcolor="#FFF">
-          <Box className={classes.boxTitle}>최근 1년 국가별 동영상 조회수</Box>
+          <Box className={classes.boxTitle}>국가별 동영상 조회수</Box>
           <MapGraph mapData={countryData} />
+        </Box>
+        <Box p={2} bgcolor="#F2F2F2">
+          <Box className={classes.reportText}>
+            최근 1년 동안 유튜브 채널의 국가 별로 개별된 모두 영상의 조회수를 보실 수 있습니다.
+          </Box>
         </Box>
       </Grid>
       <Grid item xs={6} style={{ height: 'inherit' }}>
