@@ -302,7 +302,7 @@ function YoutubeAnalysis(props) {
     }).then((res) => {
       const { data } = res.data;
       setYoutubeInfo(data);
-      setProcess(false);
+      // setProcess(false);
     }).catch((err) => {
       setProcess(false);
       // alert(err.response.data.message);
@@ -324,7 +324,7 @@ function YoutubeAnalysis(props) {
 
   useEffect(() => {
     getYoutubeInfo();
-    // getYoutubeAnalytics();
+    getYoutubeAnalytics();
   }, []);
 
   return (

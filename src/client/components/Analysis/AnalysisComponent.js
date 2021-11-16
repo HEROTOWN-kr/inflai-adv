@@ -621,7 +621,7 @@ function AnalysisComponent(props) {
           <Box p={2} mt="50px" bgcolor="#F2F2F2">
             <Typography variant="subtitle2">
               { `${instaData.INS_NAME}는 ${instaData.INS_FLWR}명의 팔로워를 보유하고 있으며 이는 ${instaData.influencerType} 입니다.
-                인플루언서 영향력을 나타내는 인플라이니수는 ${instaData.INS_SCORE}
+                인플루언서 영향력을 나타내는 인플라이지수는 ${instaData.INS_SCORE}
                 점이며 최근 30일간 ${instaData.monthMedia.mediaCount}건의 포스팅으로 진행하였고
                 ${instaData.monthMedia.likeSum}건의 좋아요수와 ${instaData.monthMedia.commentsSum}건의 댓글을 받아 공감능력은 ${instaData.ability}%(${instaData.abilityType}) 상태입니다.
                 보유팔로워의 ${locationMax.value}%가 ${locationMax.description}인으로 구성되어있으며
