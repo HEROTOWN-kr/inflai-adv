@@ -3,6 +3,9 @@ import {
 } from '@material-ui/core';
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import {
+  ImageOutlined, VisibilityOutlined, CheckBoxOutlined, PieChartOutlined
+} from '@material-ui/icons';
 import StyledImage from '../../containers/StyledImage';
 import defaultAccountImage from '../../img/default_account_image.png';
 import styleTheme from './AnalysisTheme';
@@ -364,7 +367,7 @@ function AnalysisComponent(props) {
   }
 
   useEffect(() => {
-    getInstaInfo();
+    // getInstaInfo();
   }, []);
 
   function testExcel() {
@@ -382,6 +385,98 @@ function AnalysisComponent(props) {
     <ThemeProvider theme={styleTheme}>
       <Box bgcolor="#FAFAFA">
         <Box px={2} py={2} maxWidth="1350px" m="0 auto">
+          <Grid container spacing={3}>
+            <Grid item xs={3}>
+              <Box
+                className={`${classes.box} ${classes.bgBlue} ${classes.youtubeLink}`}
+              >
+                <Grid container alignItems="center" style={{ height: '100%' }}>
+                  <Grid item>
+                    <img width={70} height={70} className={classes.avatar} src={instaData.INS_PROFILE_IMG || defaultAccountImage} alt="noImage" />
+                  </Grid>
+                  <Grid item xs>
+                    <Box
+                      maxWidth="300px"
+                      ml={2}
+                      fontSize={25}
+                      fontWeight="bold"
+                    >
+                      {instaData.INS_NAME}
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
+            <Grid item xs={2}>
+              <Box className={`${classes.box} ${classes.bgGreen}`}>
+                <Box mb={1}>
+                  게시물
+                </Box>
+                <Grid container justify="space-between" alignItems="center">
+                  <Grid item>
+                    <ImageOutlined fontSize="large" />
+                  </Grid>
+                  <Grid item>
+                    <Box fontSize={28} fontWeight="bold">
+                      {instaData.INS_MEDIA_CNT}
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
+            <Grid item xs={2}>
+              <Box className={`${classes.box} ${classes.bgOrange}`}>
+                <Box mb={1}>
+                  팔로워
+                </Box>
+                <Grid container justify="space-between" alignItems="center">
+                  <Grid item>
+                    <VisibilityOutlined fontSize="large" />
+                  </Grid>
+                  <Grid item>
+                    <Box fontSize={28} fontWeight="bold">
+                      {instaData.INS_MEDIA_CNT}
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
+            <Grid item xs={2}>
+              <Box className={`${classes.box} ${classes.bgRed}`}>
+                <Box mb={1}>
+                  팔로잉
+                </Box>
+                <Grid container justify="space-between" alignItems="center">
+                  <Grid item>
+                    <CheckBoxOutlined fontSize="large" />
+                  </Grid>
+                  <Grid item>
+                    <Box fontSize={28} fontWeight="bold">
+                      {instaData.INS_MEDIA_CNT}
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
+            <Grid item xs={2}>
+              <Box className={`${classes.box} ${classes.bgGreenBlue}`}>
+                <Box mb={1}>
+                  카테고리
+                </Box>
+                <Grid container justify="space-between" alignItems="center">
+                  <Grid item>
+                    <PieChartOutlined fontSize="large" />
+                  </Grid>
+                  <Grid item>
+                    <Box fontSize={28} fontWeight="bold">
+
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
+          </Grid>
+
           <Box my="50px">
             <Grid container alignItems="center">
               <Grid item>

@@ -59,7 +59,24 @@ const analysisStyles = makeStyles({
   },
   grey: {
     backgroundColor: '#00000017'
-  }
+  },
+  box: {
+    padding: '15px 25px',
+    color: '#fff',
+    borderRadius: '5px',
+    boxSizing: 'border-box',
+    height: '100%',
+    transition: 'all 0.3s ease-in-out',
+    '&:hover': {
+      boxShadow: '0 0 25px -5px #9e9c9e',
+    }
+  },
+  bgBlue: { background: 'linear-gradient(45deg, #4099ff, #73b4ff)' },
+  bgGreen: { background: 'linear-gradient(45deg, #2ed8b6, #59e0c5)' },
+  bgOrange: { background: 'linear-gradient(45deg, #FFB64D, #ffcb80)' },
+  bgRed: { background: 'linear-gradient(45deg, #FF5370, #ff869a)' },
+  bgGreenBlue: { background: 'linear-gradient(45deg, #2e65d8, #59e0c5)' },
+  avatar: { borderRadius: '50%' },
 });
 
 export default analysisStyles;
