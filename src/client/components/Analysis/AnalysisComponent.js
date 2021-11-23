@@ -385,7 +385,7 @@ function AnalysisComponent(props) {
     <ThemeProvider theme={styleTheme}>
       <Box bgcolor="#FAFAFA">
         <Box px={2} py={2} maxWidth="1350px" m="0 auto">
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Grid item xs={3}>
               <Box
                 className={`${classes.box} ${classes.bgBlue} ${classes.youtubeLink}`}
@@ -458,7 +458,7 @@ function AnalysisComponent(props) {
                 </Grid>
               </Box>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={3}>
               <Box className={`${classes.box} ${classes.bgGreenBlue}`}>
                 <Box mb={1}>
                   카테고리
@@ -468,9 +468,7 @@ function AnalysisComponent(props) {
                     <PieChartOutlined fontSize="large" />
                   </Grid>
                   <Grid item>
-                    <Box fontSize={28} fontWeight="bold">
-
-                    </Box>
+                    <Box fontSize={28} fontWeight="bold" />
                   </Grid>
                 </Grid>
               </Box>
