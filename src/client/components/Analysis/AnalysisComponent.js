@@ -385,97 +385,101 @@ function AnalysisComponent(props) {
     <ThemeProvider theme={styleTheme}>
       <Box bgcolor="#FAFAFA">
         <Box px={2} py={2} maxWidth="1350px" m="0 auto">
-          <Grid container spacing={2}>
-            <Grid item xs={3}>
-              <Box
-                className={`${classes.box} ${classes.bgBlue} ${classes.youtubeLink}`}
-              >
-                <Grid container alignItems="center" style={{ height: '100%' }}>
-                  <Grid item>
-                    <img width={70} height={70} className={classes.avatar} src={instaData.INS_PROFILE_IMG || defaultAccountImage} alt="noImage" />
-                  </Grid>
-                  <Grid item xs>
-                    <Box
-                      maxWidth="300px"
-                      ml={2}
-                      fontSize={25}
-                      fontWeight="bold"
-                    >
-                      {instaData.INS_NAME}
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Grid>
-            <Grid item xs={2}>
-              <Box className={`${classes.box} ${classes.bgGreen}`}>
-                <Box mb={1}>
-                  게시물
-                </Box>
-                <Grid container justify="space-between" alignItems="center">
-                  <Grid item>
-                    <ImageOutlined fontSize="large" />
-                  </Grid>
-                  <Grid item>
-                    <Box fontSize={28} fontWeight="bold">
-                      {instaData.INS_MEDIA_CNT}
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Grid>
-            <Grid item xs={2}>
-              <Box className={`${classes.box} ${classes.bgOrange}`}>
-                <Box mb={1}>
-                  팔로워
-                </Box>
-                <Grid container justify="space-between" alignItems="center">
-                  <Grid item>
-                    <VisibilityOutlined fontSize="large" />
-                  </Grid>
-                  <Grid item>
-                    <Box fontSize={28} fontWeight="bold">
-                      {instaData.INS_MEDIA_CNT}
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Grid>
-            <Grid item xs={2}>
-              <Box className={`${classes.box} ${classes.bgRed}`}>
-                <Box mb={1}>
-                  팔로잉
-                </Box>
-                <Grid container justify="space-between" alignItems="center">
-                  <Grid item>
-                    <CheckBoxOutlined fontSize="large" />
-                  </Grid>
-                  <Grid item>
-                    <Box fontSize={28} fontWeight="bold">
-                      {instaData.INS_MEDIA_CNT}
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Grid>
-            <Grid item xs={3}>
-              <Box className={`${classes.box} ${classes.bgGreenBlue}`}>
-                <Box mb={1}>
-                  카테고리
-                </Box>
-                <Grid container justify="space-between" alignItems="center">
-                  <Grid item>
-                    <PieChartOutlined fontSize="large" />
-                  </Grid>
-                  <Grid item>
-                    <Box fontSize={28} fontWeight="bold" />
-                  </Grid>
-                </Grid>
-              </Box>
-            </Grid>
-          </Grid>
-
           <Box my="50px">
+            <Grid container spacing={2}>
+              <Grid item xs={3}>
+                <Box
+                  className={`${classes.box} ${classes.bgBlue} ${classes.youtubeLink}`}
+                >
+                  <Grid container alignItems="center" style={{ height: '100%' }}>
+                    <Grid item>
+                      <img width={70} height={70} className={classes.avatar} src={instaData.INS_PROFILE_IMG || defaultAccountImage} alt="noImage" />
+                    </Grid>
+                    <Grid item xs>
+                      <Box
+                        maxWidth="300px"
+                        ml={2}
+                        fontSize={23}
+                        fontWeight="bold"
+                      >
+                        <Box>{instaData.INS_NAME}</Box>
+                        <Box>{instaData.INS_USERNAME}</Box>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Grid>
+              <Grid item xs={2}>
+                <Box className={`${classes.box} ${classes.bgGreen}`}>
+                  <Box mb={1}>
+                  게시물
+                  </Box>
+                  <Grid container justify="space-between" alignItems="center">
+                    <Grid item>
+                      <ImageOutlined fontSize="large" />
+                    </Grid>
+                    <Grid item>
+                      <Box fontSize={28} fontWeight="bold">
+                        {instaData.INS_MEDIA_CNT}
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Grid>
+              <Grid item xs={2}>
+                <Box className={`${classes.box} ${classes.bgOrange}`}>
+                  <Box mb={1}>
+                  팔로워
+                  </Box>
+                  <Grid container justify="space-between" alignItems="center">
+                    <Grid item>
+                      <VisibilityOutlined fontSize="large" />
+                    </Grid>
+                    <Grid item>
+                      <Box fontSize={28} fontWeight="bold">
+                        {instaData.INS_MEDIA_CNT}
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Grid>
+              <Grid item xs={2}>
+                <Box className={`${classes.box} ${classes.bgRed}`}>
+                  <Box mb={1}>
+                  팔로잉
+                  </Box>
+                  <Grid container justify="space-between" alignItems="center">
+                    <Grid item>
+                      <CheckBoxOutlined fontSize="large" />
+                    </Grid>
+                    <Grid item>
+                      <Box fontSize={28} fontWeight="bold">
+                        {instaData.INS_MEDIA_CNT}
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Grid>
+              <Grid item xs={3}>
+                <Box className={`${classes.box} ${classes.bgGreenBlue}`}>
+                  <Box mb={1}>
+                  카테고리
+                  </Box>
+                  <Grid container justify="space-between" alignItems="center">
+                    <Grid item>
+                      <PieChartOutlined fontSize="large" />
+                    </Grid>
+                    <Grid item>
+                      <Box fontSize={28} fontWeight="bold">
+                        {imgDetectMax.description}
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+          {/* <Box my="50px">
             <Grid container alignItems="center">
               <Grid item>
                 <Box width="350px">
@@ -536,149 +540,145 @@ function AnalysisComponent(props) {
                       </Typography>
                     </Box>
                   </Grid>
-                  {/* <Grid item>
+                  <Grid item>
                     <Button variant="contained" color="primary" onClick={testExcel}>excel</Button>
-                  </Grid> */}
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
-          </Box>
+          </Box> */}
           <Box mb="13px">
             <Typography variant="subtitle2">계정 정보 간단 요약</Typography>
           </Box>
-          <Grid container spacing={2}>
-            <Grid item xs={8}>
-              <Box borderTop="7px solid #DDDDDD" borderRadius="7px" overflow="hidden">
-                <Grid container>
-                  <Grid item xs={6}>
-                    <Box borderRight="1px solid #0000001a">
-                      <Box py="13px" px={2}>
-                        <Grid container justify="space-between">
-                          <Grid item>
-                            <Box className={classes.textAndIcon}>
-                              <span>인플라이 지수</span>
-                              <HelpTooltip title={tooltips.score} />
-                            </Box>
-                          </Grid>
-                          <Grid item>
-                            <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                              {`${instaData.INS_SCORE}점`}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </Box>
-                      <Box py="13px" px={2} bgcolor="#FFF">
-                        <Grid container justify="space-between">
-                          <Grid item>
-                            <Box className={classes.textAndIcon}>
-                              <span>소통공감 지수</span>
-                              <HelpTooltip title={tooltips.communication} />
-                            </Box>
-                          </Grid>
-                          <Grid item>
-                            <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                              {`${instaData.ability}%(${instaData.abilityType})`}
-                            </Typography>
-                          </Grid>
-                        </Grid>
 
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={4}>
+              <Box boxSizing="border-box" borderTop="7px solid #DDDDDD" borderRadius="7px" overflow="hidden">
+                <Box py="13px" px={2}>
+                  <Grid container justify="space-between">
+                    <Grid item>
+                      <Box className={classes.textAndIcon}>
+                        <span>인플라이 지수</span>
+                        <HelpTooltip title={tooltips.score} />
                       </Box>
-                      <Box py="13px" px={2}>
-                        <Grid container justify="space-between">
-                          <Grid item>
-                            <Box className={classes.textAndIcon}>
-                              <span> 인플라이 랭킹</span>
-                              <HelpTooltip title={tooltips.ranking} />
-                            </Box>
-                          </Grid>
-                          <Grid item>
-                            <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                              {instaData.INS_RANK}
-위
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </Box>
-                      <Box py="13px" px={2} bgcolor="#FFF">
-                        <Grid container justify="space-between">
-                          <Grid item>
-                            <Box className={classes.textAndIcon}>
-                              <span>팔로워충성도</span>
-                              <HelpTooltip title={tooltips.impressions} />
-                            </Box>
-                          </Grid>
-                          <Grid item>
-                            <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                              {`${instaData.impressions.impressionsMax}명(${instaData.impressions.impressionsMaxPer}%)`}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </Box>
-                    </Box>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1" classes={{ root: classes.bold600 }}>
+                        {`${instaData.INS_SCORE}점`}
+                      </Typography>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={6}>
-                    <Box py="13px" px={2}>
-                      <Grid container justify="space-between">
-                        <Grid item>
-                          <Typography variant="body1">
-                            팔로워 주요 국적
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                            {locationMax.statsTop}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Box>
-                    <Box py="13px" px={2} bgcolor="#FFF">
-                      <Grid container justify="space-between">
-                        <Grid item>
-                          <Typography variant="body1">
-                            팔로워 성비
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                            {instaData.genderMax}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Box>
-                    <Box py="13px" px={2}>
-                      <Grid container justify="space-between">
-                        <Grid item>
-                          <Typography variant="body1">
-                            팔로워 연령
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                            {instaData.ageMax}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Box>
-                    <Box py="13px" px={2} bgcolor="#FFF">
-                      <Grid container justify="space-between">
-                        <Grid item>
-                          <Box className={classes.textAndIcon}>
-                            <span>국내영향력 팔로워</span>
-                            <HelpTooltip title={tooltips.activity} />
-                          </Box>
-                        </Grid>
-                        <Grid item>
-                          <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                            {`${instaData.followerActivity.flwrsMax}명(${instaData.followerActivity.flwrsMaxPer}%)`}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Box>
+                </Box>
+                <Box py="13px" px={2} bgcolor="#FFF">
+                  <Grid container justify="space-between">
+                    <Grid item>
+                      <Box className={classes.textAndIcon}>
+                        <span>소통공감 지수</span>
+                        <HelpTooltip title={tooltips.communication} />
+                      </Box>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1" classes={{ root: classes.bold600 }}>
+                        {`${instaData.ability}%(${instaData.abilityType})`}
+                      </Typography>
+                    </Grid>
                   </Grid>
-                </Grid>
+                </Box>
+                <Box py="13px" px={2}>
+                  <Grid container justify="space-between">
+                    <Grid item>
+                      <Box className={classes.textAndIcon}>
+                        <span> 인플라이 랭킹</span>
+                        <HelpTooltip title={tooltips.ranking} />
+                      </Box>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1" classes={{ root: classes.bold600 }}>
+                        {instaData.INS_RANK}
+                        위
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Box>
+                <Box py="13px" px={2} bgcolor="#FFF">
+                  <Grid container justify="space-between">
+                    <Grid item>
+                      <Box className={classes.textAndIcon}>
+                        <span>팔로워충성도</span>
+                        <HelpTooltip title={tooltips.impressions} />
+                      </Box>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1" classes={{ root: classes.bold600 }}>
+                        {`${instaData.impressions.impressionsMax}명(${instaData.impressions.impressionsMaxPer}%)`}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Box>
               </Box>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
+              <Box boxSizing="border-box" borderTop="7px solid #DDDDDD" borderRadius="7px" overflow="hidden">
+                <Box py="13px" px={2}>
+                  <Grid container justify="space-between">
+                    <Grid item>
+                      <Typography variant="body1">
+                      팔로워 주요 국적
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1" classes={{ root: classes.bold600 }}>
+                        {locationMax.statsTop}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Box>
+                <Box py="13px" px={2} bgcolor="#FFF">
+                  <Grid container justify="space-between">
+                    <Grid item>
+                      <Typography variant="body1">
+                      팔로워 성비
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1" classes={{ root: classes.bold600 }}>
+                        {instaData.genderMax}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Box>
+                <Box py="13px" px={2}>
+                  <Grid container justify="space-between">
+                    <Grid item>
+                      <Typography variant="body1">
+                      팔로워 연령
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1" classes={{ root: classes.bold600 }}>
+                        {instaData.ageMax}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Box>
+                <Box py="13px" px={2} bgcolor="#FFF">
+                  <Grid container justify="space-between">
+                    <Grid item>
+                      <Box className={classes.textAndIcon}>
+                        <span>국내영향력 팔로워</span>
+                        <HelpTooltip title={tooltips.activity} />
+                      </Box>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1" classes={{ root: classes.bold600 }}>
+                        {`${instaData.followerActivity.flwrsMax}명(${instaData.followerActivity.flwrsMaxPer}%)`}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={4}>
               <Box height="100%" boxSizing="border-box" borderTop="7px solid #DDDDDD" borderRadius="7px" overflow="hidden">
                 <Box py="13px" px={2}>
                   <Grid container justify="space-between">
