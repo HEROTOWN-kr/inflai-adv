@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box, Grid, makeStyles, Typography
+  Box, CircularProgress, Grid, makeStyles, Typography
 } from '@material-ui/core';
 import Slider from 'react-slick';
 import axios from 'axios';
@@ -8,6 +8,7 @@ import defaultImage from '../../../img/notFound400_316.png';
 import BarComponent from '../BarComponent';
 import { DAY_OF_WEEK, HOURS } from '../../../lib/Сonstants';
 import CategoryPieChart from '../CategoryPieChart';
+import PieChartApex from '../PieChartApex';
 
 const useStyles = makeStyles({
   multiLineEllipsis: {
@@ -176,6 +177,8 @@ function PostPart(props) {
   const [process, setProcess] = useState(false);
   const [labelData, setLabelData] = useState([]);
   const [objectData, setObjectData] = useState([]);
+  const [scoreData, setScoreData] = useState([]);
+  const [colorData, setColorData] = useState([]);
   const { testImage, instaData, setImgDetectMac } = props;
   const {
     mediaData, postStats, lastPosts, maxLikesMedia, maxCmntMedia, INS_ID
@@ -210,6 +213,43 @@ function PostPart(props) {
     });
   }
 
+  function getChartData(INS_ID) {
+    setProcess(true);
+    /* setProcess(true);
+    const res = {
+      labels: ['Food', 'Green', 'Happy', 'Font', '기타'],
+      scores: [21, 1, 1, 1, 1],
+      detectColors: ['#F0B27A', '#82E0AA', '#85C1E9', '#BB8FCE', '#D7DBDD']
+    };
+
+    const { labels, scores, detectColors } = res;
+
+    setLabelData(labels);
+    setScoreData(scores);
+    setColorData(detectColors);
+    setImgDetectMac(labels[0]);
+    setProcess(false); */
+
+    // const { host } = window.location;
+
+    axios.get('/api/TB_INSTA/getGoogleDataApex', {
+      params: { INS_ID }
+    }).then((res) => {
+      const { labels, scores, detectColors } = res.data;
+      setLabelData(labels);
+      setScoreData(scores);
+      setColorData(detectColors);
+      setImgDetectMac(labels[0]);
+      setProcess(false);
+    }).catch((e) => {
+
+    });
+  }
+
+  useEffect(() => {
+    getChartData(239);
+  }, []);
+
   useEffect(() => {
     if (INS_ID) {
       getGoogleVisionData(INS_ID);
@@ -241,14 +281,27 @@ function PostPart(props) {
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={6}>
             {/* <Typography variant="subtitle2" paragraph>Label 분석</Typography> */}
-            <Box boxSizing="border-box" width="100%" height="390px" p="20px" bgcolor="#FFF" borderRadius="7px">
-              <CategoryPieChart detectData={labelData} process={process} />
+            {/* <Box boxSizing="border-box" width="100%" height="390px" p="20px" bgcolor="#FFF" borderRadius="7px">
+             <CategoryPieChart detectData={labelData} process={process} />
+             </Box> */}
+            <Box boxSizing="border-box" width="100%" p="20px" bgcolor="#FFF" borderRadius="7px" height={process ? '358px' : 'auto'}>
+              {process ? (
+                <Grid container height="100%" alignItems="center" justify="center">
+                  <Grid item>
+                    <CircularProgress />
+                  </Grid>
+                </Grid>
+              ) : (
+                <PieChartApex series={scoreData} colors={colorData} labels={labelData} />
+              )}
             </Box>
           </Grid>
           <Grid item xs={6}>
             {/* <Typography variant="subtitle2" paragraph>Object 분석</Typography> */}
-            <Box boxSizing="border-box" width="100%" height="390px" p="20px" bgcolor="#FFF" borderRadius="7px">
-              <CategoryPieChart detectData={objectData} process={process} />
+            {/* <Box boxSizing="border-box" width="100%" height="390px" p="20px" bgcolor="#FFF" borderRadius="7px"> */}
+            <Box boxSizing="border-box" width="100%" p="20px" bgcolor="#FFF" borderRadius="7px">
+              {/* <CategoryPieChart detectData={objectData} process={process} /> */}
+              <PieChartApex series={scoreData} colors={colorData} labels={labelData} />
             </Box>
           </Grid>
         </Grid>
