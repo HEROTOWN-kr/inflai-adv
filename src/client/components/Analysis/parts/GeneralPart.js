@@ -14,7 +14,7 @@ function GeneralPart(props) {
         <Typography variant="h6">기본 지표</Typography>
       </Box>
       <Grid container spacing={1}>
-        <Grid item xs={3}>
+        <Grid item xs={12} md={3}>
           <Box mb="13px">
             <Typography variant="subtitle2">인플라이 랭킹</Typography>
           </Box>
@@ -32,7 +32,7 @@ function GeneralPart(props) {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} md={3}>
           <Box mb="13px">
             <Typography variant="subtitle2">적극적 팔로워</Typography>
           </Box>
@@ -49,7 +49,7 @@ function GeneralPart(props) {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} md={3}>
           <Box mb="13px">
             <Typography variant="subtitle2">소통, 공감능력</Typography>
           </Box>
@@ -66,7 +66,7 @@ function GeneralPart(props) {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} md={3}>
           <Box mb="13px">
             <Typography variant="subtitle2">팔로워충성도</Typography>
           </Box>

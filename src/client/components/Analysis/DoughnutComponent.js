@@ -25,7 +25,8 @@ function DoughnutComponent(props) {
     legend: {
       display: false
     },
-    responsive: false,
+    responsive: true,
+    maintainAspectRatio: true,
     cutoutPercentage: 65, // толщина полоски
     plugins: {
       doughnutlabel: {

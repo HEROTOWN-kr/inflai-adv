@@ -367,7 +367,7 @@ function AnalysisComponent(props) {
   }
 
   useEffect(() => {
-    // getInstaInfo();
+    getInstaInfo();
   }, []);
 
   function testExcel() {
@@ -387,7 +387,7 @@ function AnalysisComponent(props) {
         <Box px={2} py={2} maxWidth="1350px" m="0 auto">
           <Box my="50px">
             <Grid container spacing={2}>
-              <Grid item xs={3}>
+              <Grid item xs={12} md={3}>
                 <Box
                   className={`${classes.box} ${classes.bgBlue} ${classes.youtubeLink}`}
                 >
@@ -409,7 +409,7 @@ function AnalysisComponent(props) {
                   </Grid>
                 </Box>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={6} md={2}>
                 <Box className={`${classes.box} ${classes.bgGreen}`}>
                   <Box mb={1}>
                   게시물
@@ -426,7 +426,7 @@ function AnalysisComponent(props) {
                   </Grid>
                 </Box>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={6} md={2}>
                 <Box className={`${classes.box} ${classes.bgOrange}`}>
                   <Box mb={1}>
                   팔로워
@@ -443,7 +443,7 @@ function AnalysisComponent(props) {
                   </Grid>
                 </Box>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={6} md={2}>
                 <Box className={`${classes.box} ${classes.bgRed}`}>
                   <Box mb={1}>
                   팔로잉
@@ -460,7 +460,7 @@ function AnalysisComponent(props) {
                   </Grid>
                 </Box>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={6} md={2}>
                 <Box className={`${classes.box} ${classes.bgGreenBlue}`}>
                   <Box mb={1}>
                   카테고리

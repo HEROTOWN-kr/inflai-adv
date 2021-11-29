@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box, colors, Grid, LinearProgress, Typography
+  Box, colors, Grid, LinearProgress, Typography, useMediaQuery, useTheme
 } from '@material-ui/core';
 import { FiberManualRecord } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
@@ -57,6 +57,8 @@ function AudiencePart(props) {
   const { male, female } = genderData;
   const [mapData, setMapData] = useState([]);
   const [statsData, setStatsData] = useState([]);
+  const theme = useTheme();
+  const isMD = useMediaQuery(theme.breakpoints.up('md'));
 
   const classes = analysisStyles();
   const barClasses = barStyles();
@@ -93,7 +95,7 @@ function AudiencePart(props) {
   return (
     <Box mt="80px" mb="24px">
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <Box pl="10px" borderLeft="4px solid #6E0FFF">
             <Typography variant="h6" paragraph>팔로워 충성도 분석</Typography>
           </Box>
@@ -162,7 +164,7 @@ function AudiencePart(props) {
 
           </Box>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <Grid container direction="column" style={{ height: '100%' }}>
             <Grid item>
               <Box pl="10px" borderLeft="4px solid #6E0FFF">
@@ -220,7 +222,7 @@ function AudiencePart(props) {
         <Typography variant="subtitle2" paragraph>팔로워의 지도</Typography>
       </Box>
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <Box borderRadius="7px" bgcolor="#FFF" p="20px">
             <MapGraph mapData={mapData} />
           </Box>
@@ -230,7 +232,7 @@ function AudiencePart(props) {
             </Typography>
           </Box>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <Box borderRadius="7px" bgcolor="#FFF" p="20px" height="100%" boxSizing="border-box">
 
             {statsData && statsData.length ? (
@@ -266,7 +268,7 @@ function AudiencePart(props) {
       </Grid>
       <Box mt="50px">
         <Grid container spacing={2}>
-          <Grid item xs={3}>
+          <Grid item xs={12} md={3}>
             <Typography variant="subtitle2" paragraph>언어 비율</Typography>
             <Box p="20px" bgcolor="#FFF" borderRadius="7px">
               {testData.language.map(item => (
@@ -290,7 +292,7 @@ function AudiencePart(props) {
               ))}
             </Box>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={12} md={3}>
             <Typography variant="subtitle2" paragraph>연령 비율</Typography>
             <Box p="20px" bgcolor="#FFF" borderRadius="7px">
               { ageData.map((item, index) => (
@@ -314,11 +316,11 @@ function AudiencePart(props) {
               ))}
             </Box>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Typography variant="subtitle2" paragraph>성별 비율</Typography>
             <Box p="20px" bgcolor="#FFF" borderRadius="7px">
               <Grid container>
-                <Grid item>
+                <Grid item xs={12} md="auto">
                   <Box mx={5} mt="30px">
                     <DoughnutComponent chartData={[femaleSum, maleSum]} chartWidth={140} chartHeight={140} chartColor={['#6E0FFF', 'rgba(0, 0, 0, 0.2)']} />
                     <Box mt="25px">
@@ -341,8 +343,8 @@ function AudiencePart(props) {
                     </Box>
                   </Box>
                 </Grid>
-                <Grid item xs>
-                  <Box maxWidth="380px" m="0 auto">
+                <Grid item xs={12} md>
+                  <Box maxWidth="380px" m="0 auto" mt={{ xs: 2, md: 0 }}>
                     <BarComponent data={sex} />
                   </Box>
                 </Grid>

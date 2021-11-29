@@ -361,7 +361,7 @@ function ReactionPart(props) {
         <Typography variant="h6">반응 분석</Typography>
       </Box>
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           {/* <Typography variant="subtitle2" paragraph>최근 24시간 온라인 상태였던 팔로워 수</Typography> */}
           <Box mb="17px" className={classes.textAndIcon}>
             <span style={{ color: '#000', fontSize: '16px', fontWeight: '500' }}>최근 24시간 온라인 상태였던 팔로워 수</span>
@@ -371,7 +371,7 @@ function ReactionPart(props) {
             <Line height={150} data={activity} options={activityOpt} />
           </Box>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <Typography variant="subtitle2" paragraph>
             사용자의 미디어가 조회된 횟수 합계
           </Typography>
@@ -382,19 +382,19 @@ function ReactionPart(props) {
       </Grid>
       <Box mt="50px">
         <Grid container spacing={2}>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" paragraph>최근 포스트의 좋아요수</Typography>
             <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
               <BarComponent data={likesData} options={likesOpt} />
             </Box>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" paragraph>최근 포스트의 댓글수</Typography>
             <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
               <BarComponent data={commentsData} options={commentsOpt} />
             </Box>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" paragraph>좋아요와 댓글 비교</Typography>
             <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
               <Line height={200} data={line} />
@@ -404,22 +404,22 @@ function ReactionPart(props) {
       </Box>
       <Box mt="50px">
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Typography variant="subtitle2" paragraph>평균 반응 비율</Typography>
             <Grid container spacing={2}>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
                   <BarComponent height={242} data={testData.reaction} options={testData.reactionOpt} />
                 </Box>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
                   <BarComponent height={242} data={testData.reaction} options={testData.reactionOpt} />
                 </Box>
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Typography variant="subtitle2" paragraph>해시태그 주요 키워드</Typography>
             <Box height="250px" p="20px" bgcolor="#FFF" borderRadius="7px">
               <ReactWordcloud options={options} words={instaData.hashTags} callbacks={callbacks} />

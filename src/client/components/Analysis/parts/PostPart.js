@@ -10,7 +10,7 @@ import { DAY_OF_WEEK, HOURS } from '../../../lib/Сonstants';
 import CategoryPieChart from '../CategoryPieChart';
 import PieChartApex from '../PieChartApex';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   multiLineEllipsis: {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -30,8 +30,12 @@ const useStyles = makeStyles({
     borderRadius: '7px',
     objectFit: 'cover',
     objectPosition: '50% 50%',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      height: 'auto',
+    }
   },
-});
+}));
 
 const hourData = {
   labels: HOURS,
@@ -130,12 +134,12 @@ function MediaCard(props) {
 
   return (
     <Grid container>
-      <Grid item>
+      <Grid item xs={12} md="auto">
         <img className={classes.imgFileMedia} src={post.media_url || defaultImage} />
         {/* <StyledImage borderRadius="7px" width="200px" height="200px" src={post.media_url || testImage} /> */}
       </Grid>
-      <Grid item xs zeroMinWidth>
-        <Box ml={2} p={2} position="relative" boxSizing="border-box" height="100%" bgcolor="#FFF" borderRadius="7px">
+      <Grid item xs={12} md zeroMinWidth>
+        <Box ml={{ xs: 0, md: 2 }} mt={{ xs: 2, md: 0 }} p={2} position="relative" boxSizing="border-box" height="100%" bgcolor="#FFF" borderRadius="7px">
           <Grid container style={{ height: '100%' }}>
             <Grid item xs={12}>
               <Typography variant="body1" className={classes.multiLineEllipsis}>
@@ -279,7 +283,7 @@ function PostPart(props) {
       <Box my="50px">
         <Typography variant="h6" paragraph>계정 이미지 인공지능 분석</Typography>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             {/* <Typography variant="subtitle2" paragraph>Label 분석</Typography> */}
             {/* <Box boxSizing="border-box" width="100%" height="390px" p="20px" bgcolor="#FFF" borderRadius="7px">
              <CategoryPieChart detectData={labelData} process={process} />
@@ -296,7 +300,7 @@ function PostPart(props) {
               )}
             </Box>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             {/* <Typography variant="subtitle2" paragraph>Object 분석</Typography> */}
             {/* <Box boxSizing="border-box" width="100%" height="390px" p="20px" bgcolor="#FFF" borderRadius="7px"> */}
             <Box boxSizing="border-box" width="100%" p="20px" bgcolor="#FFF" borderRadius="7px">
@@ -308,11 +312,11 @@ function PostPart(props) {
       </Box>
       <Box mb="50px">
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Typography variant="subtitle2" paragraph>인기포스트(좋아요수 1위)</Typography>
             <MediaCard post={maxLikesMedia} testImage={testImage} />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Typography variant="subtitle2" paragraph>관심도1위(댓글 1위)</Typography>
             <MediaCard post={maxCmntMedia} testImage={testImage} />
           </Grid>
@@ -330,19 +334,19 @@ function PostPart(props) {
       </Box>
 
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" paragraph>요일별 포스팅 성향</Typography>
           <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
             <BarComponent data={dayData} options={dayOpt} />
           </Box>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" paragraph>시간별 포스팅 성향</Typography>
           <Box p="20px" pt="40px" bgcolor="#FFF" borderRadius="7px">
             <BarComponent data={hourData} options={hourOpt} />
           </Box>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <Box mt="41px" mb="20px" p="20px" pb="40px" bgcolor="#FFF" borderRadius="7px">
             <Box width="fit-content" mb="15px" px="12px" pt="4px" pb="7px" fontSize="16px" borderRadius="7px" bgcolor="#9047FF" color="#FFF" component="div">Total</Box>
             <Typography variant="body1">
