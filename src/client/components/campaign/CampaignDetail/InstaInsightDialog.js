@@ -15,8 +15,11 @@ const useStyles = makeStyles({
   },
   paper: {
     margin: '12px',
-    // width: '100%',
+    width: '100%',
     borderRadius: '2px'
+  },
+  paperScrollBody: {
+    maxWidth: '1500px',
   },
   button: {
     padding: 0,
@@ -30,8 +33,15 @@ const InstaInsightDialog = (props) => {
 
   return (
     <Dialog
-      classes={{ paper: classes.paper }}
-      fullScreen
+      /* classes={{ paper: classes.paper }}
+      fullScreen */
+      disableBackdropClick
+      scroll="body"
+      classes={{
+        paper: classes.paper,
+        paperScrollBody: classes.paperScrollBody,
+      }}
+      aria-labelledby="simple-dialog-title"
       open={open}
       onClose={handleClose}
     >
@@ -42,7 +52,7 @@ const InstaInsightDialog = (props) => {
         </IconButton>
       </Box>
       <Box>
-        <AnalysisComponent INS_ID={INS_ID} />
+        <AnalysisComponent INS_ID={INS_ID} closeDialog={handleClose} />
       </Box>
     </Dialog>
   );

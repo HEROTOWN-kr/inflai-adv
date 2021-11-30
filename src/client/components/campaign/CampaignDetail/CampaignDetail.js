@@ -49,6 +49,11 @@ const useStyles = makeStyles({
   num: {
     fontFamily: 'Montserrat, sans-serif',
     fontWeight: '600'
+  },
+  overflowBreak: {
+    overflowWrap: 'break-word',
+    wordBreak: 'break-all',
+    whiteSpace: 'pre-wrap'
   }
 });
 
@@ -288,7 +293,7 @@ function CampaignDetail() {
               {loading ? (
                 <Skeleton variant="text" height={16} />
               ) : (
-                <Box fontSize={isMD ? '16px' : '14px'} whiteSpace="pre-wrap" color={Colors.grey2}>
+                <Box className={classes.overflowBreak} fontSize={isMD ? '16px' : '14px'} whiteSpace="pre-wrap" color={Colors.grey2}>
                   {productData.AD_SHRT_DISC}
                 </Box>
               )}
@@ -574,7 +579,7 @@ function CampaignDetail() {
                       <Box fontSize="18px" color="#000000">
                         {productData.AD_NAME}
                       </Box>
-                      <Box my="10px" fontSize="14px">
+                      <Box className={classes.overflowBreak} my="10px" fontSize="14px">
                         {productData.AD_SHRT_DISC}
                       </Box>
                       <Box mb="15px">

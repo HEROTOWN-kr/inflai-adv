@@ -1,10 +1,10 @@
 import {
-  Box, Grid, useMediaQuery, useTheme, ThemeProvider, Typography, Tooltip, Button,
+  Box, Grid, useMediaQuery, useTheme, ThemeProvider, Typography, Tooltip, Button, IconButton
 } from '@material-ui/core';
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-  ImageOutlined, VisibilityOutlined, CheckBoxOutlined, PieChartOutlined
+  ImageOutlined, VisibilityOutlined, CheckBoxOutlined, PieChartOutlined, Cancel
 } from '@material-ui/icons';
 import StyledImage from '../../containers/StyledImage';
 import defaultAccountImage from '../../img/default_account_image.png';
@@ -321,7 +321,7 @@ const defaultData = {
 };
 
 function AnalysisComponent(props) {
-  const { INS_ID } = props;
+  const { INS_ID, closeDialog } = props;
   const [loading, setLoading] = useState(false);
   const [instaData, setInstaData] = useState(defaultData);
   const [imgDetectMax, setImgDetectMax] = useState({ description: '', value: '' });
@@ -384,8 +384,13 @@ function AnalysisComponent(props) {
   return (
     <ThemeProvider theme={styleTheme}>
       <Box bgcolor="#FAFAFA">
+        <Box position="absolute" top="0" right="0">
+          <IconButton style={{ position: 'fixed', color: '#fff' }} onClick={closeDialog}>
+            <Cancel />
+          </IconButton>
+        </Box>
         <Box px={2} py={2} maxWidth="1350px" m="0 auto">
-          <Box my="50px">
+          <Box mb="30px" mt="15px">
             <Grid container spacing={2}>
               <Grid item xs={12} md={3}>
                 <Box
@@ -437,7 +442,7 @@ function AnalysisComponent(props) {
                     </Grid>
                     <Grid item>
                       <Box fontSize={28} fontWeight="bold">
-                        {instaData.INS_MEDIA_CNT}
+                        {instaData.INS_FLWR}
                       </Box>
                     </Grid>
                   </Grid>
@@ -454,13 +459,13 @@ function AnalysisComponent(props) {
                     </Grid>
                     <Grid item>
                       <Box fontSize={28} fontWeight="bold">
-                        {instaData.INS_MEDIA_CNT}
+                        {instaData.INS_FLW}
                       </Box>
                     </Grid>
                   </Grid>
                 </Box>
               </Grid>
-              <Grid item xs={6} md={2}>
+              <Grid item xs={6} md={3}>
                 <Box className={`${classes.box} ${classes.bgGreenBlue}`}>
                   <Box mb={1}>
                   카테고리

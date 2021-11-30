@@ -181,8 +181,12 @@ function PostPart(props) {
   const [process, setProcess] = useState(false);
   const [labelData, setLabelData] = useState([]);
   const [objectData, setObjectData] = useState([]);
-  const [scoreData, setScoreData] = useState([]);
-  const [colorData, setColorData] = useState([]);
+  const [apexLabelData, setApexLabelData] = useState({
+    labels: [], scores: [], colors: []
+  });
+  const [apexObjectData, setApexObjectData] = useState({
+    labels: [], scores: [], colors: []
+  });
   const { testImage, instaData, setImgDetectMac } = props;
   const {
     mediaData, postStats, lastPosts, maxLikesMedia, maxCmntMedia, INS_ID
@@ -239,11 +243,14 @@ function PostPart(props) {
     axios.get('/api/TB_INSTA/getGoogleDataApex', {
       params: { INS_ID }
     }).then((res) => {
-      const { labels, scores, detectColors } = res.data;
-      setLabelData(labels);
-      setScoreData(scores);
-      setColorData(detectColors);
-      setImgDetectMac(labels[0]);
+      const { labelInfo, objectInfo } = res.data;
+      setApexLabelData({
+        labels: labelInfo.labels, scores: labelInfo.scores, colors: labelInfo.detectColors
+      });
+      setApexObjectData({
+        labels: objectInfo.labels, scores: objectInfo.scores, colors: objectInfo.detectColors
+      });
+      setImgDetectMac({ description: labelInfo.categoryMax.description, value: labelInfo.categoryMax.value });
       setProcess(false);
     }).catch((e) => {
 
@@ -251,12 +258,13 @@ function PostPart(props) {
   }
 
   useEffect(() => {
-    getChartData(239);
+    // getChartData(239);
   }, []);
 
   useEffect(() => {
     if (INS_ID) {
-      getGoogleVisionData(INS_ID);
+      // getGoogleVisionData(INS_ID);
+      getChartData(INS_ID);
     }
   }, [INS_ID]);
 
@@ -296,16 +304,24 @@ function PostPart(props) {
                   </Grid>
                 </Grid>
               ) : (
-                <PieChartApex series={scoreData} colors={colorData} labels={labelData} />
+                <PieChartApex series={apexLabelData.scores} colors={apexLabelData.colors} labels={apexLabelData.labels} />
               )}
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
             {/* <Typography variant="subtitle2" paragraph>Object 분석</Typography> */}
             {/* <Box boxSizing="border-box" width="100%" height="390px" p="20px" bgcolor="#FFF" borderRadius="7px"> */}
-            <Box boxSizing="border-box" width="100%" p="20px" bgcolor="#FFF" borderRadius="7px">
+            <Box boxSizing="border-box" width="100%" p="20px" bgcolor="#FFF" borderRadius="7px" height={process ? '358px' : 'auto'}>
               {/* <CategoryPieChart detectData={objectData} process={process} /> */}
-              <PieChartApex series={scoreData} colors={colorData} labels={labelData} />
+              {process ? (
+                <Grid container height="100%" alignItems="center" justify="center">
+                  <Grid item>
+                    <CircularProgress />
+                  </Grid>
+                </Grid>
+              ) : (
+                <PieChartApex series={apexObjectData.scores} colors={apexObjectData.colors} labels={apexObjectData.labels} />
+              )}
             </Box>
           </Grid>
         </Grid>
