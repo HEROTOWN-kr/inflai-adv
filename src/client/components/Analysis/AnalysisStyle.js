@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { colors } from '@material-ui/core';
 
-const analysisStyles = makeStyles({
+const analysisStyles = makeStyles(theme => ({
   colorViolet: {
     color: '#6E0FFF'
   },
@@ -69,6 +69,9 @@ const analysisStyles = makeStyles({
     transition: 'all 0.3s ease-in-out',
     '&:hover': {
       boxShadow: '0 0 25px -5px #9e9c9e',
+    },
+    [theme.breakpoints.down('md')]: {
+      padding: '12px 16px',
     }
   },
   bgBlue: { background: 'linear-gradient(45deg, #4099ff, #73b4ff)' },
@@ -77,6 +80,6 @@ const analysisStyles = makeStyles({
   bgRed: { background: 'linear-gradient(45deg, #FF5370, #ff869a)' },
   bgGreenBlue: { background: 'linear-gradient(45deg, #2e65d8, #59e0c5)' },
   avatar: { borderRadius: '50%' },
-});
+}));
 
 export default analysisStyles;

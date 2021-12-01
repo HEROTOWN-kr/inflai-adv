@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import {
-  Backdrop, Box, CircularProgress, Grid, IconButton, Tooltip, Typography
+  Backdrop, Box, CircularProgress, Grid, IconButton, Tooltip, Typography, useMediaQuery, useTheme
 } from '@material-ui/core';
 import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import {
-  Cancel, HelpOutline, NotificationsNone, RemoveRedEyeOutlined, ThumbUpOutlined
+  Cancel, HelpOutline, ImageOutlined, NotificationsNone, RemoveRedEyeOutlined, ThumbUpOutlined
 } from '@material-ui/icons';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
@@ -26,6 +26,9 @@ const useStyles = makeStyles(theme => ({
     transition: 'all 0.3s ease-in-out',
     '&:hover': {
       boxShadow: '0 0 25px -5px #9e9c9e',
+    },
+    [theme.breakpoints.down('md')]: {
+      padding: '12px 16px',
     }
   },
   boxTitle: {
@@ -245,6 +248,8 @@ function YoutubeAnalysis(props) {
   const [youtubeInfo, setYoutubeInfo] = useState(defaultValues);
   const [youtubeAnalytics, setYoutubeAnalytics] = useState(defaultAnalyticsValues);
   const classes = useStyles();
+  const theme = useTheme();
+  const isMD = useMediaQuery(theme.breakpoints.up('md'));
 
   const viewLine = createDataSet({ color: green, label: '조회수', data: youtubeInfo.videos_info.View_count });
   const commentLine = createDataSet({ color: violet, label: '댓끌수', data: youtubeInfo.videos_info.Comment_count });
@@ -339,8 +344,8 @@ function YoutubeAnalysis(props) {
             </IconButton>
           </Box>
           <Box maxWidth={1500} m="0 auto">
-            <Grid container spacing={3}>
-              <Grid item xs={3}>
+            <Grid container spacing={isMD ? 3 : 2}>
+              <Grid item xs={12} md={3}>
                 <Box
                   className={`${classes.box} ${classes.bgBlue} ${classes.youtubeLink}`}
                   onClick={() => window.open(`https://www.youtube.com/channel/${youtubeInfo.channel_info.Channel_id}`, '_blank')}
@@ -362,51 +367,57 @@ function YoutubeAnalysis(props) {
                   </Grid>
                 </Box>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={6} md={3}>
                 <Box className={`${classes.box} ${classes.bgGreen}`}>
-                  <Box mb={1}>
+                  <Box mb={{ xs: '2px', md: 1 }}>
                         구독자수
                   </Box>
                   <Grid container justify="space-between" alignItems="center">
+                    {isMD ? (
+                      <Grid item>
+                        <NotificationsNone fontSize="large" />
+                      </Grid>
+                    ) : null}
                     <Grid item>
-                      <NotificationsNone fontSize="large" />
-                    </Grid>
-                    <Grid item>
-                      <Box fontSize={28} fontWeight="bold">
+                      <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
                         {youtubeInfo.channel_info.Number_of_subscribe}
                       </Box>
                     </Grid>
                   </Grid>
                 </Box>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={6} md={3}>
                 <Box className={`${classes.box} ${classes.bgOrange}`}>
-                  <Box mb={1}>
+                  <Box mb={{ xs: '2px', md: 1 }}>
                         최근 조회수(누적)
                   </Box>
                   <Grid container justify="space-between" alignItems="center">
+                    {isMD ? (
+                      <Grid item>
+                        <RemoveRedEyeOutlined fontSize="large" />
+                      </Grid>
+                    ) : null}
                     <Grid item>
-                      <RemoveRedEyeOutlined fontSize="large" />
-                    </Grid>
-                    <Grid item>
-                      <Box fontSize={28} fontWeight="bold">
+                      <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
                         {youtubeInfo.videos_info.viewCountSum}
                       </Box>
                     </Grid>
                   </Grid>
                 </Box>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={6} md={3}>
                 <Box className={`${classes.box} ${classes.bgRed}`}>
-                  <Box mb={1}>
+                  <Box mb={{ xs: '2px', md: 1 }}>
                         최근 좋아요 수(누적)
                   </Box>
                   <Grid container justify="space-between" alignItems="center">
+                    {isMD ? (
+                      <Grid item>
+                        <ThumbUpOutlined fontSize="large" />
+                      </Grid>
+                    ) : null}
                     <Grid item>
-                      <ThumbUpOutlined fontSize="large" />
-                    </Grid>
-                    <Grid item>
-                      <Box fontSize={28} fontWeight="bold">
+                      <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
                         {youtubeInfo.videos_info.likeCountSum}
                       </Box>
                     </Grid>
@@ -427,12 +438,12 @@ function YoutubeAnalysis(props) {
               </Box>
             </Box>
             <Box my={3}>
-              <Grid container spacing={3}>
-                <Grid item xs={6}>
+              <Grid container spacing={isMD ? 3 : 2}>
+                <Grid item xs={12} md={6}>
                   <Box p={3} bgcolor="#FFF">
                     <Box className={classes.textAndIcon}>
                       <span className={classes.boxTitle}>상위 카테고리 분석 결과</span>
-                      <Tooltip title={tooltipContent.content_second} placement="top-start" classes={{ tooltip: classes.tooltip }}>
+                      <Tooltip title={tooltipContent.content_second} placement="top-start" classes={{ tooltip: classes.tooltip }} enterTouchDelay={0}>
                         <HelpOutline fontSize="small" classes={{ root: classes.tooltipIcon }} />
                       </Tooltip>
                     </Box>
@@ -440,7 +451,7 @@ function YoutubeAnalysis(props) {
                     <PieChartApex series={youtubeInfo.content_second_series} colors={youtubeInfo.content_second_colors} labels={youtubeInfo.content_second_labels} />
                   </Box>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                   <Box p={3} bgcolor="#FFF">
                     <Box className={classes.textAndIcon}>
                       <span className={classes.boxTitle}>하위 카테고리 분석 결과</span>
@@ -455,8 +466,8 @@ function YoutubeAnalysis(props) {
                 </Grid>
               </Grid>
             </Box>
-            <Grid container spacing={3}>
-              <Grid item xs={6}>
+            <Grid container spacing={isMD ? 3 : 2}>
+              <Grid item xs={12} md={6}>
                 <Box p={3} bgcolor="#FFF">
                   <Box className={classes.textAndIcon}>
                     <span className={classes.boxTitle}>비디오 제목 분석 결과</span>
@@ -468,7 +479,7 @@ function YoutubeAnalysis(props) {
                   <PieChartApex series={youtubeInfo.title_prediction_series} colors={youtubeInfo.title_prediction_colors} labels={youtubeInfo.title_prediction_labels} />
                 </Box>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Box p={3} bgcolor="#FFF">
                   <Box className={classes.textAndIcon}>
                     <span className={classes.boxTitle}>비디오 댓글 평가</span>
@@ -482,11 +493,11 @@ function YoutubeAnalysis(props) {
               </Grid>
             </Grid>
             <Box my={3}>
-              <Grid container spacing={3}>
-                <Grid item xs={6}>
+              <Grid container spacing={isMD ? 3 : 2}>
+                <Grid item xs={12} md={6}>
                   <Box p={3} bgcolor="#FFF">
                     <Box className={classes.boxTitle}>조회수와 댓글수 비교</Box>
-                    <Line height={150} data={lineData} />
+                    <Line height={isMD ? 150 : 250} data={lineData} />
                   </Box>
                   <Box p={2} bgcolor="#F2F2F2">
                     <Box className={classes.reportText}>
@@ -494,10 +505,10 @@ function YoutubeAnalysis(props) {
                     </Box>
                   </Box>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                   <Box p={3} bgcolor="#FFF">
                     <Box className={classes.boxTitle}>좋아요수와 싫어요수 비교</Box>
-                    <BarComponent height={150} data={likeDislikeData} options={barOptions} />
+                    <BarComponent height={isMD ? 150 : 250} data={likeDislikeData} options={barOptions} />
                   </Box>
                   <Box p={2} bgcolor="#F2F2F2">
                     <Box className={classes.reportText}>
@@ -507,11 +518,11 @@ function YoutubeAnalysis(props) {
                 </Grid>
               </Grid>
             </Box>
-            <Grid container spacing={3}>
-              <Grid item xs={6}>
+            <Grid container spacing={isMD ? 3 : 2}>
+              <Grid item xs={12} md={6}>
                 <Box p={3} bgcolor="#FFF">
                   <Box className={classes.boxTitle}>신규 구독자 수</Box>
-                  <BarComponent height={150} data={subscribersGainedData} options={barOptions} />
+                  <BarComponent height={isMD ? 150 : 250} data={subscribersGainedData} options={barOptions} />
                 </Box>
                 <Box p={2} bgcolor="#F2F2F2">
                   <Box className={classes.reportText}>
@@ -519,10 +530,10 @@ function YoutubeAnalysis(props) {
                   </Box>
                 </Box>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Box p={3} bgcolor="#FFF">
                   <Box className={classes.boxTitle}>영상 조회수</Box>
-                  <Line height={150} data={viewsData} />
+                  <Line height={isMD ? 150 : 250} data={viewsData} />
                 </Box>
                 <Box p={2} bgcolor="#F2F2F2">
                   <Box className={classes.reportText}>
@@ -532,9 +543,9 @@ function YoutubeAnalysis(props) {
               </Grid>
             </Grid>
             <Box my={3}>
-              <LocationPart classes={classes} data={youtubeAnalytics.watchTimeByCountry} process={process} />
+              <LocationPart classes={classes} data={youtubeAnalytics.watchTimeByCountry} process={process} isMD={isMD} />
             </Box>
-            <GenderAgePart classes={classes} genderDemographic={youtubeAnalytics.genderDemographic.chart} ageDemographic={youtubeAnalytics.ageDemographic} process={process} />
+            <GenderAgePart classes={classes} genderDemographic={youtubeAnalytics.genderDemographic.chart} ageDemographic={youtubeAnalytics.ageDemographic} process={process} isMD={isMD} />
           </Box>
         </Box>
       )}

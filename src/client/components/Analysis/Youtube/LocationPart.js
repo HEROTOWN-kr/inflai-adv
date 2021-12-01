@@ -73,14 +73,14 @@ function createDataSet(props) {
 }
 
 function LocationPart(props) {
-  const { classes, data } = props || {};
+  const { classes, data, isMD } = props || {};
   const { countryData, countryLineData } = data || {};
 
   const dataSet = createDataSet(countryLineData);
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={6}>
+    <Grid container spacing={isMD ? 3 : 2}>
+      <Grid item xs={12} md={6}>
         <Box p={3} bgcolor="#FFF">
           <Box className={classes.boxTitle}>국가별 동영상 조회수</Box>
           <MapGraph mapData={countryData} />
@@ -91,9 +91,9 @@ function LocationPart(props) {
           </Box>
         </Box>
       </Grid>
-      <Grid item xs={6} style={{ height: 'inherit' }}>
+      <Grid item xs={12} md={6} style={{ height: 'inherit' }}>
         <Box p={3} bgcolor="#FFF" height="100%" boxSizing="border-box">
-          <HorizontalBar data={dataSet} options={options} />
+          <HorizontalBar height={isMD ? 150 : 250} data={dataSet} options={options} />
         </Box>
       </Grid>
     </Grid>

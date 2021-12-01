@@ -38,8 +38,8 @@ function Footer() {
               <Grid item xs={12}>
                 <div className="info">
                   <Box color="#000">(주)대가들이사는마을</Box>
-                  <div>대표 : 김무성 | 주소 : 경기도 고양시 일산동구 백마로 195 엠시티 섹션동 4층 4003호</div>
-                  <div>대표전화 : 1522-7947  | Mail : myfna@naver.com</div>
+                  <div>대표 : 김무성 | 주소 : 경기도 고양시 덕양구 삼원로 83 광양프런티어밸리 6차 802호</div>
+                  <div>대표전화 : 1522-7947  | Mail : info@inflai.com</div>
                   <div>사업자번호 : 695-81-00452</div>
                 </div>
               </Grid>

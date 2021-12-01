@@ -10,6 +10,7 @@ import DoughnutComponent from '../DoughnutComponent';
 import BarComponent from '../BarComponent';
 import analysisStyles from '../AnalysisStyle';
 import MapGraph from '../../campaign/Graphs/MapGraph';
+import PieChartApex from '../PieChartApex';
 
 
 const sex = {
@@ -57,6 +58,11 @@ function AudiencePart(props) {
   const { male, female } = genderData;
   const [mapData, setMapData] = useState([]);
   const [statsData, setStatsData] = useState([]);
+  const [apexData, setApexData] = useState({
+    scores: [],
+    labels: [],
+    colors: []
+  });
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -73,7 +79,9 @@ function AudiencePart(props) {
     axios.get('/api/TB_INSTA/statsMapNew', {
       params: { INS_ID }
     }).then((res) => {
-      const { statsTopString, sortedStats, stats } = res.data;
+      const {
+        statsTopString, sortedStats, stats, apexStats
+      } = res.data;
       if (sortedStats) setMapData(sortedStats);
       if (stats) {
         setStatsData(stats);
@@ -82,6 +90,9 @@ function AudiencePart(props) {
           value: stats[0].value,
           statsTop: statsTopString
         });
+      }
+      if (apexStats) {
+        setApexData(apexStats);
       }
     }).catch(err => alert(err));
   }
@@ -234,8 +245,20 @@ function AudiencePart(props) {
         </Grid>
         <Grid item xs={12} md={6}>
           <Box borderRadius="7px" bgcolor="#FFF" p="20px" height="100%" boxSizing="border-box">
-
-            {statsData && statsData.length ? (
+            {apexData ? (
+              <Grid container alignItems="center" style={{ height: '100%' }}>
+                <Grid item xs={12}>
+                  <PieChartApex series={apexData.scores} colors={apexData.colors} labels={apexData.labels} />
+                </Grid>
+              </Grid>
+            ) : (
+              <Grid container alignItems="center" justify="center" style={{ height: '100%' }}>
+                <Grid item>
+                    로딩 중...
+                </Grid>
+              </Grid>
+            )}
+            {/* {statsData && statsData.length ? (
               <Grid container alignItems="center" style={{ height: '100%' }}>
                 <Grid item xs={12}>
                   <Box height="350px">
@@ -262,7 +285,7 @@ function AudiencePart(props) {
                     로딩 중...
                 </Grid>
               </Grid>
-            )}
+            )} */}
           </Box>
         </Grid>
       </Grid>

@@ -416,15 +416,17 @@ function AnalysisComponent(props) {
               </Grid>
               <Grid item xs={6} md={2}>
                 <Box className={`${classes.box} ${classes.bgGreen}`}>
-                  <Box mb={1}>
+                  <Box mb={{ xs: '2px', md: 1 }}>
                   게시물
                   </Box>
                   <Grid container justify="space-between" alignItems="center">
+                    {isMD ? (
+                      <Grid item>
+                        <ImageOutlined fontSize="large" />
+                      </Grid>
+                    ) : null}
                     <Grid item>
-                      <ImageOutlined fontSize="large" />
-                    </Grid>
-                    <Grid item>
-                      <Box fontSize={28} fontWeight="bold">
+                      <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
                         {instaData.INS_MEDIA_CNT}
                       </Box>
                     </Grid>
@@ -433,15 +435,17 @@ function AnalysisComponent(props) {
               </Grid>
               <Grid item xs={6} md={2}>
                 <Box className={`${classes.box} ${classes.bgOrange}`}>
-                  <Box mb={1}>
+                  <Box mb={{ xs: '2px', md: 1 }}>
                   팔로워
                   </Box>
                   <Grid container justify="space-between" alignItems="center">
+                    {isMD ? (
+                      <Grid item>
+                        <VisibilityOutlined fontSize="large" />
+                      </Grid>
+                    ) : null}
                     <Grid item>
-                      <VisibilityOutlined fontSize="large" />
-                    </Grid>
-                    <Grid item>
-                      <Box fontSize={28} fontWeight="bold">
+                      <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
                         {instaData.INS_FLWR}
                       </Box>
                     </Grid>
@@ -454,11 +458,13 @@ function AnalysisComponent(props) {
                   팔로잉
                   </Box>
                   <Grid container justify="space-between" alignItems="center">
+                    {isMD ? (
+                      <Grid item>
+                        <CheckBoxOutlined fontSize="large" />
+                      </Grid>
+                    ) : null}
                     <Grid item>
-                      <CheckBoxOutlined fontSize="large" />
-                    </Grid>
-                    <Grid item>
-                      <Box fontSize={28} fontWeight="bold">
+                      <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
                         {instaData.INS_FLW}
                       </Box>
                     </Grid>
@@ -471,11 +477,13 @@ function AnalysisComponent(props) {
                   카테고리
                   </Box>
                   <Grid container justify="space-between" alignItems="center">
+                    {isMD ? (
+                      <Grid item>
+                        <PieChartOutlined fontSize="large" />
+                      </Grid>
+                    ) : null}
                     <Grid item>
-                      <PieChartOutlined fontSize="large" />
-                    </Grid>
-                    <Grid item>
-                      <Box fontSize={28} fontWeight="bold">
+                      <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
                         {imgDetectMax.description}
                       </Box>
                     </Grid>
@@ -716,7 +724,7 @@ function AnalysisComponent(props) {
               </Box>
             </Grid>
           </Grid>
-          <Box p={2} mt="50px" bgcolor="#F2F2F2">
+          <Box p={2} mt={{ xs: '25px', md: '50px' }} bgcolor="#F2F2F2">
             <Typography variant="subtitle2">
               { `${instaData.INS_NAME}는 ${instaData.INS_FLWR}명의 팔로워를 보유하고 있으며 이는 ${instaData.influencerType} 입니다.
                 인플루언서 영향력을 나타내는 인플라이지수는 ${instaData.INS_SCORE}
