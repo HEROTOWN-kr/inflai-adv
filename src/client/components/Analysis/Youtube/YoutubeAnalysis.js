@@ -455,7 +455,7 @@ function YoutubeAnalysis(props) {
                   <Box p={3} bgcolor="#FFF">
                     <Box className={classes.textAndIcon}>
                       <span className={classes.boxTitle}>하위 카테고리 분석 결과</span>
-                      <Tooltip title={tooltipContent.content_primary} placement="top-start" classes={{ tooltip: classes.tooltip }}>
+                      <Tooltip title={tooltipContent.content_primary} placement="top-start" classes={{ tooltip: classes.tooltip }} enterTouchDelay={0}>
                         <HelpOutline fontSize="small" classes={{ root: classes.tooltipIcon }} />
                       </Tooltip>
                     </Box>
@@ -471,7 +471,7 @@ function YoutubeAnalysis(props) {
                 <Box p={3} bgcolor="#FFF">
                   <Box className={classes.textAndIcon}>
                     <span className={classes.boxTitle}>비디오 제목 분석 결과</span>
-                    <Tooltip title={tooltipContent.title_prediction} placement="top-start" classes={{ tooltip: classes.tooltip }}>
+                    <Tooltip title={tooltipContent.title_prediction} placement="top-start" classes={{ tooltip: classes.tooltip }} enterTouchDelay={0}>
                       <HelpOutline fontSize="small" classes={{ root: classes.tooltipIcon }} />
                     </Tooltip>
                   </Box>
@@ -483,7 +483,7 @@ function YoutubeAnalysis(props) {
                 <Box p={3} bgcolor="#FFF">
                   <Box className={classes.textAndIcon}>
                     <span className={classes.boxTitle}>비디오 댓글 평가</span>
-                    <Tooltip title={tooltipContent.comment_prediction} placement="top-start" classes={{ tooltip: classes.tooltip }}>
+                    <Tooltip title={tooltipContent.comment_prediction} placement="top-start" classes={{ tooltip: classes.tooltip }} enterTouchDelay={0}>
                       <HelpOutline fontSize="small" classes={{ root: classes.tooltipIcon }} />
                     </Tooltip>
                   </Box>
