@@ -17,12 +17,14 @@ import Sample from '../../component-sample';
 import NaverInsightDialog from './NaverInsightDialog';
 import MyPagination from '../../../containers/MyPagination';
 import InstaInsightDialog from './InstaInsightDialog';
+import AnalysisDialog from '../../Analysis/Youtube/AnalysisDialog';
 
 function ParticipantList(props) {
   const { adId, type, isMD } = props;
   const [participants, setParticipants] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [instaDialogOpen, setInstaDialogOpen] = useState(false);
+  const [youtubeDialogOpen, setYoutubeDialogOpen] = useState(false);
   const [naverDialogOpen, setNaverDialogOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
   const [instaId, setInstaId] = useState(0);
@@ -43,6 +45,10 @@ function ParticipantList(props) {
 
   function toggleInstaDialog() {
     setInstaDialogOpen(!instaDialogOpen);
+  }
+
+  function toggleYoutubeDialog() {
+    setYoutubeDialogOpen(!youtubeDialogOpen);
   }
 
   function toggleNaverDialog() {
@@ -66,6 +72,11 @@ function ParticipantList(props) {
   function clickInstaInfo(id) {
     setInfluencerId(id);
     toggleInstaDialog();
+  }
+
+  function clickYoutubeInfo(id) {
+    setInfluencerId(id);
+    toggleYoutubeDialog();
   }
 
   function clickNaverInfo(id) {
@@ -185,6 +196,23 @@ function ParticipantList(props) {
                           </StyledButton>
                         </Grid>
                       ) : null}
+
+                      {item.YOU_ID ? (
+                        <Grid item xs={12}>
+                          <StyledButton
+                            height={40}
+                            padding="0 20px"
+                            background={Colors.green}
+                            hoverBackground={Colors.greenHover}
+                            onClick={() => clickYoutubeInfo(item.YOU_ID)}
+                            startIcon={<Description />}
+                            disabled={item.YOU_STATUS === 0}
+                          >
+                              보고서
+                          </StyledButton>
+                        </Grid>
+                      ) : null}
+
                       <Grid item xs={12}>
                         <StyledButton
                           height={40}
@@ -218,6 +246,7 @@ function ParticipantList(props) {
           ) : null}
           <InsightDialog open={dialogOpen} closeDialog={toggleDialog} selectedId={selectedId} />
           <InstaInsightDialog open={instaDialogOpen} handleClose={toggleInstaDialog} INS_ID={influencerId} />
+          <AnalysisDialog open={youtubeDialogOpen} closeDialog={toggleYoutubeDialog} id={influencerId} />
           <NaverInsightDialog open={naverDialogOpen} closeDialog={toggleNaverDialog} selectedId={influencerId} />
           <ConfirmDialog
             open={confirmDialogOpen}
