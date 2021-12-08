@@ -1,16 +1,13 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import {
-  Box, Grid, IconButton,
-  Paper, Table, TableBody,
-  TableContainer, TableHead, TableRow,
-  InputAdornment, CircularProgress
+  Box, Grid, Table, TableBody,
+  TableHead, TableRow, CircularProgress
 } from '@material-ui/core';
 import axios from 'axios';
 import { AssessmentRounded } from '@material-ui/icons/';
-import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
-import { useForm } from 'react-hook-form';
-import SearchIcon from '@material-ui/icons/Search';
+import { makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
+import { useHistory, useParams } from 'react-router-dom';
 import StyledTableCell from '../../../containers/StyledTableCell';
 import MyPagination from '../../../containers/MyPagination';
 import AnalysisDialog from '../../Analysis/Youtube/AnalysisDialog';
@@ -18,6 +15,12 @@ import StyledIconButton from '../../../containers/StyledIconButton';
 import StyledTableSortLabel from '../../../containers/StyledTableSortLabel';
 import ReactFormText from '../../../containers/ReactFormText';
 import StyledText from '../../../containers/StyledText';
+import StyledSelect from '../../../containers/StyledSelect';
+import StyledTableRow from '../../../containers/StyledTableRow';
+import StyledButton from '../../../containers/StyledButton';
+import { Colors } from '../../../lib/Сonstants';
+import InsightDialog from './InsightDialog';
+import ConfirmDialog from '../../../containers/ConfirmDialog';
 
 const useStyles = makeStyles({
   root: {
@@ -34,42 +37,44 @@ const useStyles = makeStyles({
   }
 });
 
-const tableRows = {
-  title: [
-    {
-      text: '#',
-      align: 'center',
-      width: '60px'
-    },
-    {
-      text: '이름',
-      align: 'left'
-    },
-    {
-      text: '채널 이름',
-      align: 'left',
-      width: '250px'
-    },
-    {
-      id: 'YOU_SUBS',
-      text: '구독수',
-      align: 'center',
-      width: '100px'
-    },
-    {
-      id: 'YOU_VIEWS',
-      text: '조회수',
-      align: 'center',
-      width: '100px'
-    },
-    {
-      text: '분석결과',
-      align: 'center',
-      width: '100px'
-    }
-  ],
-  body: ['rownum', 'INF_NAME', 'YOU_SUBS', 'YOU_VIEWS']
-};
+const tableRows = [
+  {
+    text: '#',
+    align: 'center',
+    width: '60px'
+  },
+  {
+    text: '이름',
+    align: 'left'
+  },
+  {
+    text: '채널 이름',
+    align: 'left',
+    width: '250px'
+  },
+  {
+    id: 'YOU_SUBS',
+    text: '구독수',
+    align: 'center',
+    width: '100px'
+  },
+  {
+    id: 'YOU_VIEWS',
+    text: '조회수',
+    align: 'center',
+    width: '100px'
+  },
+  {
+    text: '분석',
+    align: 'center',
+    width: '50px'
+  },
+  {
+    text: '선정',
+    align: 'center',
+    width: '50px',
+  }
+];
 
 const defaultUpdateTime = moment().set({ h: 4, m: 0, s: 0 }).format('YYYY-MM-DD h:mm:ss');
 
@@ -86,22 +91,21 @@ function LoadingComponent() {
 }
 
 function CampaignParYoutube(props) {
-  const { setTab } = props;
-  const [youtubeId, setYoutubeId] = useState(null);
-  const [influencers, setInfluencers] = useState([]);
-  const [updateTime, setUpdateTime] = useState('');
+  const [selectedId, setSelectedId] = useState(0);
+  const [participants, setParticipants] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [searchWord, setSearchWord] = useState('');
   const [order, setOrder] = useState({ orderBy: 'YOU_SUBS', direction: 'desc' });
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+
+  const params = useParams();
+  const history = useHistory();
+  const adId = params.id;
   const classes = useStyles();
 
-  const { register, handleSubmit, errors } = useForm({
-    mode: 'onBlur',
-    defaultValues: { searchValue: '' }
-  });
+  const limit = 10;
 
   const changePage = (event, value) => {
     setPage(value);
@@ -111,41 +115,28 @@ function CampaignParYoutube(props) {
     setDialogOpen(!dialogOpen);
   }
 
+  function toggleConfirmDialog() {
+    setConfirmDialogOpen(!confirmDialogOpen);
+  }
+
   function getAnalysis(id) {
-    setYoutubeId(id);
+    setSelectedId(id);
     toggleDialog();
   }
 
-  function searchFunc(data) {
-    const { searchValue } = data;
-    setPage(1);
-    setSearchWord(searchValue);
-  }
-
-
-  function getInfluencers() {
+  function getParticipants() {
     setLoading(true);
-    axios.get('/api/TB_YOUTUBE/', {
-      params: { ...order, searchWord, page }
+    axios.get('/api/TB_PARTICIPANT/getListYoutube', {
+      params: {
+        ...order, adId, limit, page
+      }
     }).then((res) => {
-      const { list, dbCount } = res.data.data;
-      setInfluencers(list);
-      setCount(dbCount);
-      setLoading(false);
+      setParticipants(res.data.data);
+      setCount(res.data.count);
     }).catch((e) => {
       alert(e.response.data.message);
+    }).then(() => {
       setLoading(false);
-    });
-  }
-
-  function getUpdateTime() {
-    axios.get('/api/TB_YOUTUBE/getUpdateTime', {
-      params: { ...order, searchWord, page }
-    }).then((res) => {
-      const { updateTime } = res.data;
-      setUpdateTime(updateTime);
-    }).catch((e) => {
-      alert(e.response.data.message);
     });
   }
 
@@ -157,149 +148,135 @@ function CampaignParYoutube(props) {
     });
   }
 
+  function selectParticipant() {
+    axios.post('/api/TB_PARTICIPANT/change', { adId, participantId: selectedId }).then((res) => {
+      if (res.status === 201) {
+        alert(res.data.message);
+      } else {
+        getParticipants();
+      }
+    }).catch(err => alert(err.response.data.message));
+  }
+
+  function selectBoxChange(event) {
+    setOrder({ ...order, orderBy: event.target.value });
+  }
+
+  function clickSelect(id) {
+    setSelectedId(id);
+    toggleConfirmDialog();
+  }
 
   useEffect(() => {
-    getUpdateTime();
-    setTab(1);
-  }, []);
+    getParticipants();
+  }, [order, page]);
 
-  useEffect(() => {
-    getInfluencers();
-  }, [order, searchWord, page]);
-
-
-  return (
-    <Box maxWidth={1276} m="0 auto">
-      <Box mb={1}>
-        <Grid container alignItems="center">
-          <Grid item xs container alignItems="center">
-            <Grid item>
-              <Box width={280}>
-                <ReactFormText
-                  register={register}
-                  errors={errors}
-                  name="searchValue"
-                  placeholder="검색"
-                  InputProps={{
-                    classes: { root: classes.root, adornedEnd: classes.endAdornment },
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton onClick={handleSubmit(searchFunc)}>
-                          <SearchIcon fontSize="small" />
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                  }}
-                  onKeyPress={(ev) => {
-                    if (ev.key === 'Enter') {
-                      ev.preventDefault();
-                      handleSubmit(searchFunc)();
-                    }
-                  }}
-                />
-              </Box>
-            </Grid>
-            { searchWord ? (
-              <Grid item>
-                <Box ml={2} fontSize={24} color="green">
-                  {`(${searchWord}) 검색 결과`}
-                </Box>
-              </Grid>
-            ) : null }
-
-          </Grid>
+  return participants.length > 0 ? (
+    <Fragment>
+      <Box mt={2} mb={1}>
+        <Grid container justify="space-between" alignItems="center">
+          <Grid item>※ 신청한 고객들의 카테고리별 분석자료를 각각 보실 수 있습니다.</Grid>
           <Grid item>
-            <StyledText color="#b9b9b9" fontSize="14px">
-              {`최근 업데이트: ${updateTime}`}
-            </StyledText>
+            <StyledSelect
+              native
+              variant="outlined"
+              value={order.orderBy}
+              onChange={selectBoxChange}
+              fullWidth
+            >
+              <option value="YOU_SUBS">구독수</option>
+              <option value="YOU_VIEWS">조회수</option>
+            </StyledSelect>
           </Grid>
         </Grid>
       </Box>
-      {loading ? (
-        <LoadingComponent />
-      ) : (
-        <Fragment>
-          <TableContainer component={Paper}>
-            <Table aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  { tableRows.title.map(item => (
-                    <StyledTableCell
-                      key={item.text}
-                      align={item.align}
-                      width={item.width}
-                    >
-                      { item.id ? (
-                        <Grid container justify="center">
-                          <Grid item>
-                            <StyledTableSortLabel
-                              id={item.id}
-                              color="#66f8ff"
-                              active={order.orderBy === item.id}
-                              direction={order.orderBy === item.id ? order.direction : 'desc'}
-                              onClick={() => sortTable(item.id)}
-                            >
-                              {item.text}
-                            </StyledTableSortLabel>
-                          </Grid>
-                        </Grid>
-                      ) : item.text }
-                    </StyledTableCell>
-                  )) }
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {influencers.map(row => (
-                  <TableRow
-                    classes={{ root: classes.tableRowRoot }}
-                    key={row.YOU_ID}
-                    onClick={() => getAnalysis(row.YOU_ID)}
+      <Table>
+        <TableHead>
+          <TableRow>
+            {tableRows.map(item => (
+              <StyledTableCell key={item.text} align={item.align} width={item.width || null}>
+                {item.id ? (
+                  <StyledTableSortLabel
+                    color="#66f8ff"
+                    active={order.orderBy === item.id}
+                    direction={order.orderBy === item.id ? order.direction : 'desc'}
+                    onClick={() => sortTable(item.id)}
                   >
-                    <StyledTableCell align="center">
-                      {row.rownum}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {row.INF_NAME}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {row.YOU_NAME}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {row.YOU_SUBS}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {row.YOU_VIEWS}
-                    </StyledTableCell>
-                    <StyledTableCell padding="2px" align="center">
-                      <StyledIconButton onClick={() => getAnalysis(row.YOU_ID)}>
-                        <AssessmentRounded />
-                      </StyledIconButton>
-                    </StyledTableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <Box py={4}>
-            <Grid container justify="center">
-              <Grid item>
-                <MyPagination
-                  itemCount={count}
-                  page={page}
-                  changePage={changePage}
-                  perPage={10}
-                />
-              </Grid>
-            </Grid>
-          </Box>
-        </Fragment>
-      )}
-      <AnalysisDialog
-        open={dialogOpen}
-        closeDialog={toggleDialog}
-        id={youtubeId}
+                    {item.text}
+                  </StyledTableSortLabel>
+                ) : item.text}
+              </StyledTableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {participants.map(row => (
+            <StyledTableRow hover key={row.id}>
+              <StyledTableCell align="center">
+                {row.rownum}
+              </StyledTableCell>
+              <StyledTableCell>
+                {row.PAR_NAME}
+              </StyledTableCell>
+              <StyledTableCell>
+                {row.YOU_NAME}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {row.YOU_SUBS}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {row.YOU_VIEWS}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                <StyledButton
+                  height="25px"
+                  padding="0px 5px"
+                  onClick={() => getAnalysis(row.YOU_ID)}
+                >
+                      분석
+                </StyledButton>
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {row.PAR_STATUS === '1' ? (
+                  <StyledButton
+                    background={Colors.green}
+                    hoverBackground={Colors.greenHover}
+                    height="25px"
+                    padding="0px 5px"
+                    onClick={() => clickSelect(row.PAR_ID)}
+                  >
+                          선정
+                  </StyledButton>
+                ) : (
+                  <StyledText color={Colors.green}>선정됨</StyledText>
+                )}
+              </StyledTableCell>
+            </StyledTableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <Box py={4}>
+        <Grid container justify="center">
+          <Grid item>
+            <MyPagination
+              itemCount={count}
+              page={page}
+              changePage={changePage}
+              perPage={limit}
+            />
+          </Grid>
+        </Grid>
+      </Box>
+      <AnalysisDialog open={dialogOpen} closeDialog={toggleDialog} id={selectedId} />
+      <ConfirmDialog
+        open={confirmDialogOpen}
+        closeDialog={toggleConfirmDialog}
+        dialogText="선정하시겠습니까?"
+        onConfirm={selectParticipant}
       />
-    </Box>
+    </Fragment>
+  ) : (
+    <Box textAlign="center" my={4}>신청한 리뷰어 없습니다</Box>
   );
 }
 

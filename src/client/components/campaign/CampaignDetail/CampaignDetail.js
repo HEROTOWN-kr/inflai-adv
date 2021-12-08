@@ -29,6 +29,7 @@ import ParticipantList from './ParticipantList';
 import SelectedList from './SelectedList';
 import CampaignParInsta from './CampaignParInsta';
 import CampaignParBlog from './CampaignParBlog';
+import CampaignParYoutube from './CampaignParYoutube';
 
 const useStyles = makeStyles({
   root: {
@@ -161,7 +162,7 @@ function ParticipantComponent(props) {
   if (type === '1') {
     return <CampaignParInsta />;
   } if (type === '2') {
-    return <Box>Youtube</Box>;
+    return <CampaignParYoutube />;
   } if (type === '3') {
     return <CampaignParBlog />;
   }
