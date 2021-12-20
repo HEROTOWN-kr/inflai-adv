@@ -3,11 +3,11 @@ import React, {
   useContext, useEffect, useState
 } from 'react';
 import {
-  Grid, Divider, CircularProgress, Button, Box, Hidden, IconButton, makeStyles
+  Grid, Divider, CircularProgress, Button, Box, Hidden, IconButton, makeStyles, Typography
 } from '@material-ui/core';
 import axios from 'axios';
 import {
-  Sync, ChevronRight, Print, Share, Error, SupervisorAccount, ExpandMore, ExpandLess, FiberManualRecord
+  Sync, ChevronRight, Print, Share, Error, SupervisorAccount, ExpandMore, ExpandLess, FiberManualRecord, Clear
 } from '@material-ui/icons';
 import ReactHtmlParser from 'react-html-parser';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -34,6 +34,11 @@ import CampaignParYoutube from './CampaignParYoutube';
 const useStyles = makeStyles({
   root: {
     color: Colors.pink3
+  },
+  linkText: {
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
   },
   rightMenu: {
     borderBottom: 'solid 1px #efefef',
@@ -66,6 +71,10 @@ const RightMenuLinks = [
   {
     text: '제공내역',
     link: 'provide'
+  },
+  {
+    text: '참조할 링크',
+    link: 'links'
   },
   {
     text: '검색 키워드',
@@ -238,7 +247,9 @@ function CampaignDetail() {
           history.push('/');
         } else {
           const { data } = res.data;
-          setProductData(data);
+          const { AD_LINKS } = data;
+          const links = AD_LINKS ? JSON.parse(AD_LINKS) : null;
+          setProductData({ ...data, AD_LINKS: links });
           setCurrentImage(data.TB_PHOTO_ADs[0].PHO_FILE_URL);
           setLoading(false);
         }
@@ -493,6 +504,41 @@ function CampaignDetail() {
                   </Grid>
                 </React.Fragment>
               ) : null}
+              <Grid item xs={12}>
+                <Divider />
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container>
+                  <ElementLink name="links" />
+                  <Grid item>
+                    <Box width="125px" fontWeight="bold">
+                      참조할 링크
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm className="provide-info">
+                    { productData.AD_LINKS ? (
+                      <Grid container spacing={1}>
+                        { productData.AD_LINKS.map(item => (
+                          <Grid item key={item}>
+                            <Box
+                              mt={{ xs: '4px', md: 0 }}
+                              p="2px 5px 2px 10px"
+                              bgcolor="#0000000d"
+                              borderRadius="5px"
+                              maxWidth={300}
+                              style={{ cursor: 'pointer' }}
+                              onClick={() => window.open(item, '_blank')}
+                            >
+                              <Typography classes={{ root: classes.linkText }}>{item}</Typography>
+                            </Box>
+                          </Grid>
+                        ))}
+                      </Grid>
+                    ) : null}
+                    <Box />
+                  </Grid>
+                </Grid>
+              </Grid>
               <Grid item xs={12}>
                 <Divider />
               </Grid>

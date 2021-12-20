@@ -151,7 +151,7 @@ function ParticipantList(props) {
                               css={{ background: Colors.blue2, cursor: 'pointer' }}
                               onClick={() => clickInfo(item.INF_ID)}
                             >
-                              <StyledText color="#fff">정보</StyledText>
+                              <StyledText color="#fff">요약분석</StyledText>
                             </Box>
                           </Grid>
                         ) : null}
@@ -179,20 +179,20 @@ function ParticipantList(props) {
                   </Grid>
                 </Grid>
                 <Grid item>
-                  <Box width="125px">
+                  <Box width="130px">
                     <Grid container spacing={1}>
                       {item.INS_ID ? (
                         <Grid item xs={12}>
                           <StyledButton
                             height={40}
-                            padding="0 20px"
+                            padding="0 12px"
                             background={Colors.green}
                             hoverBackground={Colors.greenHover}
                             onClick={() => clickInstaInfo(item.INF_ID)}
-                            startIcon={<Description />}
+                            // startIcon={<Description />}
                             disabled={item.INS_STATUS === 0}
                           >
-                            보고서
+                            계정분석 보고서
                           </StyledButton>
                         </Grid>
                       ) : null}
