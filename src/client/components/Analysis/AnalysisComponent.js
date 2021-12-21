@@ -354,8 +354,8 @@ function AnalysisComponent(props) {
 
   function getTestInstaInfo() {
     setLoading(true);
-    axios.get('/api/testRoute/test', {
-      params: { instaId: 1158 }
+    axios.get('/api/testRoute/getInstaInsights', {
+      params: { INS_ID: 1297 }
     }).then((res) => {
       const { data } = res.data;
       setInstaData({ ...instaData, ...data });
@@ -368,6 +368,7 @@ function AnalysisComponent(props) {
 
   useEffect(() => {
     getInstaInfo();
+    // getTestInstaInfo();
   }, []);
 
   function testExcel() {
