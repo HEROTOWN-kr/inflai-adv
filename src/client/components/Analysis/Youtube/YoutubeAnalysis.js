@@ -447,7 +447,7 @@ function YoutubeAnalysis(props) {
                         <HelpOutline fontSize="small" classes={{ root: classes.tooltipIcon }} />
                       </Tooltip>
                     </Box>
-                    {/* <CategoryPieChart detectData={youtubeInfo.content_second_prediction} process={process} /> */}
+                     {/*<CategoryPieChart detectData={youtubeInfo.content_second_prediction} process={process} />*/}
                     <PieChartApex series={youtubeInfo.content_second_series} colors={youtubeInfo.content_second_colors} labels={youtubeInfo.content_second_labels} />
                   </Box>
                 </Grid>
@@ -460,7 +460,7 @@ function YoutubeAnalysis(props) {
                       </Tooltip>
                     </Box>
                     {/* <Box className={classes.boxTitle}>하위 카테고리 분석 결과</Box> */}
-                    {/* <CategoryPieChart detectData={youtubeInfo.content_primary_prediction} process={process} /> */}
+                    {/* <CategoryPieChart detectData={youtubeInfo.content_primary_prediction} process={process} />*/}
                     <PieChartApex series={youtubeInfo.content_primary_series} colors={youtubeInfo.content_primary_colors} labels={youtubeInfo.content_primary_labels} />
                   </Box>
                 </Grid>
