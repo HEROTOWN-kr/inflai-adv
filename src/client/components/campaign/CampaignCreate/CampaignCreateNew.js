@@ -319,18 +319,18 @@ function CampaignCreateNew() {
             register={register}
             errors={errors}
             name="campaignName"
-            placeholder="예시) 초경량 휴대용 선풍기, 인스타그래머 모집"
+            placeholder="Ex) 5만원 반려동물 구강케어 1박스 (30매)"
           />
         </Grid>
         <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">짧은설명</StyledText></Box>
+          <Box mb={1}><StyledText color="#3f51b5">제공하는 제품(서비스) 짧은설명</StyledText></Box>
           <ReactFormText
             register={register}
             errors={errors}
             multiline
             rows={5}
             name="shortDisc"
-            placeholder="예시) 3단계 풍속조절이 되는 휴대용 선풍기에요. 설명이 정확하고 매력적일수록 더 많은 인플루언서의 신청을 받을 수 있습니다"
+            placeholder={'설명이 자세히 되어야지 제품에 대한 이해도가 높아집니다\n자세히 써 주세요'}
           />
         </Grid>
         <Grid item xs={12}>
@@ -551,30 +551,32 @@ function CampaignCreateNew() {
             </Grid>
           </Grid>
         ) : null}
-        <Grid item xs={4}>
-          <Box mb={1}><StyledText color="#3f51b5">참조할 링크</StyledText></Box>
-          <ReactFormText
-            register={register}
-            errors={errors}
-            name="linkItem"
-            placeholder="예시) https://www.inflai.com"
-            InputProps={{
-              classes: { adornedEnd: classes.endAdornment },
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={addLink}>
-                    <ArrowRightAlt fontSize="small" />
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-            onKeyPress={(ev) => {
-              if (ev.key === 'Enter') {
-                ev.preventDefault();
-                addLink();
-              }
-            }}
-          />
+        <Grid item xs={12}>
+          <Box mb={1}><StyledText color="#3f51b5">참조할 링크 (링크는 최대 3개까지 입력가능합니다. 주소 쓰시고 꼭 화살표 버튼 눌러주세요)</StyledText></Box>
+          <Box maxWidth={400}>
+            <ReactFormText
+              register={register}
+              errors={errors}
+              name="linkItem"
+              placeholder="예시) https://www.inflai.com"
+              InputProps={{
+                classes: { adornedEnd: classes.endAdornment },
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={addLink}>
+                      <ArrowRightAlt fontSize="small" />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+              onKeyPress={(ev) => {
+                if (ev.key === 'Enter') {
+                  ev.preventDefault();
+                  addLink();
+                }
+              }}
+            />
+          </Box>
         </Grid>
 
         <Grid item xs={12}>
@@ -585,6 +587,9 @@ function CampaignCreateNew() {
             multiline
             rows={5}
             name="discription"
+            placeholder={'예) 사진 5장 이상 + 동영상 20초 1개 이상\n'
+            + '반려동물이 구강케어 필름 먹는 사진과 영상 각 1장씩\n'
+            + '나머지는 제품사진 등 올려주세요\n'}
           />
         </Grid>
         <Grid item xs={12}>
@@ -625,7 +630,7 @@ function CampaignCreateNew() {
         </Grid>
         <Grid item xs={12}>
           <Box mb={1}>
-            <StyledText color="#3f51b5">이미지 업로드</StyledText>
+            <StyledText color="#3f51b5">이미지 업로드 (5장 까지 업로드 가능합니다)</StyledText>
             <input
               type="text"
               readOnly
@@ -646,6 +651,22 @@ function CampaignCreateNew() {
         <Grid item xs={12}>
           <Box mb={1}><StyledText color="#3f51b5">상세정보</StyledText></Box>
           <CKEditorComponent control={control} name="detailInfo" errors={errors} />
+
+          <Box
+            mt="10px"
+            fontSize="15px"
+            color="#4c4747"
+            bgcolor="#9af9ae"
+            padding="10px 15px"
+            borderRadius="8px"
+          >
+            입력 하시느라 고생하셨습니다. 모집기간 중에도 인플루언서 선정이 가능합니다.
+            신청하신 인플루언서들 계정의 인공지능 분석 자료를 실시간 보실 수 있습니다.
+            광고주님의 제품에 맞는 인플루언서들을 선정하시면 곧바로 인플루언서들에게 선정소식과 함께 광고주님의 전화번호가 전송이 됩니다.
+            궁금하신 내용등은 직접 상담하시면 됩니다.
+            인플루언서들이 리뷰를 올리면 선정된 인플루언서 탭에서 링크를 확인하실 수 있습니다.
+            링크 내용이 마음에 드시면 별점 5개를 주어서 인플루언서를 평가해 주세요.
+          </Box>
         </Grid>
 
         <Grid item xs={12}>

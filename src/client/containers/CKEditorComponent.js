@@ -16,13 +16,13 @@ function CKEditorComponent(props) {
           <CKEditor
             editor={DecoupledEditor}
             config={
-                        {
-                          ckfinder: {
-                            uploadUrl: '/api/TB_AD/uploadAWS'
-                          },
-                        }
-                    }
-                    // data="<p>Hello from CKEditor 5!</p>"
+                {
+                  ckfinder: {
+                    uploadUrl: '/api/TB_AD/uploadAWS'
+                  },
+                  placeholder: '제품판매하는 쇼핑몰 URL 및 기타 자료 있으면 올려주세요 !!!'
+                }
+            }
             onInit={(editor) => {
               const toolbarContainer = document.querySelector(`#${name}_toolbar-container`);
               toolbarContainer.appendChild(editor.ui.view.toolbar.element);
