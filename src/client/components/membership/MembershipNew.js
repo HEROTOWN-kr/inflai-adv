@@ -6,13 +6,9 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import Slider from 'react-slick';
 import { Clear, Description } from '@material-ui/icons';
-import StyledText from '../../containers/StyledText';
 import { Colors } from '../../lib/Сonstants';
-import PlanSuccessDialog from './PlanSuccessDialog';
 import AuthContext from '../../context/AuthContext';
-import Payment from './Payment';
 import StyledButton from '../../containers/StyledButton';
 import CouponDialog from './CouponDialog';
 
@@ -39,6 +35,55 @@ const useStyles = makeStyles({
     padding: 0,
     minWidth: 0
   },
+  plan: {
+    textAlign: 'center',
+    padding: '35px',
+    marginBottom: '50px',
+    boxSizing: 'border-box',
+    borderRadius: '13px',
+    maxWidth: '325px',
+    color: '#7f7f7f',
+    backgroundColor: '#ffffff',
+    '& .plan-name': {
+      margin: '0 auto',
+      fontSize: '35px',
+      color: '#142b65',
+      fontWeight: '600'
+    },
+    '& .divider': {
+      margin: '0 auto',
+      marginTop: '20px',
+      borderRadius: '13px',
+      width: '95px',
+      height: '3px'
+    },
+    '& .plan-detail': {
+      margin: '35px 0',
+      fontSize: '15px',
+      letterSpacing: '0.01em',
+      lineHeight: '24px'
+    },
+    '& .plan-price': {
+      fontSize: '35px',
+      fontWeight: '600',
+      color: '#142b65'
+    },
+    '& .pay-button': {
+      margin: '26px auto',
+      padding: '11px 27px',
+      width: '100px',
+      fontSize: '18px',
+      color: '#ffffff',
+      cursor: 'pointer',
+      borderRadius: '30px'
+    },
+    '& .add-info': {
+      marginBottom: '10px',
+      fontSize: '15px',
+      letterSpacing: '0.01em',
+      lineHeight: '24px'
+    },
+  }
 });
 
 function SpringDialog(props) {
@@ -119,6 +164,7 @@ function MembershipNew() {
   const [springDialog, setSpringDialog] = useState(false);
   const history = useHistory();
   const { token } = useContext(AuthContext);
+  const classes = useStyles();
 
   function getPlans() {
     axios.get('/api/TB_PLAN/').then((res) => {
@@ -148,55 +194,37 @@ function MembershipNew() {
   }
 
   function selectPlan(plan) {
-    if (token) {
-      const {
-        PLN_ID, PLN_PRICE_MONTH, PLN_NAME, PLN_MONTH
-      } = plan;
-
-      if (PLN_PRICE_MONTH > 0) {
-        axios.get('/api/TB_ADVERTISER/getInfo', { params: { token, } }).then((res) => {
-          const {
-            ADV_ID, ADV_COM_NAME, ADV_NAME, ADV_EMAIL, ADV_TEL
-          } = res.data.data;
-
-
-          const finalPrice = Math.round(PLN_PRICE_MONTH * PLN_MONTH * 1.1);
-
-          const planData = {
-            ADV_ID,
-            ADV_COM_NAME,
-            ADV_NAME,
-            ADV_EMAIL,
-            ADV_TEL,
-            PLN_ID,
-            PLN_NAME: `${PLN_NAME} 멤버십 구독`,
-            finalPrice: finalPrice.toString()
-          };
-
-          setSelected(planData);
-          toggleSpringDialog();
-        }).catch((err) => {
-          alert(err.response.data.message);
-        });
-      } else {
-        axios.post('/api/TB_SUBSCRIPTION/save', {
-          token,
-          PLN_ID
-        }).then((res) => {
-          if (res.status === 202) {
-            alert(res.data.message);
-            history.push('/Profile/UserInfo');
-          } else if (res.status === 201) {
-            alert(res.data.message);
-          } else {
-            history.push('/Campaign');
-          }
-        }).catch(error => alert(error.response.data.message));
-      }
-    } else {
+    if (!token) {
       history.push('/Login');
+      return;
     }
-    // toggleSpringDialog();
+
+    const { PLN_ID, PLN_PRICE_MONTH } = plan;
+
+    if (PLN_PRICE_MONTH > 0) {
+      axios.get('/api/TB_ADVERTISER/getInfo', { params: { token } }).then((res) => {
+        const { ADV_ID } = res.data.data;
+        const planData = { ADV_ID, PLN_ID };
+        setSelected(planData);
+        toggleSpringDialog();
+      }).catch((err) => {
+        alert(err.response.data.message);
+      });
+    } else {
+      axios.post('/api/TB_SUBSCRIPTION/save', {
+        token,
+        PLN_ID
+      }).then((res) => {
+        if (res.status === 202) {
+          alert(res.data.message);
+          history.push('/Profile/UserInfo');
+        } else if (res.status === 201) {
+          alert(res.data.message);
+        } else {
+          history.push('/Campaign');
+        }
+      }).catch(error => alert(error.response.data.message));
+    }
   }
 
   return (
@@ -221,39 +249,93 @@ function MembershipNew() {
         </Box>
         <Box mt="20px" mb="90px">
           <Grid container spacing={2} justify="space-between" style={{ marginBottom: '-50px' }}>
-            {plans.map((item, index) => (
+            {/* {plans.map((item, index) => (
               <Grid item key={item.PLN_ID}>
-                <Box
-                  textAlign="center"
-                  p="35px"
-                  mb="50px"
-                  boxSizing="border-box"
-                  border={`3px solid ${PlanColors[index]}`}
-                  borderRadius="13px"
-                  maxWidth="325px"
-                  color="#7f7f7f"
-                  bgcolor="#ffffff"
-                >
-                  <Box m="0 auto" fontSize="35px" color="#142b65" fontWeight="600">{item.PLN_NAME}</Box>
-                  <Box m="0 auto" mt="20px" bgcolor={PlanColors[index]} borderRadius="13px" width="95px" height="3px" component="hr" />
-                  <Box my="35px" fontSize="15px" letterSpacing="0.01em" lineHeight="24px">{item.PLN_DETAIL2}</Box>
-                  <Box fontSize="35px" fontWeight="600" color="#142b65">{`${(item.PLN_PRICE_MONTH).toLocaleString('en')}원` || '무료'}</Box>
+                <Box border={`3px solid ${PlanColors[index]}`} className={classes.plan}>
+                  <Box className="plan-name">{item.PLN_NAME}</Box>
+                  <Box className="divider" bgcolor={PlanColors[index]} component="hr" />
+                  <Box className="plan-detail">{item.PLN_DETAIL2}</Box>
+                  <Box className="plan-price">{`${(item.PLN_PRICE_MONTH).toLocaleString('en')}원` || '무료'}</Box>
                   <Box mt="6px">VAT 포함</Box>
-                  {/* <Box my="35px" m="0 auto" p="11px 27px" width="100px" fontSize="18px" color="#ffffff" bgcolor={PlanColors[index]} borderRadius="30px" css={{ cursor: 'pointer' }}>구독하기</Box> */}
-                  {/* <Payment bgColor={PlanColors[index]} /> */}
-                  { item.PLN_PRICE_MONTH > 0 ? (
-                    <Box my="26px" m="0 auto" p="11px 27px" width="100px" fontSize="18px" color="#ffffff" bgcolor={PlanColors[index]} borderRadius="30px" css={{ cursor: 'pointer' }} onClick={() => selectPlan(item)}>
-                        결제
-                    </Box>
-                  ) : (
-                    <Box my="26px" m="0 auto" p="11px 27px" width="100px" fontSize="18px" color="#ffffff" bgcolor={PlanColors[index]} borderRadius="30px" css={{ cursor: 'pointer' }} onClick={() => selectPlan(item)}>
-                     시작
-                    </Box>
-                  )}
-                  <Box mb="10px" fontSize="15px" letterSpacing="0.01em" lineHeight="24px">{item.PLN_DETAIL}</Box>
+                  <Box className="pay-button" bgcolor={PlanColors[index]} onClick={() => selectPlan(item)}>
+                    { item.PLN_PRICE_MONTH > 0 ? '결제' : '시작' }
+                  </Box>
+                  <Box className="add-info">{item.PLN_DETAIL}</Box>
                 </Box>
               </Grid>
-            ))}
+            ))} */}
+            <Grid item>
+              <Box border={`3px solid ${PlanColors[0]}`} className={classes.plan}>
+                <Box className="plan-name">무료사용자</Box>
+                <Box className="divider" bgcolor={PlanColors[0]} component="hr" />
+                <Box className="plan-detail">• 1개월 간 총 10명의 인플루언서를 인공지능으로 선택할수 있습니다.</Box>
+                <Box className="plan-price">0원</Box>
+                <Box mt="6px">VAT 포함</Box>
+                <Box
+                  className="pay-button"
+                  bgcolor={PlanColors[0]}
+                  onClick={() => selectPlan({ PLN_ID: 4, PLN_PRICE_MONTH: 0 })}
+                >
+                  시작
+                </Box>
+                <Box className="add-info">1개월 무료 플랜입니다</Box>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box border={`3px solid ${PlanColors[1]}`} className={classes.plan}>
+                <Box className="plan-name">교육생</Box>
+                <Box className="divider" bgcolor={PlanColors[1]} component="hr" />
+                <Box className="plan-detail">• 1개월 간 총 20명의 인플루언서를 인공지능으로 선택할수 있습니다.</Box>
+                <Box className="plan-price">0원</Box>
+                <Box mt="6px">VAT 포함</Box>
+                <Box
+                  className="pay-button"
+                  bgcolor={PlanColors[1]}
+                  onClick={() => selectPlan({ PLN_ID: 8, PLN_PRICE_MONTH: 0 })}
+                >
+                  신청
+                </Box>
+                <Box className="add-info">1개월 무료 플랜입니다</Box>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box border={`3px solid ${PlanColors[2]}`} className={classes.plan}>
+                <Box className="plan-name">일반</Box>
+                <Box className="divider" bgcolor={PlanColors[2]} component="hr" />
+                <Box className="plan-detail" style={{ margin: '20px 0 26px 0' }}>
+                  • 1개월 간 총 50명의 인플루언서를 인공지능으로 선택할수 있습니다.
+                  <br />
+                  (SNS, 블로그 인플라이 대해서 글 쓰기)
+                </Box>
+                <Box className="plan-price">0원</Box>
+                <Box mt="6px">VAT 포함</Box>
+                <Box
+                  className="pay-button"
+                  bgcolor={PlanColors[2]}
+                  onClick={() => selectPlan({ PLN_ID: 9, PLN_PRICE_MONTH: 0 })}
+                >
+                  신청
+                </Box>
+                <Box className="add-info">1개월 무료 플랜입니다</Box>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box border={`3px solid ${PlanColors[3]}`} className={classes.plan}>
+                <Box className="plan-name">프로</Box>
+                <Box className="divider" bgcolor={PlanColors[3]} component="hr" />
+                <Box className="plan-detail">• 1개월 간 무제한 인플루언서를 인공지능으로 선택할수 있습니다.</Box>
+                <Box className="plan-price">100,000원</Box>
+                <Box mt="6px">VAT 포함</Box>
+                <Box
+                  className="pay-button"
+                  bgcolor={PlanColors[3]}
+                  onClick={() => selectPlan({ PLN_ID: 10, PLN_PRICE_MONTH: 100000 })}
+                >
+                  결제
+                </Box>
+                <Box className="add-info">1개월 무료 플랜입니다</Box>
+              </Box>
+            </Grid>
           </Grid>
         </Box>
 

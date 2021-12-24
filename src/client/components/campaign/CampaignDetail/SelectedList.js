@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Box, Grid } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import { StarBorder, Description } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
 import { Colors } from '../../../lib/Сonstants';
 import StyledImage from '../../../containers/StyledImage';
 import defaultAccountImage from '../../../img/default_account_image.png';
@@ -15,6 +16,17 @@ import InsightDialog from './InsightDialog';
 import ConfirmDialog from '../../../containers/ConfirmDialog';
 import DetailDataDialog from './DetailDataDialog';
 import MyPagination from '../../../containers/MyPagination';
+import HelpTooltip from '../../Analysis/HelpTooltip';
+
+const useStyles = makeStyles(() => ({
+  textAndIcon: {
+    display: 'flex',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    fontSize: '14px',
+    color: '#000'
+  },
+}));
 
 function RatingComponent(props) {
   const { id, rating } = props;
@@ -51,6 +63,7 @@ function SelectedList(props) {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const limit = 10;
+  const classes = useStyles();
 
   const changePage = (event, value) => {
     setPage(value);
@@ -174,8 +187,9 @@ function SelectedList(props) {
                 </Grid>
                 <Grid item xs={12} sm="auto">
                   {item.PAR_REVIEW ? (
-                    <Box>
+                    <Box className={classes.textAndIcon}>
                       <RatingComponent id={item.PAR_ID} rating={item.PAR_RATING} />
+                      <HelpTooltip title="인플루언서들이 올린 리뷰자료를 보시고 별점으로 평가해주세요" />
                     </Box>
                   ) : null}
                   <Box mt="5px" ml="auto" width={{ xs: '100%', sm: '120px' }}>
