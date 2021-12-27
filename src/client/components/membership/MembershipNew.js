@@ -41,7 +41,7 @@ const useStyles = makeStyles({
     marginBottom: '50px',
     boxSizing: 'border-box',
     borderRadius: '13px',
-    maxWidth: '325px',
+    maxWidth: '335px',
     color: '#7f7f7f',
     backgroundColor: '#ffffff',
     '& .plan-name': {
@@ -305,7 +305,7 @@ function MembershipNew() {
                 <Box className="plan-detail" style={{ margin: '20px 0 26px 0' }}>
                   • 1개월 간 총 50명의 인플루언서를 인공지능으로 선택할수 있습니다.
                   <br />
-                  (SNS, 블로그 인플라이 대해서 글 쓰기)
+                  (본인의 sns 블로그에 인플라이 소개하기)
                 </Box>
                 <Box className="plan-price">0원</Box>
                 <Box mt="6px">VAT 포함</Box>
