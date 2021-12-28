@@ -15,6 +15,7 @@ import InsightDialog from './InsightDialog';
 import { AdvertiseTypes, Colors } from '../../../lib/Сonstants';
 import ConfirmDialog from '../../../containers/ConfirmDialog';
 import StyledSelect from '../../../containers/StyledSelect';
+import InstaInsightDialog from './InstaInsightDialog';
 
 const tableHeader = [
   {
@@ -57,6 +58,11 @@ const tableHeader = [
     colName: 'INS_SCORE',
   },
   {
+    text: '요약',
+    align: 'center',
+    width: '50px',
+  },
+  {
     text: '분석',
     align: 'center',
     width: '50px',
@@ -71,6 +77,7 @@ const tableHeader = [
 function CampaignParInsta() {
   const [participants, setParticipants] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [instaDialogOpen, setInstaDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
   const [count, setCount] = useState(0);
@@ -83,6 +90,10 @@ function CampaignParInsta() {
 
   function toggleDialog() {
     setDialogOpen(!dialogOpen);
+  }
+
+  function toggleInstaDialog() {
+    setInstaDialogOpen(!instaDialogOpen);
   }
 
   function toggleConfirmDialog() {
@@ -136,6 +147,11 @@ function CampaignParInsta() {
   function clickSelect(id) {
     setSelectedId(id);
     toggleConfirmDialog();
+  }
+
+  function clickInstaInfo(id) {
+    setSelectedId(id);
+    toggleInstaDialog();
   }
 
   function selectBoxChange(event) {
@@ -243,7 +259,16 @@ function CampaignParInsta() {
                   padding="0px 5px"
                   onClick={() => clickInfo(row.INF_ID)}
                 >
-                    분석
+                    요약
+                </StyledButton>
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                <StyledButton
+                  height="25px"
+                  padding="0px 5px"
+                  onClick={() => clickInstaInfo(row.INF_ID)}
+                >
+                  분석
                 </StyledButton>
               </StyledTableCell>
               <StyledTableCell align="center">
@@ -278,6 +303,7 @@ function CampaignParInsta() {
         </Grid>
       </Box>
       <InsightDialog open={dialogOpen} closeDialog={toggleDialog} selectedId={selectedId} />
+      <InstaInsightDialog open={instaDialogOpen} handleClose={toggleInstaDialog} INS_ID={selectedId} />
       <ConfirmDialog
         open={confirmDialogOpen}
         closeDialog={toggleConfirmDialog}
