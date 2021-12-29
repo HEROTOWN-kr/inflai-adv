@@ -578,7 +578,8 @@ function AnalysisComponent(props) {
                     </Grid>
                     <Grid item>
                       <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                        {`${instaData.INS_SCORE}점`}
+                        {/* {`${instaData.INS_SCORE}점`} */}
+                        서비스예정
                       </Typography>
                     </Grid>
                   </Grid>
@@ -727,10 +728,12 @@ function AnalysisComponent(props) {
           </Grid>
           <Box p={2} mt={{ xs: '25px', md: '50px' }} bgcolor="#F2F2F2">
             <Typography variant="subtitle2">
-              { `${instaData.INS_NAME}는 ${instaData.INS_FLWR}명의 팔로워를 보유하고 있으며 이는 ${instaData.influencerType} 입니다.
-                인플루언서 영향력을 나타내는 인플라이지수는 ${instaData.INS_SCORE}
-                점이며 최근 30일간 ${instaData.monthMedia.mediaCount}건의 포스팅으로 진행하였고
-                ${instaData.monthMedia.likeSum}건의 좋아요수와 ${instaData.monthMedia.commentsSum}건의 댓글을 받아 공감능력은 ${instaData.ability}%(${instaData.abilityType}) 상태입니다.
+              { `${instaData.INS_NAME}는 ${instaData.INS_FLWR}명의 팔로워를 보유하고 있으며 
+                이는 인플루언서 구분 중 ${instaData.influencerType}에 해당됩니다.
+                인플루언서 영향력을 나타내는 인플라이지수는 서비스 예정 주이며 
+                최근 30일간 ${instaData.monthMedia.mediaCount}건의 포스팅으로 진행하였고
+                ${instaData.monthMedia.likeSum}건의 좋아요수와 ${instaData.monthMedia.commentsSum}건의 댓글을 받아 
+                공감능력은 ${instaData.ability}%(${instaData.abilityType}) 상태입니다.
                 보유팔로워의 ${locationMax.value}%가 ${locationMax.description}인으로 구성되어있으며
                 ${instaData.ageMax}대 ${instaData.genderMax}걸쳐서 가장 큰 영향력을 발휘하게 됩니다.
                 게시물 인공지능분석 결과 가장 높은 비율인 ${imgDetectMax.value}%를 (${imgDetectMax.description})가 차지하고 있어서
