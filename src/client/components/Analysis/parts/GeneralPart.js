@@ -21,8 +21,7 @@ function GeneralPart(props) {
           <Box borderRadius="7px" overflow="hidden">
             <Box bgcolor="#FFF" px={2} py="45px">
               <Typography classes={{ root: classes.generalStats }}>
-                {instaData.INS_RANK}
-위
+                {`상위 ${instaData.INS_RANK} / ${instaData.INS_COUNT} `}
               </Typography>
             </Box>
             <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
@@ -44,7 +43,8 @@ function GeneralPart(props) {
             </Box>
             <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
               <Typography variant="body1">
-                  특정 범위 동안 온라인 상태였던 인스타 사용자 팔로워 수 합계
+                {`${instaData.INS_FLWR} 팔뤄워 중 
+                ${instaData.followerActivity.flwrsMax}명 적극적 팔로워로 나타났다`}
               </Typography>
             </Box>
           </Box>
@@ -61,7 +61,7 @@ function GeneralPart(props) {
             </Box>
             <Box px="25px" pt="15px" pb="30px" bgcolor="#F2F2F2">
               <Typography variant="body1">
-                사용자가 포스팅된 계시물의 좋아요수랑 댓끌수를 대비해서 나오는 공감능력은 상태입니다.
+                사용자가 포스팅된 계시물의 좋아요수랑 댓글수를 대비해서 나오는 공감능력은 상태입니다.
               </Typography>
             </Box>
           </Box>

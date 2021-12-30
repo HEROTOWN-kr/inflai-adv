@@ -609,8 +609,7 @@ function AnalysisComponent(props) {
                     </Grid>
                     <Grid item>
                       <Typography variant="body1" classes={{ root: classes.bold600 }}>
-                        {instaData.INS_RANK}
-                        위
+                        {`상위 ${instaData.INS_RANK} / ${instaData.INS_COUNT} `}
                       </Typography>
                     </Grid>
                   </Grid>

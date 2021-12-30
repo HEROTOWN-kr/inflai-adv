@@ -162,15 +162,15 @@ function AudiencePart(props) {
               충성도있는 팔로워 수로 본 영향력지수
             </Typography>
             <Typography variant="body1">
-              0%~1%  : 미미
+              0%~5%  : 미미
               <br />
-              1%~3%  : 저조
+              5%~10%  : 저조
               <br />
-              3%~5%  : 보통
+              10%~15%  : 보통
               <br />
-              5%~7%  : 우수
+              15%~20%  : 우수
               <br />
-              7%이상  : 매우우수
+              25%이상  : 매우우수
             </Typography>
 
           </Box>

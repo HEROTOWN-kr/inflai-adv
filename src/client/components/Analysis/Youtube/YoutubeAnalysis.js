@@ -252,7 +252,7 @@ function YoutubeAnalysis(props) {
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
 
   const viewLine = createDataSet({ color: green, label: '조회수', data: youtubeInfo.videos_info.View_count });
-  const commentLine = createDataSet({ color: violet, label: '댓끌수', data: youtubeInfo.videos_info.Comment_count });
+  const commentLine = createDataSet({ color: violet, label: '댓글수', data: youtubeInfo.videos_info.Comment_count });
   const views = createDataSet({
     color: violet,
     label: '구독자수',

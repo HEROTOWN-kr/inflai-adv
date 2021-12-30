@@ -160,7 +160,7 @@ function MediaCard(props) {
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <Typography variant="body1" style={{ textAlign: 'center' }}>
-                      {'댓끌수: '}
+                      {'댓글수: '}
                       <span style={{ color: 'blue' }}>
                         {post.comments_count}
                             개
