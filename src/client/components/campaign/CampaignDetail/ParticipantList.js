@@ -189,6 +189,7 @@ function ParticipantList(props) {
                             background={Colors.green}
                             hoverBackground={Colors.greenHover}
                             onClick={() => clickInstaInfo(item.INF_ID)}
+                            // onClick={() => clickInstaInfo(item.INS_ID)}
                             // startIcon={<Description />}
                             disabled={item.INS_STATUS === 0}
                           >

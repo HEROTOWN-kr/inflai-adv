@@ -166,6 +166,7 @@ const defaultData = {
   influencerType: '',
   mediaData: {
     urls: Array(9).fill(null),
+    shortCodes: Array(9).fill(null),
     comments: [12, 19, 3, 5, 2, 3],
     likes: [12, 19, 3, 5, 2, 3],
     likesMaxIdx: 1,
@@ -354,9 +355,10 @@ function AnalysisComponent(props) {
 
   function getTestInstaInfo() {
     setLoading(true);
-    axios.get('/api/testRoute/getInstaInsights', {
-      params: { INS_ID: 1297 }
+    axios.get('/api/TB_INSTA/getInstaInsights', {
+      params: { INS_ID } // 1297
     }).then((res) => {
+      if (res.status === 201 || res.status === 202) return;
       const { data } = res.data;
       setInstaData({ ...instaData, ...data });
       setLoading(false);

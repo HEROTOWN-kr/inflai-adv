@@ -265,6 +265,17 @@ function PostPart(props) {
               </Box>
             </Box>
           ))}
+
+          {/* {mediaData.shortCodes.map((item, index) => {
+            const url = `https://www.instagram.com/p/${item}/media/?size=l`;
+            return (
+              <Box key={index} width="100%">
+                <Box margin="0 8px">
+                  <img className={classes.imgFile} src={url || defaultImage} />
+                </Box>
+              </Box>
+            );
+          })} */}
         </Slider>
       </Box>
       <Box my="50px">
