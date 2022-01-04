@@ -169,6 +169,7 @@ const defaultData = {
     shortCodes: Array(9).fill(null),
     comments: [12, 19, 3, 5, 2, 3],
     likes: [12, 19, 3, 5, 2, 3],
+    lastImages: [],
     likesMaxIdx: 1,
     commentsMaxIdx: 1
   },
@@ -369,8 +370,8 @@ function AnalysisComponent(props) {
   }
 
   useEffect(() => {
-    getInstaInfo();
-    // getTestInstaInfo();
+    // getInstaInfo();
+    getTestInstaInfo();
   }, []);
 
   function testExcel() {

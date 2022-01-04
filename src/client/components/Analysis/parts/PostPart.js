@@ -258,24 +258,21 @@ function PostPart(props) {
       </Box>
       <Box margin="0 -8px">
         <Slider {...settings}>
-          {mediaData.urls.map((item, index) => (
+          {/* {mediaData.urls.map((item, index) => (
+            <Box key={index} width="100%">
+              <Box margin="0 8px">
+                <img className={classes.imgFile} src={item || defaultImage} />
+              </Box>
+            </Box>
+          ))} */}
+
+          {mediaData.lastImages.map((item, index) => (
             <Box key={index} width="100%">
               <Box margin="0 8px">
                 <img className={classes.imgFile} src={item || defaultImage} />
               </Box>
             </Box>
           ))}
-
-          {/* {mediaData.shortCodes.map((item, index) => {
-            const url = `https://www.instagram.com/p/${item}/media/?size=l`;
-            return (
-              <Box key={index} width="100%">
-                <Box margin="0 8px">
-                  <img className={classes.imgFile} src={url || defaultImage} />
-                </Box>
-              </Box>
-            );
-          })} */}
         </Slider>
       </Box>
       <Box my="50px">
