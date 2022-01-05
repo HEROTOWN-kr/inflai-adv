@@ -5,6 +5,7 @@ import ReactWordcloud from 'react-wordcloud';
 import BarComponent from '../BarComponent';
 import HelpTooltip from '../HelpTooltip';
 import analysisStyles from '../AnalysisStyle';
+import WordCloud from '../WordCloud';
 
 
 const words = [
@@ -422,7 +423,8 @@ function ReactionPart(props) {
           <Grid item xs={12} md={6}>
             <Typography variant="subtitle2" paragraph>해시태그 주요 키워드</Typography>
             <Box height="250px" p="20px" bgcolor="#FFF" borderRadius="7px">
-              <ReactWordcloud options={options} words={instaData.hashTags} callbacks={callbacks} />
+              {/* <ReactWordcloud options={options} words={instaData.hashTags} callbacks={callbacks} /> */}
+              <WordCloud />
             </Box>
           </Grid>
         </Grid>
