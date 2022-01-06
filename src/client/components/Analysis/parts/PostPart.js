@@ -258,21 +258,21 @@ function PostPart(props) {
       </Box>
       <Box margin="0 -8px">
         <Slider {...settings}>
-          {/* {mediaData.urls.map((item, index) => (
-            <Box key={index} width="100%">
-              <Box margin="0 8px">
-                <img className={classes.imgFile} src={item || defaultImage} />
-              </Box>
-            </Box>
-          ))} */}
-
-          {mediaData.lastImages.map((item, index) => (
+          {mediaData.urls.map((item, index) => (
             <Box key={index} width="100%">
               <Box margin="0 8px">
                 <img className={classes.imgFile} src={item || defaultImage} />
               </Box>
             </Box>
           ))}
+
+          {/* {mediaData.lastImages.map((item, index) => (
+            <Box key={index} width="100%">
+              <Box margin="0 8px">
+                <img className={classes.imgFile} src={item || defaultImage} />
+              </Box>
+            </Box>
+          ))} */}
         </Slider>
       </Box>
       <Box my="50px">

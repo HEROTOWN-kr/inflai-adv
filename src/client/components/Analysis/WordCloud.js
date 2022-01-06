@@ -3,55 +3,119 @@ import * as am5 from '@amcharts/amcharts5';
 import * as am5wc from '@amcharts/amcharts5/wc';
 
 function AmChartWordCloud() {
+  const color1 = '#CB02C8';
+  const color2 = '#691FD5';
+  const color3 = '#482CF9';
+  const color4 = '#89A4FF';
+
   useLayoutEffect(() => {
     const root = am5.Root.new('wordCloud');
 
     const series = root.container.children.push(
       am5wc.WordCloud.new(root, {
-        maxCount: 100, // the cloud will limited to 100 words
-        minValue: 2, // only words that appear twice or more in sourceText will appear in the cloud
         angles: [0],
+        minFontSize: 18,
+        maxFontSize: 56,
         colors: am5.ColorSet.new(root, {
           colors: [
-            am5.color(0x095256),
-            am5.color(0x087f8c),
-            am5.color(0x5aaa95),
-            am5.color(0x86a873),
-            am5.color(0xbb9f06)
+            am5.color(color1),
+            am5.color(color2),
+            am5.color(color2),
+            am5.color(color2),
+            am5.color(color2),
+            am5.color(color2),
+            am5.color(color2),
+            am5.color(color2),
+            am5.color(color2),
+            am5.color(color3),
+            am5.color(color3),
+            am5.color(color3),
+            am5.color(color3),
+            am5.color(color3),
+            am5.color(color3),
+            am5.color(color3),
+            am5.color(color3),
+            am5.color(color3),
+            am5.color(color3),
+            am5.color(color3),
+            am5.color(color3),
+            am5.color(color3),
+            am5.color(color3),
+            am5.color(color4),
+            am5.color(color4),
+            am5.color(color4),
+            am5.color(color4),
+            am5.color(color4),
+            am5.color(color4),
+            am5.color(color4),
+            am5.color(color4),
+            am5.color(color4),
+            am5.color(color4),
+            am5.color(color4),
+            am5.color(color4),
+            am5.color(color4),
+            am5.color(color4),
+            am5.color(color4),
+            am5.color(color4),
+            am5.color(color4),
+            am5.color(color4)
           ]
         })
       })
     );
 
     series.labels.template.setAll({
-      fontFamily: 'Courier New',
       fill: am5.color(0x85ffc4),
-      templateField: 'labelSettings'
+      templateField: 'labelSettings',
+      fontFamily: 'Courier New',
+      paddingLeft: 5,
+      paddingRight: 5,
+      paddingTop: 5,
+      paddingBottom: 5
     });
 
     series.data.setAll([
-      {
-        category: '안철수',
-        value: 64.96,
-        labelSettings: { fill: am5.color(0x8d8d8d) }
-      },
-      {
-        category: '이준석',
-        value: 45.07,
-        labelSettings: { fill: am5.color(0x297373) }
-      },
-      { category: '정부', value: 45.24 },
-      { category: '방문', value: 45.08 },
-      { category: '정부', value: 45.35 },
-      { category: '지원', value: 33.91 },
-      { category: '문재인', value: 33.91 },
-      { category: '발표', value: 33.91 },
-      { category: '부인', value: 33.91 },
-      { category: '여의도', value: 33.91 },
-      { category: '공수처', value: 33.91 },
-      { category: '아들', value: 33.91 },
-      { category: '김건회', value: 33.91 },
-      { category: '김혜경', value: 33.91 }
+      { category: '정부', value: 45 },
+      { category: '정부', value: 23 },
+      { category: '정부', value: 23 },
+      { category: '정부', value: 23 },
+      { category: '방문', value: 23 },
+      { category: '부인', value: 23 },
+      { category: '아들', value: 23 },
+      { category: '부인', value: 23 },
+      { category: '아들', value: 23 },
+      { category: '정부', value: 15 },
+      { category: '발표', value: 15 },
+      { category: '부인', value: 15 },
+      { category: '여의도', value: 15 },
+      { category: '지원', value: 15 },
+      { category: '문재인', value: 15 },
+      { category: '발표', value: 15 },
+      { category: '부인', value: 15 },
+      { category: '여의도', value: 15 },
+      { category: '공수처', value: 15 },
+      { category: '여의도', value: 15 },
+      { category: '공수처', value: 15 },
+      { category: '여의도', value: 15 },
+      { category: '공수처', value: 15 },
+      { category: '아들', value: 10 },
+      { category: '김건회', value: 10 },
+      { category: '김혜경', value: 10 },
+      { category: '아들', value: 10 },
+      { category: '김건회', value: 10 },
+      { category: '김혜경', value: 10 },
+      { category: '아들', value: 10 },
+      { category: '김건회', value: 10 },
+      { category: '김혜경', value: 10 },
+      { category: '방문', value: 10 },
+      { category: '부인', value: 10 },
+      { category: '아들', value: 10 },
+      { category: '김혜경', value: 10 },
+      { category: '김혜경', value: 10 },
+      { category: '방문', value: 10 },
+      { category: '부인', value: 10 },
+      { category: '아들', value: 10 },
+      { category: '김혜경', value: 10 }
     ]);
 
     root.current = root;

@@ -188,10 +188,10 @@ function ParticipantList(props) {
                             padding="0 12px"
                             background={Colors.green}
                             hoverBackground={Colors.greenHover}
-                            // onClick={() => clickInstaInfo(item.INF_ID)}
-                            onClick={() => clickInstaInfo(item.INS_ID)}
+                            onClick={() => clickInstaInfo(item.INF_ID)}
+                            // onClick={() => clickInstaInfo(item.INS_ID)}
                             // startIcon={<Description />}
-                            // disabled={item.INS_STATUS === 0}
+                            disabled={item.INS_STATUS === 0}
                           >
                             계정분석 보고서
                           </StyledButton>

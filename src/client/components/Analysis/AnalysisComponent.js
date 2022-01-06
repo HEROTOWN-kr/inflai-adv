@@ -370,8 +370,8 @@ function AnalysisComponent(props) {
   }
 
   useEffect(() => {
-    // getInstaInfo();
-    getTestInstaInfo();
+    getInstaInfo();
+    // getTestInstaInfo();
   }, []);
 
   function testExcel() {
