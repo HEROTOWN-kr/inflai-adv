@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box, Grid, Table, TableBody, TableHead, TableRow
+  Box, Grid, Table, TableBody, TableContainer, TableHead, TableRow, useMediaQuery, useTheme
 } from '@material-ui/core';
 import { useHistory, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { ArrowForward } from '@material-ui/icons';
 import StyledTableCell from '../../../containers/StyledTableCell';
 import StyledTableRow from '../../../containers/StyledTableRow';
 import StyledText from '../../../containers/StyledText';
@@ -25,7 +26,8 @@ const tableHeader = [
   },
   {
     text: '이름',
-    align: 'center'
+    align: 'center',
+    width: '60px',
   },
   /* {
     text: '인스타계정',
@@ -34,28 +36,32 @@ const tableHeader = [
   {
     text: '팔로워수',
     align: 'center',
-    colName: 'INS_FLWR'
+    colName: 'INS_FLWR',
+    width: '83px',
   },
   {
     text: '좋아요수',
     align: 'center',
     colName: 'INS_LIKES',
+    width: '83px',
   },
   {
     text: '댓글수',
     align: 'center',
     colName: 'INS_CMNT',
+    width: '83px',
   },
   {
     text: '게시물',
     align: 'center',
-    width: '70px',
     colName: 'INS_MEDIA_CNT',
+    width: '70px',
   },
   {
     text: 'AI 종합 점수',
     align: 'center',
     colName: 'INS_SCORE',
+    width: '105px',
   },
   {
     text: '요약',
@@ -87,6 +93,8 @@ function CampaignParInsta() {
   const history = useHistory();
   const adId = params.id;
   const limit = 10;
+  const theme = useTheme();
+  const isMD = useMediaQuery(theme.breakpoints.up('md'));
 
   function toggleDialog() {
     setDialogOpen(!dialogOpen);
@@ -159,10 +167,14 @@ function CampaignParInsta() {
   }
 
   return (
-    <Box my={{ xs: 0, sm: 4 }} boxSizing="border-box" maxWidth={1200} css={{ margin: '0 auto' }}>
+    <Box my={{ xs: 2, sm: 4 }} boxSizing="border-box" maxWidth={1200} css={{ margin: '0 auto' }}>
       <Box mb={1}>
         <Grid container justify="space-between" alignItems="center">
-          <Grid item>※ 신청한 고객들의 카테고리별 분석자료를 각각 보실 수 있습니다.</Grid>
+          {isMD ? (
+            <Grid item>
+              {isMD ? '※ 신청한 고객들의 카테고리별 분석자료를 각각 보실 수 있습니다.' : '※ 분석 자료'}
+            </Grid>
+          ) : null}
           <Grid item>
             <StyledSelect
               native
@@ -178,45 +190,57 @@ function CampaignParInsta() {
               {/* <option value="INS_RANK">순위</option> */}
             </StyledSelect>
           </Grid>
+          {isMD ? null : (
+            <Grid item>
+              <ArrowForward />
+            </Grid>
+          )}
         </Grid>
       </Box>
-      <Table>
-        <TableHead>
-          <TableRow>
-            {tableHeader.map(item => (
-              <StyledTableCell key={item.text} align={item.align} width={item.width || null}>
-                {item.colName ? (
-                  <StyledTableSortLabel
-                    color="#66f8ff"
-                    active={order.orderBy === item.colName}
-                    direction={order.orderBy === item.colName ? order.direction : 'desc'}
-                    onClick={() => sortTable(item.colName)}
-                  >
-                    {item.text}
-                  </StyledTableSortLabel>
-                ) : item.text}
-              </StyledTableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {participants.map(row => (
-            <StyledTableRow
-              hover
-              key={row.id}
-              onClick={(event) => {}}
-            >
-              <StyledTableCell align="center">
-                <StyledText textAlign="center">
-                  {row.rownum}
-                </StyledText>
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                <StyledText textAlign="center">
-                  {row.PAR_NAME || '-'}
-                </StyledText>
-              </StyledTableCell>
-              {/* <StyledTableCell align="center">
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              {tableHeader.map(item => (
+                <StyledTableCell key={item.text} align={item.align} width={item.width || null}>
+                  {item.colName ? (
+                    <StyledTableSortLabel
+                      color="#66f8ff"
+                      active={order.orderBy === item.colName}
+                      direction={order.orderBy === item.colName ? order.direction : 'desc'}
+                      onClick={() => sortTable(item.colName)}
+                    >
+                      <Box minWidth={item.width ? { xs: item.width, md: 'auto' } : 'auto'}>
+                        {item.text}
+                      </Box>
+                    </StyledTableSortLabel>
+                  ) : (
+                    <Box minWidth={item.width ? { xs: item.width, md: 'auto' } : 'auto'}>
+                      {item.text}
+                    </Box>
+                  )}
+                </StyledTableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {participants.map(row => (
+              <StyledTableRow
+                hover
+                key={row.id}
+                onClick={(event) => {}}
+              >
+                <StyledTableCell align="center">
+                  <StyledText textAlign="center">
+                    {row.rownum}
+                  </StyledText>
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <StyledText textAlign="center">
+                    {row.PAR_NAME || '-'}
+                  </StyledText>
+                </StyledTableCell>
+                {/* <StyledTableCell align="center">
                 {row.INS_USERNAME ? (
                   <StyledLink
                     href={`https://www.instagram.com/${row.INS_USERNAME}/`}
@@ -228,68 +252,69 @@ function CampaignParInsta() {
                   <StyledText textAlign="center">-</StyledText>
                 )}
               </StyledTableCell> */}
-              <StyledTableCell align="center">
-                <StyledText textAlign="center">
-                  {row.INS_FLWR || '-'}
-                </StyledText>
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                <StyledText textAlign="center">
-                  {row.INS_LIKES || '-'}
-                </StyledText>
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                <StyledText textAlign="center">
-                  {row.INS_CMNT || '-'}
-                </StyledText>
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                <StyledText textAlign="center">
-                  {row.INS_MEDIA_CNT || '-'}
-                </StyledText>
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                <StyledText textAlign="center">
-                  {row.INS_SCORE || '-'}
-                </StyledText>
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                <StyledButton
-                  height="25px"
-                  padding="0px 5px"
-                  onClick={() => clickInfo(row.INF_ID)}
-                >
-                    요약
-                </StyledButton>
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                <StyledButton
-                  height="25px"
-                  padding="0px 5px"
-                  onClick={() => clickInstaInfo(row.INF_ID)}
-                >
-                  분석
-                </StyledButton>
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                {row.PAR_STATUS === '1' ? (
+                <StyledTableCell align="center">
+                  <StyledText textAlign="center">
+                    {row.INS_FLWR ? row.INS_FLWR.toLocaleString('en') : '-'}
+                  </StyledText>
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <StyledText textAlign="center">
+                    {row.INS_LIKES ? row.INS_LIKES.toLocaleString('en') : '-'}
+                  </StyledText>
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <StyledText textAlign="center">
+                    {row.INS_CMNT ? row.INS_CMNT.toLocaleString('en') : '-'}
+                  </StyledText>
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <StyledText textAlign="center">
+                    {row.INS_MEDIA_CNT ? row.INS_MEDIA_CNT.toLocaleString('en') : '-'}
+                  </StyledText>
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <StyledText textAlign="center">
+                    {row.INS_SCORE ? row.INS_SCORE.toLocaleString('en') : '-'}
+                  </StyledText>
+                </StyledTableCell>
+                <StyledTableCell align="center">
                   <StyledButton
-                    background={Colors.green}
-                    hoverBackground={Colors.greenHover}
                     height="25px"
                     padding="0px 5px"
-                    onClick={() => clickSelect(row.PAR_ID)}
+                    onClick={() => clickInfo(row.INF_ID)}
                   >
-                      선정
+                      요약
                   </StyledButton>
-                ) : (
-                  <StyledText color={Colors.green}>선정됨</StyledText>
-                )}
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <StyledButton
+                    height="25px"
+                    padding="0px 5px"
+                    onClick={() => clickInstaInfo(row.INF_ID)}
+                  >
+                      분석
+                  </StyledButton>
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {row.PAR_STATUS === '1' ? (
+                    <StyledButton
+                      background={Colors.green}
+                      hoverBackground={Colors.greenHover}
+                      height="25px"
+                      padding="0px 5px"
+                      onClick={() => clickSelect(row.PAR_ID)}
+                    >
+                          선정
+                    </StyledButton>
+                  ) : (
+                    <StyledText color={Colors.green}>선정됨</StyledText>
+                  )}
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       <Box py={4}>
         <Grid container justify="center">
           <Grid item>

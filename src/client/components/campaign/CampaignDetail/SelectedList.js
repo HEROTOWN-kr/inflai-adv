@@ -118,7 +118,7 @@ function SelectedList(props) {
         <Box py={4}>
           <Grid container justify="center">
             <Grid item>
-                          신청한 리뷰어 없습니다
+              선정한 리뷰어 없습니다
             </Grid>
           </Grid>
         </Box>

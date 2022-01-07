@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import {
-  Box, Dialog, IconButton, makeStyles
+  Box, Dialog, IconButton, makeStyles, useMediaQuery
 } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
+import { useTheme } from '@material-ui/core/styles';
 import { Colors } from '../../../lib/Сonstants';
 import AnalysisComponent from '../../Analysis/AnalysisComponent';
 
@@ -30,11 +31,13 @@ const useStyles = makeStyles({
 const InstaInsightDialog = (props) => {
   const { INS_ID, open, handleClose } = props;
   const classes = useStyles();
+  const theme = useTheme();
+  const isMD = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
     <Dialog
-      /* classes={{ paper: classes.paper }}
-      fullScreen */
+      /* classes={{ paper: classes.paper }} */
+      fullScreen={!isMD}
       disableBackdropClick
       scroll="body"
       classes={{
