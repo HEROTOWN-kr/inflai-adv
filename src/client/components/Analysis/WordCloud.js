@@ -2,7 +2,54 @@ import React, { useLayoutEffect } from 'react';
 import * as am5 from '@amcharts/amcharts5';
 import * as am5wc from '@amcharts/amcharts5/wc';
 
-function AmChartWordCloud() {
+const defaultCategories = [
+  { category: '정부', value: 45 },
+  { category: '정부', value: 23 },
+  { category: '정부', value: 23 },
+  { category: '정부', value: 23 },
+  { category: '방문', value: 23 },
+  { category: '부인', value: 23 },
+  { category: '아들', value: 23 },
+  { category: '부인', value: 23 },
+  { category: '아들', value: 23 },
+  { category: '정부', value: 15 },
+  { category: '발표', value: 15 },
+  { category: '부인', value: 15 },
+  { category: '여의도', value: 15 },
+  { category: '지원', value: 15 },
+  { category: '문재인', value: 15 },
+  { category: '발표', value: 15 },
+  { category: '부인', value: 15 },
+  { category: '여의도', value: 15 },
+  { category: '공수처', value: 15 },
+  { category: '여의도', value: 15 },
+  { category: '공수처', value: 15 },
+  { category: '여의도', value: 15 },
+  { category: '공수처', value: 15 },
+  { category: '아들', value: 10 },
+  { category: '김건회', value: 10 },
+  { category: '김혜경', value: 10 },
+  { category: '아들', value: 10 },
+  { category: '김건회', value: 10 },
+  { category: '김혜경', value: 10 },
+  { category: '아들', value: 10 },
+  { category: '김건회', value: 10 },
+  { category: '김혜경', value: 10 },
+  { category: '방문', value: 10 },
+  { category: '부인', value: 10 },
+  { category: '아들', value: 10 },
+  { category: '김혜경', value: 10 },
+  { category: '김혜경', value: 10 },
+  { category: '방문', value: 10 },
+  { category: '부인', value: 10 },
+  { category: '아들', value: 10 },
+  { category: '김혜경', value: 10 }
+];
+
+function AmChartWordCloud(props) {
+  const { instaData } = props;
+  const { cloudTags } = instaData || {};
+
   const color1 = '#CB02C8';
   const color2 = '#691FD5';
   const color3 = '#482CF9';
@@ -10,6 +57,7 @@ function AmChartWordCloud() {
 
   useLayoutEffect(() => {
     const root = am5.Root.new('wordCloud');
+    const tags = cloudTags && cloudTags.length > 0 ? cloudTags : defaultCategories;
 
     const series = root.container.children.push(
       am5wc.WordCloud.new(root, {
@@ -74,56 +122,14 @@ function AmChartWordCloud() {
       paddingBottom: 5
     });
 
-    series.data.setAll([
-      { category: '정부', value: 45 },
-      { category: '정부', value: 23 },
-      { category: '정부', value: 23 },
-      { category: '정부', value: 23 },
-      { category: '방문', value: 23 },
-      { category: '부인', value: 23 },
-      { category: '아들', value: 23 },
-      { category: '부인', value: 23 },
-      { category: '아들', value: 23 },
-      { category: '정부', value: 15 },
-      { category: '발표', value: 15 },
-      { category: '부인', value: 15 },
-      { category: '여의도', value: 15 },
-      { category: '지원', value: 15 },
-      { category: '문재인', value: 15 },
-      { category: '발표', value: 15 },
-      { category: '부인', value: 15 },
-      { category: '여의도', value: 15 },
-      { category: '공수처', value: 15 },
-      { category: '여의도', value: 15 },
-      { category: '공수처', value: 15 },
-      { category: '여의도', value: 15 },
-      { category: '공수처', value: 15 },
-      { category: '아들', value: 10 },
-      { category: '김건회', value: 10 },
-      { category: '김혜경', value: 10 },
-      { category: '아들', value: 10 },
-      { category: '김건회', value: 10 },
-      { category: '김혜경', value: 10 },
-      { category: '아들', value: 10 },
-      { category: '김건회', value: 10 },
-      { category: '김혜경', value: 10 },
-      { category: '방문', value: 10 },
-      { category: '부인', value: 10 },
-      { category: '아들', value: 10 },
-      { category: '김혜경', value: 10 },
-      { category: '김혜경', value: 10 },
-      { category: '방문', value: 10 },
-      { category: '부인', value: 10 },
-      { category: '아들', value: 10 },
-      { category: '김혜경', value: 10 }
-    ]);
+    series.data.setAll(tags);
 
     root.current = root;
 
     return () => {
       root.dispose();
     };
-  }, []);
+  }, [cloudTags]);
 
   return <div id="wordCloud" style={{ width: '100%', height: '250px' }} />;
 }
