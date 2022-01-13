@@ -349,11 +349,11 @@ function CampaignEdit() {
             register={register}
             errors={errors}
             name="campaignName"
-            placeholder="예시) ㅇㅇ공기청정기 블로거, 인스타그래머 모집"
+            placeholder="Ex) 5만원 반려동물 구강케어 1박스 (30매)"
           />
         </Grid>
         <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">짧은설명</StyledText></Box>
+          <Box mb={1}><StyledText color="#3f51b5">제공하는 제품(서비스) 짧은설명</StyledText></Box>
           <ReactFormText
             register={register}
             errors={errors}
@@ -361,7 +361,7 @@ function CampaignEdit() {
             rows={5}
             rowsMax={10}
             name="shortDisc"
-            placeholder="예시) 3단계의 공기청정 기능이 탑재된 휴대용 공기청정기 입니다. 설명이 정확하고 매력적일수록 더 많은 인플루언서의 신청을 받을 수 있습니다"
+            placeholder={'설명이 자세히 되어야지 제품에 대한 이해도가 높아집니다\n자세히 써 주세요'}
           />
         </Grid>
         <Grid item xs={12}>
@@ -574,30 +574,32 @@ function CampaignEdit() {
           </Grid>
         ) : null}
 
-        <Grid item xs={4}>
-          <Box mb={1}><StyledText color="#3f51b5">참조할 링크</StyledText></Box>
-          <ReactFormText
-            register={register}
-            errors={errors}
-            name="linkItem"
-            placeholder="예시) https://www.inflai.com"
-            InputProps={{
-              classes: { adornedEnd: classes.endAdornment },
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={addLink}>
-                    <ArrowRightAlt fontSize="small" />
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-            onKeyPress={(ev) => {
-              if (ev.key === 'Enter') {
-                ev.preventDefault();
-                addLink();
-              }
-            }}
-          />
+        <Grid item xs={12}>
+          <Box mb={1}><StyledText color="#3f51b5">참조할 링크 (링크는 최대 3개까지 입력가능합니다. 주소 쓰시고 꼭 화살표 버튼 눌러주세요)</StyledText></Box>
+          <Box maxWidth={400}>
+            <ReactFormText
+              register={register}
+              errors={errors}
+              name="linkItem"
+              placeholder="예시) https://www.inflai.com"
+              InputProps={{
+                classes: { adornedEnd: classes.endAdornment },
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={addLink}>
+                      <ArrowRightAlt fontSize="small" />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+              onKeyPress={(ev) => {
+                if (ev.key === 'Enter') {
+                  ev.preventDefault();
+                  addLink();
+                }
+              }}
+            />
+          </Box>
         </Grid>
 
         <Grid item xs={12}>
@@ -609,6 +611,9 @@ function CampaignEdit() {
             rows={5}
             rowsMax={10}
             name="discription"
+            placeholder={'예) 사진 5장 이상 + 동영상 20초 1개 이상\n'
+            + '반려동물이 구강케어 필름 먹는 사진과 영상 각 1장씩\n'
+            + '나머지는 제품사진 등 올려주세요\n'}
           />
         </Grid>
         <Grid item xs={12}>
@@ -651,7 +656,7 @@ function CampaignEdit() {
         </Grid>
         <Grid item xs={12}>
           <Box mb={1}>
-            <StyledText color="#3f51b5">이미지 업로드</StyledText>
+            <StyledText color="#3f51b5">이미지 업로드 (5장 까지 업로드 가능합니다)</StyledText>
             <input
               type="text"
               readOnly
