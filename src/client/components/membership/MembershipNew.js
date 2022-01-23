@@ -264,7 +264,7 @@ function MembershipNew() {
                 </Box>
               </Grid>
             ))} */}
-            <Grid item>
+            {/* <Grid item>
               <Box border={`3px solid ${PlanColors[0]}`} className={classes.plan}>
                 <Box className="plan-name">무료사용자</Box>
                 <Box className="divider" bgcolor={PlanColors[0]} component="hr" />
@@ -334,6 +334,109 @@ function MembershipNew() {
                   결제
                 </Box>
                 <Box className="add-info">1개월 무료 플랜입니다</Box>
+              </Box>
+            </Grid> */}
+
+
+            {/*<Grid item>
+              <Box border={`3px solid ${PlanColors[0]}`} width={340} className={classes.plan}>
+                <Box className="plan-name">1 개월</Box>
+                <Box className="divider" bgcolor={PlanColors[0]} component="hr" />
+                <Box className="plan-detail" style={{ marginBottom: '59px' }}>• 최대 10명 모집 가능</Box>
+                <Box className="plan-price">0원</Box>
+                <Box mt="6px">VAT 별도</Box>
+                <Box
+                  className="pay-button"
+                  bgcolor={PlanColors[0]}
+                  onClick={() => selectPlan({ PLN_ID: 4, PLN_PRICE_MONTH: 0 })}
+                >
+                  시작
+                </Box>
+                <Box className="add-info">1개월 무료 플랜입니다</Box>
+              </Box>
+            </Grid>*/}
+            <Grid item>
+              <Box border={`3px solid ${PlanColors[0]}`} width={340} className={classes.plan}>
+                <Box className="plan-name">1개월</Box>
+                <Box className="divider" bgcolor={PlanColors[0]} component="hr" />
+                <Box className="plan-detail">
+                  1개월 이용권
+                  <br />
+                  월 최대 10명
+                </Box>
+                <Box className="plan-price">30 만원</Box>
+                <Box mt="6px">VAT 별도</Box>
+                <Box
+                  className="pay-button"
+                  bgcolor={PlanColors[0]}
+                  onClick={() => selectPlan({ PLN_ID: 4, PLN_PRICE_MONTH: 0 })}
+                >
+                  결제
+                </Box>
+                <Box className="add-info">1개월 플랜입니다</Box>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box border={`3px solid ${PlanColors[1]}`} width={340} className={classes.plan}>
+                <Box className="plan-name">3개월</Box>
+                <Box className="divider" bgcolor={PlanColors[1]} component="hr" />
+                <Box className="plan-detail">
+                  3개월 이용권
+                  <br />
+                  뭘 최대 100명
+                </Box>
+                <Box className="plan-price">90 만원</Box>
+                <Box mt="6px">VAT 별도</Box>
+                <Box
+                  className="pay-button"
+                  bgcolor={PlanColors[1]}
+                  onClick={() => selectPlan({ PLN_ID: 8, PLN_PRICE_MONTH: 0 })}
+                >
+                  결제
+                </Box>
+                <Box className="add-info">3개월 플랜입니다</Box>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box border={`3px solid ${PlanColors[2]}`} width={340} className={classes.plan}>
+                <Box className="plan-name">6개월</Box>
+                <Box className="divider" bgcolor={PlanColors[2]} component="hr" />
+                <Box className="plan-detail">
+                  6개월 이용권
+                  <br />
+                  월 최대 100명
+                </Box>
+                <Box className="plan-price">120 만원</Box>
+                <Box mt="6px">VAT 별도</Box>
+                <Box
+                  className="pay-button"
+                  bgcolor={PlanColors[2]}
+                  onClick={() => selectPlan({ PLN_ID: 9, PLN_PRICE_MONTH: 0 })}
+                >
+                  결제
+                </Box>
+                <Box className="add-info">6개월 플랜입니다</Box>
+              </Box>
+            </Grid>
+            <Grid item>
+              <Box border={`3px solid ${PlanColors[3]}`} width={340} className={classes.plan}>
+                <Box className="plan-name">12개월</Box>
+                <Box className="divider" bgcolor={PlanColors[3]} component="hr" />
+                <Box className="plan-detail">
+                  1년 이용권
+                  <br />
+                  뭘 최대 150명 / 년간 최대 1,800명
+                </Box>
+                <Box className="plan-price">200 만원</Box>
+                <Box mt="6px">VAT 별도</Box>
+                <Box
+                  className="pay-button"
+                  bgcolor={PlanColors[3]}
+                  onClick={() => selectPlan({ PLN_ID: 10, PLN_PRICE_MONTH: 100000 })}
+                >
+                  결제
+                </Box>
+                <Box className="add-info">1년 플랜입니다</Box>
               </Box>
             </Grid>
           </Grid>
