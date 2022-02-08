@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box, Grid, Table, TableBody, TableContainer, TableHead, TableRow, useMediaQuery, useTheme
+  Box,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  makeStyles,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  TableRow,
+  useMediaQuery,
+  useTheme
 } from '@material-ui/core';
 import { useHistory, useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -80,8 +91,15 @@ const tableHeader = [
   }
 ];
 
+const useStyles = makeStyles({
+  checkboxLabel: {
+    marginRight: 0
+  }
+});
+
 function CampaignParInsta() {
   const [participants, setParticipants] = useState([]);
+  const [selected, setSelected] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [instaDialogOpen, setInstaDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
@@ -90,11 +108,11 @@ function CampaignParInsta() {
   const [page, setPage] = useState(1);
   const [order, setOrder] = useState({ orderBy: 'INS_FLWR', direction: 'desc' });
   const params = useParams();
-  const history = useHistory();
   const adId = params.id;
   const limit = 10;
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
+  const classes = useStyles();
 
   function toggleDialog() {
     setDialogOpen(!dialogOpen);
@@ -109,10 +127,13 @@ function CampaignParInsta() {
   }
 
   function getParticipants() {
+    const resParams = {
+      ...order, adId, limit, page
+    };
+    if (selected) resParams.selected = '1';
+
     axios.get('/api/TB_PARTICIPANT/getListInsta', {
-      params: {
-        ...order, adId, limit, page
-      }
+      params: resParams
     }).then((res) => {
       setParticipants(res.data.data);
       setCount(res.data.count);
@@ -121,7 +142,7 @@ function CampaignParInsta() {
 
   useEffect(() => {
     getParticipants();
-  }, [order, page]);
+  }, [order, page, selected]);
 
   const changePage = (event, value) => {
     setPage(value);
@@ -176,19 +197,39 @@ function CampaignParInsta() {
             </Grid>
           ) : null}
           <Grid item>
-            <StyledSelect
-              native
-              variant="outlined"
-              value={order.orderBy}
-              onChange={selectBoxChange}
-              fullWidth
-            >
-              <option value="INS_FLWR">팔로워수</option>
-              <option value="INS_LIKES">좋아요수</option>
-              <option value="INS_CMNT">댓글수</option>
-              <option value="INS_SCORE">점수</option>
-              {/* <option value="INS_RANK">순위</option> */}
-            </StyledSelect>
+            <Grid container spacing={1}>
+              <Grid item>
+                <StyledSelect
+                  native
+                  variant="outlined"
+                  value={order.orderBy}
+                  onChange={selectBoxChange}
+                  fullWidth
+                >
+                  <option value="INS_FLWR">팔로워수</option>
+                  <option value="INS_LIKES">좋아요수</option>
+                  <option value="INS_CMNT">댓글수</option>
+                  <option value="INS_SCORE">점수</option>
+                  {/* <option value="INS_RANK">순위</option> */}
+                </StyledSelect>
+              </Grid>
+              <Grid item>
+                <FormControlLabel
+                  control={(
+                    <Checkbox
+                      checked={selected}
+                      onChange={() => setSelected(!selected)}
+                      name="checkedB"
+                      color="secondary"
+                    />
+                    )}
+                  label="선정자"
+                  classes={{ root: classes.checkboxLabel }}
+                />
+              </Grid>
+            </Grid>
+
+
           </Grid>
           {isMD ? null : (
             <Grid item>

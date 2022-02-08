@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import axios from 'axios';
 import {
-  Box, Grid, Table, TableBody, TableHead, TableRow
+  Box, Checkbox, FormControlLabel, Grid, makeStyles, Table, TableBody, TableHead, TableRow, useMediaQuery, useTheme
 } from '@material-ui/core';
 import StyledTableCell from '../../../containers/StyledTableCell';
 import StyledTableRow from '../../../containers/StyledTableRow';
@@ -56,8 +56,15 @@ const tableHeader = [
   }
 ];
 
+const useStyles = makeStyles({
+  checkboxLabel: {
+    marginRight: 0
+  }
+});
+
 function CampaignParBlog() {
   const [participants, setParticipants] = useState([]);
+  const [selected, setSelected] = useState(false);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
@@ -66,16 +73,22 @@ function CampaignParBlog() {
   const params = useParams();
   const adId = params.id;
   const limit = 10;
+  const theme = useTheme();
+  const isMD = useMediaQuery(theme.breakpoints.up('md'));
+  const classes = useStyles();
 
   function toggleConfirmDialog() {
     setConfirmDialogOpen(!confirmDialogOpen);
   }
 
   function getParticipants() {
+    const resParams = {
+      ...order, adId, limit, page
+    };
+    if (selected) resParams.selected = '1';
+
     axios.get('/api/TB_PARTICIPANT/getListBlog', {
-      params: {
-        ...order, adId, limit, page
-      }
+      params: resParams
     }).then((res) => {
       setParticipants(res.data.data);
       setCount(res.data.count);
@@ -84,7 +97,7 @@ function CampaignParBlog() {
 
   useEffect(() => {
     getParticipants();
-  }, [order, page]);
+  }, [order, page, selected]);
 
   const changePage = (event, value) => {
     setPage(value);
@@ -122,19 +135,41 @@ function CampaignParBlog() {
     <Box my={{ xs: 0, sm: 4 }} boxSizing="border-box" maxWidth={1200} css={{ margin: '0 auto' }}>
       <Box mb={1}>
         <Grid container justify="space-between" alignItems="center">
-          <Grid item>※ 신청한 고객들의 카테고리별 분석자료를 각각 보실 수 있습니다.</Grid>
+          {isMD ? (
+            <Grid item>
+              {isMD ? '※ 신청한 고객들의 카테고리별 분석자료를 각각 보실 수 있습니다.' : '※ 분석 자료'}
+            </Grid>
+          ) : null}
           <Grid item>
-            <StyledSelect
-              native
-              variant="outlined"
-              value={order.orderBy}
-              onChange={selectBoxChange}
-              fullWidth
-            >
-              <option value="NAV_GUEST_AVG">방문자수</option>
-              <option value="NAV_FLWR">이웃</option>
-              <option value="NAV_CONT">게시물</option>
-            </StyledSelect>
+            <Grid container spacing={1}>
+              <Grid item>
+                <StyledSelect
+                  native
+                  variant="outlined"
+                  value={order.orderBy}
+                  onChange={selectBoxChange}
+                  fullWidth
+                >
+                  <option value="NAV_GUEST_AVG">방문자수</option>
+                  <option value="NAV_FLWR">이웃</option>
+                  <option value="NAV_CONT">게시물</option>
+                </StyledSelect>
+              </Grid>
+              <Grid item>
+                <FormControlLabel
+                  control={(
+                    <Checkbox
+                      checked={selected}
+                      onChange={() => setSelected(!selected)}
+                      name="checkedB"
+                      color="secondary"
+                    />
+                    )}
+                  label="선정자"
+                  classes={{ root: classes.checkboxLabel }}
+                />
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Box>
