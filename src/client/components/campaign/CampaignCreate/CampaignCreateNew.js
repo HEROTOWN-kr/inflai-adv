@@ -31,6 +31,7 @@ const snsTypes = [
   { value: '1', text: '인스타', dbValue: 'AD_INSTA' },
   { value: '2', text: '유튜브', dbValue: 'AD_YOUTUBE' },
   { value: '3', text: '블로그', dbValue: 'AD_NAVER' },
+  { value: '4', text: '기자단', dbValue: '' },
 ];
 
 const editPriceTypes = [
@@ -51,6 +52,21 @@ const videoLengthTypes = [
 const deliveryTypes = [
   { value: '0', text: '매장 방문' },
   { value: '1', text: '배송상품' },
+];
+
+const reportTypes = [
+  {
+    name: 'instagram',
+    checked: false,
+    label: '인스타',
+    value: '1'
+  },
+  {
+    name: 'blog',
+    checked: false,
+    label: '블로그',
+    value: '3'
+  }
 ];
 
 const useStyles = makeStyles({
@@ -148,7 +164,8 @@ function CampaignCreateNew() {
     editPrice: '',
     videoLength: '',
     editPriceEtc: '',
-    videoLengthEtc: ''
+    videoLengthEtc: '',
+    reportTypes,
   };
 
   Yup.addMethod(Yup.string, 'integerString', function () {
@@ -202,6 +219,10 @@ function CampaignCreateNew() {
       .test('picLength', '이미지 5개만 업러드 가능합니다', val => (images.length + dbImages.length) < 6),
     detailInfo: Yup.string()
       .test('detailInfoCheck', '내용은 최대 3,000자까지 입력 가능합니다.', val => val.length < 3000),
+    reportSns: Yup.string().when('sns', {
+      is: sns => sns === '4',
+      then: Yup.string().required('기자단 모집 SNS를 선택해주세요')
+    }),
   });
 
   const {
@@ -296,6 +317,11 @@ function CampaignCreateNew() {
     const props = { ...data, token };
     if (links.length > 0) props.links = JSON.stringify(links);
 
+    if (data.sns === '4') {
+      props.sns = data.reportSns;
+      props.report = '1';
+    }
+
     axios.post('/api/TB_AD/createBiz', props).then((res) => {
       if (images.length === 0) {
         alert('캠페인이 등록되었습니다!!');
@@ -370,9 +396,6 @@ function CampaignCreateNew() {
           <Box mb={1}>
             <StyledText color="#3f51b5">
               모집SNS
-              {/* <span style={{ color: Colors.orange }}>
-                {' 1개 캠페인=10명까지 모집이 가능합니다. 추가 모집은 캠페인을 추가생성 해주세요!'}
-              </span> */}
             </StyledText>
           </Box>
           <Controller
@@ -392,6 +415,11 @@ function CampaignCreateNew() {
             name="sns"
             control={control}
           />
+
+          { errors.sns ? (
+            <div className="error-message">{errors.sns.message}</div>
+          ) : null }
+
           { watchObj.sns === '2' ? (
             <Box color={Colors.orange}>
                 유튜버 경우 제공되는 제품(서비스)외에 편집비용이 최소 20만원부터 가능합니다.
@@ -405,9 +433,61 @@ function CampaignCreateNew() {
                 인플라이는 인공지능분석을 통해 보다 좋은 유튜버를 추천해 드리며 유튜브 영상제작과정에는 참여하지 않습니다
             </Box>
           ) : null }
-          { errors.sns ? (
-            <div className="error-message">{errors.sns.message}</div>
+
+          { watchObj.sns === '4' ? (
+            <Grid item xs={12}>
+              <Box mb={2} fontSize={14} color={Colors.orange}>
+                  기자단은 물건등을 제공하거나 방문하지 않고 사장님이 주신 사진 및 자료(스토리보드) 만으로 만드는 인스타그램이나 블로그에 업로드 하는 것 입니다
+                <br />
+                  인스타그램기자단 최소비용 : 5000원 부터
+                <br />
+                  블로그기자단 최소비용 : 2만원 부터
+                <br />
+                  각 비용은 인플루언서가 해당내용을 주신 자료대로 잘 포스팅하고 난 다음에 리뷰통해서 확인한 뒤에 직접 광고주님이 입금해주시면 됩니다
+                <br />
+                  자료를 추가하여 수정요청은 안됩니다 (추가 비용을 요구함) 따라서 처음에 자료를 잘 작성해 주세요
+                <br />
+                  자료대로 안 올라갔을 경우 수정은 1회 가능하며 직접 요청하시면 됩니다
+              </Box>
+
+              <Box mb={1}>
+                <StyledText color="#3f51b5">
+                    기자단 모집 SNS
+                </StyledText>
+              </Box>
+
+              <Grid container>
+                <Grid item>
+                  <Controller
+                    as={(
+                      <RadioGroup row aria-label="gender">
+                        {reportTypes.map((item, index) => (
+                          <FormControlLabel
+                            key={item.value}
+                            value={item.value}
+                            control={(
+                              <Radio
+                                inputRef={index === 0 ? snsRef : null}
+                              />
+                                      )}
+                            label={item.label}
+                          />
+                        ))}
+                      </RadioGroup>
+                        )}
+                    onFocus={() => snsRef.current.focus()}
+                    name="reportSns"
+                    control={control}
+                  />
+                </Grid>
+              </Grid>
+
+              { errors.reportSns ? (
+                <div className="error-message">{errors.reportSns.message}</div>
+              ) : null }
+            </Grid>
           ) : null }
+
         </Grid>
 
         { watchObj.sns === '2' ? (

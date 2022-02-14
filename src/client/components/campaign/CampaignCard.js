@@ -15,6 +15,21 @@ import noImage from '../../img/noImage.png';
 import noFound from '../../img/notFound400_316.png';
 import CopyDialog from '../profile/pages/CampaignInfo/CopyDialog';
 
+const snsTypes = {
+  1: {
+    text: 'Instagram',
+    color: Colors.pink
+  },
+  2: {
+    text: 'Youtube',
+    color: Colors.red
+  },
+  3: {
+    text: 'Blog',
+    color: Colors.green
+  }
+};
+
 const useStyles = makeStyles({
   root: {
     background: '#ffffff'
@@ -41,7 +56,8 @@ const useStyles = makeStyles({
 
 function CampaignCard(props) {
   const {
-    AD_ID, getCampaigns, image, type, srchEnd, name, shrtDisc, participantsLength, cnt, proportion, onClick, isMD
+    AD_ID, getCampaigns, image, type, srchEnd, name, report,
+    shrtDisc, participantsLength, cnt, proportion, onClick, isMD
   } = props;
 
   const [selectedCampaign, setSelectedCampaign] = useState(0);
@@ -81,7 +97,20 @@ function CampaignCard(props) {
           <Grid item xs={12}>
             <Grid container justify="space-between" alignItems="flex-end">
               <Grid item>
-                <StyledText overflowHidden lineHeight="1.3em">
+                <Grid container>
+                  { report === '1' ? (
+                    <Grid item>
+                      <Box mr="4px" color="#0027ff" fontWeight="600">(기자단)</Box>
+                    </Grid>
+                  ) : null}
+                  <Grid item>
+                    <Box mr="4px" color={snsTypes[type].color} fontWeight="600">{snsTypes[type].text}</Box>
+                  </Grid>
+                  <Grid item>
+                    {` D-${calculateDates(srchEnd)}`}
+                  </Grid>
+                </Grid>
+                {/* <StyledText overflowHidden lineHeight="1.3em">
                   {type === '1' ? (
                     <span style={{ color: Colors.pink, fontWeight: '600' }}>Instagram</span>
                   ) : null}
@@ -91,9 +120,8 @@ function CampaignCard(props) {
                   {type === '3' ? (
                     <span style={{ color: Colors.green, fontWeight: '600' }}>Blog</span>
                   ) : null}
-                  {/* <span style={{ color: Colors.pink }}>{`${AdvertiseTypes.mainType[ctg1]}/${AdvertiseTypes.subType[ctg1][ctg2]}`}</span> */}
                   {` D-${calculateDates(srchEnd)}`}
-                </StyledText>
+                </StyledText> */}
               </Grid>
               <Grid item>
                 <Grid container spacing={1}>
