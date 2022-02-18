@@ -21,6 +21,7 @@ import Privacy from '../footer/Privacy';
 import MembershipNew from '../membership/MembershipNew';
 import AnalysisComponent from '../Analysis/AnalysisComponent';
 import YoutubeAnalysis from '../Analysis/Youtube/YoutubeAnalysis';
+import Question from '../question/Question';
 
 function Main() {
   const [isMember, setIsMember] = useState(false);
@@ -95,6 +96,11 @@ function Main() {
         exact
         path="/Join"
         render={renderProps => <Join {...renderProps} />}
+      />
+      <Route
+        exact
+        path="/Question/:id"
+        render={renderProps => <Question {...renderProps} />}
       />
       <Route
         path="/Activate/:hash"

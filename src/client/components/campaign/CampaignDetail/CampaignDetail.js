@@ -727,9 +727,19 @@ function CampaignDetail() {
                       </Box>
                     ))}
                     <Box mt="20px">
-                      <StyledButton background={Colors.pink3} hoverBackground={Colors.pink} fontWeight="bold" fontSize="20px" onClick={() => history.push(`/Campaign/Edit/${adId}`)}>
-                        캠페인 수정하기
-                      </StyledButton>
+                      <Grid container spacing={1}>
+                        <Grid item xs={6}>
+                          <StyledButton background={Colors.pink3} hoverBackground={Colors.pink} fontWeight="bold" fontSize="20px" onClick={() => history.push(`/Campaign/Edit/${adId}`)}>
+                            수정
+                          </StyledButton>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <StyledButton background={Colors.blue2} hoverBackground={Colors.blue2Hover} fontWeight="bold" fontSize="20px" onClick={() => history.push(`/Question/${adId}`)}>
+                            문의
+                          </StyledButton>
+                        </Grid>
+                      </Grid>
+
                     </Box>
                   </Box>
                 </Box>
