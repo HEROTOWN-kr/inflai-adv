@@ -141,7 +141,7 @@ function QuestionDialog(props) {
         </Box>
 
         <Box mt="30px">
-          <Grid container justify="center">
+          <Grid container justify="center" spacing={1}>
             <Grid item>
               <Box width="110px">
                 <Button

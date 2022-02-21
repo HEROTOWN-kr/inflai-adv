@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  Box, Grid, Paper, Table, TableHead, TableRow, TableContainer, TableBody, makeStyles
+  Box, Grid, Paper, Table, TableHead, TableRow, TableContainer, TableBody, makeStyles, useMediaQuery, useTheme
 } from '@material-ui/core';
 import axios from 'axios';
 import { useHistory, useParams } from 'react-router-dom';
@@ -60,7 +60,7 @@ const defaultCampaignInfo = {
   AD_TYPE: '1',
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   campaignCard: {
     padding: '12px'
   },
@@ -70,11 +70,15 @@ const useStyles = makeStyles({
   },
   image: {
     width: '100%',
+    height: '276px',
     objectFit: 'cover',
     objectPosition: '50% 50%',
-    height: '276px'
+    [theme.breakpoints.down('sm')]: {
+      width: '60px',
+      height: '60px',
+    }
   }
-});
+}));
 
 function Question(props) {
   const [questions, setQuestions] = useState([]);
@@ -85,6 +89,8 @@ function Question(props) {
   const { token } = useContext(AuthContext);
   const params = useParams();
   const history = useHistory();
+  const theme = useTheme();
+  const isMD = useMediaQuery(theme.breakpoints.up('md'));
   const adId = params.id;
   const classes = useStyles();
 
@@ -123,10 +129,32 @@ function Question(props) {
     <Box py="50px" bgcolor="#f5f5f5" minHeight="calc(100vh - 445px);">
       <Box px={2} maxWidth={1200} m="0 auto" boxSizing="border-box">
         <Grid container spacing={2}>
-          <Grid item>
-            <Box width="300px">
+          <Grid item xs={12} md="auto">
+            <Box width={{ xs: '100%', md: '300px' }}>
               <Paper className={classes.campaignCard}>
-                <StyledImage className={classes.image} src={campaignInfo.AD_PHOTO || noImage} />
+                <Grid container spacing={2}>
+                  <Grid item>
+                    <StyledImage className={classes.image} src={campaignInfo.AD_PHOTO || noImage} />
+                  </Grid>
+                  <Grid item xs zeroMinWidth>
+                    <Box mb={{ xs: '4px', md: '11px' }}>
+                      <StyledText overflowHidden fontSize={isMD ? '22px' : '15px'} fontWeight="bold" lineHeight="1.1em">
+                        {campaignInfo.AD_NAME}
+                      </StyledText>
+                    </Box>
+                    <StyledText overflowHidden fontSize={isMD ? '15px' : '13px'}>{campaignInfo.AD_SHRT_DISC}</StyledText>
+                    <Box pt={{ xs: '6px', md: 2 }}>
+                      {isMD ? (
+                        <Box width="30%" p={1} border={`1px solid ${adTypes[campaignInfo.AD_TYPE].color}`}>
+                          <StyledText textAlign="center" fontSize="13px" color={adTypes[campaignInfo.AD_TYPE].color} fontWeight="bold">{adTypes[campaignInfo.AD_TYPE].text}</StyledText>
+                        </Box>
+                      ) : (
+                        <StyledText fontSize="13px" color={adTypes[campaignInfo.AD_TYPE].color} fontWeight="bold">{adTypes[campaignInfo.AD_TYPE].text}</StyledText>
+                      )}
+                    </Box>
+                  </Grid>
+                </Grid>
+                {/* <StyledImage className={classes.image} src={campaignInfo.AD_PHOTO || noImage} />
                 <Box my="13px">
                   <StyledText overflowHidden fontSize="22px" fontWeight="bold" lineHeight="1.1em">
                     {campaignInfo.AD_NAME}
@@ -137,11 +165,11 @@ function Question(props) {
                   <Box width="30%" p={1} border={`1px solid ${adTypes[campaignInfo.AD_TYPE].color}`}>
                     <StyledText textAlign="center" fontSize="13px" color={adTypes[campaignInfo.AD_TYPE].color} fontWeight="bold">{adTypes[campaignInfo.AD_TYPE].text}</StyledText>
                   </Box>
-                </Box>
+                </Box> */}
               </Paper>
             </Box>
           </Grid>
-          <Grid item xs>
+          <Grid item xs={12} md>
             <Box fontSize={22} fontWeight={600} mb="25px">1대1문의하기(Q&A)</Box>
             <Box>
               <TableContainer component={Paper}>
@@ -157,7 +185,7 @@ function Question(props) {
                   </TableHead>
                   <TableBody>
                     {questions.map(item => (
-                      <TableRow hover onClick={() => getDetail(item.QUE_ID)}>
+                      <TableRow key={item.QUE_ID} hover onClick={() => getDetail(item.QUE_ID)}>
                         <StyledTableCell align="center">
                           {item.rownum}
                         </StyledTableCell>
@@ -165,7 +193,7 @@ function Question(props) {
                           {item.QUE_TITLE}
                         </StyledTableCell>
                         <StyledTableCell align="center">
-                          {item.QUE_STATE === '1' ? '답변완료' : '대기중'}
+                          <Box color={item.QUE_STATE === '1' ? Colors.green : Colors.red}>{item.QUE_STATE === '1' ? '답변완료' : '대기중'}</Box>
                         </StyledTableCell>
                         <StyledTableCell align="center">
                           {item.QUE_DT}
