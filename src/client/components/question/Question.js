@@ -1,4 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  Fragment, useContext, useEffect, useState
+} from 'react';
 import {
   Box, Grid, Paper, Table, TableHead, TableRow, TableContainer, TableBody, makeStyles, useMediaQuery, useTheme
 } from '@material-ui/core';
@@ -11,6 +13,7 @@ import noImage from '../../img/noImage.png';
 import { Colors } from '../../lib/Сonstants';
 import AuthContext from '../../context/AuthContext';
 import QuestionDialog from './QuestionDialog';
+import MyPagination from '../../containers/MyPagination';
 
 const tableHeader = [
   {
@@ -20,6 +23,11 @@ const tableHeader = [
   },
   {
     text: '제목',
+    align: 'center'
+  },
+  {
+    text: '이름',
+    width: '100px',
     align: 'center'
   },
   {
@@ -85,6 +93,8 @@ function Question(props) {
   const [campaignInfo, setCampaignInfo] = useState(defaultCampaignInfo);
   const [detailDialog, setDetailDialog] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [count, setCount] = useState(0);
+  const [page, setPage] = useState(1);
 
   const { token } = useContext(AuthContext);
   const params = useParams();
@@ -100,7 +110,7 @@ function Question(props) {
 
   function getQuestions() {
     axios.get('/api/TB_QUESTION/listBiz', {
-      params: { adId, token, page: '1' }
+      params: { adId, token, page }
     }).then((res) => {
       if (res.status === 201) {
         history.push('/Profile/CampaignInfo');
@@ -109,10 +119,15 @@ function Question(props) {
       const { data, adData, countData } = res.data;
       setCampaignInfo(adData);
       setQuestions(data);
+      setCount(countData);
     }).catch((err) => {
       alert(err.response.message);
     });
   }
+
+  const changePage = (event, value) => {
+    setPage(value);
+  };
 
   function getDetail(value) {
     setSelected(value);
@@ -154,56 +169,63 @@ function Question(props) {
                     </Box>
                   </Grid>
                 </Grid>
-                {/* <StyledImage className={classes.image} src={campaignInfo.AD_PHOTO || noImage} />
-                <Box my="13px">
-                  <StyledText overflowHidden fontSize="22px" fontWeight="bold" lineHeight="1.1em">
-                    {campaignInfo.AD_NAME}
-                  </StyledText>
-                </Box>
-                <StyledText overflowHidden fontSize="15px">{campaignInfo.AD_SHRT_DISC}</StyledText>
-                <Box pt={2}>
-                  <Box width="30%" p={1} border={`1px solid ${adTypes[campaignInfo.AD_TYPE].color}`}>
-                    <StyledText textAlign="center" fontSize="13px" color={adTypes[campaignInfo.AD_TYPE].color} fontWeight="bold">{adTypes[campaignInfo.AD_TYPE].text}</StyledText>
-                  </Box>
-                </Box> */}
               </Paper>
             </Box>
           </Grid>
           <Grid item xs={12} md>
             <Box fontSize={22} fontWeight={600} mb="25px">1대1문의하기(Q&A)</Box>
-            <Box>
-              <TableContainer component={Paper}>
-                <Table aria-label="customized table">
-                  <TableHead>
-                    <TableRow>
-                      {tableHeader.map(item => (
-                        <StyledTableCell key={item.text} align={item.align} width={item.width}>
-                          {item.text}
-                        </StyledTableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {questions.map(item => (
-                      <TableRow key={item.QUE_ID} hover onClick={() => getDetail(item.QUE_ID)}>
-                        <StyledTableCell align="center">
-                          {item.rownum}
-                        </StyledTableCell>
-                        <StyledTableCell>
-                          {item.QUE_TITLE}
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          <Box color={item.QUE_STATE === '1' ? Colors.green : Colors.red}>{item.QUE_STATE === '1' ? '답변완료' : '대기중'}</Box>
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          {item.QUE_DT}
-                        </StyledTableCell>
+            {questions.length > 0 ? (
+              <Fragment>
+                <TableContainer component={Paper}>
+                  <Table aria-label="customized table">
+                    <TableHead>
+                      <TableRow>
+                        {tableHeader.map(item => (
+                          <StyledTableCell key={item.text} align={item.align} width={item.width}>
+                            {item.text}
+                          </StyledTableCell>
+                        ))}
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Box>
+                    </TableHead>
+                    <TableBody>
+                      {questions.map(item => (
+                        <TableRow key={item.QUE_ID} hover onClick={() => getDetail(item.QUE_ID)}>
+                          <StyledTableCell align="center">
+                            {item.rownum}
+                          </StyledTableCell>
+                          <StyledTableCell>
+                            {item.QUE_TITLE}
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            {item.INF_NAME}
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            <Box color={item.QUE_STATE === '1' ? Colors.green : Colors.red}>{item.QUE_STATE === '1' ? '답변완료' : '대기중'}</Box>
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            {item.QUE_DT}
+                          </StyledTableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+                <Box py={4}>
+                  <Grid container justify="center">
+                    <Grid item>
+                      <MyPagination
+                        itemCount={count}
+                        page={page}
+                        changePage={changePage}
+                        perPage={10}
+                      />
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Fragment>
+            ) : (
+              <Box textAlign="center">문의 없습니다</Box>
+            )}
           </Grid>
         </Grid>
       </Box>
