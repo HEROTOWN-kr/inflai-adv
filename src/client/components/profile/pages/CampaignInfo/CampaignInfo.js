@@ -1,10 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import {
-  Box, useTheme, useMediaQuery, Grid, Hidden
+  Box, useTheme, useMediaQuery, Grid, Hidden, InputAdornment, IconButton, makeStyles
 } from '@material-ui/core';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import axios from 'axios';
 import { Skeleton } from '@material-ui/lab';
+import { Search } from '@material-ui/icons';
+import { useForm } from 'react-hook-form';
 import StyledText from '../../../../containers/StyledText';
 import AuthContext from '../../../../context/AuthContext';
 import { Colors } from '../../../../lib/Сonstants';
@@ -14,6 +16,16 @@ import CampaignCard from '../../../campaign/CampaignCard';
 import MyPagination from '../../../../containers/MyPagination';
 import noImage from '../../../../img/noImage.png';
 import noFound from '../../../../img/notFound400_316.png';
+import ReactFormText from '../../../../containers/ReactFormText';
+
+const useStyles = makeStyles({
+  root: {
+    background: '#ffffff'
+  },
+  endAdornment: {
+    padding: '0'
+  }
+});
 
 function TabComponent(props) {
   const {
@@ -42,18 +54,32 @@ function TabComponent(props) {
 function CampaignInfo() {
   const history = useHistory();
   const match = useRouteMatch();
+  const [searchWord, setSearchWord] = useState('');
   const [tab, setTab] = useState(1);
   const [loading, setLoading] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
   const { token } = useContext(AuthContext);
+  const classes = useStyles();
+
+  const { register, handleSubmit, errors } = useForm({
+    mode: 'onBlur',
+    defaultValues: { searchValue: '' }
+  });
+
+  function searchFunc(data) {
+    const { searchValue } = data;
+    setPage(1);
+    setSearchWord(searchValue);
+  }
 
   function getCampaigns() {
     setLoading(true);
     const params = {
       token, page, limit: 4, tab
     };
+    if (searchWord.length > 0) params.searchWord = searchWord;
 
     axios.get('/api/TB_AD/', {
       params
@@ -71,7 +97,7 @@ function CampaignInfo() {
 
   useEffect(() => {
     if (token) getCampaigns();
-  }, [page]);
+  }, [page, searchWord]);
 
   useEffect(() => {
     if (page !== 1) setPage(1);
@@ -115,6 +141,31 @@ function CampaignInfo() {
         </PageTitle>
       </Hidden>
       <Box py={{ xs: 1, md: 4 }} px={{ xs: 1, md: 6 }}>
+        <Box width={300}>
+          <ReactFormText
+            register={register}
+            errors={errors}
+            name="searchValue"
+            placeholder="검색"
+            InputProps={{
+              classes: { root: classes.root, adornedEnd: classes.endAdornment },
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleSubmit(searchFunc)}>
+                    <Search fontSize="small" />
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+            onKeyPress={(ev) => {
+              if (ev.key === 'Enter') {
+                ev.preventDefault();
+                handleSubmit(searchFunc)();
+              }
+            }}
+          />
+        </Box>
+
         <Box borderBottom={`1px solid ${Colors.grey7}`}>
           <Grid container>
             <Grid item>
