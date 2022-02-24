@@ -41,6 +41,7 @@ const useStyles = makeStyles({
 const defaultQuestionData = {
   QUE_TITLE: '',
   QUE_CONTENT: '',
+  QUE_ANSWER: '',
 };
 
 const defaultValues = {
@@ -136,6 +137,7 @@ function QuestionDialog(props) {
             rows={5}
             name="answer"
             placeholder="Ex) 제품 발송은 다음주 월요일로 정해졌습니다"
+            inputProps={{ readOnly: !!questionData.QUE_ANSWER }}
           />
           <hr />
         </Box>
