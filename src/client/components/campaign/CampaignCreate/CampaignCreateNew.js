@@ -14,6 +14,7 @@ import { useHistory } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { ArrowRightAlt, Clear } from '@material-ui/icons';
+import moment from 'moment';
 import StyledText from '../../../containers/StyledText';
 import ReactFormDatePicker from '../../../containers/ReactFormDatePicker';
 import ReactFormText from '../../../containers/ReactFormText';
@@ -32,6 +33,16 @@ const snsTypes = [
   { value: '2', text: '유튜브', dbValue: 'AD_YOUTUBE' },
   { value: '3', text: '블로그', dbValue: 'AD_NAVER' },
   { value: '4', text: '기자단', dbValue: '' },
+];
+
+const campaignTypes = [
+  { value: '1', text: '체험단' },
+  { value: '2', text: '공동구매' },
+];
+
+const productSellTypes = [
+  { value: '1', text: '사이트통해' },
+  { value: '2', text: '직접판매' },
 ];
 
 const editPriceTypes = [
@@ -139,11 +150,11 @@ function CampaignCreateNew() {
   const theme = useTheme();
   const isSM = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 7);
-  const tomorrowMax = new Date(tomorrow);
-  tomorrowMax.setDate(tomorrow.getDate() + 13);
+  // setDates
+
+  const today = moment();
+  const tomorrow = moment().add(7, 'days');
+  const tomorrowMax = moment().add(13, 'days');
 
   const [pickerDates, setPickerDates] = useState({ min: tomorrow, max: tomorrowMax });
 
@@ -157,6 +168,14 @@ function CampaignCreateNew() {
     searchFinish: tomorrow,
     selectStart: today,
     selectFinish: tomorrow,
+
+    productSellStart: today,
+    productSellFinish: tomorrow,
+    productSellType: '',
+    productSellPrice: '',
+    productSellDiscount: '',
+    productSellInfo: '',
+
     phone: '',
     email: '',
     provideInfo: '',
@@ -166,6 +185,8 @@ function CampaignCreateNew() {
     editPriceEtc: '',
     videoLengthEtc: '',
     reportTypes,
+    reportSns: '',
+    campaignType: '1'
   };
 
   Yup.addMethod(Yup.string, 'integerString', function () {
@@ -223,6 +244,23 @@ function CampaignCreateNew() {
       is: sns => sns === '4',
       then: Yup.string().required('기자단 모집 SNS를 선택해주세요')
     }),
+
+    productSellType: Yup.string().when('campaignType', {
+      is: campaignType => campaignType === '2',
+      then: Yup.string().required('판매 방식을 선택해주세요')
+    }),
+    productSellPrice: Yup.string().when('campaignType', {
+      is: campaignType => campaignType === '2',
+      then: Yup.string().required('제품 가격을 선택해주세요')
+    }),
+    productSellDiscount: Yup.string().when('campaignType', {
+      is: campaignType => campaignType === '2',
+      then: Yup.string().required('수수료를 선택해주세요')
+    }),
+    productSellInfo: Yup.string().when('campaignType', {
+      is: campaignType => campaignType === '2',
+      then: Yup.string().required('판매 정보를 선택해주세요')
+    }),
   });
 
   const {
@@ -233,7 +271,11 @@ function CampaignCreateNew() {
     defaultValues
   });
 
-  const watchObj = watch(['type', 'delivery', 'searchStart', 'searchFinish', 'shortDisc', 'influencerCount', 'sns', 'editPrice', 'videoLength']);
+  const watchObj = watch([
+    'type', 'delivery', 'searchStart', 'searchFinish',
+    'shortDisc', 'influencerCount', 'sns', 'editPrice', 'videoLength',
+    'reportTypes', 'campaignType'
+  ]);
 
   useEffect(() => {
     if (watchObj.delivery === '1') {
@@ -244,10 +286,8 @@ function CampaignCreateNew() {
   }, [watchObj.delivery]);
 
   useEffect(() => {
-    const selectStart = new Date(watchObj.searchFinish);
-    selectStart.setDate(selectStart.getDate() + 1);
-    const selectFinish = new Date(selectStart);
-    selectFinish.setDate(selectFinish.getDate() + 7);
+    const selectStart = moment(watchObj.searchFinish).add(1, 'days');
+    const selectFinish = moment(selectStart).add(7, 'days');
     setValue('selectStart', selectStart);
     setValue('selectFinish', selectFinish);
   }, [watchObj.searchFinish]);
@@ -392,6 +432,40 @@ function CampaignCreateNew() {
             placeholder="서비스나 제공물품에 대해서 자세히 적어주세요"
           />
         </Grid>
+
+        <Grid item xs={12}>
+          <Box mb={1}>
+            <StyledText color="#3f51b5">
+              캠페인 종류
+            </StyledText>
+          </Box>
+          <Grid container>
+            <Grid item>
+              <Controller
+                as={(
+                  <RadioGroup row aria-label="gender">
+                    {campaignTypes.map((item, index) => (
+                      <FormControlLabel
+                        key={item.value}
+                        value={item.value}
+                        control={(
+                          <Radio
+                            inputRef={index === 0 ? snsRef : null}
+                          />
+                                )}
+                        label={item.text}
+                      />
+                    ))}
+                  </RadioGroup>
+                  )}
+                onFocus={() => snsRef.current.focus()}
+                name="campaignType"
+                control={control}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+
         <Grid item xs={12}>
           <Box mb={1}>
             <StyledText color="#3f51b5">
@@ -666,6 +740,128 @@ function CampaignCreateNew() {
             </Grid>
           </Grid>
         </Grid>
+
+        { watchObj.campaignType === '2' ? (
+          <Fragment>
+            <Grid item xs={12}>
+              <Box mb={1}>
+                <StyledText color="#3f51b5">
+                    공동 구매기간
+                </StyledText>
+              </Box>
+              <Grid container spacing={isSM ? 3 : 1} alignItems="center">
+                <Grid item xs sm="auto">
+                  <Box width={isSM ? '250px' : '100%'}>
+                    <ReactFormDatePicker
+                      name="productSellStart"
+                      control={control}
+                      onAccept={onSearchStartChange}
+                    />
+                  </Box>
+                </Grid>
+                <Grid item xs={1} sm="auto"><Box textAlign="center">~</Box></Grid>
+                <Grid item xs sm="auto">
+                  <Box width={isSM ? '250px' : '100%'}>
+                    <ReactFormDatePicker
+                      name="productSellFinish"
+                      control={control}
+                      minDate={pickerDates.min}
+                    />
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Box mb={1}>
+                <StyledText color="#3f51b5">
+                    판매 방식
+                </StyledText>
+              </Box>
+              <Grid container>
+                <Grid item>
+                  <Controller
+                    as={(
+                      <RadioGroup row aria-label="gender">
+                        {productSellTypes.map((item, index) => (
+                          <FormControlLabel
+                            key={item.value}
+                            value={item.value}
+                            control={(
+                              <Radio
+                                inputRef={index === 0 ? snsRef : null}
+                              />
+                                      )}
+                            label={item.text}
+                          />
+                        ))}
+                      </RadioGroup>
+                        )}
+                    onFocus={() => snsRef.current.focus()}
+                    name="productSellType"
+                    control={control}
+                  />
+                </Grid>
+              </Grid>
+              { errors.productSellType ? (
+                <div className="error-message">{errors.productSellType.message}</div>
+              ) : null }
+            </Grid>
+
+            <Grid item xs={12}>
+              <Box mb={1}><StyledText color="#3f51b5">제품 가격</StyledText></Box>
+              <Grid container spacing={1} alignItems="center">
+                <Grid item xs={12} md="auto">
+                  <Box width={{ xs: '100%', md: '200px' }}>
+                    <ReactFormText
+                      register={register}
+                      errors={errors}
+                      name="productSellPrice"
+                      placeholder=""
+                      InputProps={{
+                        endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
+                        classes: { input: classes.input }
+                      }}
+                    />
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Box mb={1}><StyledText color="#3f51b5">수수료</StyledText></Box>
+              <Grid container spacing={1} alignItems="center">
+                <Grid item xs={12} md="auto">
+                  <Box width={{ xs: '100%', md: '200px' }}>
+                    <ReactFormText
+                      register={register}
+                      errors={errors}
+                      name="productSellDiscount"
+                      placeholder=""
+                      InputProps={{
+                        endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
+                        classes: { input: classes.input }
+                      }}
+                    />
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Box mb={1}><StyledText color="#3f51b5">판매 정보</StyledText></Box>
+              <ReactFormText
+                register={register}
+                errors={errors}
+                multiline
+                rows={5}
+                name="productSellInfo"
+                placeholder="공동 구매 판매 정보를 자세히 적어주세요"
+              />
+            </Grid>
+          </Fragment>
+        ) : null}
+
         <Grid item xs={12}>
           <Box mb={1}><StyledText color="#3f51b5">제공상품 배송여부</StyledText></Box>
           <Controller

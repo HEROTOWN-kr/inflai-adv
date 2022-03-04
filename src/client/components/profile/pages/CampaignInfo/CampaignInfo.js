@@ -216,12 +216,13 @@ function CampaignInfo() {
                   {campaigns.map((item) => {
                     const {
                       AD_ID, AD_TYPE, AD_CTG, AD_CTG2, AD_SRCH_END, AD_NAME, AD_SHRT_DISC,
-                      TB_PARTICIPANTs, AD_INF_CNT, proportion, TB_PHOTO_ADs, AD_REPORT
+                      TB_PARTICIPANTs, AD_INF_CNT, proportion, TB_PHOTO_ADs, AD_REPORT, AD_CAM_TYPE
                     } = item;
                     return (
                       <Grid item key={AD_ID} style={{ width: getCardWidth() }}>
                         <CampaignCard
                           AD_ID={AD_ID}
+                          campaignType={AD_CAM_TYPE}
                           getCampaigns={getCampaigns}
                           image={TB_PHOTO_ADs[0] ? TB_PHOTO_ADs[0].PHO_FILE_URL : noFound}
                           type={AD_TYPE}

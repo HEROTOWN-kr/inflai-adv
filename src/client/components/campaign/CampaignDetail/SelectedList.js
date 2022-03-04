@@ -210,6 +210,9 @@ function SelectedList(props) {
                           </StyledButton>
                         </Grid>
                       ) : null}
+                      {/* <Grid item xs={6} sm={12}>
+                        <StyledButton height="30px" padding="0 10px" onClick={() => console.log(item.PAR_ID)}>판매링크 등록</StyledButton>
+                      </Grid> */}
                     </Grid>
                   </Box>
                 </Grid>
