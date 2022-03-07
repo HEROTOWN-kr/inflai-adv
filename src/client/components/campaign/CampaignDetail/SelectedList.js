@@ -17,6 +17,7 @@ import ConfirmDialog from '../../../containers/ConfirmDialog';
 import DetailDataDialog from './DetailDataDialog';
 import MyPagination from '../../../containers/MyPagination';
 import HelpTooltip from '../../Analysis/HelpTooltip';
+import SellUrlDialog from './SellUrlDialog';
 
 const useStyles = makeStyles(() => ({
   textAndIcon: {
@@ -55,8 +56,12 @@ function RatingComponent(props) {
 }
 
 function SelectedList(props) {
-  const { adId, type, isMD } = props;
+  const {
+    adId, type, isMD, campaignType
+  } = props;
   const [participants, setParticipants] = useState([]);
+  const [currentAd, setCurrentAd] = useState({ sellUrl: '' });
+  const [sellUrlDialog, setSellUrlDialog] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
@@ -77,6 +82,10 @@ function SelectedList(props) {
     setInfoDialogOpen(!infoDialogOpen);
   }
 
+  function toggleSellUrlDialog() {
+    setSellUrlDialog(!sellUrlDialog);
+  }
+
   function clickInstaInfo(id) {
     setSelectedId(id);
     toggleDialog();
@@ -85,6 +94,14 @@ function SelectedList(props) {
   function clickDataInfo(id) {
     setSelectedId(id);
     toggleInfoDialog();
+  }
+
+  function clickSellUrl(item) {
+    const { PAR_ID, PAR_SELL_URL } = item;
+    setSelectedId(PAR_ID);
+    setCurrentAd({ sellUrl: PAR_SELL_URL });
+    console.log(item);
+    toggleSellUrlDialog();
   }
 
   function getParticipants() {
@@ -206,13 +223,23 @@ function SelectedList(props) {
                             hoverBackground={Colors.greenHover}
                             onClick={() => window.open(item.PAR_REVIEW, '_blank')}
                           >
-                                    리뷰 보기
+                            리뷰 보기
                           </StyledButton>
                         </Grid>
                       ) : null}
-                      {/* <Grid item xs={6} sm={12}>
-                        <StyledButton height="30px" padding="0 10px" onClick={() => console.log(item.PAR_ID)}>판매링크 등록</StyledButton>
-                      </Grid> */}
+                      {campaignType === '2' ? (
+                        <Grid item xs={6} sm={12}>
+                          <StyledButton
+                            height="30px"
+                            padding="0 10px"
+                            onClick={() => clickSellUrl(item)}
+                            background={Colors.green}
+                            hoverBackground={Colors.greenHover}
+                          >
+                            {item.PAR_SELL_URL ? '판매링크 수정' : '판매링크 등록'}
+                          </StyledButton>
+                        </Grid>
+                      ) : null}
                     </Grid>
                   </Box>
                 </Grid>
@@ -235,6 +262,13 @@ function SelectedList(props) {
           ) : null}
           <InsightDialog open={dialogOpen} closeDialog={toggleDialog} selectedId={selectedId} />
           <DetailDataDialog open={infoDialogOpen} closeDialog={toggleInfoDialog} selectedId={selectedId} />
+          <SellUrlDialog
+            open={sellUrlDialog}
+            closeDialog={toggleSellUrlDialog}
+            selectedId={selectedId}
+            currentAd={currentAd}
+            getParticipants={getParticipants}
+          />
         </React.Fragment>
       )}
     </>

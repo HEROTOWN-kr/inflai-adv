@@ -90,6 +90,28 @@ const RightMenuLinks = [
   },
 ];
 
+const adTypes = {
+  1: {
+    text: '인스타',
+    color: Colors.pink,
+    icon: IconInsta
+  },
+  2: {
+    text: '유튜브',
+    color: Colors.red,
+    icon: IconYoutube
+  },
+  3: {
+    text: '블로그',
+    color: '#2ba406',
+    icon: IconBlog
+  },
+  4: {
+    text: '기자단',
+    color: '#0027ff'
+  }
+};
+
 function TimeComponent(props) {
   const [seconds, setSeconds] = useState(0);
   const [leftData, setLeftData] = useState({
@@ -189,7 +211,8 @@ function CampaignDetail() {
     AD_DISC: '',
     TB_PHOTO_ADs: [],
     TB_PARTICIPANTs: [],
-    AD_CTG: 0
+    AD_CTG: 0,
+    AD_TYPE: '1'
   });
   const [currentImage, setCurrentImage] = useState('');
   const [isSticky, setSticky] = useState(false);
@@ -383,7 +406,23 @@ function CampaignDetail() {
                     <Grid item xs={12}>
                       <Grid container justify="space-between">
                         <Grid item><StyledText fontWeight="bold">카테고리</StyledText></Grid>
-                        <Grid item><StyledText>{`${AdvertiseTypes.mainType[productData.AD_CTG]}/${AdvertiseTypes.subType[productData.AD_CTG][productData.AD_CTG2]}`}</StyledText></Grid>
+                        <Grid item>
+                          <Grid container>
+                            { productData.AD_REPORT === '1' ? (
+                              <Grid item>
+                                <StyledText color={adTypes['4'].color}>(기자단)&nbsp;</StyledText>
+                              </Grid>
+                            ) : null}
+                            { productData.AD_CAM_TYPE === '2' ? (
+                              <Grid item>
+                                <StyledText color={adTypes['4'].color}>[공동구매]&nbsp;</StyledText>
+                              </Grid>
+                            ) : null}
+                            <Grid item>
+                              <StyledText>{`${AdvertiseTypes.mainType[productData.AD_CTG]}/${AdvertiseTypes.subType[productData.AD_CTG][productData.AD_CTG2]}`}</StyledText>
+                            </Grid>
+                          </Grid>
+                        </Grid>
                       </Grid>
                     </Grid>
                     <Grid item xs={12}>
@@ -453,7 +492,13 @@ function CampaignDetail() {
             {tab === 3 ? (
               <ParticipantComponent type={productData.AD_TYPE} />) : null}
             {tab === 4 ? (
-              <SelectedList adId={adId} type={productData.AD_TYPE} isMD={isMD} />) : null}
+              <SelectedList
+                adId={adId}
+                type={productData.AD_TYPE}
+                campaignType={productData.AD_CAM_TYPE}
+                isMD={isMD}
+              />
+            ) : null}
             {showMore.visible && tab === 1 ? (
               <Box mt={1} borderTop={`1px solid ${Colors.grey8}`}>
                 <StyledButton variant="text" background="#ffffff" color="#666" hoverBackground="#f8f8f8" onClick={toggleShowMore}>
@@ -631,22 +676,24 @@ function CampaignDetail() {
                       </Box>
                       <Box mb="15px">
                         <Grid container>
+                          { productData.AD_REPORT === '1' ? (
+                            <Grid item>
+                              <Box fontSize="12px" mr="7px" p="2px 5px" color={adTypes['4'].color} border={`solid 1px ${adTypes['4'].color}`}>
+                                  기자단
+                              </Box>
+                            </Grid>
+                          ) : null}
+                          { productData.AD_CAM_TYPE === '2' ? (
+                            <Grid item>
+                              <Box fontSize="12px" mr="7px" p="2px 5px" color={adTypes['4'].color} border={`solid 1px ${adTypes['4'].color}`}>
+                                  공동구매
+                              </Box>
+                            </Grid>
+                          ) : null}
                           <Grid item>
-                            {productData.AD_TYPE === '1' ? (
-                              <Box fontSize="12px" mr="7px" p="2px 5px" color={Colors.pink} border={`solid 1px ${Colors.pink}`}>
-                                  인스타
-                              </Box>
-                            ) : null}
-                            {productData.AD_TYPE === '2' ? (
-                              <Box fontSize="12px" mr="7px" p="2px 5px" color={Colors.red} border={`solid 1px ${Colors.red}`}>
-                                  유튜브
-                              </Box>
-                            ) : null}
-                            {productData.AD_TYPE === '3' ? (
-                              <Box fontSize="12px" mr="7px" p="2px 5px" color="#2ba406" border="solid 1px #2ba406">
-                                  블로그
-                              </Box>
-                            ) : null}
+                            <Box fontSize="12px" mr="7px" p="2px 5px" color={adTypes[productData.AD_TYPE].color} border={`solid 1px ${adTypes[productData.AD_TYPE].color}`}>
+                              {adTypes[productData.AD_TYPE].text}
+                            </Box>
                           </Grid>
                           <Grid item>
                             <Box fontSize="12px" p="2px 5px" bgcolor="#efefef" border="solid 1px #dcdcdc">
