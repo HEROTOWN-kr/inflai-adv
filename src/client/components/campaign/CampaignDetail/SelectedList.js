@@ -100,7 +100,6 @@ function SelectedList(props) {
     const { PAR_ID, PAR_SELL_URL } = item;
     setSelectedId(PAR_ID);
     setCurrentAd({ sellUrl: PAR_SELL_URL });
-    console.log(item);
     toggleSellUrlDialog();
   }
 
