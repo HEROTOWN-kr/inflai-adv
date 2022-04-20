@@ -15,6 +15,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { ArrowRightAlt, Clear } from '@material-ui/icons';
 import moment from 'moment';
+import { useSnackbar } from 'notistack';
 import StyledText from '../../../containers/StyledText';
 import ReactFormDatePicker from '../../../containers/ReactFormDatePicker';
 import ReactFormText from '../../../containers/ReactFormText';
@@ -126,6 +127,8 @@ function CampaignEdit() {
   function toggleSavingMode() {
     setSavingMode(!savingMode);
   }
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const deliveryRef = useRef();
   const snsRef = useRef();
@@ -426,12 +429,12 @@ function CampaignEdit() {
         });
         axios.all(uploaders).then(() => {
           setSavingMode(false);
-          alert('수정되었습니다!');
+          enqueueSnackbar('수정되었습니다!', { variant: 'success' });
           history.goBack();
         });
       } else {
         setSavingMode(false);
-        alert('수정되었습니다!');
+        enqueueSnackbar('수정되었습니다!', { variant: 'success' });
         history.goBack();
       }
     }).catch((error) => {

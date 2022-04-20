@@ -437,7 +437,7 @@ function YoutubeAnalysis(props) {
                 (제일 높은 이미지의 %가 30% 이하이면 ... 특별한 카테고리에 영향력이 없다고 보여집니다.)` }
               </Box>
             </Box>
-            <Box my={3}>
+            {/* <Box my={3}>
               <Grid container spacing={isMD ? 3 : 2}>
                 <Grid item xs={12} md={6}>
                   <Box p={3} bgcolor="#FFF">
@@ -447,7 +447,7 @@ function YoutubeAnalysis(props) {
                         <HelpOutline fontSize="small" classes={{ root: classes.tooltipIcon }} />
                       </Tooltip>
                     </Box>
-                     {/*<CategoryPieChart detectData={youtubeInfo.content_second_prediction} process={process} />*/}
+                     <CategoryPieChart detectData={youtubeInfo.content_second_prediction} process={process} />
                     <PieChartApex series={youtubeInfo.content_second_series} colors={youtubeInfo.content_second_colors} labels={youtubeInfo.content_second_labels} />
                   </Box>
                 </Grid>
@@ -459,13 +459,13 @@ function YoutubeAnalysis(props) {
                         <HelpOutline fontSize="small" classes={{ root: classes.tooltipIcon }} />
                       </Tooltip>
                     </Box>
-                    {/* <Box className={classes.boxTitle}>하위 카테고리 분석 결과</Box> */}
-                    {/* <CategoryPieChart detectData={youtubeInfo.content_primary_prediction} process={process} />*/}
+                     <Box className={classes.boxTitle}>하위 카테고리 분석 결과</Box>
+                     <CategoryPieChart detectData={youtubeInfo.content_primary_prediction} process={process} />
                     <PieChartApex series={youtubeInfo.content_primary_series} colors={youtubeInfo.content_primary_colors} labels={youtubeInfo.content_primary_labels} />
                   </Box>
                 </Grid>
               </Grid>
-            </Box>
+            </Box> */}
             <Grid container spacing={isMD ? 3 : 2}>
               <Grid item xs={12} md={6}>
                 <Box p={3} bgcolor="#FFF">

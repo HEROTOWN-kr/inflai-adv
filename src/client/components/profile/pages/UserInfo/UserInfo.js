@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
+import { useSnackbar } from 'notistack';
 import StyledText from '../../../../containers/StyledText';
 import StyledTextField from '../../../../containers/StyledTextField';
 import DaumPostCode from '../../../../containers/DaumPostCode';
@@ -73,12 +74,13 @@ const useStyles = makeStyles({
 });
 
 function UserInfo(props) {
-  const { setMessage, isMD } = props;
+  const { isMD } = props;
   const [imageUrl, setImageUrl] = useState('');
   const [userInfo, setUserInfo] = useState({});
   const { token, userDataUpdate } = useContext(AuthContext);
   const classes = useStyles();
 
+  const { enqueueSnackbar } = useSnackbar();
   const {
     register, handleSubmit, reset, errors, setValue, control
   } = useForm({
@@ -139,14 +141,14 @@ function UserInfo(props) {
           headers: { 'Content-Type': 'multipart/form-data' }
         }).then(async (response) => {
           getUserInfo();
-          setMessage({ type: 'success', open: true, text: '저장되었습니다' });
+          enqueueSnackbar('저장되었습니다!', { variant: 'success' });
         }).catch((err) => {
           console.log(err.response);
           alert('photo upload error');
         });
       }
       getUserInfo();
-      setMessage({ type: 'success', open: true, text: '저장되었습니다' });
+      enqueueSnackbar('저장되었습니다!', { variant: 'success' });
     } catch (err) {
       alert(err.message);
     }

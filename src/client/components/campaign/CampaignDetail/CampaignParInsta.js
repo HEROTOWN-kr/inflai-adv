@@ -75,6 +75,12 @@ const tableHeader = [
     width: '105px',
   },
   {
+    text: '소통 지수',
+    align: 'center',
+    colName: 'INS_COMMUNICATE',
+    width: '50px',
+  },
+  {
     text: '요약',
     align: 'center',
     width: '50px',
@@ -316,6 +322,11 @@ function CampaignParInsta() {
                 <StyledTableCell align="center">
                   <StyledText textAlign="center">
                     {row.INS_SCORE ? row.INS_SCORE.toLocaleString('en') : '-'}
+                  </StyledText>
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <StyledText textAlign="center">
+                    {row.INS_COMMUNICATE ? `${row.INS_COMMUNICATE.toLocaleString('en')}%` : '-'}
                   </StyledText>
                 </StyledTableCell>
                 <StyledTableCell align="center">

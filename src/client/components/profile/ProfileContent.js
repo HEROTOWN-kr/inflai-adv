@@ -12,18 +12,6 @@ import MyPage from './MyPage';
 
 function ProfileContent(props) {
   const match = useRouteMatch();
-  const [message, setMessage] = useState({
-    open: false,
-    text: '',
-    type: 'success'
-  });
-
-  const messageClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setMessage({ ...message, open: false });
-  };
 
   return (
     <Box height="100%">
@@ -34,15 +22,15 @@ function ProfileContent(props) {
         />
         <Route
           path={`${match.url}/UserInfo`}
-          render={renderProps => <UserInfo {...props} setMessage={setMessage} />}
+          render={renderProps => <UserInfo {...props} />}
         />
         <Route
           path={`${match.url}/MembershipInfo`}
-          render={renderProps => <MembershipInfo {...props} setMessage={setMessage} />}
+          render={renderProps => <MembershipInfo {...props} />}
         />
         <Route
           path={`${match.path}/MyPage`}
-          render={renderProps => <MyPage {...props} setMessage={setMessage} />}
+          render={renderProps => <MyPage {...props} />}
         />
         <Route
           exact
@@ -55,16 +43,6 @@ function ProfileContent(props) {
           component={NotFound}
         />
       </Switch>
-      <Snackbar
-        open={message.open}
-        autoHideDuration={4000}
-        onClose={messageClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
-        <Alert onClose={messageClose} severity={message.type}>
-          {message.text}
-        </Alert>
-      </Snackbar>
     </Box>
   );
 }

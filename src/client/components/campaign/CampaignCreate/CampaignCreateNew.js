@@ -15,6 +15,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { ArrowRightAlt, Clear } from '@material-ui/icons';
 import moment from 'moment';
+import { useSnackbar } from 'notistack';
 import StyledText from '../../../containers/StyledText';
 import ReactFormDatePicker from '../../../containers/ReactFormDatePicker';
 import ReactFormText from '../../../containers/ReactFormText';
@@ -143,6 +144,8 @@ function CampaignCreateNew() {
   function toggleSavingMode() {
     setSavingMode(!savingMode);
   }
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const deliveryRef = useRef();
   const snsRef = useRef();
@@ -364,7 +367,8 @@ function CampaignCreateNew() {
 
     axios.post('/api/TB_AD/createBiz', props).then((res) => {
       if (images.length === 0) {
-        alert('캠페인이 등록되었습니다!!');
+        setSavingMode(false);
+        enqueueSnackbar('캠페인이 등록되었습니다!!', { variant: 'success' });
         history.push('/Profile/CampaignInfo');
         return;
       }
@@ -381,12 +385,14 @@ function CampaignCreateNew() {
       }));
 
       Promise.all(promiseArray).then((response) => {
-        alert('캠페인이 등록되었습니다!!');
+        setSavingMode(false);
+        enqueueSnackbar('캠페인이 등록되었습니다!!', { variant: 'success' });
         history.push('/Profile/CampaignInfo');
       }).catch(err => console.log(err.message));
     }).catch((error) => {
+      setSavingMode(false);
       alert(error.response.data);
-    }).then(() => setSavingMode(false));
+    });
   };
 
   function checkSubscription() {
