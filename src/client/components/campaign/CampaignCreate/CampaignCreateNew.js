@@ -200,6 +200,14 @@ function CampaignCreateNew() {
     return this.matches(/^\d+$/, '숫자 입력만 가능합니다');
   });
 
+  Yup.addMethod(Yup.string, 'checkSpaces', function () {
+    return this.test({
+      name: 'checkSpaces',
+      message: '띄어쓰기 입력 불가능합니다',
+      test: value => value && value.indexOf(' ') === -1
+    });
+  });
+
   const schema = Yup.object().shape({
     campaignName: Yup.string().required('캠페인명을 입력해주세요'),
     shortDisc: Yup.string().required('짧은설명을 입력해주세요'),
@@ -226,7 +234,7 @@ function CampaignCreateNew() {
       is: type => parseInt(type, 10) === 0,
       then: Yup.string().required('상세주소를 입력해주세요'),
     }),
-    phone: Yup.string().required('연락처를 입력해주세요').integerString(),
+    phone: Yup.string().required('연락처를 입력해주세요').checkSpaces().integerString(),
     email: Yup.string().required('이메일을 입력해주세요').email('잘못된 이메일 형식입니다'),
     searchKeyword: Yup.string().required('검색키워드를 입력해주세요'),
     discription: Yup.string().required('포스팅가이드를 입력해주세요'),

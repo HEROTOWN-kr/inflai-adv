@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
-import { Grid, Paper, Box } from '@material-ui/core';
+import {
+  Grid, Paper, Box, makeStyles
+} from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { Colors } from '../../lib/Сonstants';
 import AuthContext from '../../context/AuthContext';
@@ -20,13 +22,30 @@ const cards = [
     text1: '사진, 영상, 상세페이지, 홈페이지',
     text2: '지금 견적 받아보기',
     url: '/Campaign/Request'
+  },
+  {
+    id: 3,
+    title: '지난 모집캠페인 복사',
+    text1: '기전 만들었던 캠페인',
+    text2: '지금 바로 복사하기',
+    url: '/Campaign/Copy'
   }
 ];
 
+const useStyles = makeStyles({
+  card: {
+    cursor: 'pointer',
+    border: `2px solid ${Colors.grey}`,
+    '&:hover': {
+      border: `2px solid ${Colors.pink3}`
+    }
+  }
+});
+
 function CampaignType() {
   const history = useHistory();
-  const [hoverCard, setHoverCard] = useState(null);
   const { token, isAuthenticated } = useContext(AuthContext);
+  const classes = useStyles();
 
   function checkSubscription(id, url) {
     if (id === 1) {
@@ -94,14 +113,9 @@ function CampaignType() {
         { cards.map(item => (
           <Grid key={item.id} item xs={12} sm={6}>
             <Box
-              onClick={() => createCampaign(item.id, item.url)}
-              onMouseOver={() => setHoverCard(item.id)}
-              onMouseOut={() => setHoverCard(null)}
               p={4}
-              border={item.id === hoverCard ? `2px solid ${Colors.pink3}` : `1px solid ${Colors.grey}`}
-              css={{
-                cursor: 'pointer'
-              }}
+              className={classes.card}
+              onClick={() => createCampaign(item.id, item.url)}
             >
               <Box fontSize="28px">
                 {item.title}

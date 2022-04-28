@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  Route, Switch, useRouteMatch, useHistory
+  Route, Switch, useRouteMatch
 } from 'react-router-dom';
 import CampaignType from './CampaignType';
-import CampaignCreate from './CampaignCreate/CampaignCreate';
 import CampaignRequest from './CampaignRequest';
 import CampaignDetail from './CampaignDetail/CampaignDetail';
 import PrivateRoute from '../../containers/PrivateRoute';
 import CampaignCreateNew from './CampaignCreate/CampaignCreateNew';
 import CampaignEdit from './CampaignEdit/CampaignEdit';
+import CampaignCopy from './CampaignCopy/CampaignCopy';
 
 
 function Campaign() {
   const match = useRouteMatch();
-  const history = useHistory();
 
   return (
     <React.Fragment>
@@ -25,6 +24,10 @@ function Campaign() {
         <PrivateRoute
           path={`${match.url}/Edit/:id`}
           component={CampaignEdit}
+        />
+        <PrivateRoute
+          path={`${match.url}/Copy`}
+          component={CampaignCopy}
         />
         <Route
           path={`${match.url}/Request`}
