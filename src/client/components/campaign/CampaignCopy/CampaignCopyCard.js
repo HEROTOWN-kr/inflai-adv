@@ -33,6 +33,14 @@ const useStyles = makeStyles({
   root: {
     background: '#ffffff'
   },
+  card: {
+    border: '1px solid #eaeaea',
+    overflow: 'hidden',
+    borderRadius: '10px',
+    '&:hover': {
+      cursor: 'pointer'
+    }
+  },
   endAdornment: {
     padding: '0'
   },
@@ -56,12 +64,9 @@ const useStyles = makeStyles({
 
 function CampaignCopyCard(props) {
   const {
-    AD_ID, getCampaigns, image, type, srchEnd, name, report, campaignType,
-    shrtDisc, participantsLength, cnt, proportion
+    image, type, srchEnd, name, report, campaignType,
+    shrtDisc, participantsLength, cnt, proportion, clickCard
   } = props;
-
-  const [selectedCampaign, setSelectedCampaign] = useState(0);
-  const [copyDialog, setCopyDialog] = useState(false);
 
   const classes = useStyles();
   const theme = useTheme();
@@ -79,20 +84,10 @@ function CampaignCopyCard(props) {
     return daysLag;
   }
 
-  function toggleCopyDialog() {
-    setCopyDialog(!copyDialog);
-  }
-
-  function copy() {
-    setSelectedCampaign(AD_ID);
-    toggleCopyDialog();
-  }
-
-
   return (
-    <Box border="1px solid #eaeaea" overflow="hidden" borderRadius="10px" onClick={copy}>
+    <Box className={classes.card} onClick={clickCard}>
       <StyledImage width="100%" height="auto" src={image || noImage} onError={event => event.target.setAttribute('src', noFound)} />
-      <Box borderTop="1px solid #eaeaea" p={isMD ? 3 : 1}>
+      <Box bgcolor="#fff" borderTop="1px solid #eaeaea" p={isMD ? 3 : 1}>
         <Grid container spacing={isMD ? 2 : 1}>
           <Grid item xs={12}>
             <Grid container justify="space-between" alignItems="flex-end">
@@ -156,12 +151,6 @@ function CampaignCopyCard(props) {
           </Grid>
         </Grid>
       </Box>
-      <CopyDialog
-        open={copyDialog}
-        campaignId={selectedCampaign}
-        closeDialog={toggleCopyDialog}
-        getCampaigns={getCampaigns}
-      />
     </Box>
   );
 }

@@ -10,7 +10,9 @@ const AuthContext = createContext({
   userName: null,
   userPhoto: null,
   socialType: null,
-  isAuthenticated: false
+  isAuthenticated: false,
+  isLoading: false,
+  setLoading: noop
 });
 
 export default AuthContext;

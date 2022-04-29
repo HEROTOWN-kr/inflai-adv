@@ -121,14 +121,10 @@ function CampaignEdit() {
   const [dbImages, setDbImages] = useState([]);
   const [links, setLinks] = useState([]);
   const [limits, setLimits] = useState({ InfCountUsed: 0, InfCountLeft: 0, PlnInfMonth: 0 });
-  const [savingMode, setSavingMode] = useState(false);
   const classes = useStyles();
 
-  function toggleSavingMode() {
-    setSavingMode(!savingMode);
-  }
-
   const { enqueueSnackbar } = useSnackbar();
+  const { setLoading } = useContext(AuthContext);
 
   const deliveryRef = useRef();
   const snsRef = useRef();
@@ -405,7 +401,7 @@ function CampaignEdit() {
   }
 
   const onSubmit = async (data) => {
-    setSavingMode(true);
+    setLoading(true);
     const post = {
       ...data, token, adId: params.id, links: JSON.stringify(links)
     };
@@ -428,17 +424,17 @@ function CampaignEdit() {
           }).then(response => ('sucess')).catch(error => ('error'));
         });
         axios.all(uploaders).then(() => {
-          setSavingMode(false);
+          setLoading(false);
           enqueueSnackbar('수정되었습니다!', { variant: 'success' });
           history.goBack();
         });
       } else {
-        setSavingMode(false);
+        setLoading(false);
         enqueueSnackbar('수정되었습니다!', { variant: 'success' });
         history.goBack();
       }
     }).catch((error) => {
-      setSavingMode(false);
+      setLoading(false);
       alert(error.response.data);
     });
   };
@@ -1157,7 +1153,6 @@ function CampaignEdit() {
           </Grid>
         </Grid>
       </Grid>
-      <StyledBackDrop open={savingMode} handleClose={toggleSavingMode} />
     </Box>
   );
 }

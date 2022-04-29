@@ -7,6 +7,8 @@ import CustomNavBar from './navbar/Navbar';
 import Footer from './footer/Footer';
 import useAuth from '../hooks/auth.hook';
 import AuthContext from '../context/AuthContext';
+import useLoading from '../hooks/useLoading';
+import StyledBackDrop from '../containers/StyledBackDrop';
 
 const useStyles = makeStyles({
   snackbarCloseIcon: {
@@ -18,6 +20,8 @@ function App() {
   const {
     token, login, logout, userDataUpdate, userPhoto, socialType, userName, ready
   } = useAuth();
+  const { isLoading, setLoading } = useLoading();
+
   const isAuthenticated = !!token;
   const classes = useStyles();
 
@@ -28,7 +32,7 @@ function App() {
 
   return (
     <AuthContext.Provider value={{
-      token, login, logout, userDataUpdate, userPhoto, socialType, userName, isAuthenticated
+      token, login, logout, userDataUpdate, userPhoto, socialType, userName, isAuthenticated, isLoading, setLoading
     }}
     >
       <SnackbarProvider
@@ -48,6 +52,7 @@ function App() {
             <Footer />
           </div>
         </div>
+        <StyledBackDrop open={isLoading} />
       </SnackbarProvider>
     </AuthContext.Provider>
   );
