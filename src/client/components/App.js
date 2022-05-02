@@ -1,7 +1,8 @@
 import React, { createRef } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import { SnackbarProvider } from 'notistack';
 import { Close } from '@material-ui/icons';
+import { matchPath, useLocation } from 'react-router-dom';
 import Main from './main/Main';
 import CustomNavBar from './navbar/Navbar';
 import Footer from './footer/Footer';
@@ -30,6 +31,17 @@ function App() {
     snackbarRef.current.closeSnackbar(key);
   };
 
+  const location = useLocation();
+  const { pathname } = location;
+
+  const changeBg = matchPath(pathname, {
+    path: ['/Campaign'],
+    exact: true,
+    strict: true
+  });
+
+  const currentBg = changeBg ? '#f8f8f8' : '#fff';
+
   return (
     <AuthContext.Provider value={{
       token, login, logout, userDataUpdate, userPhoto, socialType, userName, isAuthenticated, isLoading, setLoading
@@ -45,9 +57,9 @@ function App() {
           <div className="app-header">
             <CustomNavBar />
           </div>
-          <div className="app-body">
+          <Box className="app-body" bgcolor={currentBg}>
             <Main />
-          </div>
+          </Box>
           <div className="app-footer">
             <Footer />
           </div>

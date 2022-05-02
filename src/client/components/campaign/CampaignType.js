@@ -32,6 +32,27 @@ const cards = [
   }
 ];
 
+const cards2 = [
+  {
+    id: 1,
+    title: '내가 직접 모집하기',
+    content: '2분 만에 올리고 딱 맞는 인플루언서를 만나보자',
+    url: '/Campaign/Create'
+  },
+  {
+    id: 2,
+    title: '지난 모집캠페인 복사',
+    content: '기전 만들었던 캠페인 지금 바로 복사하기',
+    url: '/Campaign/Copy'
+  },
+  {
+    id: 3,
+    title: '맞춤형 마케팅 요청',
+    content: '사진, 영상, 상세페이지, 홈페이지 지금 견적 받아보기',
+    url: '/Campaign/Request'
+  }
+];
+
 const useStyles = makeStyles({
   card: {
     cursor: 'pointer',
@@ -39,6 +60,50 @@ const useStyles = makeStyles({
     '&:hover': {
       border: `2px solid ${Colors.pink3}`
     }
+  },
+  typeCard: {
+    textAlign: 'left',
+    padding: '36px',
+    boxSizing: 'border-box',
+    height: '310px',
+    width: '310px',
+    backgroundColor: '#fff',
+    border: '1px solid #ddd',
+    borderRadius: '20px',
+    position: 'relative',
+    '&:hover': {
+      cursor: 'pointer',
+      border: `1px solid ${Colors.pink3}`,
+    },
+    '&:after': {
+      content: '',
+      position: 'absolute',
+      left: '35px',
+      bottom: '49px',
+      width: '30px',
+      height: '10px',
+      background: 'url(../../img/icons/arrow_icon.png) 0 0 no-repeat',
+      backgroundSize: '100% 100%',
+    }
+  },
+  cardTitle: {
+    marginBottom: '20px',
+    color: '#999',
+  },
+  cardContent: {
+    marginBottom: '20px',
+    color: '#222',
+    letterSpacing: '-0.048em',
+    lineHeight: '32px',
+    overflow: 'hidden',
+    wordBreak: 'break-all',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'normal'
+  },
+  main: {
+    backgroundColor: '#f8f8f8',
+    color: '#000',
+    textAlign: 'center'
   }
 });
 
@@ -76,7 +141,34 @@ function CampaignType() {
 
   return (
     <Box
-      mt={4}
+      className={classes.main}
+      px={{ xs: 3, md: 6 }}
+      py={{ xs: 5, md: 8 }}
+    >
+      <Box mb={1} fontSize="24px">
+        인공지능 인플루언서 마케팅
+      </Box>
+      <Box fontSize="45px" fontWeight={700}>
+        쉽고 빠른 인플루언서 매칭
+      </Box>
+      <Box mt={4} fontSize="18px">
+        내 사업홍보에 딱 맞는 인플루언서를 만나다!
+      </Box>
+      <Box m="64px auto" maxWidth={1024}>
+        <Grid container justify="space-between">
+          { cards2.map(item => (
+            <Grid key={item.id} item>
+              <Box className={classes.typeCard} onClick={() => createCampaign(item.id, item.url)}>
+                <Box fontSize="18px" fontWeight={500} className={classes.cardTitle}>{item.title}</Box>
+                <Box fontSize="24px" className={classes.cardContent}>{item.content}</Box>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </Box>
+  /* <Box
+      my={4}
       px={{ xs: 3, md: 6 }}
       py={{ xs: 5, md: 8 }}
       maxWidth="780px"
@@ -86,20 +178,6 @@ function CampaignType() {
       border={`1px solid ${Colors.grey}`}
       margin="0 auto"
     >
-      {/* <Box p={2} mb={3} border="1px solid green" color="green">
-        지금 진행중인 서브스크립션은 비기너 플랜입니다. 서브스크립션 만료 기간은 2021-07-30 입니다.
-      </Box>
-      <Box p={1} mb={3} border="1px solid red" color="red">
-        <Grid container alignItems="center">
-          <Grid item>진행중인 서브스크립션은 없습니다. 서브스크립션 구독하실까요? </Grid>
-          <Grid item>
-            <StyledButton height="38px" padding="0 22px">
-              구독하기
-            </StyledButton>
-          </Grid>
-        </Grid>
-
-      </Box> */}
       <Box mb={1} fontSize="24px">
             인공지능 인플루언서 마케팅
       </Box>
@@ -129,7 +207,24 @@ function CampaignType() {
           </Grid>
         )) }
       </Grid>
-    </Box>
+      <Grid container justify="center">
+        <Grid item xs={12} sm={6}>
+          <Box
+            mt={4}
+            p={4}
+            className={classes.card}
+            onClick={() => createCampaign(3, '/Campaign/Copy')}
+          >
+            <Box fontSize="28px">지난 모집캠페인 복사</Box>
+            <Box mt={4}>
+              기전 만들었던 캠페인
+              <br />
+              지금 바로 복사하기
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+    </Box> */
   );
 }
 

@@ -226,7 +226,7 @@ function UserInfo(props) {
               </Grid>
               <Grid item xs={12} md>
                 <StyledText fontSize="13px" color={Colors.grey2}>
-                  * 전화번호부정확하면 멤버십신청 안됩니다
+                  * 전화번호가 부정확하면 멤버쉽 신청이 안되며 향후 인플루언서와의 소통도 할 수 없으니 정확하게 적어주세요
                 </StyledText>
               </Grid>
             </Grid>
