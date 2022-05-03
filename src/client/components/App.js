@@ -35,7 +35,14 @@ function App() {
   const { pathname } = location;
 
   const changeBg = matchPath(pathname, {
-    path: ['/Campaign'],
+    path: [
+      '/Campaign',
+      '/Campaign/Create',
+      '/Campaign/Request',
+      '/Profile/UserInfo',
+      '/Profile/CampaignInfo',
+      '/Profile/MembershipInfo',
+    ],
     exact: true,
     strict: true
   });

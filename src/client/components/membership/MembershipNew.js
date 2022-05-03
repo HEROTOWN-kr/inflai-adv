@@ -338,7 +338,7 @@ function MembershipNew() {
             </Grid> */}
 
 
-            {/*<Grid item>
+            {/* <Grid item>
               <Box border={`3px solid ${PlanColors[0]}`} width={340} className={classes.plan}>
                 <Box className="plan-name">1 개월</Box>
                 <Box className="divider" bgcolor={PlanColors[0]} component="hr" />
@@ -354,7 +354,7 @@ function MembershipNew() {
                 </Box>
                 <Box className="add-info">1개월 무료 플랜입니다</Box>
               </Box>
-            </Grid>*/}
+            </Grid> */}
             <Grid item>
               <Box border={`3px solid ${PlanColors[0]}`} width={340} className={classes.plan}>
                 <Box className="plan-name">1개월</Box>
@@ -383,7 +383,7 @@ function MembershipNew() {
                 <Box className="plan-detail">
                   3개월 이용권
                   <br />
-                  뭘 최대 100명
+                  월 최대 100명
                 </Box>
                 <Box className="plan-price">90 만원</Box>
                 <Box mt="6px">VAT 별도</Box>
@@ -425,7 +425,7 @@ function MembershipNew() {
                 <Box className="plan-detail">
                   1년 이용권
                   <br />
-                  뭘 최대 150명 / 년간 최대 1,800명
+                  월 최대 150명 / 년간 최대 1,800명
                 </Box>
                 <Box className="plan-price">200 만원</Box>
                 <Box mt="6px">VAT 별도</Box>

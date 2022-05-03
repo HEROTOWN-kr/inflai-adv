@@ -227,7 +227,7 @@ function CampaignRequest(props) {
               <div className="sub-title">인플라이 전문가들이 가장 완벽한 인플루언서 마케팅을 도와드립니다.</div>
             </Grid>
             <Grid item xs={12}>
-              <Box px={{ xs: 3, md: 6 }} py={{ md: 8 }} className="form">
+              <Box bgcolor="#fff" px={{ xs: 3, md: 6 }} py={{ md: 8 }} className="form">
                 <Form>
                   <Grid container spacing={5}>
                     <Grid item md={12}>

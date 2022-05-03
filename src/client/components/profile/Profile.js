@@ -15,7 +15,12 @@ function Profile(props) {
   const isSM = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
-    <Box py={isMD ? 6 : 0} px={isMD ? 1 : 0} css={{ background: isMD ? Colors.grey3 : '#ffffff' }} className="profile">
+    <Box
+      py={isMD ? 6 : 0}
+      px={isMD ? 1 : 0}
+      // bgcolor={isMD ? Colors.grey3 : '#ffffff'}
+      className="profile"
+    >
       <Box maxWidth={{ xs: 1500 }} css={{ margin: '0 auto' }}>
         <Grid container spacing={isMD ? 2 : 0}>
           <Hidden smDown>

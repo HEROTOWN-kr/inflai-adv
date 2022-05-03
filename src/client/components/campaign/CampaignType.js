@@ -6,7 +6,9 @@ import {
 import { useHistory } from 'react-router-dom';
 import { Colors } from '../../lib/Сonstants';
 import AuthContext from '../../context/AuthContext';
+import ArrowIcon from '../../img/icons/arrow_icon.png';
 import StyledButton from '../../containers/StyledButton';
+import StyledImage from '../../containers/StyledImage';
 
 const cards = [
   {
@@ -71,18 +73,19 @@ const useStyles = makeStyles({
     border: '1px solid #ddd',
     borderRadius: '20px',
     position: 'relative',
+    transition: 'all 0.3s ease-in-out',
     '&:hover': {
       cursor: 'pointer',
       border: `1px solid ${Colors.pink3}`,
     },
-    '&:after': {
-      content: '',
+    '&::after': {
+      content: '""',
       position: 'absolute',
       left: '35px',
       bottom: '49px',
       width: '30px',
       height: '10px',
-      background: 'url(../../img/icons/arrow_icon.png) 0 0 no-repeat',
+      background: `url(${ArrowIcon}) 0 0 no-repeat`,
       backgroundSize: '100% 100%',
     }
   },
