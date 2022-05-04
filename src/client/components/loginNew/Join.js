@@ -114,6 +114,7 @@ function Join() {
       maxWidth="400px"
       m="48px auto"
       boxSizing="border-box"
+      bgcolor="#fff"
       border={{ xs: 'medium none color', md: `solid 1px ${Colors.grey}` }}
       py={{ xs: 0, md: 6 }}
       px={{ xs: 2, md: 6 }}

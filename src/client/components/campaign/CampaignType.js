@@ -60,7 +60,7 @@ const useStyles = makeStyles({
     cursor: 'pointer',
     border: `2px solid ${Colors.grey}`,
     '&:hover': {
-      border: `2px solid ${Colors.pink3}`
+      border: `2px solid ${Colors.pink3}`,
     }
   },
   typeCard: {
@@ -77,6 +77,7 @@ const useStyles = makeStyles({
     '&:hover': {
       cursor: 'pointer',
       border: `1px solid ${Colors.pink3}`,
+      transform: 'translateY(-15px)'
     },
     '&::after': {
       content: '""',

@@ -34,7 +34,7 @@ function App() {
   const location = useLocation();
   const { pathname } = location;
 
-  const changeBg = matchPath(pathname, {
+  const changeBgStrict = matchPath(pathname, {
     path: [
       '/Campaign',
       '/Campaign/Create',
@@ -42,12 +42,22 @@ function App() {
       '/Profile/UserInfo',
       '/Profile/CampaignInfo',
       '/Profile/MembershipInfo',
+      '/Login',
+      '/SignUpNew',
     ],
     exact: true,
     strict: true
   });
 
-  const currentBg = changeBg ? '#f8f8f8' : '#fff';
+  const changeBg = matchPath(pathname, {
+    path: [
+      '/Campaign/Edit',
+    ],
+    exact: false,
+    strict: true
+  });
+
+  const currentBg = changeBgStrict || changeBg ? '#f8f8f8' : 'transparent';
 
   return (
     <AuthContext.Provider value={{

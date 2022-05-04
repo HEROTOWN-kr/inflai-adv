@@ -121,6 +121,9 @@ function CampaignCopy(props) {
       </Box>
       <Box bgcolor="#f4f4f4" pt={4}>
         <Box maxWidth={1276} m="0 auto">
+          <Box mb={3} fontSize="24px" color="#000">
+            복사할 캠페인을 선택해주세요
+          </Box>
           {axiosLoading ? (
             <Grid container spacing={isMD ? 3 : 1}>
               { Array(5).fill().map((item, index) => (

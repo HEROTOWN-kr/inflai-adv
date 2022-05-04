@@ -175,6 +175,14 @@ function CampaignEdit() {
     return this.matches(/^\d+$/, '숫자 입력만 가능합니다');
   });
 
+  Yup.addMethod(Yup.string, 'checkSpaces', function () {
+    return this.test({
+      name: 'checkSpaces',
+      message: '띄어쓰기 입력 불가능합니다',
+      test: value => value && value.indexOf(' ') === -1
+    });
+  });
+
   const schema = Yup.object().shape({
     campaignName: Yup.string().required('캠페인명을 입력해주세요'),
     shortDisc: Yup.string().required('짧은설명을 입력해주세요'),
@@ -202,7 +210,7 @@ function CampaignEdit() {
       is: type => parseInt(type, 10) === 0,
       then: Yup.string().required('상세주소를 입력해주세요'),
     }),
-    phone: Yup.string().required('연락처를 입력해주세요').integerString(),
+    phone: Yup.string().required('연락처를 입력해주세요').checkSpaces().integerString(),
     email: Yup.string().required('이메일을 입력해주세요').email('잘못된 이메일 형식입니다'),
     searchKeyword: Yup.string().required('검색키워드를 입력해주세요'),
     discription: Yup.string().required('포스팅가이드를 입력해주세요'),
@@ -459,505 +467,494 @@ function CampaignEdit() {
   }, [token]);
 
   return (
-    <Box my={{ xs: 0, sm: 4 }} p={{ xs: 2, sm: 4 }} maxWidth={1200} css={{ margin: '0 auto' }} component={Paper}>
-      <Box component={isSM ? 'h1' : 'h3'} css={{ textAlign: 'center' }}>캠페인 정보</Box>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">캠페인명 (제공물품(서비스) + 시가 등 한 줄로 적어주세요)</StyledText></Box>
-          <ReactFormText
-            register={register}
-            errors={errors}
-            name="campaignName"
-            placeholder="Ex) 5만원 반려동물 구강케어 1박스 (30매)"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">제공하는 제품(서비스) 짧은설명</StyledText></Box>
-          <ReactFormText
-            register={register}
-            errors={errors}
-            multiline
-            rows={5}
-            rowsMax={10}
-            name="shortDisc"
-            placeholder="서비스나 제공물품에 대해서 자세히 적어주세요"
-          />
-        </Grid>
+    <Fragment>
+      <Box mt={{ xs: 4, sm: 8 }} color="#000" fontSize={{ xs: '32px', sm: '45px' }} fontWeight={700} textAlign="center">
+          캠페인 정보
+      </Box>
+      <Box
+        my={{ xs: 2, sm: 4 }}
+        mx={{ xs: 2, md: 'auto' }}
+        py={{ xs: 2, sm: 6 }}
+        px={{ xs: 2, sm: 4 }}
+        maxWidth={1024}
+        bgcolor="#fff"
+        border="1px solid #ddd"
+        borderRadius="20px"
+      >
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Box mb={1}><StyledText color="#3f51b5">캠페인명 (제공물품(서비스) + 시가 등 한 줄로 적어주세요)</StyledText></Box>
+            <ReactFormText
+              register={register}
+              errors={errors}
+              name="campaignName"
+              placeholder="Ex) 5만원 반려동물 구강케어 1박스 (30매)"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Box mb={1}><StyledText color="#3f51b5">제공하는 제품(서비스) 짧은설명</StyledText></Box>
+            <ReactFormText
+              register={register}
+              errors={errors}
+              multiline
+              rows={5}
+              rowsMax={10}
+              name="shortDisc"
+              placeholder="서비스나 제공물품에 대해서 자세히 적어주세요"
+            />
+          </Grid>
 
-        <Grid item xs={12}>
-          <Box mb={1}>
-            <StyledText color="#3f51b5">
-              캠페인 종류
-            </StyledText>
-          </Box>
-          <Grid container>
-            <Grid item>
-              <Controller
-                as={(
-                  <RadioGroup row aria-label="gender">
-                    {campaignTypes.map((item, index) => (
-                      <FormControlLabel
-                        key={item.value}
-                        value={item.value}
-                        control={(
-                          <Radio
-                            inputRef={index === 0 ? snsRef : null}
-                          />
-                                )}
-                        label={item.text}
-                      />
-                    ))}
-                  </RadioGroup>
-                  )}
-                onFocus={() => snsRef.current.focus()}
-                name="campaignType"
-                control={control}
-              />
+          <Grid item xs={12}>
+            <Box mb={1}>
+              <StyledText color="#3f51b5">
+                  캠페인 종류
+              </StyledText>
+            </Box>
+            <Grid container>
+              <Grid item>
+                <Controller
+                  as={(
+                    <RadioGroup row aria-label="gender">
+                      {campaignTypes.map((item, index) => (
+                        <FormControlLabel
+                          key={item.value}
+                          value={item.value}
+                          control={(
+                            <Radio
+                              inputRef={index === 0 ? snsRef : null}
+                            />
+                                    )}
+                          label={item.text}
+                        />
+                      ))}
+                    </RadioGroup>
+                      )}
+                  onFocus={() => snsRef.current.focus()}
+                  name="campaignType"
+                  control={control}
+                />
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
 
-        <Grid item xs={12}>
-          <Box mb={1}>
-            <StyledText color="#3f51b5">
-              모집SNS
-            </StyledText>
-          </Box>
-          <Controller
-            as={(
-              <RadioGroup row aria-label="gender">
-                {snsTypes.map((item, index) => (
-                  <FormControlLabel
-                    key={item.value}
-                    value={item.value}
-                    control={<Radio inputRef={index === 0 ? snsRef : null} />}
-                    label={item.text}
-                  />
-                ))}
-              </RadioGroup>
-              )}
-            onFocus={() => snsRef.current.focus()}
-            name="sns"
-            control={control}
-          />
+          <Grid item xs={12}>
+            <Box mb={1}>
+              <StyledText color="#3f51b5">
+                  모집SNS
+              </StyledText>
+            </Box>
+            <Controller
+              as={(
+                <RadioGroup row aria-label="gender">
+                  {snsTypes.map((item, index) => (
+                    <FormControlLabel
+                      key={item.value}
+                      value={item.value}
+                      control={<Radio inputRef={index === 0 ? snsRef : null} />}
+                      label={item.text}
+                    />
+                  ))}
+                </RadioGroup>
+                  )}
+              onFocus={() => snsRef.current.focus()}
+              name="sns"
+              control={control}
+            />
 
-          { errors.sns ? (
-            <div className="error-message">{errors.sns.message}</div>
-          ) : null }
+            { errors.sns ? (
+              <div className="error-message">{errors.sns.message}</div>
+            ) : null }
+
+            { watchObj.sns === '2' ? (
+              <Box color={Colors.orange}>
+                    유튜버 경우 제공되는 제품(서비스)외에 편집비용이 최소 20만원부터 가능합니다.
+                <br />
+                    제공되는 물품(서비스)가 인기가 적거나 편집이 어려운 경우 비용을 올리시는게 빠르게 모집하기 편합니다
+                <br />
+                    수정은 1회 무료로 가능하기에 최대한 정확하게 적어주세요
+                <br />
+                    영상 업로드 후 비용을 제작자에게 직접 전달하는 방식입니다
+                <br />
+                    인플라이는 인공지능분석을 통해 보다 좋은 유튜버를 추천해 드리며 유튜브 영상제작과정에는 참여하지 않습니다
+              </Box>
+            ) : null }
+
+            { watchObj.sns === '4' ? (
+              <Grid item xs={12}>
+                <Box mb={2} fontSize={14} color={Colors.orange}>
+                      기자단은 물건등을 제공하거나 방문하지 않고 사장님이 주신 사진 및 자료(스토리보드) 만으로 만드는 인스타그램이나 블로그에 업로드 하는 것 입니다
+                  <br />
+                      인스타그램기자단 최소비용 : 5000원 부터
+                  <br />
+                      블로그기자단 최소비용 : 2만원 부터
+                  <br />
+                      각 비용은 인플루언서가 해당내용을 주신 자료대로 잘 포스팅하고 난 다음에 리뷰통해서 확인한 뒤에 직접 광고주님이 입금해주시면 됩니다
+                  <br />
+                      자료를 추가하여 수정요청은 안됩니다 (추가 비용을 요구함) 따라서 처음에 자료를 잘 작성해 주세요
+                  <br />
+                      자료대로 안 올라갔을 경우 수정은 1회 가능하며 직접 요청하시면 됩니다
+                </Box>
+
+                <Box mb={1}>
+                  <StyledText color="#3f51b5">
+                        기자단 모집 SNS
+                  </StyledText>
+                </Box>
+
+                <Grid container>
+                  <Grid item>
+                    <Controller
+                      as={(
+                        <RadioGroup row aria-label="gender">
+                          {reportTypes.map((item, index) => (
+                            <FormControlLabel
+                              key={item.value}
+                              value={item.value}
+                              control={(
+                                <Radio
+                                  inputRef={index === 0 ? snsRef : null}
+                                />
+                                          )}
+                              label={item.label}
+                            />
+                          ))}
+                        </RadioGroup>
+                            )}
+                      onFocus={() => snsRef.current.focus()}
+                      name="reportSns"
+                      control={control}
+                    />
+                  </Grid>
+                </Grid>
+
+                { errors.reportSns ? (
+                  <div className="error-message">{errors.reportSns.message}</div>
+                ) : null }
+              </Grid>
+            ) : null }
+
+          </Grid>
 
           { watchObj.sns === '2' ? (
-            <Box color={Colors.orange}>
-                유튜버 경우 제공되는 제품(서비스)외에 편집비용이 최소 20만원부터 가능합니다.
-              <br />
-                제공되는 물품(서비스)가 인기가 적거나 편집이 어려운 경우 비용을 올리시는게 빠르게 모집하기 편합니다
-              <br />
-                수정은 1회 무료로 가능하기에 최대한 정확하게 적어주세요
-              <br />
-                영상 업로드 후 비용을 제작자에게 직접 전달하는 방식입니다
-              <br />
-                인플라이는 인공지능분석을 통해 보다 좋은 유튜버를 추천해 드리며 유튜브 영상제작과정에는 참여하지 않습니다
-            </Box>
-          ) : null }
-
-          { watchObj.sns === '4' ? (
-            <Grid item xs={12}>
-              <Box mb={2} fontSize={14} color={Colors.orange}>
-                  기자단은 물건등을 제공하거나 방문하지 않고 사장님이 주신 사진 및 자료(스토리보드) 만으로 만드는 인스타그램이나 블로그에 업로드 하는 것 입니다
-                <br />
-                  인스타그램기자단 최소비용 : 5000원 부터
-                <br />
-                  블로그기자단 최소비용 : 2만원 부터
-                <br />
-                  각 비용은 인플루언서가 해당내용을 주신 자료대로 잘 포스팅하고 난 다음에 리뷰통해서 확인한 뒤에 직접 광고주님이 입금해주시면 됩니다
-                <br />
-                  자료를 추가하여 수정요청은 안됩니다 (추가 비용을 요구함) 따라서 처음에 자료를 잘 작성해 주세요
-                <br />
-                  자료대로 안 올라갔을 경우 수정은 1회 가능하며 직접 요청하시면 됩니다
-              </Box>
-
-              <Box mb={1}>
-                <StyledText color="#3f51b5">
-                    기자단 모집 SNS
-                </StyledText>
-              </Box>
-
-              <Grid container>
-                <Grid item>
-                  <Controller
-                    as={(
-                      <RadioGroup row aria-label="gender">
-                        {reportTypes.map((item, index) => (
-                          <FormControlLabel
-                            key={item.value}
-                            value={item.value}
-                            control={(
-                              <Radio
-                                inputRef={index === 0 ? snsRef : null}
-                              />
+            <Fragment>
+              <Grid item xs={12}>
+                <Box mb={1}>
+                  <StyledText color="#3f51b5">
+                        편집비용
+                  </StyledText>
+                </Box>
+                <Grid container>
+                  <Grid item>
+                    <Controller
+                      as={(
+                        <RadioGroup row aria-label="gender">
+                          {editPriceTypes.map((item, index) => (
+                            <FormControlLabel
+                              key={item.value}
+                              value={item.value}
+                              control={<Radio inputRef={index === 0 ? snsRef : null} />}
+                              label={item.text}
+                            />
+                          ))}
+                        </RadioGroup>
                             )}
-                            label={item.label}
-                          />
-                        ))}
-                      </RadioGroup>
-                        )}
-                    onFocus={() => snsRef.current.focus()}
-                    name="reportSns"
-                    control={control}
-                  />
+                      onFocus={() => snsRef.current.focus()}
+                      name="editPrice"
+                      control={control}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <StyledTextField
+                      fullWidth
+                      disabled={watchObj.editPrice !== '4'}
+                      name="editPriceEtc"
+                      inputRef={register}
+                      error={!!errors.editPriceEtc}
+                      FormHelperTextProps={{
+                        classes: { contained: classes.FormHelperContained }
+                      }}
+                      helperText={errors.editPriceEtc ? (
+                        <span className="error-message">{errors.editPriceEtc?.message}</span>
+                      ) : null}
+                      css={{ transition: 'all 1s ease-out' }}
+                      InputProps={{
+                        endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>만원</InputAdornment>,
+                        classes: { input: classes.textAlignRight }
+                      }}
+                    />
+                  </Grid>
                 </Grid>
+                { errors.editPrice ? (
+                  <div className="error-message">{errors.editPrice.message}</div>
+                ) : null }
               </Grid>
-
-              { errors.reportSns ? (
-                <div className="error-message">{errors.reportSns.message}</div>
-              ) : null }
-            </Grid>
+              <Grid item xs={12}>
+                <Box mb={1}>
+                  <StyledText color="#3f51b5">
+                        원하시는 유튜브영상 길이
+                  </StyledText>
+                </Box>
+                <Grid container>
+                  <Grid item>
+                    <Controller
+                      as={(
+                        <RadioGroup row aria-label="gender">
+                          {videoLengthTypes.map((item, index) => (
+                            <FormControlLabel
+                              key={item.value}
+                              value={item.value}
+                              control={<Radio inputRef={index === 0 ? snsRef : null} />}
+                              label={item.text}
+                            />
+                          ))}
+                        </RadioGroup>
+                            )}
+                      onFocus={() => snsRef.current.focus()}
+                      name="videoLength"
+                      control={control}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <StyledTextField
+                      fullWidth
+                      disabled={watchObj.videoLength !== '5'}
+                      name="videoLengthEtc"
+                      inputRef={register}
+                      error={!!errors.videoLengthEtc}
+                      FormHelperTextProps={{
+                        classes: { contained: classes.FormHelperContained }
+                      }}
+                      helperText={errors.videoLengthEtc ? (
+                        <span className="error-message">{errors.videoLengthEtc?.message}</span>
+                      ) : null}
+                      css={{ transition: 'all 1s ease-out' }}
+                      InputProps={{
+                        endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>분</InputAdornment>,
+                        classes: { input: classes.textAlignRight }
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+                { errors.videoLength ? (
+                  <div className="error-message">{errors.videoLength.message}</div>
+                ) : null }
+              </Grid>
+            </Fragment>
           ) : null }
 
-        </Grid>
-
-        { watchObj.sns === '2' ? (
-          <Fragment>
-            <Grid item xs={12}>
-              <Box mb={1}>
-                <StyledText color="#3f51b5">
-                    편집비용
-                </StyledText>
-              </Box>
-              <Grid container>
-                <Grid item>
-                  <Controller
-                    as={(
-                      <RadioGroup row aria-label="gender">
-                        {editPriceTypes.map((item, index) => (
-                          <FormControlLabel
-                            key={item.value}
-                            value={item.value}
-                            control={<Radio inputRef={index === 0 ? snsRef : null} />}
-                            label={item.text}
-                          />
-                        ))}
-                      </RadioGroup>
-                        )}
-                    onFocus={() => snsRef.current.focus()}
-                    name="editPrice"
+          <Grid item xs={12}>
+            <Box mb={1}>
+              <StyledText color="#3f51b5">
+                  모집인원
+                <span style={{ color: Colors.orange }}>
+                  {` (남은 인플루언서 수 ${limits.InfCountLeft}명/${limits.PlnInfMonth}명)`}
+                </span>
+              </StyledText>
+            </Box>
+            <ReactFormText register={register} errors={errors} name="influencerCount" />
+          </Grid>
+          <Grid item xs={12}>
+            <Box mb={1}>
+              <StyledText color="#3f51b5">
+                  리뷰어 모집기간 (최대 모집기간은 1주일입니다)
+              </StyledText>
+            </Box>
+            <Grid container spacing={isSM ? 3 : 1} alignItems="center">
+              <Grid item xs sm="auto">
+                <Box width={isSM ? '250px' : '100%'}>
+                  <ReactFormDatePicker
+                    name="searchStart"
+                    control={control}
+                    onAccept={onSearchStartChange}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={1} sm="auto"><Box textAlign="center">~</Box></Grid>
+              <Grid item xs sm="auto">
+                <Box width={isSM ? '250px' : '100%'}>
+                  <ReactFormDatePicker
+                    name="searchFinish"
                     control={control}
                   />
-                </Grid>
-                <Grid item>
-                  <StyledTextField
-                    fullWidth
-                    disabled={watchObj.editPrice !== '4'}
-                    name="editPriceEtc"
-                    inputRef={register}
-                    error={!!errors.editPriceEtc}
-                    FormHelperTextProps={{
-                      classes: { contained: classes.FormHelperContained }
-                    }}
-                    helperText={errors.editPriceEtc ? (
-                      <span className="error-message">{errors.editPriceEtc?.message}</span>
-                    ) : null}
-                    css={{ transition: 'all 1s ease-out' }}
-                    InputProps={{
-                      endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>만원</InputAdornment>,
-                      classes: { input: classes.textAlignRight }
-                    }}
-                  />
-                </Grid>
+                </Box>
               </Grid>
-              { errors.editPrice ? (
-                <div className="error-message">{errors.editPrice.message}</div>
-              ) : null }
-            </Grid>
-            <Grid item xs={12}>
-              <Box mb={1}>
-                <StyledText color="#3f51b5">
-                    원하시는 유튜브영상 길이
-                </StyledText>
-              </Box>
-              <Grid container>
-                <Grid item>
-                  <Controller
-                    as={(
-                      <RadioGroup row aria-label="gender">
-                        {videoLengthTypes.map((item, index) => (
-                          <FormControlLabel
-                            key={item.value}
-                            value={item.value}
-                            control={<Radio inputRef={index === 0 ? snsRef : null} />}
-                            label={item.text}
-                          />
-                        ))}
-                      </RadioGroup>
-                        )}
-                    onFocus={() => snsRef.current.focus()}
-                    name="videoLength"
-                    control={control}
-                  />
-                </Grid>
-                <Grid item>
-                  <StyledTextField
-                    fullWidth
-                    disabled={watchObj.videoLength !== '5'}
-                    name="videoLengthEtc"
-                    inputRef={register}
-                    error={!!errors.videoLengthEtc}
-                    FormHelperTextProps={{
-                      classes: { contained: classes.FormHelperContained }
-                    }}
-                    helperText={errors.videoLengthEtc ? (
-                      <span className="error-message">{errors.videoLengthEtc?.message}</span>
-                    ) : null}
-                    css={{ transition: 'all 1s ease-out' }}
-                    InputProps={{
-                      endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>분</InputAdornment>,
-                      classes: { input: classes.textAlignRight }
-                    }}
-                  />
-                </Grid>
-              </Grid>
-              { errors.videoLength ? (
-                <div className="error-message">{errors.videoLength.message}</div>
-              ) : null }
-            </Grid>
-          </Fragment>
-        ) : null }
-
-        <Grid item xs={12}>
-          <Box mb={1}>
-            <StyledText color="#3f51b5">
-              모집인원
-              <span style={{ color: Colors.orange }}>
-                {` (남은 인플루언서 수 ${limits.InfCountLeft}명/${limits.PlnInfMonth}명)`}
-              </span>
-            </StyledText>
-          </Box>
-          <ReactFormText register={register} errors={errors} name="influencerCount" />
-        </Grid>
-        <Grid item xs={12}>
-          <Box mb={1}>
-            <StyledText color="#3f51b5">
-              리뷰어 모집기간 (최대 모집기간은 1주일입니다)
-            </StyledText>
-          </Box>
-          <Grid container spacing={isSM ? 3 : 1} alignItems="center">
-            <Grid item xs sm="auto">
-              <Box width={isSM ? '250px' : '100%'}>
-                <ReactFormDatePicker
-                  name="searchStart"
-                  control={control}
-                  onAccept={onSearchStartChange}
-                  // disablePast
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={1} sm="auto"><Box textAlign="center">~</Box></Grid>
-            <Grid item xs sm="auto">
-              <Box width={isSM ? '250px' : '100%'}>
-                <ReactFormDatePicker
-                  name="searchFinish"
-                  control={control}
-                  // minDate={pickerDates.min}
-                  // maxDate={pickerDates.max}
-                />
-              </Box>
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Box mb={1}>
-            <StyledText color="#3f51b5">
-              인플루언서 발표기간
-            </StyledText>
-          </Box>
-          <Grid container spacing={isSM ? 3 : 1} alignItems="center">
-            <Grid item xs sm="auto">
-              <Box width={isSM ? '250px' : '100%'}>
-                <ReactFormDatePicker
-                  name="selectStart"
-                  disabled
-                  control={control}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={1} sm="auto"><Box textAlign="center">~</Box></Grid>
-            <Grid item xs sm="auto">
-              <Box width={isSM ? '250px' : '100%'}>
-                <ReactFormDatePicker
-                  name="selectFinish"
-                  disabled
-                  control={control}
-                />
-              </Box>
-            </Grid>
-          </Grid>
-        </Grid>
-
-        { watchObj.campaignType === '2' ? (
-          <Fragment>
-            <Grid item xs={12}>
-              <Box mb={1}>
-                <StyledText color="#3f51b5">
-                    공동 구매기간
-                </StyledText>
-              </Box>
-              <Grid container spacing={isSM ? 3 : 1} alignItems="center">
-                <Grid item xs sm="auto">
-                  <Box width={isSM ? '250px' : '100%'}>
-                    <ReactFormDatePicker
-                      name="productSellStart"
-                      control={control}
-                      onAccept={onSearchStartChange}
-                    />
-                  </Box>
-                </Grid>
-                <Grid item xs={1} sm="auto"><Box textAlign="center">~</Box></Grid>
-                <Grid item xs sm="auto">
-                  <Box width={isSM ? '250px' : '100%'}>
-                    <ReactFormDatePicker
-                      name="productSellFinish"
-                      control={control}
-                      // minDate={pickerDates.min}
-                    />
-                  </Box>
-                </Grid>
-              </Grid>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Box mb={1}>
-                <StyledText color="#3f51b5">
-                    판매 방식
-                </StyledText>
-              </Box>
-              <Grid container>
-                <Grid item>
-                  <Controller
-                    as={(
-                      <RadioGroup row aria-label="gender">
-                        {productSellTypes.map((item, index) => (
-                          <FormControlLabel
-                            key={item.value}
-                            value={item.value}
-                            control={(
-                              <Radio
-                                inputRef={index === 0 ? snsRef : null}
-                              />
-                                      )}
-                            label={item.text}
-                          />
-                        ))}
-                      </RadioGroup>
-                        )}
-                    onFocus={() => snsRef.current.focus()}
-                    name="productSellType"
+          <Grid item xs={12}>
+            <Box mb={1}>
+              <StyledText color="#3f51b5">
+                  인플루언서 발표기간
+              </StyledText>
+            </Box>
+            <Grid container spacing={isSM ? 3 : 1} alignItems="center">
+              <Grid item xs sm="auto">
+                <Box width={isSM ? '250px' : '100%'}>
+                  <ReactFormDatePicker
+                    name="selectStart"
+                    disabled
                     control={control}
                   />
-                </Grid>
+                </Box>
               </Grid>
-              { errors.productSellType ? (
-                <div className="error-message">{errors.productSellType.message}</div>
-              ) : null }
-            </Grid>
-
-            <Grid item xs={12}>
-              <Box mb={1}><StyledText color="#3f51b5">제품 가격</StyledText></Box>
-              <Grid container spacing={1} alignItems="center">
-                <Grid item xs={12} md="auto">
-                  <Box width={{ xs: '100%', md: '200px' }}>
-                    <ReactFormText
-                      register={register}
-                      errors={errors}
-                      name="productSellPrice"
-                      placeholder=""
-                      InputProps={{
-                        endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
-                        classes: { input: classes.input }
-                      }}
-                    />
-                  </Box>
-                </Grid>
-              </Grid>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Box mb={1}><StyledText color="#3f51b5">수수료</StyledText></Box>
-              <Grid container spacing={1} alignItems="center">
-                <Grid item xs={12} md="auto">
-                  <Box width={{ xs: '100%', md: '200px' }}>
-                    <ReactFormText
-                      register={register}
-                      errors={errors}
-                      name="productSellDiscount"
-                      placeholder=""
-                      InputProps={{
-                        endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
-                        classes: { input: classes.input }
-                      }}
-                    />
-                  </Box>
-                </Grid>
-              </Grid>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Box mb={1}><StyledText color="#3f51b5">판매 정보</StyledText></Box>
-              <ReactFormText
-                register={register}
-                errors={errors}
-                multiline
-                rows={5}
-                name="productSellInfo"
-                placeholder="공동 구매 판매 정보를 자세히 적어주세요"
-              />
-            </Grid>
-          </Fragment>
-        ) : null}
-
-        <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">제공상품 배송여부</StyledText></Box>
-          <Controller
-            as={(
-              <RadioGroup row aria-label="gender">
-                {deliveryTypes.map((item, index) => (
-                  <FormControlLabel
-                    key={item.value}
-                    value={item.value}
-                    control={<Radio inputRef={index === 0 ? deliveryRef : null} />}
-                    label={item.text}
+              <Grid item xs={1} sm="auto"><Box textAlign="center">~</Box></Grid>
+              <Grid item xs sm="auto">
+                <Box width={isSM ? '250px' : '100%'}>
+                  <ReactFormDatePicker
+                    name="selectFinish"
+                    disabled
+                    control={control}
                   />
-                ))}
-              </RadioGroup>
-              )}
-            name="delivery"
-            onFocus={() => deliveryRef.current.focus()}
-            control={control}
-          />
-          {errors.delivery ? (
-            <div className="error-message">{errors.delivery.message}</div>
+                </Box>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          { watchObj.campaignType === '2' ? (
+            <Fragment>
+              <Grid item xs={12}>
+                <Box mb={1}>
+                  <StyledText color="#3f51b5">
+                        공동 구매기간
+                  </StyledText>
+                </Box>
+                <Grid container spacing={isSM ? 3 : 1} alignItems="center">
+                  <Grid item xs sm="auto">
+                    <Box width={isSM ? '250px' : '100%'}>
+                      <ReactFormDatePicker
+                        name="productSellStart"
+                        control={control}
+                        onAccept={onSearchStartChange}
+                      />
+                    </Box>
+                  </Grid>
+                  <Grid item xs={1} sm="auto"><Box textAlign="center">~</Box></Grid>
+                  <Grid item xs sm="auto">
+                    <Box width={isSM ? '250px' : '100%'}>
+                      <ReactFormDatePicker
+                        name="productSellFinish"
+                        control={control}
+                      />
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Box mb={1}>
+                  <StyledText color="#3f51b5">
+                        판매 방식
+                  </StyledText>
+                </Box>
+                <Grid container>
+                  <Grid item>
+                    <Controller
+                      as={(
+                        <RadioGroup row aria-label="gender">
+                          {productSellTypes.map((item, index) => (
+                            <FormControlLabel
+                              key={item.value}
+                              value={item.value}
+                              control={(
+                                <Radio
+                                  inputRef={index === 0 ? snsRef : null}
+                                />
+                                          )}
+                              label={item.text}
+                            />
+                          ))}
+                        </RadioGroup>
+                            )}
+                      onFocus={() => snsRef.current.focus()}
+                      name="productSellType"
+                      control={control}
+                    />
+                  </Grid>
+                </Grid>
+                { errors.productSellType ? (
+                  <div className="error-message">{errors.productSellType.message}</div>
+                ) : null }
+              </Grid>
+
+              <Grid item xs={12}>
+                <Box mb={1}><StyledText color="#3f51b5">제품 가격</StyledText></Box>
+                <Grid container spacing={1} alignItems="center">
+                  <Grid item xs={12} md="auto">
+                    <Box width={{ xs: '100%', md: '200px' }}>
+                      <ReactFormText
+                        register={register}
+                        errors={errors}
+                        name="productSellPrice"
+                        placeholder=""
+                        InputProps={{
+                          endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
+                          classes: { input: classes.input }
+                        }}
+                      />
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Box mb={1}><StyledText color="#3f51b5">수수료</StyledText></Box>
+                <Grid container spacing={1} alignItems="center">
+                  <Grid item xs={12} md="auto">
+                    <Box width={{ xs: '100%', md: '200px' }}>
+                      <ReactFormText
+                        register={register}
+                        errors={errors}
+                        name="productSellDiscount"
+                        placeholder=""
+                        InputProps={{
+                          endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
+                          classes: { input: classes.input }
+                        }}
+                      />
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Box mb={1}><StyledText color="#3f51b5">판매 정보</StyledText></Box>
+                <ReactFormText
+                  register={register}
+                  errors={errors}
+                  multiline
+                  rows={5}
+                  name="productSellInfo"
+                  placeholder="공동 구매 판매 정보를 자세히 적어주세요"
+                />
+              </Grid>
+            </Fragment>
           ) : null}
-        </Grid>
-        <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">카테고리</StyledText></Box>
-          <Grid container spacing={2}>
-            <Grid item xs={6} sm="auto">
-              <Box width={isSM ? '200px' : '100%'}>
-                <Controller
-                  render={controllerProps => (
-                    <StyledSelect
-                      native
-                      {...controllerProps}
-                      variant="outlined"
-                      fullWidth
-                    >
-                      {AdvertiseTypes.mainType.map((item, index) => <option key={index} value={index}>{item}</option>)}
-                    </StyledSelect>
+
+          <Grid item xs={12}>
+            <Box mb={1}><StyledText color="#3f51b5">제공상품 배송여부</StyledText></Box>
+            <Controller
+              as={(
+                <RadioGroup row aria-label="gender">
+                  {deliveryTypes.map((item, index) => (
+                    <FormControlLabel
+                      key={item.value}
+                      value={item.value}
+                      control={<Radio inputRef={index === 0 ? deliveryRef : null} />}
+                      label={item.text}
+                    />
+                  ))}
+                </RadioGroup>
                   )}
-                  name="type"
-                  control={control}
-                />
-              </Box>
-            </Grid>
-            {AdvertiseTypes.subType[watchObj.type] ? (
+              name="delivery"
+              onFocus={() => deliveryRef.current.focus()}
+              control={control}
+            />
+            {errors.delivery ? (
+              <div className="error-message">{errors.delivery.message}</div>
+            ) : null}
+          </Grid>
+          <Grid item xs={12}>
+            <Box mb={1}><StyledText color="#3f51b5">카테고리</StyledText></Box>
+            <Grid container spacing={2}>
               <Grid item xs={6} sm="auto">
                 <Box width={isSM ? '200px' : '100%'}>
                   <Controller
@@ -968,192 +965,213 @@ function CampaignEdit() {
                         variant="outlined"
                         fullWidth
                       >
-                        {AdvertiseTypes.subType[watchObj.type].map((item, index) => <option key={index} value={index}>{item}</option>)}
+                        {AdvertiseTypes.mainType.map((item, index) => <option key={index} value={index}>{item}</option>)}
                       </StyledSelect>
                     )}
-                    name="subtype"
+                    name="type"
                     control={control}
                   />
                 </Box>
               </Grid>
-            ) : null}
-          </Grid>
-        </Grid>
-        {parseInt(watchObj.type, 10) === 0 ? (
-          <Grid item xs={12}>
-            <Box mb={1}><StyledText color="#3f51b5">주소</StyledText></Box>
-            <DaumPostCode setValue={setValue} register={register} errors={errors} />
-          </Grid>
-        ) : null}
-        <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">연락처</StyledText></Box>
-          <ReactFormText register={register} errors={errors} name="phone" />
-        </Grid>
-        <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">이메일</StyledText></Box>
-          <ReactFormText register={register} errors={errors} name="email" />
-        </Grid>
-        <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">필수키워드</StyledText></Box>
-          <ReactFormText register={register} errors={errors} name="searchKeyword" />
-        </Grid>
-
-        {links.length > 0 ? (
-          <Grid item xs={12}>
-            <Grid container spacing={1}>
-              { links.map(item => (
-                <Grid item key={item}>
-                  <Box
-                    p="2px 5px 2px 10px"
-                    bgcolor="#0000000d"
-                    borderRadius="5px"
-                    maxWidth={300}
-                  >
-                    <Grid style={{ display: 'flex' }}>
-                      <Typography classes={{ root: classes.linkText }}>{item}</Typography>
-                      <Clear
-                        fontSize="small"
-                        classes={{ root: classes.clearRoot }}
-                        onClick={() => deleteLink(item)}
-                      />
-                    </Grid>
+              {AdvertiseTypes.subType[watchObj.type] ? (
+                <Grid item xs={6} sm="auto">
+                  <Box width={isSM ? '200px' : '100%'}>
+                    <Controller
+                      render={controllerProps => (
+                        <StyledSelect
+                          native
+                          {...controllerProps}
+                          variant="outlined"
+                          fullWidth
+                        >
+                          {AdvertiseTypes.subType[watchObj.type].map((item, index) => <option key={index} value={index}>{item}</option>)}
+                        </StyledSelect>
+                      )}
+                      name="subtype"
+                      control={control}
+                    />
                   </Box>
                 </Grid>
-              ))}
+              ) : null}
             </Grid>
           </Grid>
-        ) : null}
+          {parseInt(watchObj.type, 10) === 0 ? (
+            <Grid item xs={12}>
+              <Box mb={1}><StyledText color="#3f51b5">주소</StyledText></Box>
+              <DaumPostCode setValue={setValue} register={register} errors={errors} />
+            </Grid>
+          ) : null}
+          <Grid item xs={12}>
+            <Box mb={1}><StyledText color="#3f51b5">연락처</StyledText></Box>
+            <ReactFormText register={register} errors={errors} name="phone" />
+          </Grid>
+          <Grid item xs={12}>
+            <Box mb={1}><StyledText color="#3f51b5">이메일</StyledText></Box>
+            <ReactFormText register={register} errors={errors} name="email" />
+          </Grid>
+          <Grid item xs={12}>
+            <Box mb={1}><StyledText color="#3f51b5">필수키워드</StyledText></Box>
+            <ReactFormText register={register} errors={errors} name="searchKeyword" />
+          </Grid>
 
-        <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">참조할 링크 (링크는 최대 3개까지 입력가능합니다. 주소 쓰시고 꼭 화살표 버튼 눌러주세요)</StyledText></Box>
-          <Box maxWidth={400}>
+          {links.length > 0 ? (
+            <Grid item xs={12}>
+              <Grid container spacing={1}>
+                { links.map(item => (
+                  <Grid item key={item}>
+                    <Box
+                      p="2px 5px 2px 10px"
+                      bgcolor="#0000000d"
+                      borderRadius="5px"
+                      maxWidth={300}
+                    >
+                      <Grid style={{ display: 'flex' }}>
+                        <Typography classes={{ root: classes.linkText }}>{item}</Typography>
+                        <Clear
+                          fontSize="small"
+                          classes={{ root: classes.clearRoot }}
+                          onClick={() => deleteLink(item)}
+                        />
+                      </Grid>
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+          ) : null}
+
+          <Grid item xs={12}>
+            <Box mb={1}><StyledText color="#3f51b5">참조할 링크 (링크는 최대 3개까지 입력가능합니다. 주소 쓰시고 꼭 화살표 버튼 눌러주세요)</StyledText></Box>
+            <Box maxWidth={400}>
+              <ReactFormText
+                register={register}
+                errors={errors}
+                name="linkItem"
+                placeholder="예시) https://www.inflai.com"
+                InputProps={{
+                  classes: { adornedEnd: classes.endAdornment },
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={addLink}>
+                        <ArrowRightAlt fontSize="small" />
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
+                onKeyPress={(ev) => {
+                  if (ev.key === 'Enter') {
+                    ev.preventDefault();
+                    addLink();
+                  }
+                }}
+              />
+            </Box>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Box mb={1}><StyledText color="#3f51b5">포스팅가이드</StyledText></Box>
             <ReactFormText
               register={register}
               errors={errors}
-              name="linkItem"
-              placeholder="예시) https://www.inflai.com"
-              InputProps={{
-                classes: { adornedEnd: classes.endAdornment },
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={addLink}>
-                      <ArrowRightAlt fontSize="small" />
-                    </IconButton>
-                  </InputAdornment>
-                )
-              }}
-              onKeyPress={(ev) => {
-                if (ev.key === 'Enter') {
-                  ev.preventDefault();
-                  addLink();
-                }
-              }}
+              multiline
+              rows={5}
+              rowsMax={10}
+              name="discription"
+              placeholder={'예) 사진 5장 이상 + 동영상 20초 1개 이상\n'
+                  + '반려동물이 구강케어 필름 먹는 사진과 영상 각 1장씩\n'
+                  + '나머지는 제품사진 등 올려주세요\n'}
             />
-          </Box>
-        </Grid>
-
-        <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">포스팅가이드</StyledText></Box>
-          <ReactFormText
-            register={register}
-            errors={errors}
-            multiline
-            rows={5}
-            rowsMax={10}
-            name="discription"
-            placeholder={'예) 사진 5장 이상 + 동영상 20초 1개 이상\n'
-            + '반려동물이 구강케어 필름 먹는 사진과 영상 각 1장씩\n'
-            + '나머지는 제품사진 등 올려주세요\n'}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">제공내역 (필수)</StyledText></Box>
-          <ReactFormText
-            register={register}
-            errors={errors}
-            multiline
-            rows={5}
-            rowsMax={10}
-            name="provideInfo"
-            placeholder="예시) 시가 12만원 상당 스틱형벌꿀 1박스"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">추가 제공금액 (선택)</StyledText></Box>
-          <Grid container spacing={1} alignItems="center">
-            <Grid item xs={12} md="auto">
-              <Box width={{ xs: '100%', md: '200px' }}>
-                <ReactFormText
-                  register={register}
-                  errors={errors}
-                  name="provideMoney"
-                  placeholder=""
-                  InputProps={{
-                    readOnly: true,
-                    endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
-                    classes: { input: classes.input }
-                  }}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md>
-              <Box fontSize="14px">
-                제공하는 물품(서비스)의 시가가 낮은 경우 인플루언서 모집이 원활하지 않을 수 있습니다.
-                이럴 때 추가적인 금액을 제공해 주시면 더 좋은 인플루언서가 신청할 가능성이 커집니다.
-              </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box mb={1}><StyledText color="#3f51b5">제공내역 (필수)</StyledText></Box>
+            <ReactFormText
+              register={register}
+              errors={errors}
+              multiline
+              rows={5}
+              rowsMax={10}
+              name="provideInfo"
+              placeholder="예시) 시가 12만원 상당 스틱형벌꿀 1박스"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Box mb={1}><StyledText color="#3f51b5">추가 제공금액 (선택)</StyledText></Box>
+            <Grid container spacing={1} alignItems="center">
+              <Grid item xs={12} md="auto">
+                <Box width={{ xs: '100%', md: '200px' }}>
+                  <ReactFormText
+                    register={register}
+                    errors={errors}
+                    name="provideMoney"
+                    placeholder=""
+                    InputProps={{
+                      readOnly: true,
+                      endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
+                      classes: { input: classes.input }
+                    }}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md>
+                <Box fontSize="14px">
+                    제공하는 물품(서비스)의 시가가 낮은 경우 인플루언서 모집이 원활하지 않을 수 있습니다.
+                    이럴 때 추가적인 금액을 제공해 주시면 더 좋은 인플루언서가 신청할 가능성이 커집니다.
+                </Box>
+              </Grid>
             </Grid>
           </Grid>
+          <Grid item xs={12}>
+            <Box mb={1}>
+              <StyledText color="#3f51b5">이미지 업로드 (5장 까지 업로드 가능합니다, 최소 한 장 이상필수)</StyledText>
+              <input
+                type="text"
+                readOnly
+                name="picArray"
+                ref={register}
+                style={{
+                  opacity: '0', width: '0', padding: '0', border: '0', height: '0'
+                }}
+              />
+            </Box>
+            <Box border="1px solid #0000003b" p={3}>
+              <ImageHolder
+                setValue={setValue}
+                images={images}
+                setImages={setImages}
+                dbImages={dbImages}
+                setDbImages={setDbImages}
+                campaignId={params.id}
+                getCampaignData={getCampaignData}
+              />
+            </Box>
+            {errors.picArray ? (
+              <div className="error-message">{errors.picArray.message}</div>
+            ) : null}
+          </Grid>
+          <Grid item xs={12}>
+            <Box mb={1}><StyledText color="#3f51b5">상세정보</StyledText></Box>
+            <CKEditorComponent control={control} name="detailInfo" errors={errors} />
+          </Grid>
         </Grid>
+      </Box>
+      <Box mb={{ xs: 4, sm: 8 }} mx={2}>
         <Grid item xs={12}>
-          <Box mb={1}>
-            <StyledText color="#3f51b5">이미지 업로드 (5장 까지 업로드 가능합니다, 최소 한 장 이상필수)</StyledText>
-            <input
-              type="text"
-              readOnly
-              name="picArray"
-              ref={register}
-              style={{
-                opacity: '0', width: '0', padding: '0', border: '0', height: '0'
-              }}
-            />
-          </Box>
-          <Box border="1px solid #0000003b" p={3}>
-            <ImageHolder
-              setValue={setValue}
-              images={images}
-              setImages={setImages}
-              dbImages={dbImages}
-              setDbImages={setDbImages}
-              campaignId={params.id}
-              getCampaignData={getCampaignData}
-            />
-          </Box>
-          {errors.picArray ? (
-            <div className="error-message">{errors.picArray.message}</div>
-          ) : null}
-        </Grid>
-        <Grid item xs={12}>
-          <Box mb={1}><StyledText color="#3f51b5">상세정보</StyledText></Box>
-          <CKEditorComponent control={control} name="detailInfo" errors={errors} />
-        </Grid>
-
-        <Grid item xs={12}>
-          <Grid container justify="center" spacing={1}>
+          <Grid container justify="center" spacing={3}>
             <Grid item xs={6} sm="auto">
-              <Box width={isSM ? '200px' : '100%'}>
-                <StyledButton onClick={() => history.push('/')}>취소</StyledButton>
+              <Box width={{ xs: '100%', sm: '200px' }}>
+                <StyledButton background={Colors.pink3} hoverBackground={Colors.pink} onClick={() => history.push('/')}>취소</StyledButton>
               </Box>
             </Grid>
             <Grid item xs={6} sm="auto">
-              <Box width={isSM ? '200px' : '100%'}>
+              <Box width={{ xs: '100%', sm: '200px' }}>
                 <StyledButton onClick={handleSubmit(onSubmit)}>저장하기</StyledButton>
               </Box>
             </Grid>
-            {/* <Grid item xs={2}><StyledButton onClick={handleSubmit(onSubmit2)}>test</StyledButton></Grid> */}
           </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </Fragment>
+
   );
 }
 export default CampaignEdit;
