@@ -1098,9 +1098,10 @@ function CampaignCreateNew() {
 
             <Box
               mt="10px"
-              fontSize="15px"
+              fontSize="14px"
               color="#4c4747"
-              bgcolor="#9af9ae"
+              bgcolor="#fdf7e2"
+              border="1px solid #e6cf79"
               padding="10px 15px"
               borderRadius="8px"
             >
