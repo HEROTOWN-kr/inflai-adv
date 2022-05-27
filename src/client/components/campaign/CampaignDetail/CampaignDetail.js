@@ -60,6 +60,15 @@ const useStyles = makeStyles({
     overflowWrap: 'break-word',
     wordBreak: 'break-all',
     whiteSpace: 'pre-wrap'
+  },
+  stickyMenu: {
+    margin: '48px 0 16px 15px',
+    // marginLeft: '15px',
+    // marginTop: '48px',
+    // marginBottom: '16px',
+    width: '300px',
+    position: 'sticky',
+    top: '48px'
   }
 });
 
@@ -658,11 +667,132 @@ function CampaignDetail() {
             </Grid>
           </Box>
         </Grid>
-        {/* <Grid item xs>
-          <Box height="1000px" css={{ background: 'green' }}>test</Box>
-        </Grid> */}
         {isMD ? (
           <Grid item style={{ borderLeft: '1px solid #eee' }}>
+            {/* <Box className={classes.stickyMenu}>
+              <Box pb="13px" borderBottom="solid 1px #efefef">
+                <Box fontSize="18px" color="#000000">
+                  {productData.AD_NAME}
+                </Box>
+                <Box className={classes.overflowBreak} my="10px" fontSize="14px">
+                  {productData.AD_SHRT_DISC}
+                </Box>
+                <Box mb="15px">
+                  <Grid container>
+                    { productData.AD_REPORT === '1' ? (
+                      <Grid item>
+                        <Box fontSize="12px" mr="7px" p="2px 5px" color={adTypes['4'].color} border={`solid 1px ${adTypes['4'].color}`}>
+                            기자단
+                        </Box>
+                      </Grid>
+                    ) : null}
+                    { productData.AD_CAM_TYPE === '2' ? (
+                      <Grid item>
+                        <Box fontSize="12px" mr="7px" p="2px 5px" color={adTypes['4'].color} border={`solid 1px ${adTypes['4'].color}`}>
+                            공동구매
+                        </Box>
+                      </Grid>
+                    ) : null}
+                    <Grid item>
+                      <Box fontSize="12px" mr="7px" p="2px 5px" color={adTypes[productData.AD_TYPE].color} border={`solid 1px ${adTypes[productData.AD_TYPE].color}`}>
+                        {adTypes[productData.AD_TYPE].text}
+                      </Box>
+                    </Grid>
+                    <Grid item>
+                      <Box fontSize="12px" p="2px 5px" bgcolor="#efefef" border="solid 1px #dcdcdc">
+                        {productData.AD_DELIVERY === 0 ? '방문형' : '배송형'}
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Box>
+                <TimeComponent FinalDate={productData.AD_SRCH_END} />
+                <Box fontSize="14px" color="#000000">
+                  신청&nbsp;
+                  <span className={classes.num} style={{ color: '#ff3478' }}>{productData.TB_PARTICIPANTs.length}</span>
+                  &nbsp;/&nbsp;모집&nbsp;
+                  <span className={classes.num}>{productData.AD_INF_CNT}</span>
+                </Box>
+              </Box>
+              <Box pl="5px" pt="14px" pb="23px" fontSize="14px" borderBottom="solid 1px #efefef">
+                <Box mb="4px" color="#ff3478">
+                  <Grid container alignItems="center">
+                    <Grid item>
+                      <FiberManualRecord classes={{ fontSizeSmall: classes.record }} fontSize="small" />
+                    </Grid>
+                    <Grid item>
+                      <Box width="110px">리뷰어 신청기간</Box>
+                    </Grid>
+                    <Grid item>
+                      <span className={classes.num}>
+                        {`${productData.AD_SRCH_START} ~ ${productData.AD_SRCH_END}`}
+                      </span>
+                    </Grid>
+                  </Grid>
+                </Box>
+                <Box mb="4px">
+                  <Grid container alignItems="center">
+                    <Grid item>
+                      <FiberManualRecord classes={{ fontSizeSmall: classes.record }} fontSize="small" />
+                    </Grid>
+                    <Grid item>
+                      <Box width="110px">선정자 발표</Box>
+                    </Grid>
+                    <Grid item>
+                      <span className={classes.num}>
+                        {`${productData.AD_SEL_START} ~ ${productData.AD_SEL_END}`}
+                      </span>
+                    </Grid>
+                  </Grid>
+                </Box>
+                <Box mb="4px">
+                  <Grid container alignItems="center">
+                    <Grid item>
+                      <FiberManualRecord classes={{ fontSizeSmall: classes.record }} fontSize="small" />
+                    </Grid>
+                    <Grid item>
+                      <Box width="110px">리뷰 등록기간</Box>
+                    </Grid>
+                    <Grid item>
+                      <span className={classes.num}>
+                        {`${addDays(productData.AD_SEL_END, 1)} ~ ${addDays(productData.AD_SEL_END, 8)}`}
+                      </span>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Box>
+              { RightMenuLinks.map(item => (
+                <Box
+                  key={item.link}
+                  py="13px"
+                  pl="5px"
+                  classes={{ root: classes.rightMenu }}
+                  onClick={() => scrollTo(item.link)}
+                >
+                  <Grid container alignItems="center" justify="space-between">
+                    <Grid item>{item.text}</Grid>
+                    <Grid item>
+                      <ChevronRight />
+                    </Grid>
+                  </Grid>
+                </Box>
+              ))}
+              <Box mt="20px">
+                <Grid container spacing={1}>
+                  <Grid item xs={6}>
+                    <StyledButton background={Colors.pink3} hoverBackground={Colors.pink} fontWeight="bold" fontSize="20px" onClick={() => history.push(`/Campaign/Edit/${adId}`)}>
+                      수정
+                    </StyledButton>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <StyledButton background={Colors.blue2} hoverBackground={Colors.blue2Hover} fontWeight="bold" fontSize="20px" onClick={() => history.push(`/Question/${adId}`)}>
+                      문의
+                    </StyledButton>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box> */}
+
+
             <Box width="300px" position="relative">
               <Box position="absolute" top={isSticky ? '-92px' : '0'} left="0">
                 <Box position={isSticky ? 'fixed' : 'static'}>
