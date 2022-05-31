@@ -258,15 +258,15 @@ function CampaignCreateNew() {
     }),
     productSellPrice: Yup.string().when('campaignType', {
       is: campaignType => campaignType === '2',
-      then: Yup.string().required('제품 가격을 선택해주세요')
+      then: Yup.string().required('제품 가격을 입력해주세요')
     }),
     productSellDiscount: Yup.string().when('campaignType', {
       is: campaignType => campaignType === '2',
-      then: Yup.string().required('수수료를 선택해주세요')
+      then: Yup.string().required('판매 수익을 입력해주세요')
     }),
     productSellInfo: Yup.string().when('campaignType', {
       is: campaignType => campaignType === '2',
-      then: Yup.string().required('판매 정보를 선택해주세요')
+      then: Yup.string().required('판매 정보를 입력해주세요')
     }),
   });
 
@@ -852,7 +852,7 @@ function CampaignCreateNew() {
               </Grid>
 
               <Grid item xs={12}>
-                <Box mb={1}><StyledText color="#3f51b5">수수료</StyledText></Box>
+                <Box mb={1}><StyledText color="#3f51b5">판매 수익</StyledText></Box>
                 <Grid container spacing={1} alignItems="center">
                   <Grid item xs={12} md="auto">
                     <Box width={{ xs: '100%', md: '200px' }}>

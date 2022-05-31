@@ -28,7 +28,7 @@ function Main() {
   const { token } = useContext(AuthContext);
   const { pathname } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, [pathname]);
 
   function checkMembership() {

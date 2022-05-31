@@ -10,7 +10,7 @@ import Membership from '../membership/Membership';
 import HomeProcess from './sections/HomeProcess';
 import HomeBanners from './sections/HomeBanners';
 import HomeVideoTitle from './sections/HomeVideoTitle';
-import MembershipNew from "../membership/MembershipNew";
+import MembershipNew from '../membership/MembershipNew';
 
 
 function home(props) {
@@ -26,9 +26,9 @@ function home(props) {
       )}
       <HomeService isMD={isMD} />
       <HomeCategory />
-      <HomeBanners />
       {/* <HomeProcess /> */}
       <HomeSpeciality isMD={isMD} />
+      <HomeBanners />
       {/* <HomePartners isMD={isMD} /> */}
     </Box>
   );
