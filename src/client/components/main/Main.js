@@ -22,6 +22,7 @@ import MembershipNew from '../membership/MembershipNew';
 import AnalysisComponent from '../Analysis/AnalysisComponent';
 import YoutubeAnalysis from '../Analysis/Youtube/YoutubeAnalysis';
 import Question from '../question/Question';
+import InstagramAnalytics from '../Analysis/Instagram/InstagramAnalytics';
 
 function Main() {
   const [isMember, setIsMember] = useState(false);
@@ -125,6 +126,10 @@ function Main() {
       <Route
         path="/YoutubeAnalysis"
         render={renderProps => <YoutubeAnalysis {...renderProps} id={25} />}
+      />
+      <Route
+        path="/InstagramAnalytics"
+        render={renderProps => <InstagramAnalytics {...renderProps} />}
       />
       <Route
         component={NotFound}

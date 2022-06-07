@@ -44,6 +44,7 @@ function App() {
       '/Profile/MembershipInfo',
       '/Login',
       '/SignUpNew',
+      '/InstagramAnalytics',
     ],
     exact: true,
     strict: true
