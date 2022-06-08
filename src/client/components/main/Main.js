@@ -121,7 +121,7 @@ function Main() {
       />
       <Route
         path="/InstaDialog"
-        render={renderProps => <AnalysisComponent {...renderProps} INS_ID={3550} />} // 1101, INS_ID: 1297, INF_ID: 3550
+        render={renderProps => <AnalysisComponent {...renderProps} INS_ID={2630} />} // 1101, INS_ID: 1297, INF_ID: 3550
       />
       <Route
         path="/YoutubeAnalysis"
