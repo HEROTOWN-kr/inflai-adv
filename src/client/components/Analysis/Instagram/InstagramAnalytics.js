@@ -12,10 +12,18 @@ import {
 } from '@material-ui/icons';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
+import Slider from 'react-slick';
 import commonStyles from '../../../lib/commonStyles';
 import defaultAccountImage from '../../../img/default_account_image.png';
+import defaultImage from '../../../img/notFound400_316.png';
 
 const useStyles = makeStyles(theme => ({
+  imgFile: {
+    width: '100%',
+    height: '210px',
+    objectFit: 'cover',
+    objectPosition: '50% 50%',
+  },
   input: {
     padding: '15px 14px 15px 0'
   },
@@ -99,9 +107,31 @@ const useStyles = makeStyles(theme => ({
   avatar: { borderRadius: '50%' },
 }));
 
+const settings = {
+  infinite: true,
+  speed: 500,
+  slidesToShow: 6,
+  slidesToScroll: 1,
+  arrows: true,
+  autoplay: true,
+  autoplaySpeed: 2000,
+  responsive: [
+    {
+      breakpoint: 960,
+      settings: {
+        slidesToShow: 2, slidesToScroll: 1, arrows: false, dots: true
+      }
+    }
+  ]
+};
+
+const instaDefaultValues = {
+  lastPosts: []
+};
+
 function InstagramAnalytics(props) {
   const [userName, setUserName] = useState(null);
-  const [instaData, setInstaData] = useState({});
+  const [instaData, setInstaData] = useState(instaDefaultValues);
   const classes = useStyles();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -175,7 +205,7 @@ function InstagramAnalytics(props) {
             >
               <Grid container alignItems="center" style={{ height: '100%' }}>
                 <Grid item>
-                  <img width={70} height={70} className={classes.avatar} src={instaData.INS_PROFILE_IMG || defaultAccountImage} alt="noImage" />
+                  <img width={70} height={70} className={classes.avatar} src={instaData.pic || defaultAccountImage} alt="noImage" />
                 </Grid>
                 <Grid item xs>
                   <Box
@@ -280,10 +310,34 @@ function InstagramAnalytics(props) {
         mt={2}
         p={2}
       >
+        <Box margin="0 -8px">
+          <Slider {...settings}>
+            {instaData.lastPosts.map((item, index) => (
+              <Box key={index} width="100%">
+                <Box margin="0 8px">
+                  {/* <img className={classes.imgFile} src={item.thumbnail || defaultImage} /> */}
+
+                  <iframe className={classes.imgFile} src={item.thumbnail} />
+                </Box>
+              </Box>
+            ))}
+          </Slider>
+        </Box>
+      </Box>
+
+      <Box
+        {...commonStyles.whiteBlock}
+        mt={2}
+        p={2}
+      >
         <pre>
           {JSON.stringify(instaData, null, 2)}
         </pre>
       </Box>
+
+      {/* <img width="300px" height="300px" src="https://scontent-ssn1-1.cdninstagram.com/v/t51.29350-15/286467739_3168906236695048_5795425232992755663_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=8ae9d6&_nc_ohc=4wZwsNAfI4MAX9-mCMA&_nc_ht=scontent-ssn1-1.cdninstagram.com&edm=AM6HXa8EAAAA&oh=00_AT-fCorwzZjSOCAxCs2k8u2P8yaRp95eSTr_mX7fOhUxqg&oe=62A650A9" /> */}
+      <img width="300px" height="300px" src="https://inflai-aws-bucket.s3.ap-northeast-2.amazonaws.com/instagram_common/timatiofficial/img/2ya5cimcl46f2qvq.jpg" />
+
 
     </Box>
   );
