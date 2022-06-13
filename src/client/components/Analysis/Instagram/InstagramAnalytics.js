@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Box, Button, colors, Grid, InputAdornment, makeStyles, OutlinedInput, useMediaQuery, useTheme,
+  Box, Button, colors, Grid, InputAdornment, makeStyles, OutlinedInput, Typography, useMediaQuery, useTheme,
 } from '@material-ui/core';
 import {
-  Assessment,
-  CheckBoxOutlined,
+  Assessment, ChatBubbleOutline,
+  CheckBoxOutlined, FavoriteBorder,
   ImageOutlined,
   Instagram,
   PieChartOutlined,
@@ -13,9 +13,11 @@ import {
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
 import Slider from 'react-slick';
+import { Line } from 'react-chartjs-2';
 import commonStyles from '../../../lib/commonStyles';
 import defaultAccountImage from '../../../img/default_account_image.png';
 import defaultImage from '../../../img/notFound400_316.png';
+import PieChartApex from '../PieChartApex';
 
 const useStyles = makeStyles(theme => ({
   imgFile: {
@@ -23,6 +25,24 @@ const useStyles = makeStyles(theme => ({
     height: '210px',
     objectFit: 'cover',
     objectPosition: '50% 50%',
+  },
+  imgFileMedia: {
+    width: '200px',
+    height: '200px',
+    borderRadius: '7px',
+    objectFit: 'cover',
+    objectPosition: '50% 50%',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      height: 'auto',
+    }
+  },
+  multiLineEllipsis: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkit-line-clamp': 3,
+    '-webkit-box-orient': 'vertical'
   },
   input: {
     padding: '15px 14px 15px 0'
@@ -105,6 +125,33 @@ const useStyles = makeStyles(theme => ({
   bgRed: { background: 'linear-gradient(45deg, #FF5370, #ff869a)' },
   bgGreenBlue: { background: 'linear-gradient(45deg, #2e65d8, #59e0c5)' },
   avatar: { borderRadius: '50%' },
+  imgSlider: {
+    position: 'relative',
+    '&::before': {
+      zIndex: '1',
+      content: '""',
+      position: 'absolute',
+      top: '0',
+      left: '0px',
+      display: 'block',
+      width: '40px',
+      height: '100%',
+      background:
+          'linear-gradient(90deg,rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)'
+    },
+    '&::after': {
+      zIndex: '1',
+      content: '""',
+      position: 'absolute',
+      top: '0',
+      right: '0px',
+      display: 'block',
+      width: '40px',
+      height: '100%',
+      background:
+          'linear-gradient(90deg,rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)'
+    }
+  },
 }));
 
 const settings = {
@@ -132,11 +179,124 @@ const settings = {
 
 const instaDefaultValues = {
   pic: '',
-  lastPosts: []
+  lastPosts: [],
+  analyzeInfo: {
+    labelInfo: {
+      labels: [],
+      scores: [],
+      detectColors: [],
+      categoryMax: {}
+    },
+    objectInfo: {
+      labels: [],
+      scores: [],
+      detectColors: [],
+    },
+  }
+};
+
+const likesData = {
+  labels: ['1', '2', '3', '4', '5', '6'],
+  datasets: [
+    {
+      label: '# of Votes',
+      backgroundColor: [
+        '#EAEAEA', '#18DBA8', '#EAEAEA', '#EAEAEA', '#EAEAEA', '#EAEAEA'
+      ],
+      categoryPercentage: 0.5
+    },
+  ],
+};
+
+const likesOpt = {
+  legend: {
+    display: false
+  },
+  scales: {
+    xAxes: [
+      {
+        categoryPercentage: 0.5,
+        barPercentage: 0.6,
+        gridLines: { display: false }
+      }
+    ],
+    yAxes: [
+      {
+        categoryPercentage: 1.0,
+        barPercentage: 1.0,
+        gridLines: {
+          drawBorder: false,
+          drawTicks: false
+        },
+        ticks: {
+          display: true,
+          min: 0,
+          max: 100,
+          stepSize: 5
+        }
+      }
+    ]
+  }
+};
+
+const followerActivity = {
+  hours: [
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+    '21',
+    '22',
+    '23'
+  ],
+  flwrs: [
+    678,
+    689,
+    700,
+    687,
+    689,
+    683,
+    656,
+    613,
+    480,
+    291,
+    183,
+    124,
+    124,
+    154,
+    247,
+    382,
+    509,
+    599,
+    620,
+    638,
+    640,
+    656,
+    663,
+    681
+  ]
 };
 
 function InstagramAnalytics(props) {
-  const [userName, setUserName] = useState(null);
+  const [inputValue, setInputValue] = useState('');
+  const [userName, setUserName] = useState('');
   const [instaData, setInstaData] = useState(instaDefaultValues);
   const classes = useStyles();
 
@@ -144,18 +304,8 @@ function InstagramAnalytics(props) {
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
 
-  function getInstaData() {
-    if (!userName) {
-      enqueueSnackbar('계정 이름을 입력해주세요', {
-        variant: 'error',
-        anchorOrigin: {
-          vertical: 'top',
-          horizontal: 'center',
-        },
-      });
-      return;
-    }
-
+  function callServerApi() {
+    console.log('call api');
     axios.get('/api/testRoute/test', {
       params: { username: userName }
     }).then((res) => {
@@ -165,6 +315,27 @@ function InstagramAnalytics(props) {
       alert(err.response.data.message);
     });
   }
+
+  function getInstaData() {
+    if (!inputValue) {
+      enqueueSnackbar('계정 이름을 입력해주세요', {
+        variant: 'error',
+        anchorOrigin: {
+          vertical: 'top',
+          horizontal: 'center',
+        },
+      });
+      return;
+    }
+    setUserName(inputValue);
+    setInputValue('');
+  }
+
+  useEffect(() => {
+    if (userName) callServerApi();
+  }, [userName]);
+
+  const lastMedia = instaData.lastPosts.slice(0, 4);
 
   return (
     <Box maxWidth={1200} py={5} mx="auto">
@@ -194,7 +365,8 @@ function InstagramAnalytics(props) {
                     </Button>
                   </InputAdornment>
                 )}
-                onChange={e => setUserName(e.target.value)}
+                value={inputValue}
+                onChange={e => setInputValue(e.target.value)}
                 classes={{ input: classes.input }}
               />
             </form>
@@ -316,17 +488,25 @@ function InstagramAnalytics(props) {
         mt={2}
         p={2}
       >
-        <Box margin="0 -8px">
-          <Slider {...settings}>
-            {instaData.lastPosts.map((item, index) => (
-              <Box key={index} width="100%">
-                <Box margin="0 8px">
-                  <img className={classes.imgFile} src={item.s3Url || defaultImage} />
+        <Typography variant="h6">
+          포스팅 분석
+          <span>{`(${instaData.name}님은 주로 이런 포스팅을 최근에 하고 있습니다)`}</span>
+        </Typography>
+
+        <Box className={classes.imgSlider}>
+          <Box mt={2}>
+            <Slider {...settings}>
+              {instaData.lastPosts.map((item, index) => (
+                <Box key={index} width="100%">
+                  <Box margin="0 8px">
+                    <img className={classes.imgFile} src={item.s3Url || defaultImage} />
+                  </Box>
                 </Box>
-              </Box>
-            ))}
-          </Slider>
+              ))}
+            </Slider>
+          </Box>
         </Box>
+
       </Box>
 
       <Box
@@ -334,8 +514,93 @@ function InstagramAnalytics(props) {
         mt={2}
         p={2}
       >
-        test
+        <Typography variant="h6" paragraph>계정 이미지 인공지능 분석</Typography>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} md={6}>
+            <PieChartApex series={instaData.analyzeInfo?.labelInfo?.scores} colors={instaData.analyzeInfo?.labelInfo?.colors} labels={instaData.analyzeInfo?.labelInfo?.labels} />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <PieChartApex series={instaData.analyzeInfo?.objectInfo?.scores} colors={instaData.analyzeInfo?.objectInfo?.colors} labels={instaData.analyzeInfo?.objectInfo?.labels} />
+          </Grid>
+        </Grid>
       </Box>
+
+      <Box mt={2}>
+        <Grid container spacing={2} alignItems="center">
+          {lastMedia.map(item => (
+            <Grid item xs={12} md={6}>
+              <Box {...commonStyles.whiteBlock} p={2}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md="auto">
+                    <img className={classes.imgFileMedia} src={item?.s3Url || defaultImage} />
+                  </Grid>
+                  <Grid item xs={12} md zeroMinWidth>
+                    <Grid
+                      container
+                      direction="column"
+                      style={{ height: '100%', boxSizing: 'border-box' }}
+                    >
+                      <Grid item xs>
+                        <Typography variant="body1" className={classes.multiLineEllipsis}>
+                          {item?.caption}
+                        </Typography>
+                      </Grid>
+
+                      <Grid item xs="auto">
+                        <Grid container justifyContent="center" spacing={2}>
+                          <Grid item>
+                            <div
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexWrap: 'wrap'
+                              }}
+                            >
+                              <FavoriteBorder />
+                              <span style={{ marginLeft: '6px' }}>{item?.likes}</span>
+                            </div>
+                          </Grid>
+                          <Grid item>
+                            <div
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexWrap: 'wrap'
+                              }}
+                            >
+                              <ChatBubbleOutline />
+                              <span style={{ marginLeft: '6px' }}>{item?.comments}</span>
+                            </div>
+                          </Grid>
+                        </Grid>
+
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
+          ))}
+
+        </Grid>
+      </Box>
+
+
+      <Box mt={2}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} md={6}>
+            <Box {...commonStyles.whiteBlock} p={2}>
+              <Line height={150} data={followerActivity.flwrs} options={followerActivity.hours} />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Box {...commonStyles.whiteBlock} p={2}>
+              test
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+
 
       <Box
         {...commonStyles.whiteBlock}
