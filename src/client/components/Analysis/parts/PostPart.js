@@ -9,6 +9,7 @@ import BarComponent from '../BarComponent';
 import { DAY_OF_WEEK, HOURS } from '../../../lib/Сonstants';
 import CategoryPieChart from '../CategoryPieChart';
 import PieChartApex from '../PieChartApex';
+import defaultAccountImage from '../../../img/default_account_image.png';
 
 const useStyles = makeStyles(theme => ({
   multiLineEllipsis: {
@@ -135,7 +136,7 @@ function MediaCard(props) {
   return (
     <Grid container>
       <Grid item xs={12} md="auto">
-        <img className={classes.imgFileMedia} src={post.media_url || defaultImage} />
+        <img className={classes.imgFileMedia} src={post.media_url || defaultImage} onError={event => event.target.setAttribute('src', post.s3Url || defaultImage)} />
         {/* <StyledImage borderRadius="7px" width="200px" height="200px" src={post.media_url || testImage} /> */}
       </Grid>
       <Grid item xs={12} md zeroMinWidth>
@@ -189,12 +190,14 @@ function PostPart(props) {
   });
   const { testImage, instaData, setImgDetectMac } = props;
   const {
-    mediaData, postStats, lastPosts, maxLikesMedia, maxCmntMedia, INS_ID
+    mediaData, postStats, lastPosts, maxLikesMedia, maxCmntMedia, INS_ID, INS_STATUS
   } = instaData;
   const {
     hourStats, dayStats, dayMaxIdx, hourMaxIdx, dayAvg, weekAvg
   } = postStats;
   const classes = useStyles();
+
+  const urls = INS_STATUS === 1 ? mediaData.urls : mediaData.s3urls;
 
   hourData.datasets[0].data = hourStats;
   hourData.datasets[0].backgroundColor = Array(hourStats.length).fill('#EAEAEA');
@@ -258,7 +261,7 @@ function PostPart(props) {
       </Box>
       <Box margin="0 -8px">
         <Slider {...settings}>
-          {mediaData.urls.map((item, index) => (
+          {urls.map((item, index) => (
             <Box key={index} width="100%">
               <Box margin="0 8px">
                 <img className={classes.imgFile} src={item || defaultImage} />

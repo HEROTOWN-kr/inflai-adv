@@ -195,47 +195,39 @@ const instaDefaultValues = {
   }
 };
 
-const likesData = {
-  labels: ['1', '2', '3', '4', '5', '6'],
+const activity = {
   datasets: [
     {
-      label: '# of Votes',
-      backgroundColor: [
-        '#EAEAEA', '#18DBA8', '#EAEAEA', '#EAEAEA', '#EAEAEA', '#EAEAEA'
-      ],
-      categoryPercentage: 0.5
+      label: '팔로워 수',
+      fill: true,
+      lineTension: 0.5,
+      backgroundColor: 'rgba(231, 251, 246, 0.6)',
+      borderColor: 'rgba(24, 219, 168, 1)',
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderWidth: 4,
+      borderJoinStyle: 'miter',
+      pointBorderColor: 'white',
+      pointBackgroundColor: 'rgba(24, 219, 168, 1)',
+      pointBorderWidth: 1,
+      pointHoverRadius: 10,
+      pointHoverBackgroundColor: 'rgba(24, 219, 168, 1)',
+      pointHoverBorderColor: 'rgba(24, 219, 168, 1)',
+      pointHoverBorderWidth: 2,
+      pointRadius: 1,
+      pointHitRadius: 10,
     },
   ],
 };
 
-const likesOpt = {
-  legend: {
-    display: false
-  },
+const activityOpt = {
   scales: {
-    xAxes: [
-      {
-        categoryPercentage: 0.5,
-        barPercentage: 0.6,
-        gridLines: { display: false }
+    yAxes: [{
+      ticks: {
+        beginAtZero: true
       }
-    ],
-    yAxes: [
-      {
-        categoryPercentage: 1.0,
-        barPercentage: 1.0,
-        gridLines: {
-          drawBorder: false,
-          drawTicks: false
-        },
-        ticks: {
-          display: true,
-          min: 0,
-          max: 100,
-          stepSize: 5
-        }
-      }
-    ]
+    }]
   }
 };
 
@@ -293,6 +285,9 @@ const followerActivity = {
     681
   ]
 };
+
+activity.datasets[0].data = followerActivity.flwrs;
+activity.labels = followerActivity.hours;
 
 function InstagramAnalytics(props) {
   const [inputValue, setInputValue] = useState('');
@@ -590,7 +585,7 @@ function InstagramAnalytics(props) {
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12} md={6}>
             <Box {...commonStyles.whiteBlock} p={2}>
-              <Line height={150} data={followerActivity.flwrs} options={followerActivity.hours} />
+              <Line height={150} data={activity} options={activityOpt} />
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>

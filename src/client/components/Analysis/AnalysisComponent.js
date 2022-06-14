@@ -166,6 +166,7 @@ const defaultData = {
   influencerType: '',
   mediaData: {
     urls: Array(9).fill(null),
+    s3urls: Array(9).fill(null),
     shortCodes: Array(9).fill(null),
     comments: [12, 19, 3, 5, 2, 3],
     likes: [12, 19, 3, 5, 2, 3],
@@ -342,7 +343,7 @@ function AnalysisComponent(props) {
 
   function getInstaInfo() {
     setLoading(true);
-    axios.get('/api/TB_INSTA/instaInfo', {
+    axios.get('/api/TB_INSTA/instaInfoNew', {
       params: { instaId: INS_ID }
     }).then((res) => {
       const { data } = res.data;
@@ -402,7 +403,7 @@ function AnalysisComponent(props) {
                 >
                   <Grid container alignItems="center" style={{ height: '100%' }}>
                     <Grid item>
-                      <img width={70} height={70} className={classes.avatar} src={instaData.INS_PROFILE_IMG || defaultAccountImage} alt="noImage" />
+                      <img width={70} height={70} className={classes.avatar} src={instaData.INS_PROFILE_IMG || defaultAccountImage} alt="noImage" onError={event => event.target.setAttribute('src', defaultAccountImage)} />
                     </Grid>
                     <Grid item xs>
                       <Box
