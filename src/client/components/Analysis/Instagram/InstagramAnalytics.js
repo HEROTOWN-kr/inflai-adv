@@ -290,7 +290,7 @@ activity.datasets[0].data = followerActivity.flwrs;
 activity.labels = followerActivity.hours;
 
 function InstagramAnalytics(props) {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState('timatiofficial');
   const [userName, setUserName] = useState('');
   const [instaData, setInstaData] = useState(instaDefaultValues);
   const classes = useStyles();
@@ -300,7 +300,6 @@ function InstagramAnalytics(props) {
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
 
   function callServerApi() {
-    console.log('call api');
     axios.get('/api/testRoute/test', {
       params: { username: userName }
     }).then((res) => {
@@ -590,7 +589,7 @@ function InstagramAnalytics(props) {
           </Grid>
           <Grid item xs={12} md={6}>
             <Box {...commonStyles.whiteBlock} p={2}>
-              test
+              <Line height={150} data={activity} options={activityOpt} />
             </Box>
           </Grid>
         </Grid>
