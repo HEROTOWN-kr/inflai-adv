@@ -18,6 +18,7 @@ import commonStyles from '../../../lib/commonStyles';
 import defaultAccountImage from '../../../img/default_account_image.png';
 import defaultImage from '../../../img/notFound400_316.png';
 import PieChartApex from '../PieChartApex';
+import WordCloud from '../WordCloud';
 
 const useStyles = makeStyles(theme => ({
   imgFile: {
@@ -192,36 +193,34 @@ const instaDefaultValues = {
       scores: [],
       detectColors: [],
     },
-  }
+  },
+  likes: [],
+  comments: []
 };
 
-const activity = {
-  datasets: [
-    {
-      label: '팔로워 수',
-      fill: true,
-      lineTension: 0.5,
-      backgroundColor: 'rgba(231, 251, 246, 0.6)',
-      borderColor: 'rgba(24, 219, 168, 1)',
-      borderCapStyle: 'butt',
-      borderDash: [],
-      borderDashOffset: 0.0,
-      borderWidth: 4,
-      borderJoinStyle: 'miter',
-      pointBorderColor: 'white',
-      pointBackgroundColor: 'rgba(24, 219, 168, 1)',
-      pointBorderWidth: 1,
-      pointHoverRadius: 10,
-      pointHoverBackgroundColor: 'rgba(24, 219, 168, 1)',
-      pointHoverBorderColor: 'rgba(24, 219, 168, 1)',
-      pointHoverBorderWidth: 2,
-      pointRadius: 1,
-      pointHitRadius: 10,
-    },
-  ],
+const defaultDataSet = {
+  label: '좋아요수',
+  fill: true,
+  lineTension: 0.5,
+  backgroundColor: 'rgba(231, 251, 246, 0.6)',
+  borderColor: 'rgba(24, 219, 168, 1)',
+  borderCapStyle: 'butt',
+  borderDash: [],
+  borderDashOffset: 0.0,
+  borderWidth: 4,
+  borderJoinStyle: 'miter',
+  pointBorderColor: 'white',
+  pointBackgroundColor: 'rgba(24, 219, 168, 1)',
+  pointBorderWidth: 1,
+  pointHoverRadius: 10,
+  pointHoverBackgroundColor: 'rgba(24, 219, 168, 1)',
+  pointHoverBorderColor: 'rgba(24, 219, 168, 1)',
+  pointHoverBorderWidth: 2,
+  pointRadius: 1,
+  pointHitRadius: 10,
 };
 
-const activityOpt = {
+const defaultOptions = {
   scales: {
     yAxes: [{
       ticks: {
@@ -231,63 +230,47 @@ const activityOpt = {
   }
 };
 
-const followerActivity = {
-  hours: [
-    '0',
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    '11',
-    '12',
-    '13',
-    '14',
-    '15',
-    '16',
-    '17',
-    '18',
-    '19',
-    '20',
-    '21',
-    '22',
-    '23'
-  ],
-  flwrs: [
-    678,
-    689,
-    700,
-    687,
-    689,
-    683,
-    656,
-    613,
-    480,
-    291,
-    183,
-    124,
-    124,
-    154,
-    247,
-    382,
-    509,
-    599,
-    620,
-    638,
-    640,
-    656,
-    663,
-    681
-  ]
+const commentsDataSet = {
+  ...defaultDataSet,
+  label: '댓글수',
+  backgroundColor: 'rgba(244, 236, 255, 0.6)',
+  borderColor: 'rgba(144, 71, 255, 1)',
+  pointBackgroundColor: 'rgba(144, 71, 255, 1)',
+  pointHoverBackgroundColor: 'rgba(144, 71, 255, 1)',
+  pointHoverBorderColor: 'rgba(144, 71, 255, 1)',
 };
 
-activity.datasets[0].data = followerActivity.flwrs;
-activity.labels = followerActivity.hours;
+const commentsLikesDataSet = [
+  {
+    ...defaultDataSet,
+    label: '좋아요수',
+    fill: false,
+    lineTension: 0,
+    borderWidth: 5,
+    pointRadius: 7,
+  },
+  {
+    ...defaultDataSet,
+    label: '댓글수',
+    fill: false,
+    backgroundColor: 'rgba(144, 71, 255, 1)',
+    borderColor: 'rgba(144, 71, 255, 1)',
+    pointBackgroundColor: 'rgba(144, 71, 255, 1)',
+    pointHoverBackgroundColor: 'rgba(144, 71, 255, 1)',
+    pointHoverBorderColor: 'rgba(144, 71, 255, 1)',
+    lineTension: 0,
+    borderWidth: 5,
+    pointRadius: 7,
+  },
+];
+
+const likes = { datasets: [defaultDataSet] };
+const likesOpt = { ...defaultOptions };
+
+const comments = { datasets: [commentsDataSet] };
+const commentsOpt = { ...defaultOptions };
+
+const commentsLikes = { datasets: [...commentsLikesDataSet] };
 
 function InstagramAnalytics(props) {
   const [inputValue, setInputValue] = useState('timatiofficial');
@@ -330,6 +313,20 @@ function InstagramAnalytics(props) {
   }, [userName]);
 
   const lastMedia = instaData.lastPosts.slice(0, 4);
+
+  // line.labels = Array.from({ length: likes.length }, (_, i) => i + 1);
+
+  likes.datasets[0].data = instaData.likes;
+  likes.labels = Array.from({ length: instaData.likes.length }, (_, i) => i + 1);
+
+  comments.datasets[0].data = instaData.comments;
+  comments.labels = Array.from({ length: instaData.comments.length }, (_, i) => i + 1);
+
+  console.log(commentsLikes.datasets);
+  commentsLikes.datasets[0].data = instaData.likes;
+  commentsLikes.datasets[1].data = instaData.comments;
+  commentsLikes.labels = Array.from({ length: instaData.likes.length }, (_, i) => i + 1);
+
 
   return (
     <Box maxWidth={1200} py={5} mx="auto">
@@ -584,12 +581,27 @@ function InstagramAnalytics(props) {
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12} md={6}>
             <Box {...commonStyles.whiteBlock} p={2}>
-              <Line height={150} data={activity} options={activityOpt} />
+              <Line height={150} data={likes} options={likesOpt} />
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
             <Box {...commonStyles.whiteBlock} p={2}>
-              <Line height={150} data={activity} options={activityOpt} />
+              <Line height={150} data={comments} options={commentsOpt} />
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+
+      <Box mt={2}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} md={6}>
+            <Box {...commonStyles.whiteBlock} p={2}>
+              <Line height={150} data={commentsLikes} />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Box {...commonStyles.whiteBlock} height="250px" p={2}>
+              <WordCloud instaData={instaData} />
             </Box>
           </Grid>
         </Grid>
