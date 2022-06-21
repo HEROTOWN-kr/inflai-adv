@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Box, Button, colors, Grid, InputAdornment, makeStyles, OutlinedInput, Typography, useMediaQuery, useTheme,
 } from '@material-ui/core';
@@ -19,6 +19,7 @@ import defaultAccountImage from '../../../img/default_account_image.png';
 import defaultImage from '../../../img/notFound400_316.png';
 import PieChartApex from '../PieChartApex';
 import WordCloud from '../WordCloud';
+import AuthContext from '../../../context/AuthContext';
 
 const useStyles = makeStyles(theme => ({
   imgFile: {
@@ -107,6 +108,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#00000017'
   },
   box: {
+    position: 'relative',
     padding: '15px 25px',
     color: '#fff',
     borderRadius: '5px',
@@ -119,6 +121,11 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('md')]: {
       padding: '12px 16px',
     }
+  },
+  boxIcon: {
+    position: 'absolute',
+    top: 17,
+    right: 15
   },
   bgBlue: { background: 'linear-gradient(45deg, #4099ff, #73b4ff)' },
   bgGreen: { background: 'linear-gradient(45deg, #2ed8b6, #59e0c5)' },
@@ -277,19 +284,23 @@ function InstagramAnalytics(props) {
   const [userName, setUserName] = useState('');
   const [instaData, setInstaData] = useState(instaDefaultValues);
   const classes = useStyles();
+  const { setLoading } = useContext(AuthContext);
 
   const { enqueueSnackbar } = useSnackbar();
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
 
   function callServerApi() {
+    setLoading(true);
     axios.get('/api/testRoute/test', {
       params: { username: userName }
     }).then((res) => {
       const { data } = res;
       setInstaData(data);
+      setLoading(false);
     }).catch((err) => {
       alert(err.response.data.message);
+      setLoading(false);
     });
   }
 
@@ -397,11 +408,11 @@ function InstagramAnalytics(props) {
                         게시물
               </Box>
               <Grid container justify="space-between" alignItems="center">
-                {isMD ? (
+                {/* {isMD ? (
                   <Grid item>
                     <ImageOutlined fontSize="large" />
                   </Grid>
-                ) : null}
+                ) : null} */}
                 <Grid item>
                   <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
                     {instaData.posts}
@@ -416,18 +427,19 @@ function InstagramAnalytics(props) {
               <Box mb={{ xs: '2px', md: 1 }}>
                         팔로워
               </Box>
-              <Grid container justify="space-between" alignItems="center">
+              <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
+                {instaData.followers}
+              </Box>
+              {/*<VisibilityOutlined fontSize="large" className={classes.boxIcon} />*/}
+
+              {/* <Grid container justify="space-between" alignItems="center">
                 {isMD ? (
                   <Grid item>
                     <VisibilityOutlined fontSize="large" />
                   </Grid>
                 ) : null}
-                <Grid item>
-                  <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
-                    {instaData.followers}
-                  </Box>
-                </Grid>
-              </Grid>
+                <Grid item />
+              </Grid> */}
             </Box>
           </Grid>
 
@@ -437,11 +449,11 @@ function InstagramAnalytics(props) {
                         팔로잉
               </Box>
               <Grid container justify="space-between" alignItems="center">
-                {isMD ? (
+                {/* {isMD ? (
                   <Grid item>
                     <CheckBoxOutlined fontSize="large" />
                   </Grid>
-                ) : null}
+                ) : null} */}
                 <Grid item>
                   <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
                     {instaData.following}
@@ -457,15 +469,15 @@ function InstagramAnalytics(props) {
                         카테고리
               </Box>
               <Grid container justify="space-between" alignItems="center">
-                {isMD ? (
+                {/* {isMD ? (
                   <Grid item>
                     <PieChartOutlined fontSize="large" />
                   </Grid>
-                ) : null}
+                ) : null} */}
                 <Grid item>
                   <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
                     {/* {imgDetectMax.description} */}
-                      test
+                    {instaData?.analyzeInfo?.labelInfo?.categoryMax?.description || ''}
                   </Box>
                 </Grid>
               </Grid>
@@ -608,7 +620,7 @@ function InstagramAnalytics(props) {
       </Box>
 
 
-      <Box
+      {/* <Box
         {...commonStyles.whiteBlock}
         mt={2}
         p={2}
@@ -616,7 +628,7 @@ function InstagramAnalytics(props) {
         <pre>
           {JSON.stringify(instaData, null, 2)}
         </pre>
-      </Box>
+      </Box> */}
     </Box>
   );
 }
