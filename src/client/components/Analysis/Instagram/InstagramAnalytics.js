@@ -402,7 +402,7 @@ function InstagramAnalytics(props) {
             </Box>
           </Grid>
 
-          <Grid item xs={6} md={2}>
+          <Grid item xs={6} md={3}>
             <Box className={`${classes.box} ${classes.bgGreen}`}>
               <Box mb={{ xs: '2px', md: 1 }}>
                         게시물
@@ -422,7 +422,7 @@ function InstagramAnalytics(props) {
             </Box>
           </Grid>
 
-          <Grid item xs={6} md={2}>
+          <Grid item xs={6} md={3}>
             <Box className={`${classes.box} ${classes.bgOrange}`}>
               <Box mb={{ xs: '2px', md: 1 }}>
                         팔로워
@@ -430,7 +430,7 @@ function InstagramAnalytics(props) {
               <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
                 {instaData.followers}
               </Box>
-              {/*<VisibilityOutlined fontSize="large" className={classes.boxIcon} />*/}
+              {/* <VisibilityOutlined fontSize="large" className={classes.boxIcon} /> */}
 
               {/* <Grid container justify="space-between" alignItems="center">
                 {isMD ? (
@@ -443,7 +443,7 @@ function InstagramAnalytics(props) {
             </Box>
           </Grid>
 
-          <Grid item xs={6} md={2}>
+          <Grid item xs={6} md={3}>
             <Box className={`${classes.box} ${classes.bgRed}`}>
               <Box mb={1}>
                         팔로잉
@@ -462,11 +462,13 @@ function InstagramAnalytics(props) {
               </Grid>
             </Box>
           </Grid>
+        </Grid>
 
+        <Grid container spacing={2}>
           <Grid item xs={6} md={3}>
             <Box className={`${classes.box} ${classes.bgGreenBlue}`}>
               <Box mb={1}>
-                        카테고리
+                카테고리
               </Box>
               <Grid container justify="space-between" alignItems="center">
                 {/* {isMD ? (
@@ -481,6 +483,29 @@ function InstagramAnalytics(props) {
                   </Box>
                 </Grid>
               </Grid>
+            </Box>
+          </Grid>
+
+          <Grid item xs={6} md={3}>
+            <Box className={`${classes.box} ${classes.bgRed}`}>
+              <Box mb={{ xs: '2px', md: 1 }}>
+                소통고감 지수
+              </Box>
+              <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
+                {instaData.abilityType}
+              </Box>
+            </Box>
+
+          </Grid>
+
+          <Grid item xs={6} md={3}>
+            <Box className={`${classes.box} ${classes.bgOrange}`}>
+              <Box mb={{ xs: '2px', md: 1 }}>
+                소통고감 지수
+              </Box>
+              <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
+                {instaData.influencerType}
+              </Box>
             </Box>
           </Grid>
         </Grid>
