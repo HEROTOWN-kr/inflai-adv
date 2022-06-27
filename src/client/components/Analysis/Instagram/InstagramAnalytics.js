@@ -202,7 +202,9 @@ const instaDefaultValues = {
     },
   },
   likes: [],
-  comments: []
+  comments: [],
+  ability: '',
+  abilityType: '',
 };
 
 const defaultDataSet = {
@@ -415,7 +417,7 @@ function InstagramAnalytics(props) {
                 ) : null} */}
                 <Grid item>
                   <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
-                    {instaData.posts}
+                    {instaData?.posts?.toLocaleString('en')}
                   </Box>
                 </Grid>
               </Grid>
@@ -428,7 +430,7 @@ function InstagramAnalytics(props) {
                         팔로워
               </Box>
               <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
-                {instaData.followers}
+                {instaData?.followers?.toLocaleString('en')}
               </Box>
               {/* <VisibilityOutlined fontSize="large" className={classes.boxIcon} /> */}
 
@@ -456,7 +458,7 @@ function InstagramAnalytics(props) {
                 ) : null} */}
                 <Grid item>
                   <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
-                    {instaData.following}
+                    {instaData?.following?.toLocaleString('en')}
                   </Box>
                 </Grid>
               </Grid>
@@ -492,7 +494,7 @@ function InstagramAnalytics(props) {
                 소통고감 지수
               </Box>
               <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
-                {instaData.abilityType}
+                {`${instaData.ability}%(${instaData.abilityType})`}
               </Box>
             </Box>
 
@@ -501,7 +503,7 @@ function InstagramAnalytics(props) {
           <Grid item xs={6} md={3}>
             <Box className={`${classes.box} ${classes.bgOrange}`}>
               <Box mb={{ xs: '2px', md: 1 }}>
-                소통고감 지수
+                인플루언서 카테고리
               </Box>
               <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
                 {instaData.influencerType}
@@ -585,7 +587,7 @@ function InstagramAnalytics(props) {
                               }}
                             >
                               <FavoriteBorder />
-                              <span style={{ marginLeft: '6px' }}>{item?.likes}</span>
+                              <span style={{ marginLeft: '6px' }}>{item?.likes?.toLocaleString('en')}</span>
                             </div>
                           </Grid>
                           <Grid item>
@@ -597,7 +599,7 @@ function InstagramAnalytics(props) {
                               }}
                             >
                               <ChatBubbleOutline />
-                              <span style={{ marginLeft: '6px' }}>{item?.comments}</span>
+                              <span style={{ marginLeft: '6px' }}>{item?.comments?.toLocaleString('en')}</span>
                             </div>
                           </Grid>
                         </Grid>
