@@ -282,7 +282,7 @@ const commentsOpt = { ...defaultOptions };
 const commentsLikes = { datasets: [...commentsLikesDataSet] };
 
 function InstagramAnalytics(props) {
-  const [inputValue, setInputValue] = useState('timatiofficial');
+  const [inputValue, setInputValue] = useState('');
   const [userName, setUserName] = useState('');
   const [instaData, setInstaData] = useState(instaDefaultValues);
   const classes = useStyles();
@@ -294,7 +294,7 @@ function InstagramAnalytics(props) {
 
   function callServerApi() {
     setLoading(true);
-    axios.get('/api/testRoute/test', {
+    axios.get('/api/TB_INSTA/analyzeInstagram', {
       params: { username: userName }
     }).then((res) => {
       const { data } = res;
@@ -348,6 +348,13 @@ function InstagramAnalytics(props) {
         mb={2}
         p={2}
       >
+        <Box
+          textAlign="center"
+          fontSize="30px"
+          mb="20px"
+        >
+          인스타그램 계정을 입력해주세요
+        </Box>
         <Grid container spacing={1} justify="center">
           <Grid item>
             <form noValidate autoComplete="off">
@@ -377,64 +384,73 @@ function InstagramAnalytics(props) {
           </Grid>
           <Grid item />
         </Grid>
+        <Box
+          textAlign="center"
+          fontSize="15px"
+          mt="20px"
+        >
+          * 인스타그램 분석은 공개 계정만 가능합니다
+        </Box>
       </Box>
 
-      <Box {...commonStyles.whiteBlock} p={2}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={3}>
-            <Box
-              className={`${classes.box} ${classes.bgBlue} ${classes.youtubeLink}`}
-            >
-              <Grid container alignItems="center" style={{ height: '100%' }}>
-                <Grid item>
-                  <img width={70} height={70} className={classes.avatar} src={instaData.mainPicUrl || defaultAccountImage} alt="noImage" />
+      {instaData.name && (
+      <>
+        <Box {...commonStyles.whiteBlock} p={2}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={3}>
+              <Box
+                className={`${classes.box} ${classes.bgBlue} ${classes.youtubeLink}`}
+              >
+                <Grid container alignItems="center" style={{ height: '100%' }}>
+                  <Grid item>
+                    <img width={70} height={70} className={classes.avatar} src={instaData.mainPicUrl || defaultAccountImage} alt="noImage" />
+                  </Grid>
+                  <Grid item xs>
+                    <Box
+                      maxWidth="300px"
+                      ml={2}
+                      fontSize={23}
+                      fontWeight="bold"
+                    >
+                      <Box>{instaData.name}</Box>
+                      <Box>{userName}</Box>
+                    </Box>
+                  </Grid>
                 </Grid>
-                <Grid item xs>
-                  <Box
-                    maxWidth="300px"
-                    ml={2}
-                    fontSize={23}
-                    fontWeight="bold"
-                  >
-                    <Box>{instaData.name}</Box>
-                    <Box>{userName}</Box>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Box>
-          </Grid>
-
-          <Grid item xs={6} md={3}>
-            <Box className={`${classes.box} ${classes.bgGreen}`}>
-              <Box mb={{ xs: '2px', md: 1 }}>
-                        게시물
               </Box>
-              <Grid container justify="space-between" alignItems="center">
-                {/* {isMD ? (
+            </Grid>
+
+            <Grid item xs={6} md={3}>
+              <Box className={`${classes.box} ${classes.bgGreen}`}>
+                <Box mb={{ xs: '2px', md: 1 }}>
+                      게시물
+                </Box>
+                <Grid container justify="space-between" alignItems="center">
+                  {/* {isMD ? (
                   <Grid item>
                     <ImageOutlined fontSize="large" />
                   </Grid>
                 ) : null} */}
-                <Grid item>
-                  <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
-                    {instaData?.posts?.toLocaleString('en')}
-                  </Box>
+                  <Grid item>
+                    <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
+                      {instaData?.posts?.toLocaleString('en')}
+                    </Box>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Box>
-          </Grid>
-
-          <Grid item xs={6} md={3}>
-            <Box className={`${classes.box} ${classes.bgOrange}`}>
-              <Box mb={{ xs: '2px', md: 1 }}>
-                        팔로워
               </Box>
-              <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
-                {instaData?.followers?.toLocaleString('en')}
-              </Box>
-              {/* <VisibilityOutlined fontSize="large" className={classes.boxIcon} /> */}
+            </Grid>
 
-              {/* <Grid container justify="space-between" alignItems="center">
+            <Grid item xs={6} md={3}>
+              <Box className={`${classes.box} ${classes.bgOrange}`}>
+                <Box mb={{ xs: '2px', md: 1 }}>
+                      팔로워
+                </Box>
+                <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
+                  {instaData?.followers?.toLocaleString('en')}
+                </Box>
+                {/* <VisibilityOutlined fontSize="large" className={classes.boxIcon} /> */}
+
+                {/* <Grid container justify="space-between" alignItems="center">
                 {isMD ? (
                   <Grid item>
                     <VisibilityOutlined fontSize="large" />
@@ -442,212 +458,212 @@ function InstagramAnalytics(props) {
                 ) : null}
                 <Grid item />
               </Grid> */}
-            </Box>
-          </Grid>
-
-          <Grid item xs={6} md={3}>
-            <Box className={`${classes.box} ${classes.bgRed}`}>
-              <Box mb={1}>
-                        팔로잉
               </Box>
-              <Grid container justify="space-between" alignItems="center">
-                {/* {isMD ? (
+            </Grid>
+
+            <Grid item xs={6} md={3}>
+              <Box className={`${classes.box} ${classes.bgRed}`}>
+                <Box mb={1}>
+                      팔로잉
+                </Box>
+                <Grid container justify="space-between" alignItems="center">
+                  {/* {isMD ? (
                   <Grid item>
                     <CheckBoxOutlined fontSize="large" />
                   </Grid>
                 ) : null} */}
-                <Grid item>
-                  <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
-                    {instaData?.following?.toLocaleString('en')}
-                  </Box>
-                </Grid>
-              </Grid>
-            </Box>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={2}>
-          <Grid item xs={6} md={3}>
-            <Box className={`${classes.box} ${classes.bgGreenBlue}`}>
-              <Box mb={1}>
-                카테고리
-              </Box>
-              <Grid container justify="space-between" alignItems="center">
-                {/* {isMD ? (
                   <Grid item>
-                    <PieChartOutlined fontSize="large" />
-                  </Grid>
-                ) : null} */}
-                <Grid item>
-                  <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
-                    {/* {imgDetectMax.description} */}
-                    {instaData?.analyzeInfo?.labelInfo?.categoryMax?.description || ''}
-                  </Box>
-                </Grid>
-              </Grid>
-            </Box>
-          </Grid>
-
-          <Grid item xs={6} md={3}>
-            <Box className={`${classes.box} ${classes.bgRed}`}>
-              <Box mb={{ xs: '2px', md: 1 }}>
-                소통고감 지수
-              </Box>
-              <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
-                {`${instaData.ability}%(${instaData.abilityType})`}
-              </Box>
-            </Box>
-
-          </Grid>
-
-          <Grid item xs={6} md={3}>
-            <Box className={`${classes.box} ${classes.bgOrange}`}>
-              <Box mb={{ xs: '2px', md: 1 }}>
-                인플루언서 카테고리
-              </Box>
-              <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
-                {instaData.influencerType}
-              </Box>
-            </Box>
-          </Grid>
-        </Grid>
-      </Box>
-
-      <Box
-        {...commonStyles.whiteBlock}
-        mt={2}
-        p={2}
-      >
-        <Typography variant="h6">
-          포스팅 분석
-          <span>{`(${instaData.name}님은 주로 이런 포스팅을 최근에 하고 있습니다)`}</span>
-        </Typography>
-
-        <Box className={classes.imgSlider}>
-          <Box mt={2}>
-            <Slider {...settings}>
-              {instaData.lastPosts.map((item, index) => (
-                <Box key={index} width="100%">
-                  <Box margin="0 8px">
-                    <img className={classes.imgFile} src={item.s3Url || defaultImage} />
-                  </Box>
-                </Box>
-              ))}
-            </Slider>
-          </Box>
-        </Box>
-
-      </Box>
-
-      <Box
-        {...commonStyles.whiteBlock}
-        mt={2}
-        p={2}
-      >
-        <Typography variant="h6" paragraph>계정 이미지 인공지능 분석</Typography>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} md={6}>
-            <PieChartApex series={instaData.analyzeInfo?.labelInfo?.scores} colors={instaData.analyzeInfo?.labelInfo?.colors} labels={instaData.analyzeInfo?.labelInfo?.labels} />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <PieChartApex series={instaData.analyzeInfo?.objectInfo?.scores} colors={instaData.analyzeInfo?.objectInfo?.colors} labels={instaData.analyzeInfo?.objectInfo?.labels} />
-          </Grid>
-        </Grid>
-      </Box>
-
-      <Box mt={2}>
-        <Grid container spacing={2} alignItems="center">
-          {lastMedia.map(item => (
-            <Grid item xs={12} md={6}>
-              <Box {...commonStyles.whiteBlock} p={2}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} md="auto">
-                    <img className={classes.imgFileMedia} src={item?.s3Url || defaultImage} />
-                  </Grid>
-                  <Grid item xs={12} md zeroMinWidth>
-                    <Grid
-                      container
-                      direction="column"
-                      style={{ height: '100%', boxSizing: 'border-box' }}
-                    >
-                      <Grid item xs>
-                        <Typography variant="body1" className={classes.multiLineEllipsis}>
-                          {item?.caption}
-                        </Typography>
-                      </Grid>
-
-                      <Grid item xs="auto">
-                        <Grid container justifyContent="center" spacing={2}>
-                          <Grid item>
-                            <div
-                              style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                flexWrap: 'wrap'
-                              }}
-                            >
-                              <FavoriteBorder />
-                              <span style={{ marginLeft: '6px' }}>{item?.likes?.toLocaleString('en')}</span>
-                            </div>
-                          </Grid>
-                          <Grid item>
-                            <div
-                              style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                flexWrap: 'wrap'
-                              }}
-                            >
-                              <ChatBubbleOutline />
-                              <span style={{ marginLeft: '6px' }}>{item?.comments?.toLocaleString('en')}</span>
-                            </div>
-                          </Grid>
-                        </Grid>
-
-                      </Grid>
-                    </Grid>
+                    <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
+                      {instaData?.following?.toLocaleString('en')}
+                    </Box>
                   </Grid>
                 </Grid>
               </Box>
             </Grid>
-          ))}
-
-        </Grid>
-      </Box>
-
-
-      <Box mt={2}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} md={6}>
-            <Box {...commonStyles.whiteBlock} p={2}>
-              <Line height={150} data={likes} options={likesOpt} />
-            </Box>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <Box {...commonStyles.whiteBlock} p={2}>
-              <Line height={150} data={comments} options={commentsOpt} />
-            </Box>
-          </Grid>
-        </Grid>
-      </Box>
 
-      <Box mt={2}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} md={6}>
-            <Box {...commonStyles.whiteBlock} p={2}>
-              <Line height={150} data={commentsLikes} />
-            </Box>
+          <Grid container spacing={2}>
+            <Grid item xs={6} md={3}>
+              <Box className={`${classes.box} ${classes.bgGreenBlue}`}>
+                <Box mb={1}>
+                      카테고리
+                </Box>
+                <Grid container justify="space-between" alignItems="center">
+                  {/* {isMD ? (
+                  <Grid item>
+                    <PieChartOutlined fontSize="large" />
+                  </Grid>
+                ) : null} */}
+                  <Grid item>
+                    <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
+                      {/* {imgDetectMax.description} */}
+                      {instaData?.analyzeInfo?.labelInfo?.categoryMax?.description || ''}
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
+
+            <Grid item xs={6} md={3}>
+              <Box className={`${classes.box} ${classes.bgRed}`}>
+                <Box mb={{ xs: '2px', md: 1 }}>
+                      소통고감 지수
+                </Box>
+                <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
+                  {`${instaData.ability}%(${instaData.abilityType})`}
+                </Box>
+              </Box>
+
+            </Grid>
+
+            <Grid item xs={6} md={3}>
+              <Box className={`${classes.box} ${classes.bgOrange}`}>
+                <Box mb={{ xs: '2px', md: 1 }}>
+                      인플루언서 카테고리
+                </Box>
+                <Box fontSize={{ xs: 23, md: 28 }} fontWeight="bold">
+                  {instaData.influencerType}
+                </Box>
+              </Box>
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <Box {...commonStyles.whiteBlock} height="250px" p={2}>
-              <WordCloud instaData={instaData} />
+        </Box>
+
+        <Box
+          {...commonStyles.whiteBlock}
+          mt={2}
+          p={2}
+        >
+          <Typography variant="h6">
+                포스팅 분석
+            <span>{`(${instaData.name}님은 주로 이런 포스팅을 최근에 하고 있습니다)`}</span>
+          </Typography>
+
+          <Box className={classes.imgSlider}>
+            <Box mt={2}>
+              <Slider {...settings}>
+                {instaData.lastPosts.map((item, index) => (
+                  <Box key={index} width="100%">
+                    <Box margin="0 8px">
+                      <img className={classes.imgFile} src={item.s3Url || defaultImage} />
+                    </Box>
+                  </Box>
+                ))}
+              </Slider>
             </Box>
+          </Box>
+
+        </Box>
+
+        <Box
+          {...commonStyles.whiteBlock}
+          mt={2}
+          p={2}
+        >
+          <Typography variant="h6" paragraph>계정 이미지 인공지능 분석</Typography>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12} md={6}>
+              <PieChartApex series={instaData.analyzeInfo?.labelInfo?.scores} colors={instaData.analyzeInfo?.labelInfo?.colors} labels={instaData.analyzeInfo?.labelInfo?.labels} />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <PieChartApex series={instaData.analyzeInfo?.objectInfo?.scores} colors={instaData.analyzeInfo?.objectInfo?.colors} labels={instaData.analyzeInfo?.objectInfo?.labels} />
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
+        </Box>
+
+        <Box mt={2}>
+          <Grid container spacing={2} alignItems="center">
+            {lastMedia.map(item => (
+              <Grid item xs={12} md={6}>
+                <Box {...commonStyles.whiteBlock} p={2}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md="auto">
+                      <img className={classes.imgFileMedia} src={item?.s3Url || defaultImage} />
+                    </Grid>
+                    <Grid item xs={12} md zeroMinWidth>
+                      <Grid
+                        container
+                        direction="column"
+                        style={{ height: '100%', boxSizing: 'border-box' }}
+                      >
+                        <Grid item xs>
+                          <Typography variant="body1" className={classes.multiLineEllipsis}>
+                            {item?.caption}
+                          </Typography>
+                        </Grid>
+
+                        <Grid item xs="auto">
+                          <Grid container justifyContent="center" spacing={2}>
+                            <Grid item>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  flexWrap: 'wrap'
+                                }}
+                              >
+                                <FavoriteBorder />
+                                <span style={{ marginLeft: '6px' }}>{item?.likes?.toLocaleString('en')}</span>
+                              </div>
+                            </Grid>
+                            <Grid item>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  flexWrap: 'wrap'
+                                }}
+                              >
+                                <ChatBubbleOutline />
+                                <span style={{ marginLeft: '6px' }}>{item?.comments?.toLocaleString('en')}</span>
+                              </div>
+                            </Grid>
+                          </Grid>
+
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Grid>
+            ))}
+
+          </Grid>
+        </Box>
 
 
-      {/* <Box
+        <Box mt={2}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12} md={6}>
+              <Box {...commonStyles.whiteBlock} p={2}>
+                <Line height={150} data={likes} options={likesOpt} />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Box {...commonStyles.whiteBlock} p={2}>
+                <Line height={150} data={comments} options={commentsOpt} />
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+
+        <Box mt={2}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12} md={6}>
+              <Box {...commonStyles.whiteBlock} p={2}>
+                <Line height={150} data={commentsLikes} />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Box {...commonStyles.whiteBlock} height="250px" p={2}>
+                <WordCloud instaData={instaData} />
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+
+
+        {/* <Box
         {...commonStyles.whiteBlock}
         mt={2}
         p={2}
@@ -656,6 +672,8 @@ function InstagramAnalytics(props) {
           {JSON.stringify(instaData, null, 2)}
         </pre>
       </Box> */}
+      </>
+      )}
     </Box>
   );
 }

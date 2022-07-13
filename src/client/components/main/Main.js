@@ -23,6 +23,7 @@ import AnalysisComponent from '../Analysis/AnalysisComponent';
 import YoutubeAnalysis from '../Analysis/Youtube/YoutubeAnalysis';
 import Question from '../question/Question';
 import InstagramAnalytics from '../Analysis/Instagram/InstagramAnalytics';
+import HomeNew from '../home/HomeNew';
 
 function Main() {
   const [isMember, setIsMember] = useState(false);
@@ -58,6 +59,10 @@ function Main() {
         exact
         path="/"
         render={props => <Home {...props} isMember={isMember} />}
+      />
+      <Route
+        path="/HomeNew"
+        render={props => <HomeNew {...props} />}
       />
       <Route
         path="/Campaign"

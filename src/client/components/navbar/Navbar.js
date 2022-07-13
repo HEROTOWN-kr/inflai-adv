@@ -81,6 +81,14 @@ function CustomNavbar(props) {
     }
   }
 
+  const hideNavbar = matchPath(location.pathname, {
+    path: [
+      '/HomeNew',
+    ],
+    exact: true,
+    strict: true
+  });
+
   useEffect(() => {
     checkPath(location.pathname);
   }, [location]);
@@ -92,7 +100,8 @@ function CustomNavbar(props) {
   return (
     <React.Fragment>
       {isMD ? (
-        <NavbarComponent {...props} isMD={isMD} />
+        hideNavbar ? null
+          : <NavbarComponent {...props} isMD={isMD} />
       ) : (
         <React.Fragment>
           { visible.top ? <MobileNavBar /> : null }
