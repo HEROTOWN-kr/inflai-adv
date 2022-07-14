@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Grid } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 // import Logo from '../../img/logo.png';
 import Logo from '../../img/logo_blue.png';
@@ -16,9 +16,7 @@ function NavbarLogo() {
 
   return (
     <Box my={2} className="logo">
-      <Link
-        to="/"
-      >
+      <Link to="/">
         <div style={styles} />
       </Link>
     </Box>

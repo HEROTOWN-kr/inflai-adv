@@ -2,19 +2,39 @@ import React from 'react';
 import {
   Box, Button, Grid, makeStyles
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import MainBg from '../../img/bg/mainBg.png';
+import Logo from '../../img/logo_blue.png';
 import IconStartUp from '../../img/iconStartUp.png';
+
+const defaultMenuLinks = [
+  {
+    text: '인플루언서 모집',
+    link: '/Campaign'
+  },
+  {
+    text: '요금제',
+    link: '/Membership'
+  },
+  {
+    text: '인플루언서 관리',
+    link: '/Profile/CampaignInfo'
+  }
+];
 
 const useStyles = makeStyles(theme => ({
   start: {
     height: '100vh',
     background: `url(${MainBg}) center`,
-    backgroundSize: 'cover'
+    backgroundSize: 'cover',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    boxSizing: 'border-box',
+    padding: '38px 100px'
   },
   startWrapper: {
     color: '#000',
-    padding: '0 100px',
-    minHeight: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between'
@@ -56,14 +76,43 @@ const useStyles = makeStyles(theme => ({
     fontSize: '26px',
     fontWeight: '600',
     border: '3px solid'
+  },
+  navbar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  navbarLinks: {
+    background: '#fff',
+    width: '425px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    borderRadius: '10px',
+    padding: '10px 40px',
+  },
+  link: {
+    textDecoration: 'none',
+    color: '#000'
   }
 }));
 
 function HomeNew(props) {
   const classes = useStyles();
   return (
-    <div>
+    <>
       <Box className={classes.start}>
+        <Box className={classes.navbar}>
+          <img src={Logo} alt="noLogo" />
+          <Box className={classes.navbarLinks}>
+            { defaultMenuLinks.map(link => (
+              <Link
+                className={classes.link}
+                to={link.link}
+              >
+                {link.text}
+              </Link>
+            ))}
+          </Box>
+        </Box>
         <Box className={classes.startWrapper}>
           <Box>
             <Box className={classes.startName}>인플라이</Box>
@@ -92,12 +141,14 @@ function HomeNew(props) {
           </Box>
           <img className={classes.startImage} src={IconStartUp} alt="noImg" />
         </Box>
+        <Box height="44px" />
+      </Box>
+      <Box bgcolor="#DBE2F8">
+        analyse
       </Box>
 
-      <Box>
+    </>
 
-      </Box>
-    </div>
   );
 }
 
