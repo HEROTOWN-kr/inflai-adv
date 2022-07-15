@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Box, Button, Grid, makeStyles
+  Box, Button, Grid, Input, makeStyles
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import MainBg from '../../img/bg/mainBg.png';
@@ -21,6 +21,11 @@ const defaultMenuLinks = [
     link: '/Profile/CampaignInfo'
   }
 ];
+
+const whiteCard = {
+  backgroundColor: '#fff',
+  border: '1px solid #BBBDBF',
+};
 
 const useStyles = makeStyles(theme => ({
   start: {
@@ -77,6 +82,18 @@ const useStyles = makeStyles(theme => ({
     fontWeight: '600',
     border: '3px solid'
   },
+  inputButton: {
+    ...whiteCard,
+    display: 'flex',
+    alignItems: 'center',
+    borderRadius: '33px',
+    fontSize: '20px',
+    fontWeight: '600',
+    color: '#2D3768',
+    boxShadow: 'none',
+    padding: '6px 45px',
+
+  },
   navbar: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -92,6 +109,9 @@ const useStyles = makeStyles(theme => ({
   link: {
     textDecoration: 'none',
     color: '#000'
+  },
+  input: {
+    fontSize: '33px'
   }
 }));
 
@@ -143,8 +163,16 @@ function HomeNew(props) {
         </Box>
         <Box height="44px" />
       </Box>
-      <Box bgcolor="#DBE2F8">
-        analyse
+      <Box py="150px" color="#2D3768" bgcolor="#DBE2F8">
+        <Box fontSize="60px" textAlign="center">인스타그램 계정을 입력해주세요</Box>
+        <Box mt="60px" display="flex" justifyContent="center">
+          <Box bgcolor="#fff" borderRadius="33px" py="6px" px="18px">
+            <Input disableUnderline classes={{ root: classes.input }} />
+          </Box>
+          <Box className={classes.inputButton}>
+            분석
+          </Box>
+        </Box>
       </Box>
 
     </>
