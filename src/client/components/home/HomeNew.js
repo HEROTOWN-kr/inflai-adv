@@ -84,15 +84,17 @@ const useStyles = makeStyles(theme => ({
   },
   inputButton: {
     ...whiteCard,
+    width: '50px',
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: '33px',
     fontSize: '20px',
     fontWeight: '600',
     color: '#2D3768',
     boxShadow: 'none',
     padding: '6px 45px',
-
+    marginLeft: '15px',
   },
   navbar: {
     display: 'flex',
@@ -112,6 +114,9 @@ const useStyles = makeStyles(theme => ({
   },
   input: {
     fontSize: '33px'
+  },
+  whiteBox: {
+    ...whiteCard
   }
 }));
 
@@ -163,17 +168,45 @@ function HomeNew(props) {
         </Box>
         <Box height="44px" />
       </Box>
-      <Box py="150px" color="#2D3768" bgcolor="#DBE2F8">
-        <Box fontSize="60px" textAlign="center">인스타그램 계정을 입력해주세요</Box>
-        <Box mt="60px" display="flex" justifyContent="center">
-          <Box bgcolor="#fff" borderRadius="33px" py="6px" px="18px">
-            <Input disableUnderline classes={{ root: classes.input }} />
+      <Box bgcolor="#DBE2F8">
+        <Box py="150px" px={2} mx="auto" color="#2D3768" maxWidth="1200px" width="100%">
+          <Box fontSize="60px" textAlign="center">인스타그램 계정을 입력해주세요</Box>
+          <Box maxWidth="800px" width="100%" mx="auto">
+            <Box mt="60px" display="flex">
+              <Box
+                flex="1"
+                bgcolor="#fff"
+                borderRadius="33px"
+                py="6px"
+                px="18px"
+                maxWidth="650px"
+                width="100%"
+              >
+                <Input fullWidth disableUnderline classes={{ root: classes.input }} />
+              </Box>
+              <Box className={classes.inputButton}>
+                분석
+              </Box>
+            </Box>
+            <Box mt={2}>* 인스타그램 분석은 공개 계정만 가능합니다</Box>
           </Box>
-          <Box className={classes.inputButton}>
-            분석
-          </Box>
+
+
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Box className={classes.whiteBox}>
+                test
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box className={classes.whiteBox}>
+                test
+              </Box>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
+
 
     </>
 
