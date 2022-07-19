@@ -116,7 +116,17 @@ const useStyles = makeStyles(theme => ({
     fontSize: '33px'
   },
   whiteBox: {
-    ...whiteCard
+    ...whiteCard,
+    padding: '55px 0',
+    borderRadius: '20px',
+    textAlign: 'center',
+    fontSize: '40px'
+  },
+  title: {
+    fontSize: '22px',
+    fontWeight: '600',
+    textAlign: 'center',
+    marginBottom: '8px'
   }
 }));
 
@@ -169,41 +179,94 @@ function HomeNew(props) {
         <Box height="44px" />
       </Box>
       <Box bgcolor="#DBE2F8">
-        <Box py="150px" px={2} mx="auto" color="#2D3768" maxWidth="1200px" width="100%">
-          <Box fontSize="60px" textAlign="center">인스타그램 계정을 입력해주세요</Box>
-          <Box maxWidth="800px" width="100%" mx="auto">
-            <Box mt="60px" display="flex">
-              <Box
-                flex="1"
-                bgcolor="#fff"
-                borderRadius="33px"
-                py="6px"
-                px="18px"
-                maxWidth="650px"
-                width="100%"
-              >
-                <Input fullWidth disableUnderline classes={{ root: classes.input }} />
-              </Box>
-              <Box className={classes.inputButton}>
-                분석
-              </Box>
+        <Box py="150px" px={2} mx="auto" color="#2D3768" maxWidth="1100px" width="100%">
+          <Box fontSize="45px" textAlign="center">인스타그램 계정을 입력해주세요</Box>
+          <Box mt="42px" display="flex">
+            <Box
+              flex="1"
+              bgcolor="#fff"
+              borderRadius="33px"
+              border="1px solid #BBBDBF"
+              py="6px"
+              px="18px"
+            >
+              <Input fullWidth disableUnderline classes={{ root: classes.input }} />
             </Box>
-            <Box mt={2}>* 인스타그램 분석은 공개 계정만 가능합니다</Box>
+            <Box className={classes.inputButton}>
+                분석
+            </Box>
+          </Box>
+          <Box fontSize="26px" mt={1}>* 인스타그램 분석은 공개 계정만 가능합니다</Box>
+
+          <Box my={8}>
+            <Grid container spacing={4}>
+              <Grid item xs={4}>
+                <Box className={classes.title}>계시물</Box>
+                <Box className={classes.whiteBox}>
+                  4,284
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box className={classes.title}>팔로워</Box>
+                <Box className={classes.whiteBox}>
+                  8,282,675
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box className={classes.title}>팔로잉</Box>
+                <Box className={classes.whiteBox}>
+                  281
+                </Box>
+              </Grid>
+
+              <Grid item xs={4}>
+                <Box className={classes.title}>카테고리</Box>
+                <Box className={classes.whiteBox}>
+                  음식
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box className={classes.title}>소통고감지수</Box>
+                <Box className={classes.whiteBox}>
+                  0.1%(미미)
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box className={classes.title}>인플루언서 카테고리</Box>
+                <Box className={classes.whiteBox}>
+                  Celebrity
+                </Box>
+              </Grid>
+            </Grid>
           </Box>
 
+          <Box className={classes.title}>포스팅 분석 (13님은 주로 이런 포스팅을 최근에 하고 있습니다)</Box>
+          <Box className={classes.whiteBox}>
+            포스팅 분석
+          </Box>
 
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <Box className={classes.whiteBox}>
-                test
-              </Box>
+          <Box className={classes.title}>계정 이미지 인공지능 분석</Box>
+          <Box className={classes.whiteBox}>
+            계정 이미지 인공지능 분석
+          </Box>
+
+          <Box className={classes.title}>최근 게시물</Box>
+          <Box my={8}>
+            <Grid container spacing={4}>
+              <Grid item xs={}>
+                <Box className={classes.title}>계시물</Box>
+                <Box className={classes.whiteBox}>
+                  4,284
+                </Box>
+              </Grid>
+              <Grid item xs={}>
+                <Box className={classes.title}>계시물</Box>
+                <Box className={classes.whiteBox}>
+                  4,284
+                </Box>
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <Box className={classes.whiteBox}>
-                test
-              </Box>
-            </Grid>
-          </Grid>
+          </Box>
         </Box>
       </Box>
 
