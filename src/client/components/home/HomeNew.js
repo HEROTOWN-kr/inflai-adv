@@ -253,13 +253,13 @@ function HomeNew(props) {
           <Box className={classes.title}>최근 게시물</Box>
           <Box my={8}>
             <Grid container spacing={4}>
-              <Grid item xs={}>
+              <Grid item xs={6}>
                 <Box className={classes.title}>계시물</Box>
                 <Box className={classes.whiteBox}>
                   4,284
                 </Box>
               </Grid>
-              <Grid item xs={}>
+              <Grid item xs={6}>
                 <Box className={classes.title}>계시물</Box>
                 <Box className={classes.whiteBox}>
                   4,284
