@@ -33,10 +33,14 @@ function Campaign() {
           path={`${match.url}/Request`}
           render={renderProps => <CampaignRequest {...renderProps} />}
         />
-        <Route
+        <PrivateRoute
+          path={`${match.url}/detail/:id`}
+          component={CampaignDetail}
+        />
+      {/*  <Route
           path={`${match.path}/detail/:id`}
           render={renderProps => <CampaignDetail {...renderProps} />}
-        />
+        />*/}
         <Route
           exact
           path={`${match.url}/`}
