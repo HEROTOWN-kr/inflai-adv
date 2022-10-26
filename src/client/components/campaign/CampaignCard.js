@@ -9,26 +9,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import StyledImage from '../../containers/StyledImage';
 import StyledText from '../../containers/StyledText';
-import { AdvertiseTypes, Colors } from '../../lib/Сonstants';
+import { Colors, snsTypesObject } from '../../lib/Сonstants';
 import StyledSvg from '../../containers/StyledSvg';
 import noImage from '../../img/noImage.png';
 import noFound from '../../img/notFound400_316.png';
 import CopyDialog from '../profile/pages/CampaignInfo/CopyDialog';
-
-const snsTypes = {
-  1: {
-    text: 'Instagram',
-    color: Colors.pink
-  },
-  2: {
-    text: 'Youtube',
-    color: Colors.red
-  },
-  3: {
-    text: 'Blog',
-    color: Colors.green
-  }
-};
 
 const useStyles = makeStyles({
   root: {
@@ -100,24 +85,12 @@ function CampaignCard(props) {
               <Grid item>
                 <Grid container>
                   <Grid item>
-                    <Box mr="4px" color={snsTypes[type].color} fontWeight="600">{snsTypes[type].text}</Box>
+                    <Box mr="4px" color={snsTypesObject[type].color} fontWeight="600">{snsTypesObject[type].text}</Box>
                   </Grid>
                   <Grid item>
                     {` D-${calculateDates(srchEnd)}`}
                   </Grid>
                 </Grid>
-                {/* <StyledText overflowHidden lineHeight="1.3em">
-                  {type === '1' ? (
-                    <span style={{ color: Colors.pink, fontWeight: '600' }}>Instagram</span>
-                  ) : null}
-                  {type === '2' ? (
-                    <span style={{ color: Colors.red, fontWeight: '600' }}>Youtube</span>
-                  ) : null}
-                  {type === '3' ? (
-                    <span style={{ color: Colors.green, fontWeight: '600' }}>Blog</span>
-                  ) : null}
-                  {` D-${calculateDates(srchEnd)}`}
-                </StyledText> */}
               </Grid>
               <Grid item>
                 <Grid container spacing={1}>

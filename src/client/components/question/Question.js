@@ -10,7 +10,7 @@ import StyledImage from '../../containers/StyledImage';
 import StyledText from '../../containers/StyledText';
 import StyledTableCell from '../../containers/StyledTableCell';
 import noImage from '../../img/noImage.png';
-import { Colors } from '../../lib/Сonstants';
+import { Colors, snsTypesObject } from '../../lib/Сonstants';
 import AuthContext from '../../context/AuthContext';
 import QuestionDialog from './QuestionDialog';
 import MyPagination from '../../containers/MyPagination';
@@ -41,25 +41,6 @@ const tableHeader = [
     align: 'center'
   }
 ];
-
-const adTypes = {
-  1: {
-    text: '인스타',
-    color: Colors.pink,
-  },
-  2: {
-    text: '유튜브',
-    color: Colors.red,
-  },
-  3: {
-    text: '블로그',
-    color: '#2ba406',
-  },
-  4: {
-    text: '기자단',
-    color: '#0027ff'
-  }
-};
 
 const defaultCampaignInfo = {
   AD_PHOTO: '',
@@ -160,11 +141,11 @@ function Question(props) {
                     <StyledText overflowHidden fontSize={isMD ? '15px' : '13px'}>{campaignInfo.AD_SHRT_DISC}</StyledText>
                     <Box pt={{ xs: '6px', md: 2 }}>
                       {isMD ? (
-                        <Box width="30%" p={1} border={`1px solid ${adTypes[campaignInfo.AD_TYPE].color}`}>
-                          <StyledText textAlign="center" fontSize="13px" color={adTypes[campaignInfo.AD_TYPE].color} fontWeight="bold">{adTypes[campaignInfo.AD_TYPE].text}</StyledText>
+                        <Box width="30%" p={1} border={`1px solid ${snsTypesObject[campaignInfo.AD_TYPE].color}`}>
+                          <StyledText textAlign="center" fontSize="13px" color={snsTypesObject[campaignInfo.AD_TYPE].color} fontWeight="bold">{snsTypesObject[campaignInfo.AD_TYPE].text}</StyledText>
                         </Box>
                       ) : (
-                        <StyledText fontSize="13px" color={adTypes[campaignInfo.AD_TYPE].color} fontWeight="bold">{adTypes[campaignInfo.AD_TYPE].text}</StyledText>
+                        <StyledText fontSize="13px" color={snsTypesObject[campaignInfo.AD_TYPE].color} fontWeight="bold">{snsTypesObject[campaignInfo.AD_TYPE].text}</StyledText>
                       )}
                     </Box>
                   </Grid>

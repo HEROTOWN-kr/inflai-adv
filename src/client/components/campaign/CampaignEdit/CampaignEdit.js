@@ -20,66 +20,15 @@ import StyledText from '../../../containers/StyledText';
 import ReactFormDatePicker from '../../../containers/ReactFormDatePicker';
 import ReactFormText from '../../../containers/ReactFormText';
 import StyledSelect from '../../../containers/StyledSelect';
-import { AdvertiseTypes, Colors } from '../../../lib/Сonstants';
+import {
+  AdvertiseTypes, Colors, snsTypes, campaignTypes, productSellTypes, editPriceTypes, videoLengthTypes, deliveryTypes, reportTypes
+} from '../../../lib/Сonstants';
 import DaumPostCode from '../../../containers/DaumPostCode';
 import ImageHolder from '../CampaignCreate/ImageHolder';
 import CKEditorComponent from '../../../containers/CKEditorComponent';
 import StyledButton from '../../../containers/StyledButton';
 import AuthContext from '../../../context/AuthContext';
-import StyledBackDrop from '../../../containers/StyledBackDrop';
 import StyledTextField from '../../../containers/StyledTextField';
-
-const snsTypes = [
-  { value: '1', text: '인스타', dbValue: 'AD_INSTA' },
-  { value: '2', text: '유튜브', dbValue: 'AD_YOUTUBE' },
-  { value: '3', text: '블로그', dbValue: 'AD_NAVER' },
-  { value: '4', text: '기자단', dbValue: '' },
-];
-
-const campaignTypes = [
-  { value: '1', text: '체험단' },
-  { value: '2', text: '공동구매' },
-];
-
-const productSellTypes = [
-  { value: '1', text: '사이트통해' },
-  { value: '2', text: '직접판매' },
-];
-
-const editPriceTypes = [
-  { value: '1', text: '20만원' },
-  { value: '2', text: '30만원' },
-  { value: '3', text: '50만원' },
-  { value: '4', text: '기타' },
-];
-
-const videoLengthTypes = [
-  { value: '1', text: '1분미만' },
-  { value: '2', text: '1~3분' },
-  { value: '3', text: '3~5분' },
-  { value: '4', text: '5~10분' },
-  { value: '5', text: '기타' },
-];
-
-const deliveryTypes = [
-  { value: '0', text: '매장 방문' },
-  { value: '1', text: '배송상품' },
-];
-
-const reportTypes = [
-  {
-    name: 'instagram',
-    checked: false,
-    label: '인스타',
-    value: '1'
-  },
-  {
-    name: 'blog',
-    checked: false,
-    label: '블로그',
-    value: '3'
-  }
-];
 
 const useStyles = makeStyles({
   endAdornment: {

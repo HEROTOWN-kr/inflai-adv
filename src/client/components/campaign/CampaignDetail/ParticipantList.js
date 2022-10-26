@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Box, Grid } from '@material-ui/core';
 import { setIn } from 'formik';
 import { Check, CheckCircle, Description } from '@material-ui/icons';
-import { Colors } from '../../../lib/Сonstants';
+import { Colors, ratings } from '../../../lib/Сonstants';
 import StyledImage from '../../../containers/StyledImage';
 import defaultAccountImage from '../../../img/default_account_image.png';
 import StyledText from '../../../containers/StyledText';
@@ -135,6 +135,10 @@ function ParticipantList(props) {
                         <Grid item>
                           <StyledText fontSize="16px" fontWeight="bold">{item.PAR_NAME}</StyledText>
                         </Grid>
+                        <Grid item>
+                          <StyledImage width="21px" height="21px" src={ratings[item.INF_RATING].icon} />
+                        </Grid>
+
                         {item.PAR_INSTA ? (
                           <Grid item><StyledImage width="21px" height="21px" src={IconInsta} /></Grid>
                         ) : null}

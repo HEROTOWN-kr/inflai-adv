@@ -7,7 +7,7 @@ import {
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Clear, Description } from '@material-ui/icons';
-import { Colors } from '../../lib/Сonstants';
+import { Colors, KAKAO_CHANNEL_URL } from '../../lib/Сonstants';
 import AuthContext from '../../context/AuthContext';
 import StyledButton from '../../containers/StyledButton';
 import CouponDialog from './CouponDialog';
@@ -364,14 +364,16 @@ function MembershipNew() {
                   <br />
                   월 최대 10명
                 </Box>
-                <Box className="plan-price">30 만원</Box>
-                <Box mt="6px">VAT 별도</Box>
+                <Box className="plan-price" style={{ textDecoration: 'line-through' }}>30 만원</Box>
+                {/* <Box mt="6px">VAT 별도</Box> */}
+
+                <Box className="plan-price">무료</Box>
                 <Box
                   className="pay-button"
                   bgcolor={PlanColors[0]}
                   onClick={() => selectPlan({ PLN_ID: 4, PLN_PRICE_MONTH: 0 })}
                 >
-                  결제
+                  가입
                 </Box>
                 <Box className="add-info">1개월 플랜입니다</Box>
               </Box>
@@ -385,14 +387,15 @@ function MembershipNew() {
                   <br />
                   월 최대 100명
                 </Box>
-                <Box className="plan-price">90 만원</Box>
-                <Box mt="6px">VAT 별도</Box>
+                <Box className="plan-price" style={{ textDecoration: 'line-through' }}>90 만원</Box>
+                {/* <Box mt="6px">VAT 별도</Box> */}
+                <Box className="plan-price">무료</Box>
                 <Box
                   className="pay-button"
                   bgcolor={PlanColors[1]}
                   onClick={() => selectPlan({ PLN_ID: 8, PLN_PRICE_MONTH: 0 })}
                 >
-                  결제
+                  가입
                 </Box>
                 <Box className="add-info">3개월 플랜입니다</Box>
               </Box>
@@ -406,14 +409,22 @@ function MembershipNew() {
                   <br />
                   월 최대 100명
                 </Box>
-                <Box className="plan-price">120 만원</Box>
-                <Box mt="6px">VAT 별도</Box>
-                <Box
+                {/* <Box className="plan-price">120 만원</Box> */}
+                <Box py="26px" className="plan-price">별도 문의</Box>
+                {/* <Box mt="6px">VAT 별도</Box> */}
+                {/* <Box
                   className="pay-button"
                   bgcolor={PlanColors[2]}
                   onClick={() => selectPlan({ PLN_ID: 9, PLN_PRICE_MONTH: 0 })}
                 >
                   결제
+                </Box> */}
+                <Box
+                  className="pay-button"
+                  bgcolor={PlanColors[2]}
+                  onClick={() => window.open(KAKAO_CHANNEL_URL, '_blank')}
+                >
+                  문의
                 </Box>
                 <Box className="add-info">6개월 플랜입니다</Box>
               </Box>
@@ -427,14 +438,22 @@ function MembershipNew() {
                   <br />
                   월 최대 150명 / 년간 최대 1,800명
                 </Box>
-                <Box className="plan-price">200 만원</Box>
-                <Box mt="6px">VAT 별도</Box>
-                <Box
+                {/* <Box className="plan-price">200 만원</Box> */}
+                <Box py="26px" className="plan-price">별도 문의</Box>
+                {/* <Box mt="6px">VAT 별도</Box> */}
+                {/* <Box
                   className="pay-button"
                   bgcolor={PlanColors[3]}
                   onClick={() => selectPlan({ PLN_ID: 10, PLN_PRICE_MONTH: 100000 })}
                 >
                   결제
+                </Box> */}
+                <Box
+                  className="pay-button"
+                  bgcolor={PlanColors[3]}
+                  onClick={() => window.open(KAKAO_CHANNEL_URL, '_blank')}
+                >
+                  문의
                 </Box>
                 <Box className="add-info">1년 플랜입니다</Box>
               </Box>

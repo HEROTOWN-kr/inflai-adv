@@ -1,3 +1,12 @@
+import ratingNew from '../img/icons/clover-icon.png';
+import ratingBronze from '../img/icons/medal-bronze.png';
+import ratingSilver from '../img/icons/medal-silver.png';
+import ratingGold from '../img/icons/medal-gold.png';
+import ratingPlatinum from '../img/icons/medal-platinum.png';
+import IconYoutube from '../img/icon_youtube_url.png';
+import IconInsta from '../img/icon_instagram_url.png';
+import IconBlog from '../img/icon_blog_url.png';
+
 export const city = ['시/도 선택', '서울특별시', '인천광역시', '대전광역시', '광주광역시', '대구광역시', '울산광역시', '부산광역시', '경기도', '강원도', '충청북도', '충청남도', '전라북도', '전라남도', '경상북도', '경상남도', '제주도'];
 export const area = [
   ['구/군 선택'],
@@ -91,85 +100,9 @@ export const testData = [
     requests_count: '5',
     tags: '#inflai #advertise',
     INF_ID: 48,
-  },
-  /* {
-      profile_picture_url: 'https://images.unsplash.com/photo-1549068106-b024baf5062d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-      username: 'Lucas',
-      name: '박이솔',
-      followers_count: '15254',
-      INF_ID: 49,
-    },
-    {
-      profile_picture_url: 'https://images.unsplash.com/photo-1545996124-0501ebae84d0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80',
-      username: 'Amir',
-      name: '김진후',
-      followers_count: '26325',
-      INF_ID: 54,
-    },
-    {
-      profile_picture_url: 'https://images.unsplash.com/photo-1545912453-db258ca9b7b7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-      username: 'Valerie',
-      name: '유서후',
-      followers_count: '36235',
-      INF_ID: 1,
-    },
-    {
-      profile_picture_url: 'https://images.unsplash.com/photo-1569124589354-615739ae007b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-      username: 'Ilinerwise',
-      name: '문희원',
-      followers_count: '750',
-      INF_ID: 2,
-    },
-    {
-      profile_picture_url: 'https://images.unsplash.com/photo-1545167622-3a6ac756afa4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=656&q=80',
-      username: 'Reza Biazar',
-      name: '황찬세',
-      followers_count: '150213',
-      INF_ID: 3,
-    },
-    {
-      profile_picture_url: 'https://images.unsplash.com/photo-1541647376583-8934aaf3448a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-      username: 'Harishan Kobalasingam',
-      name: '김예준',
-      followers_count: '3533',
-      INF_ID: 6,
-    },
-    {
-      profile_picture_url: 'https://images.unsplash.com/photo-1565260524775-7e9b536fba2f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-      username: 'Pantian Punpuang',
-      name: '박현우',
-      followers_count: '65235',
-      INF_ID: 5,
-    },
-    {
-      profile_picture_url: 'https://images.unsplash.com/photo-1547624643-3bf761b09502?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-      username: 'Sebastian Hemetsberger',
-      name: '김지호',
-      followers_count: '23633',
-      INF_ID: 7,
-    },
-    {
-      profile_picture_url: 'https://images.unsplash.com/photo-1546820389-44d77e1f3b31?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80',
-      username: 'Jake_Fagan',
-      name: '최준우',
-      followers_count: '12856',
-      INF_ID: 8,
-    },
-    {
-      profile_picture_url: 'https://images.unsplash.com/photo-1548946526-f69e2424cf45?ixlib=rb-1.2.1&auto=format&fit=crop&w=564&q=80',
-      username: 'Arshd_Khad',
-      name: '문시우',
-      followers_count: '19652',
-      INF_ID: 9,
-    },
-    {
-      profile_picture_url: 'https://images.unsplash.com/photo-1530512728528-123933595874?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-      username: 'Roberto_Delgado',
-      name: '김민준',
-      followers_count: '26542',
-      INF_ID: 10,
-    }, */
+  }
 ];
+
 export const classification = [{ value: '1', text: '국내사업자' }, { value: '2', text: '해외사업자' }];
 export const jobType = [{ value: '1', text: '일반' }, { value: '2', text: '에이전시' }, { value: '3', text: '소상공인' }];
 export const testText = 'test';
@@ -177,6 +110,7 @@ export const Colors = {
   white: '#ffffff',
   blue: '#093c5e',
   blue2: '#409CFF',
+  blue3: '#0027ff',
   blue2Back: '#DDEFFF',
   blue2Hover: '#467fbd',
   orange: '#FF835D',
@@ -198,6 +132,7 @@ export const Colors = {
   grey8: '#ddd',
   green: '#24d024',
   green2: '#009688',
+  green3: '#2ba406',
   green2Back: '#aafff8',
   greenHover: '#3bb13b',
   pink: '#eb128c',
@@ -216,5 +151,98 @@ export const AdvertiseTypes = {
   ],
 };
 
+export const snsTypesObject = {
+  1: {
+    text: 'Instagram',
+    color: Colors.pink,
+    textKr: '인스타',
+    icon: IconInsta
+  },
+  2: {
+    text: 'Youtube',
+    color: Colors.red,
+    textKr: '유튜브',
+    icon: IconYoutube
+  },
+  3: {
+    text: 'Blog',
+    color: Colors.green3,
+    textKr: '블로그',
+    icon: IconBlog
+  },
+  4: {
+    text: 'Report',
+    color: Colors.blue3,
+    textKr: '기자단',
+  },
+  5: {
+    text: '리뷰어',
+    color: Colors.aqua,
+    textKr: '리뷰어',
+  },
+};
+
+export const snsTypes = [
+  { value: '1', text: '인스타', dbValue: 'AD_INSTA' },
+  { value: '2', text: '유튜브', dbValue: 'AD_YOUTUBE' },
+  { value: '3', text: '블로그', dbValue: 'AD_NAVER' },
+  { value: '4', text: '기자단', dbValue: '' },
+  { value: '5', text: '리뷰어', dbValue: '' },
+];
+
+export const campaignTypes = [
+  { value: '1', text: '체험단' },
+  { value: '2', text: '공동구매' },
+];
+
+export const productSellTypes = [
+  { value: '1', text: '사이트통해' },
+  { value: '2', text: '직접판매' },
+];
+
+export const editPriceTypes = [
+  { value: '1', text: '20만원' },
+  { value: '2', text: '30만원' },
+  { value: '3', text: '50만원' },
+  { value: '4', text: '기타' },
+];
+
+export const videoLengthTypes = [
+  { value: '1', text: '1분미만' },
+  { value: '2', text: '1~3분' },
+  { value: '3', text: '3~5분' },
+  { value: '4', text: '5~10분' },
+  { value: '5', text: '기타' },
+];
+
+export const deliveryTypes = [
+  { value: '0', text: '매장 방문' },
+  { value: '1', text: '배송상품' },
+];
+
+export const reportTypes = [
+  {
+    name: 'instagram',
+    checked: false,
+    label: '인스타',
+    value: '1'
+  },
+  {
+    name: 'blog',
+    checked: false,
+    label: '블로그',
+    value: '3'
+  }
+];
+
 export const HOURS = [...Array(24).keys()];
 export const DAY_OF_WEEK = ['일', '월', '화', '수', '목', '금', '토'];
+export const KAKAO_CHANNEL_URL = 'http://pf.kakao.com/_AYxeUxb';
+
+export const ratings = {
+  1: { text: 'NEW', icon: ratingNew },
+  2: { text: 'BRONZE', icon: ratingBronze },
+  3: { text: 'SILVER', icon: ratingSilver },
+  4: { text: 'GOLD', icon: ratingGold },
+  5: { text: 'PLATINUM', icon: ratingPlatinum },
+};
