@@ -732,7 +732,7 @@ function CampaignEdit() {
           <Grid item xs={12}>
             <Box mb={1}>
               <StyledText color="#3f51b5">
-                  인플루언서 발표기간
+                  인플루언서 업로드기간
               </StyledText>
             </Box>
             <Grid container spacing={isSM ? 3 : 1} alignItems="center">

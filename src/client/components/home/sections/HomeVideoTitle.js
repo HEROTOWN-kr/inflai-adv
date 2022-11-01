@@ -3,12 +3,14 @@ import { Box } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import * as Scroll from 'react-scroll';
+import { useHistory } from 'react-router-dom';
 
 const { animateScroll, scroller } = Scroll;
 
 function HomeVideoTitle() {
   const theme = useTheme();
   const isMD = useMediaQuery(theme.breakpoints.up('md'));
+  const history = useHistory();
 
   function scrollTo() {
     const h = window.innerHeight;
@@ -52,7 +54,8 @@ function HomeVideoTitle() {
           margin="0 auto"
           mt={3}
           style={{ cursor: 'pointer' }}
-          onClick={scrollTo}
+          onClick={() => history.push('/Campaign')}
+          // onClick={scrollTo}
         >
         시작하기
         </Box>

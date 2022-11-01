@@ -39,19 +39,22 @@ const cards2 = [
     id: 1,
     title: '내가 직접 모집하기',
     content: '2분 만에 올리고 딱 맞는 인플루언서를 만나보자',
-    url: '/Campaign/Create'
+    url: '/Campaign/Create',
+    backgroundColor: '#3c83ff',
   },
   {
     id: 2,
     title: '지난 모집캠페인 복사',
     content: '기전 만들었던 캠페인 지금 바로 복사하기',
-    url: '/Campaign/Copy'
+    url: '/Campaign/Copy',
+    backgroundColor: '#ff9919',
   },
   {
     id: 3,
     title: '맞춤형 마케팅 요청',
     content: '사진, 영상, 상세페이지, 홈페이지 지금 견적 받아보기',
-    url: '/Campaign/Request'
+    url: '/Campaign/Request',
+    backgroundColor: '#44d800',
   }
 ];
 
@@ -63,13 +66,17 @@ const useStyles = makeStyles({
       border: `2px solid ${Colors.pink3}`,
     }
   },
+
+  /* bgBlue: { background: 'linear-gradient(45deg, #4099ff, #73b4ff)' },
+  bgGreen: { background: 'linear-gradient(45deg, #2ed8b6, #59e0c5)' },
+  bgOrange: { background: 'linear-gradient(45deg, #FFB64D, #ffcb80)' }, */
+
   typeCard: {
     textAlign: 'left',
     padding: '36px',
     boxSizing: 'border-box',
     height: '310px',
     width: '310px',
-    backgroundColor: '#fff',
     border: '1px solid #ddd',
     borderRadius: '20px',
     position: 'relative',
@@ -92,11 +99,13 @@ const useStyles = makeStyles({
   },
   cardTitle: {
     marginBottom: '20px',
-    color: '#999',
+    // color: '#999',
+    color: '#fff',
   },
   cardContent: {
     marginBottom: '20px',
-    color: '#222',
+    // color: '#222',
+    color: '#fff',
     letterSpacing: '-0.048em',
     lineHeight: '32px',
     overflow: 'hidden',
@@ -162,7 +171,7 @@ function CampaignType() {
         <Grid container justify="space-between">
           { cards2.map(item => (
             <Grid key={item.id} item>
-              <Box className={classes.typeCard} onClick={() => createCampaign(item.id, item.url)}>
+              <Box className={classes.typeCard} style={{ backgroundColor: item.backgroundColor }} onClick={() => createCampaign(item.id, item.url)}>
                 <Box fontSize="18px" fontWeight={500} className={classes.cardTitle}>{item.title}</Box>
                 <Box fontSize="24px" className={classes.cardContent}>{item.content}</Box>
               </Box>
