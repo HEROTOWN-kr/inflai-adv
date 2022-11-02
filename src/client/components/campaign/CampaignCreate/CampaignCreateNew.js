@@ -422,6 +422,7 @@ function CampaignCreateNew() {
                           value={item.value}
                           control={(
                             <Radio
+                              disabled={item.disabled}
                               inputRef={index === 0 ? snsRef : null}
                             />
                                     )}
@@ -451,7 +452,7 @@ function CampaignCreateNew() {
                     <FormControlLabel
                       key={item.value}
                       value={item.value}
-                      control={<Radio inputRef={index === 0 ? snsRef : null} />}
+                      control={<Radio inputRef={index === 0 ? snsRef : null} disabled={item.disabled} />}
                       label={item.text}
                     />
                   ))}

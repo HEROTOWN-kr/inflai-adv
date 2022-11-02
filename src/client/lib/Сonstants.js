@@ -183,16 +183,26 @@ export const snsTypesObject = {
 };
 
 export const snsTypes = [
-  { value: '1', text: '인스타', dbValue: 'AD_INSTA' },
-  { value: '2', text: '유튜브', dbValue: 'AD_YOUTUBE' },
-  { value: '3', text: '블로그', dbValue: 'AD_NAVER' },
-  { value: '4', text: '기자단', dbValue: '' },
-  { value: '5', text: '리뷰어', dbValue: '' },
+  {
+    value: '1', text: '인스타', dbValue: 'AD_INSTA', disabled: false
+  },
+  {
+    value: '2', text: '유튜브', dbValue: 'AD_YOUTUBE', disabled: true
+  },
+  {
+    value: '3', text: '블로그', dbValue: 'AD_NAVER', disabled: false
+  },
+  {
+    value: '4', text: '기자단', dbValue: '', disabled: false
+  },
+  {
+    value: '5', text: '리뷰어', dbValue: '', disabled: false
+  },
 ];
 
 export const campaignTypes = [
-  { value: '1', text: '체험단' },
-  { value: '2', text: '공동구매' },
+  { value: '1', text: '체험단', disabled: false },
+  { value: '2', text: '공동구매', disabled: true },
 ];
 
 export const productSellTypes = [

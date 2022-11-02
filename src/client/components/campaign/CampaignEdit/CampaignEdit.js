@@ -470,7 +470,7 @@ function CampaignEdit() {
                           value={item.value}
                           control={(
                             <Radio
-                              inputRef={index === 0 ? snsRef : null}
+                              inputRef={index === 0 ? snsRef : null} disabled={item.disabled}
                             />
                                     )}
                           label={item.text}
@@ -499,7 +499,7 @@ function CampaignEdit() {
                     <FormControlLabel
                       key={item.value}
                       value={item.value}
-                      control={<Radio inputRef={index === 0 ? snsRef : null} />}
+                      control={<Radio inputRef={index === 0 ? snsRef : null} disabled={item.disabled} />}
                       label={item.text}
                     />
                   ))}
