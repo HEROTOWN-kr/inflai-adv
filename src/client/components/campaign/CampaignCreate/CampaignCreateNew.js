@@ -396,22 +396,6 @@ function CampaignCreateNew() {
           </Grid>
 
           <Grid item xs={12}>
-            <Box mb={1}><StyledText color="#3f51b5">제공하는 제품(서비스) 시가</StyledText></Box>
-            <Box width={{ xs: '100%', md: '200px' }}>
-              <ReactFormText
-                register={register}
-                errors={errors}
-                name="provideMoney"
-                placeholder=""
-                InputProps={{
-                  endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
-                  classes: { input: classes.input }
-                }}
-              />
-            </Box>
-          </Grid>
-
-          <Grid item xs={12}>
             <Box mb={1}><StyledText color="#3f51b5">제공하는 제품(서비스) 짧은설명</StyledText></Box>
             <ReactFormText
               register={register}
@@ -1015,6 +999,23 @@ function CampaignCreateNew() {
               placeholder="예시) 시가 12만원 상당 스틱형벌꿀 1박스"
             />
           </Grid>
+
+          <Grid item xs={12}>
+            <Box mb={1}><StyledText color="#3f51b5">제공하는 제품(서비스) 시가</StyledText></Box>
+            <Box width={{ xs: '100%', md: '200px' }}>
+              <ReactFormText
+                register={register}
+                errors={errors}
+                name="provideMoney"
+                placeholder=""
+                InputProps={{
+                  endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
+                  classes: { input: classes.input }
+                }}
+              />
+            </Box>
+          </Grid>
+
           <Grid item xs={12}>
             <Box mb={1}><StyledText color="#3f51b5">추가 제공금액 (선택)</StyledText></Box>
             <Grid container spacing={1} alignItems="center">
