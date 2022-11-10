@@ -539,6 +539,63 @@ function CampaignCreateNew() {
 
           </Grid>
 
+          { watchObj.campaignType === '1' ? (
+            <Grid item xs={12}>
+              <Box mb={1}><StyledText color="#3f51b5">제공하는 제품(서비스) 시가</StyledText></Box>
+              <Box width={{ xs: '100%', md: '200px' }}>
+                <ReactFormText
+                  register={register}
+                  errors={errors}
+                  name="provideMoney"
+                  placeholder=""
+                  InputProps={{
+                    endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
+                    classes: { input: classes.input }
+                  }}
+                />
+              </Box>
+            </Grid>
+          ) : null}
+
+
+          <Grid item xs={12}>
+            <Box mb={1}><StyledText color="#3f51b5">제공내역 (필수)</StyledText></Box>
+            <ReactFormText
+              register={register}
+              errors={errors}
+              multiline
+              rows={5}
+              name="provideInfo"
+              placeholder="예시) 시가 12만원 상당 스틱형벌꿀 1박스"
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Box mb={1}><StyledText color="#3f51b5">추가 제공금액 (선택)</StyledText></Box>
+            <Grid container spacing={1} alignItems="center">
+              <Grid item xs={12} md="auto">
+                <Box width={{ xs: '100%', md: '200px' }}>
+                  <ReactFormText
+                    register={register}
+                    errors={errors}
+                    name="provideMoney"
+                    placeholder=""
+                    InputProps={{
+                      endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
+                      classes: { input: classes.input }
+                    }}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={12} md>
+                <Box fontSize="14px">
+                  제공하는 물품(서비스)의 시가가 낮은 경우 인플루언서 모집이 원활하지 않을 수 있습니다.
+                  이럴 때 추가적인 금액을 제공해 주시면 더 좋은 인플루언서가 신청할 가능성이 커집니다.
+                </Box>
+              </Grid>
+            </Grid>
+          </Grid>
+
           { watchObj.sns === '2' ? (
             <Fragment>
               <Grid item xs={12}>
@@ -988,59 +1045,8 @@ function CampaignCreateNew() {
                   + '나머지는 제품사진 등 올려주세요\n'}
             />
           </Grid>
-          <Grid item xs={12}>
-            <Box mb={1}><StyledText color="#3f51b5">제공내역 (필수)</StyledText></Box>
-            <ReactFormText
-              register={register}
-              errors={errors}
-              multiline
-              rows={5}
-              name="provideInfo"
-              placeholder="예시) 시가 12만원 상당 스틱형벌꿀 1박스"
-            />
-          </Grid>
 
-          <Grid item xs={12}>
-            <Box mb={1}><StyledText color="#3f51b5">제공하는 제품(서비스) 시가</StyledText></Box>
-            <Box width={{ xs: '100%', md: '200px' }}>
-              <ReactFormText
-                register={register}
-                errors={errors}
-                name="provideMoney"
-                placeholder=""
-                InputProps={{
-                  endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
-                  classes: { input: classes.input }
-                }}
-              />
-            </Box>
-          </Grid>
 
-          <Grid item xs={12}>
-            <Box mb={1}><StyledText color="#3f51b5">추가 제공금액 (선택)</StyledText></Box>
-            <Grid container spacing={1} alignItems="center">
-              <Grid item xs={12} md="auto">
-                <Box width={{ xs: '100%', md: '200px' }}>
-                  <ReactFormText
-                    register={register}
-                    errors={errors}
-                    name="provideMoney"
-                    placeholder=""
-                    InputProps={{
-                      endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
-                      classes: { input: classes.input }
-                    }}
-                  />
-                </Box>
-              </Grid>
-              <Grid item xs={12} md>
-                <Box fontSize="14px">
-                    제공하는 물품(서비스)의 시가가 낮은 경우 인플루언서 모집이 원활하지 않을 수 있습니다.
-                    이럴 때 추가적인 금액을 제공해 주시면 더 좋은 인플루언서가 신청할 가능성이 커집니다.
-                </Box>
-              </Grid>
-            </Grid>
-          </Grid>
           <Grid item xs={12}>
             <Box mb={1}>
               <StyledText color="#3f51b5">이미지 업로드 (5장 까지 업로드 가능합니다, 최소 한 장 이상필수)</StyledText>
