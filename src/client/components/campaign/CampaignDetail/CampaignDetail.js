@@ -395,7 +395,7 @@ function CampaignDetail() {
                         <Grid item><StyledText fontWeight="bold">카테고리</StyledText></Grid>
                         <Grid item>
                           <Grid container>
-                            { productData.AD_REPORT === '1' ? (
+                            { productData.AD_CAM_TYPE === '3' ? (
                               <Grid item>
                                 <StyledText color={snsTypesObject['4'].color}>(기자단)&nbsp;</StyledText>
                               </Grid>
@@ -660,7 +660,7 @@ function CampaignDetail() {
                       </Box>
                       <Box mb="15px">
                         <Grid container>
-                          { productData.AD_REPORT === '1' ? (
+                          { productData.AD_CAM_TYPE === '3' ? (
                             <Grid item>
                               <Box fontSize="12px" mr="7px" p="2px 5px" color={snsTypesObject['4'].color} border={`solid 1px ${snsTypesObject['4'].color}`}>
                                   기자단

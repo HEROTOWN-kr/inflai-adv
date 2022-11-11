@@ -109,7 +109,7 @@ function CampaignCopyCard(props) {
               {campaignType === '2' ? (
                 <span style={{ color: '#00b605' }}>[공동구매] </span>
               ) : null}
-              { report === '1' ? (
+              { campaignType === '3' ? (
                 <span style={{ color: '#0027ff' }}>[기자단] </span>
               ) : null}
               {name}

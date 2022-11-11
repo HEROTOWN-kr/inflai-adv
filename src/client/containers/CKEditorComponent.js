@@ -20,7 +20,7 @@ function CKEditorComponent(props) {
                   ckfinder: {
                     uploadUrl: '/api/TB_AD/uploadAWS'
                   },
-                  placeholder: '제품판매하는 쇼핑몰 URL 및 기타 자료 있으면 올려주세요 !!!'
+                  placeholder: '※ 생력가능 하지만 가급적 채워주시면 인플루언서들이 지원할 때 도움이 됩니다'
                 }
             }
             onInit={(editor) => {

@@ -99,6 +99,7 @@ function CampaignEdit() {
     searchFinish: tomorrow,
     selectStart: today,
     selectFinish: tomorrow,
+    priceSum: '',
 
     productSellStart: today,
     productSellFinish: tomorrow,
@@ -252,7 +253,7 @@ function CampaignEdit() {
           AD_DETAIL_ADDR, AD_EXTR_ADDR, TB_PHOTO_ADs, AD_REPORT,
           AD_EDIT_PRICE, AD_EDIT_PRICE_ETC, AD_VIDEO_LEN, AD_VIDEO_LEN_ETC,
           AD_CAM_TYPE, AD_SELL_TYPE, AD_PROD_PRICE, AD_PROD_DISCOUNT, AD_PROD_INFO,
-          AD_PROD_SELL_START, AD_PROD_SELL_END
+          AD_PROD_SELL_START, AD_PROD_SELL_END, AD_PRICE_SUM
         } = data;
 
         const resetObj = {
@@ -286,6 +287,7 @@ function CampaignEdit() {
         if (AD_EDIT_PRICE_ETC) resetObj.editPriceEtc = AD_EDIT_PRICE_ETC;
         if (AD_VIDEO_LEN) resetObj.videoLength = AD_VIDEO_LEN;
         if (AD_VIDEO_LEN_ETC) resetObj.videoLengthEtc = AD_VIDEO_LEN_ETC;
+        if (AD_PRICE_SUM) resetObj.priceSum = AD_PRICE_SUM;
 
         if (AD_SELL_TYPE) resetObj.productSellType = AD_SELL_TYPE;
         if (AD_PROD_PRICE) resetObj.productSellPrice = AD_PROD_PRICE;
@@ -487,6 +489,24 @@ function CampaignEdit() {
             </Grid>
           </Grid>
 
+          { watchObj.campaignType === '3' ? (
+            <Grid item xs={12}>
+              <Box mb={2} fontSize={14} color={Colors.orange}>
+                  기자단은 물건등을 제공하거나 방문하지 않고 사장님이 주신 사진 및 자료(스토리보드) 만으로 만드는 인스타그램이나 블로그에 업로드 하는 것 입니다
+                <br />
+                  인스타그램기자단 최소비용 : 5000원 부터
+                <br />
+                  블로그기자단 최소비용 : 2만원 부터
+                <br />
+                  각 비용은 인플루언서가 해당내용을 주신 자료대로 잘 포스팅하고 난 다음에 리뷰통해서 확인한 뒤에 직접 광고주님이 입금해주시면 됩니다
+                <br />
+                  자료를 추가하여 수정요청은 안됩니다 (추가 비용을 요구함) 따라서 처음에 자료를 잘 작성해 주세요
+                <br />
+                  자료대로 안 올라갔을 경우 수정은 1회 가능하며 직접 요청하시면 됩니다
+              </Box>
+            </Grid>
+          ) : null}
+
           <Grid item xs={12}>
             <Box mb={1}>
               <StyledText color="#3f51b5">
@@ -528,61 +548,64 @@ function CampaignEdit() {
                     인플라이는 인공지능분석을 통해 보다 좋은 유튜버를 추천해 드리며 유튜브 영상제작과정에는 참여하지 않습니다
               </Box>
             ) : null }
+          </Grid>
 
-            { watchObj.sns === '4' ? (
-              <Grid item xs={12}>
-                <Box mb={2} fontSize={14} color={Colors.orange}>
-                      기자단은 물건등을 제공하거나 방문하지 않고 사장님이 주신 사진 및 자료(스토리보드) 만으로 만드는 인스타그램이나 블로그에 업로드 하는 것 입니다
-                  <br />
-                      인스타그램기자단 최소비용 : 5000원 부터
-                  <br />
-                      블로그기자단 최소비용 : 2만원 부터
-                  <br />
-                      각 비용은 인플루언서가 해당내용을 주신 자료대로 잘 포스팅하고 난 다음에 리뷰통해서 확인한 뒤에 직접 광고주님이 입금해주시면 됩니다
-                  <br />
-                      자료를 추가하여 수정요청은 안됩니다 (추가 비용을 요구함) 따라서 처음에 자료를 잘 작성해 주세요
-                  <br />
-                      자료대로 안 올라갔을 경우 수정은 1회 가능하며 직접 요청하시면 됩니다
+          { watchObj.campaignType === '1' ? (
+            <Grid item xs={12}>
+              <Box mb={1}><StyledText color="#3f51b5">제공하는 제품(서비스) 시가</StyledText></Box>
+              <Box width={{ xs: '100%', md: '200px' }}>
+                <ReactFormText
+                  register={register}
+                  errors={errors}
+                  name="priceSum"
+                  placeholder=""
+                  InputProps={{
+                    endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
+                    classes: { input: classes.input }
+                  }}
+                />
+              </Box>
+            </Grid>
+          ) : null}
+
+          <Grid item xs={12}>
+            <Box mb={1}><StyledText color="#3f51b5">제공내역 (필수)</StyledText></Box>
+            <ReactFormText
+              register={register}
+              errors={errors}
+              multiline
+              rows={5}
+              rowsMax={10}
+              name="provideInfo"
+              placeholder="예시) 시가 12만원 상당 스틱형벌꿀 1박스"
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Box mb={1}><StyledText color="#3f51b5">추가 제공금액 (선택)</StyledText></Box>
+            <Grid container spacing={1} alignItems="center">
+              <Grid item xs={12} md="auto">
+                <Box width={{ xs: '100%', md: '200px' }}>
+                  <ReactFormText
+                    register={register}
+                    errors={errors}
+                    name="provideMoney"
+                    placeholder=""
+                    InputProps={{
+                      readOnly: true,
+                      endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
+                      classes: { input: classes.input }
+                    }}
+                  />
                 </Box>
-
-                <Box mb={1}>
-                  <StyledText color="#3f51b5">
-                        기자단 모집 SNS
-                  </StyledText>
-                </Box>
-
-                <Grid container>
-                  <Grid item>
-                    <Controller
-                      as={(
-                        <RadioGroup row aria-label="gender">
-                          {reportTypes.map((item, index) => (
-                            <FormControlLabel
-                              key={item.value}
-                              value={item.value}
-                              control={(
-                                <Radio
-                                  inputRef={index === 0 ? snsRef : null}
-                                />
-                                          )}
-                              label={item.label}
-                            />
-                          ))}
-                        </RadioGroup>
-                            )}
-                      onFocus={() => snsRef.current.focus()}
-                      name="reportSns"
-                      control={control}
-                    />
-                  </Grid>
-                </Grid>
-
-                { errors.reportSns ? (
-                  <div className="error-message">{errors.reportSns.message}</div>
-                ) : null }
               </Grid>
-            ) : null }
-
+              <Grid item xs={12} md>
+                <Box fontSize="14px">
+                  제공하는 물품(서비스)의 시가가 낮은 경우 인플루언서 모집이 원활하지 않을 수 있습니다.
+                  이럴 때 추가적인 금액을 제공해 주시면 더 좋은 인플루언서가 신청할 가능성이 커집니다.
+                </Box>
+              </Grid>
+            </Grid>
           </Grid>
 
           { watchObj.sns === '2' ? (
@@ -1027,49 +1050,10 @@ function CampaignEdit() {
               rows={5}
               rowsMax={10}
               name="discription"
-              placeholder={'예) 사진 5장 이상 + 동영상 20초 1개 이상\n'
-                  + '반려동물이 구강케어 필름 먹는 사진과 영상 각 1장씩\n'
-                  + '나머지는 제품사진 등 올려주세요\n'}
+              placeholder="※ 선정된 분들에게 광고주분이 직접 카톡(메일, 유선 등)으로 전달 드립니다"
             />
           </Grid>
-          <Grid item xs={12}>
-            <Box mb={1}><StyledText color="#3f51b5">제공내역 (필수)</StyledText></Box>
-            <ReactFormText
-              register={register}
-              errors={errors}
-              multiline
-              rows={5}
-              rowsMax={10}
-              name="provideInfo"
-              placeholder="예시) 시가 12만원 상당 스틱형벌꿀 1박스"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Box mb={1}><StyledText color="#3f51b5">추가 제공금액 (선택)</StyledText></Box>
-            <Grid container spacing={1} alignItems="center">
-              <Grid item xs={12} md="auto">
-                <Box width={{ xs: '100%', md: '200px' }}>
-                  <ReactFormText
-                    register={register}
-                    errors={errors}
-                    name="provideMoney"
-                    placeholder=""
-                    InputProps={{
-                      readOnly: true,
-                      endAdornment: <InputAdornment disablePointerEvents position="end" classes={{ positionEnd: classes.positionEnd }}>원</InputAdornment>,
-                      classes: { input: classes.input }
-                    }}
-                  />
-                </Box>
-              </Grid>
-              <Grid item xs={12} md>
-                <Box fontSize="14px">
-                    제공하는 물품(서비스)의 시가가 낮은 경우 인플루언서 모집이 원활하지 않을 수 있습니다.
-                    이럴 때 추가적인 금액을 제공해 주시면 더 좋은 인플루언서가 신청할 가능성이 커집니다.
-                </Box>
-              </Grid>
-            </Grid>
-          </Grid>
+
           <Grid item xs={12}>
             <Box mb={1}>
               <StyledText color="#3f51b5">이미지 업로드 (5장 까지 업로드 가능합니다, 최소 한 장 이상필수)</StyledText>
