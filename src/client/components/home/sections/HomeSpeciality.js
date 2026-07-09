@@ -6,7 +6,7 @@ import StyledButton from '../../../containers/StyledButton';
 const specialityTypes = [
   {
     id: 1,
-    imgUrl: 'http://image-2.blueweb.co.kr/~herotowncokr/herotowncokr/index/index_whatwedo_photo.jpg',
+    imgUrl: '/index_whatwedo_photo.jpg',
     title: '사진촬영',
     text1: '포토그래퍼와 스타일리스트의 협업으로',
     text2: '클라이언트의 마음을 사로잡는 최상의 콘텐츠를 제작합니다.',
@@ -14,7 +14,7 @@ const specialityTypes = [
   },
   {
     id: 2,
-    imgUrl: 'http://image-2.blueweb.co.kr/~herotowncokr/herotowncokr/index/index_whatwedo_video.jpg',
+    imgUrl: '/index_whatwedo_video.jpg',
     title: '영상제작',
     text1: '사진촬영과 영상작업을 동시에 진행합니다. 촬영팀과 영상팀의',
     text2: '협업으로 빠른 속도와 고품질 퀄리티 서비스를 제공합니다',
@@ -22,7 +22,7 @@ const specialityTypes = [
   },
   {
     id: 3,
-    imgUrl: 'http://image-2.blueweb.co.kr/~herotowncokr/herotowncokr/index/index_whatwedo_design.jpg',
+    imgUrl: '/index_whatwedo_design.jpg',
     title: '디자인',
     text1: '클라이언트와 밀도있는 소통을 통해 원하는 컨셉을 정확히 파악하여',
     text2: '비즈니스에 필요한 시각적 요소를 최고의 비주얼로 만들어드립니다.',
